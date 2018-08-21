@@ -1,62 +1,62 @@
 [
     {
         "id": 1,
-        "type:": "drugs",
+        "type": "drugs",
         "url": "drugs/drug1"
     },
     {
         "id": 2,
-        "type:": "drugs",
+        "type": "drugs",
         "url": "drugs/drug2"
     },
     {
         "id": 3,
-        "type:": "drugs",
+        "type": "drugs",
         "url": "drugs/drug3"
     },
     {
         "id": 4,
-        "type:": "drugs",
+        "type": "drugs",
         "url": "drugs/drug4"
     },
     {
         "id": 5,
-        "type:": "drugs",
+        "type": "drugs",
         "url": "drugs/drug5"
     },
     {
         "id": 6,
-        "type:": "drugs",
+        "type": "drugs",
         "url": "drugs/drug6"
     },
     {
         "id": 7,
-        "type:": "procedure",
+        "type": "procedure",
         "url": "procedure/procedure1"
     },
     {
         "id": 8,
-        "type:": "procedure",
+        "type": "procedure",
         "url": "procedure/procedure2"
     },
     {
         "id": 9,
-        "type:": "procedure",
+        "type": "procedure",
         "url": "procedure/procedure3"
     },
     {
         "id": 10,
-        "type:": "procedure",
+        "type": "procedure",
         "url": "procedure/procedure4"
     },
     {
         "id": 11,
-        "type:": "organism",
+        "type": "organism",
         "url": "organism/organism1"
     },
     {
         "id": 12,
-        "type:": "organism",
+        "type": "organism",
         "url": "organism/organism2"
     }
 ]

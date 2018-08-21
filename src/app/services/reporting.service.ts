@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Report } from '../models/report';
 
@@ -8,19 +7,13 @@ import { Report } from '../models/report';
 })
 export class ReportingService {
 
-    private reports = new Subject<Report[]>();
+    public reports = new Subject<Report[]>();
 
 
-    constructor(private http: HttpClient) {
+    constructor() {
     }
 
-    getReports() {
-        this.http.get<Report[]>(`assets/fake-data/reports.json`).subscribe(result => {
-            this.reports.next(result);
-        });
-    }
-
-    fetchReports(): Observable<any> {
+    getReports(): Observable<Report[]> {
         return this.reports.asObservable();
     }
 }

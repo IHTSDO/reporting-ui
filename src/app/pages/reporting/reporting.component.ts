@@ -14,11 +14,10 @@ export class ReportingComponent implements OnInit, OnDestroy {
     subscription: Subscription;
 
     constructor(private reportingService: ReportingService) {
-        this.reportingService.getReports();
     }
 
     ngOnInit() {
-        this.subscription = this.reportingService.fetchReports().subscribe(reports => {
+        this.subscription = this.reportingService.getReports().subscribe(reports => {
             this.reports = reports;
         });
     }

@@ -1,0 +1,30 @@
+@import 'src/variables.scss';
+
+div.reporting {
+    font-weight: 300;
+
+    div.report {
+        border-bottom: 1px solid $alto-white;
+
+        &:hover {
+            cursor: pointer;
+            background-color: $gallery-white;
+        }
+
+        &:active {
+            background-color: $onahau-blue;
+        }
+
+        &.last {
+            border-bottom: none;
+        }
+
+        div.border-bar {
+            border-right: 1px solid $alto-white;
+        }
+    }
+
+    button {
+        font-weight: 300;
+    }
+}
