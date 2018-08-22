@@ -1,7 +1,19 @@
-<div class="reporting pt-5">
-    <div *ngFor="let report of reports; let last = last" class="row report p-2" [ngClass]="{last: last}">
+<div class="reporting">
+    <div class="row py-5 justify-content-center">
+        <!--<div class="col-sm">-->
+            <button class="btn-filter py-2 px-3 m-2" (click)="filterTypeSwitch('drugs')" [class.selected]="filterType === 'drugs'">DRUGS</button>
+        <!--</div>-->
+        <!--<div class="col-sm">-->
+            <button class="btn-filter py-2 px-3 m-2" (click)="filterTypeSwitch('procedure')" [class.selected]="filterType === 'procedure'">PROCEDURE</button>
+        <!--</div>-->
+        <!--<div class="col-sm">-->
+            <button class="btn-filter py-2 px-3 m-2" (click)="filterTypeSwitch('organism')" [class.selected]="filterType === 'organism'">ORGANISM</button>
+        <!--</div>-->
+    </div>
+
+    <div *ngFor="let report of reports | type:filterType; let last = last" class="row report p-2" [ngClass]="{last: last}">
         <div class="col-sm-1 border-bar">{{report.id}}</div>
-        <div class="col-sm-2 border-bar">{{report.type}}</div>
+        <div class="col-sm-2 border-bar">{{report.type | uppercase}}</div>
         <div class="col-sm-9">{{report.url}}</div>
     </div>
 

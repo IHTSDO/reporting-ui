@@ -19,7 +19,7 @@ button, input, textarea {
     border: none;
     resize: none;
 
-    &:focus {
+    &:focus, &:active {
         outline: none !important;
     }
 

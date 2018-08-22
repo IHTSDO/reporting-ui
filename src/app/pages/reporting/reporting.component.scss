@@ -26,5 +26,22 @@ div.reporting {
 
     button {
         font-weight: 300;
+
+        &.btn-filter {
+            background-color: $gallery-white;
+            border-radius: 1.5rem;
+
+            &:hover {
+                background-color: $alto-white;
+            }
+        }
+
+        &.selected {
+            background-color: $onahau-blue;
+
+            &:hover {
+                background-color: $sail-blue;
+            }
+        }
     }
 }

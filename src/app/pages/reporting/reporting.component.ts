@@ -12,6 +12,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
 
     reports: Report[];
     subscription: Subscription;
+    filterType: string;
 
     constructor(private reportingService: ReportingService) {
     }
@@ -24,5 +25,13 @@ export class ReportingComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
+    }
+
+    filterTypeSwitch(type) {
+        if(this.filterType !== type) {
+            this.filterType = type;
+        } else {
+            this.filterType = null;
+        }
     }
 }
