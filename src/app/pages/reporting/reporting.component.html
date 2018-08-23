@@ -1,31 +1,30 @@
 <div class="reporting">
     <div class="row py-5 justify-content-center">
-        <!--<div class="col-sm">-->
-            <button class="btn-filter py-2 px-3 m-2" (click)="filterTypeSwitch('drugs')" [class.selected]="filterType === 'drugs'">DRUGS</button>
-        <!--</div>-->
-        <!--<div class="col-sm">-->
-            <button class="btn-filter py-2 px-3 m-2" (click)="filterTypeSwitch('procedure')" [class.selected]="filterType === 'procedure'">PROCEDURE</button>
-        <!--</div>-->
-        <!--<div class="col-sm">-->
-            <button class="btn-filter py-2 px-3 m-2" (click)="filterTypeSwitch('organism')" [class.selected]="filterType === 'organism'">ORGANISM</button>
-        <!--</div>-->
+            <button class="btn-filter py-2 px-3 m-2"
+                    [class.active]="filterType === 'drugs'"
+                    (click)="filterTypeSwitch('drugs')" >DRUGS</button>
+            <button class="btn-filter py-2 px-3 m-2"
+                    [class.active]="filterType === 'procedure'"
+                    (click)="filterTypeSwitch('procedure')">PROCEDURE</button>
+            <button class="btn-filter py-2 px-3 m-2"
+                    [class.active]="filterType === 'organism'"
+                    (click)="filterTypeSwitch('organism')" >ORGANISM</button>
     </div>
 
-    <div *ngFor="let report of reports | type:filterType; let last = last" class="row report p-2" [ngClass]="{last: last}">
+    <div *ngFor="let report of reports | type:filterType; let last = last"
+         class="row report p-2"
+         [class.active]="activeReport === report"
+         [class.last]="last"
+         (click)="activeReport = report">
         <div class="col-sm-1 border-bar">{{report.id}}</div>
         <div class="col-sm-2 border-bar">{{report.type | uppercase}}</div>
         <div class="col-sm-9">{{report.url}}</div>
     </div>
 
-    <div class="row pt-5 text-center">
+    <div class="row pt-5 text-right">
         <div class="col-sm">
-            <button class="btn btn-primary m-3">Button 1</button>
-        </div>
-        <div class="col-sm">
-            <button class="btn btn-primary m-3">Button 2</button>
-        </div>
-        <div class="col-sm">
-            <button class="btn btn-primary m-3">Button 3</button>
+            <button class="btn btn-primary m-3"
+            (click)="submitReport()">View Report</button>
         </div>
     </div>
 </div>

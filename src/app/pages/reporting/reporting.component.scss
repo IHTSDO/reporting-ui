@@ -11,7 +11,7 @@ div.reporting {
             background-color: $gallery-white;
         }
 
-        &:active {
+        &.active {
             background-color: $onahau-blue;
         }
 
@@ -36,7 +36,7 @@ div.reporting {
             }
         }
 
-        &.selected {
+        &.active {
             background-color: $onahau-blue;
 
             &:hover {

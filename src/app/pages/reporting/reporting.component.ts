@@ -10,8 +10,9 @@ import { ReportingService } from '../../services/reporting.service';
 })
 export class ReportingComponent implements OnInit, OnDestroy {
 
-    reports: Report[];
     subscription: Subscription;
+    reports: Report[];
+    activeReport: Report;
     filterType: string;
 
     constructor(private reportingService: ReportingService) {
@@ -33,5 +34,9 @@ export class ReportingComponent implements OnInit, OnDestroy {
         } else {
             this.filterType = null;
         }
+    }
+
+    submitReport() {
+        console.log(this.activeReport);
     }
 }
