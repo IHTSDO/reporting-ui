@@ -15,7 +15,7 @@
          class="row report p-2"
          [class.active]="activeReport === report"
          [class.last]="last"
-         (click)="activeReport = report">
+         (click)="activeReportSwitch(report)">
         <div class="col-sm-1 border-bar">{{report.id}}</div>
         <div class="col-sm-2 border-bar">{{report.type | uppercase}}</div>
         <div class="col-sm-9">{{report.url}}</div>
@@ -23,8 +23,9 @@
 
     <div class="row pt-5 text-right">
         <div class="col-sm">
-            <button class="btn btn-primary m-3"
-            (click)="submitReport()">View Report</button>
+            <button [disabled]="!activeReport"
+                    class="btn btn-primary m-3"
+                    (click)="submitReport()">View Report</button>
         </div>
     </div>
 </div>

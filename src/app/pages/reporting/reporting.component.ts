@@ -36,6 +36,14 @@ export class ReportingComponent implements OnInit, OnDestroy {
         }
     }
 
+    activeReportSwitch(report) {
+        if(this.activeReport !== report) {
+            this.activeReport = report;
+        } else {
+            this.activeReport = null;
+        }
+    }
+
     submitReport() {
         console.log(this.activeReport);
     }
