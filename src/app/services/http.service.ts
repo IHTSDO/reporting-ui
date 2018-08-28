@@ -12,7 +12,7 @@ export class HttpService {
     }
 
     getReports() {
-        this.http.get<Report[]>(`assets/fake-data/reports.json`).subscribe(result => {
+        this.http.get<Report[]>('http://local.ihtsdotools.org:8086/authoring-services/jobs/Report').subscribe(result => {
             this.reportingService.reports.next(result);
         });
     }

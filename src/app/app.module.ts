@@ -6,7 +6,6 @@ import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.
 import { ReportingComponent } from './pages/reporting/reporting.component';
 import { ReportingService } from './services/reporting.service';
 import { HttpClientModule } from '@angular/common/http';
-import { SnomedReportCellComponent } from './components/snomed-report-cell/snomed-report-cell.component';
 import { TypePipe } from './pipes/type.pipe';
 
 @NgModule({
@@ -15,7 +14,6 @@ import { TypePipe } from './pipes/type.pipe';
         SnomedNavbarComponent,
         SnomedFooterComponent,
         ReportingComponent,
-        SnomedReportCellComponent,
         TypePipe
     ],
     imports: [

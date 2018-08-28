@@ -10,7 +10,7 @@ export class TypePipe implements PipeTransform {
         if(!searchText) return items;
 
         // searchText = searchText.toLowerCase();
-        items = items.filter(item => item.type === searchText);
+        items = items.filter(item => item.name === searchText);
         return items;
     }
 

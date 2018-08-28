@@ -7,8 +7,6 @@ import { HttpService } from './services/http.service';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    title = 'app';
-
     constructor(private httpService: HttpService) {
         this.httpService.getReports();
     }

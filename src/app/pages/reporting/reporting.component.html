@@ -1,28 +1,21 @@
 <div class="reporting">
     <div class="row py-5 justify-content-center">
         <label class="py-2 m-2">Categories:</label>
-        <button class="btn-filter py-2 px-3 m-2"
-                [class.active]="filterType === 'General QA'"
-                (click)="filterTypeSwitch('General QA')" >General QA</button>
-        <button class="btn-filter py-2 px-3 m-2"
-                [class.active]="filterType === 'General Queries'"
-                (click)="filterTypeSwitch('General Queries')">General Queries</button>
-        <button class="btn-filter py-2 px-3 m-2"
-                [class.active]="filterType === 'Quality Improvement'"
-                (click)="filterTypeSwitch('Quality Improvement')">Quality Improvement</button>
-        <button class="btn-filter py-2 px-3 m-2"
-                [class.active]="filterType === 'Drugs and Substances'"
-                (click)="filterTypeSwitch('Drugs and Substances')">Drugs and Substances</button>
+        <div *ngFor="let report of reports">
+            <button class="btn-filter py-2 px-3 m-2"
+                    [class.active]="filterType === report.name"
+                    (click)="filterTypeSwitch(report.name)">{{report.name}}</button>
+        </div>
     </div>
 
-    <div *ngFor="let report of reports | type:filterType; let last = last"
-         class="row report p-2"
-         [class.active]="activeReport === report"
-         [class.last]="last"
-         (click)="activeReportSwitch(report)">
-        <div class="col-sm-1 border-bar">{{report.id}}</div>
-        <div class="col-sm-3 border-bar">{{report.type | uppercase}}</div>
-        <div class="col-sm-8">{{report.jobName}}</div>
+    <div *ngFor="let report of reports | type:filterType">
+        <div *ngFor="let job of report.jobs"
+             class="row report p-2"
+             [class.active]="activeReport === job"
+             (click)="activeReportSwitch(job)">
+            <div class="col-sm-3 border-bar">{{job.name | uppercase}}</div>
+            <div class="col-sm-8">{{job.description}}</div>
+        </div>
     </div>
 
     <div class="row pt-5 text-right">

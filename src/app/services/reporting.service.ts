@@ -9,7 +9,6 @@ export class ReportingService {
 
     public reports = new Subject<Report[]>();
 
-
     constructor() {
     }
 

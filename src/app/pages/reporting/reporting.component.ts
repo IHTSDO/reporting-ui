@@ -11,9 +11,9 @@ import { ReportingService } from '../../services/reporting.service';
 export class ReportingComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
-    reports: Report[];
     activeReport: Report;
     filterType: string;
+    reports: Report[];
 
     constructor(private reportingService: ReportingService) {
     }
@@ -29,7 +29,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
     }
 
     filterTypeSwitch(type) {
-        if(this.filterType !== type) {
+        if (this.filterType !== type) {
             this.filterType = type;
         } else {
             this.filterType = null;
@@ -37,7 +37,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
     }
 
     activeReportSwitch(report) {
-        if(this.activeReport !== report) {
+        if (this.activeReport !== report) {
             this.activeReport = report;
         } else {
             this.activeReport = null;

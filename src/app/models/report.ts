@@ -1,5 +1,6 @@
+import {Job} from './job';
+
 export class Report {
-    id: number;
-    type: string;
-    jobName: string;
+    name: string;
+    jobs: Job[];
 }
