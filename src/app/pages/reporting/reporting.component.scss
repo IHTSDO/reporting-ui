@@ -22,6 +22,15 @@ div.reporting {
         div.border-bar {
             border-right: 1px solid $alto-white;
         }
+        
+        div.run{
+            border-left: 1px solid $alto-white;
+            margin-left:15px;
+        }
+    }
+    
+    ngb-accordion.accordion{
+        width:100%;
     }
 
     button {

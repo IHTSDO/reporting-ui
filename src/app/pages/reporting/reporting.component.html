@@ -7,22 +7,51 @@
                     (click)="filterTypeSwitch(report.name)">{{report.name}}</button>
         </div>
     </div>
+    <div class="row" *ngFor="let report of reports | type:filterType">
+        <ngb-accordion [closeOthers]="true" activeIds="" (panelChange)="activeReportSwitch($event)">
+          <ngb-panel *ngFor="let job of report.jobs" [class.active]="activeReport === job" id="{{job.name}}" title="{{job.name}}">
+            <ng-template ngbPanelContent>
+                {{job.description}}
+                <div class="row report run p-2">
+                    <div class="col-sm-1 border-bar">Date</div>
+                    <div class="col-sm-1 border-bar">Issues</div>
+                    <div class="col-sm-3 border-bar" *ngFor="let parameter of job.parameterNames">{{parameter}}</div>
+                    <div class="col-sm-2 border-bar">User</div>
+                    <div class="col-sm-2">Status</div>
+                </div>
+                <div *ngFor="let run of currentRuns"
+                     class="row report run p-2"
+                     [class.active]="activeRun === run"
+                     (click)="activeRunSwitch(run)">
+                    <div class="col-sm-1 border-bar">{{run.requestTime}}</div>
+                    <div class="col-sm-1 border-bar">{{run.issuesReported}}</div>
+                    <div class="col-sm-3 border-bar" *ngFor="let parameter of run.parameters">
+                        <div *ngIf="parameter.value !== null || parameter.value !== 'undefined' || parameter.value !== ''">{{parameter.value}}</div>
+                        <div *ngIf="parameter.value === null || parameter.value === 'undefined' || parameter.value === ''">-</div>
+                    </div>
+                    <div class="col-sm-2 border-bar">{{run.user}}</div>
+                    <div class="col-sm-2">{{run.status}}</div>
+                </div>
+            </ng-template>
+          </ngb-panel>
 
-    <div *ngFor="let report of reports | type:filterType">
-        <div *ngFor="let job of report.jobs"
-             class="row report p-2"
-             [class.active]="activeReport === job"
-             (click)="activeReportSwitch(job)">
-            <div class="col-sm-3 border-bar">{{job.name | uppercase}}</div>
-            <div class="col-sm-8">{{job.description}}</div>
-        </div>
+        </ngb-accordion>
     </div>
-
-    <div class="row pt-5 text-right">
-        <div class="col-sm">
-            <button [disabled]="!activeReport"
-                    class="btn btn-primary m-3"
-                    (click)="submitReport()">View Report</button>
+   
+    <div class="row justify-content-center">
+        <div class="pt-2 text-right">
+            <div class="col-sm">
+                <button [disabled]="!activeReport"
+                        class="btn btn-primary m-3"
+                        (click)="submitReport()">Run Report</button>
+            </div>
+        </div>
+        <div class="pt-2 text-right">
+            <div class="col-sm">
+                <button [disabled]="!activeRun || activeRun.status !== 'Complete'"
+                        class="btn btn-primary m-3"
+                        (click)="viewReport()">View Report</button>
+            </div>
         </div>
     </div>
 </div>
