@@ -1,15 +1,12 @@
 export class JobRun {
     id: string;
     jobName: string;
-    parameters: [
-      {
-        key: string;
-        value: string;
-      }
-    ];
+    parameters: {};
+    terminologyServerUrl: string;
     requestTime: string;
-    user: string;
     status: string;
+    resultTime: string;
+    resultUrl: string;
+    user: string;
     issuesReported: string;
-    result: string
 }

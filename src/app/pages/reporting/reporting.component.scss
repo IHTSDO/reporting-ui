@@ -3,34 +3,40 @@
 div.reporting {
     font-weight: 300;
 
-    div.report {
-        border-bottom: 1px solid $alto-white;
-
-        &:hover {
-            cursor: pointer;
-            background-color: $gallery-white;
+    ngb-accordion {
+        div.title {
+            font-weight: 300;
+            color: $orient-blue;
         }
 
-        &.active {
-            background-color: $onahau-blue;
+        div.report-title {
+            border-bottom: 1px solid $alto-white;
+
+            div.border-bar {
+                border-right: 1px solid $alto-white;
+            }
         }
 
-        &.last {
-            border-bottom: none;
-        }
+        div.report {
+            border-bottom: 1px solid $alto-white;
 
-        div.border-bar {
-            border-right: 1px solid $alto-white;
+            &:hover {
+                cursor: pointer;
+                background-color: $gallery-white;
+            }
+
+            &.active {
+                background-color: $onahau-blue;
+            }
+
+            div.border-bar {
+                border-right: 1px solid $alto-white;
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }
         }
-        
-        div.run{
-            border-left: 1px solid $alto-white;
-            margin-left:15px;
-        }
-    }
-    
-    ngb-accordion.accordion{
-        width:100%;
     }
 
     button {
@@ -52,5 +58,14 @@ div.reporting {
                 background-color: $sail-blue;
             }
         }
+    }
+
+
+}
+
+div.modal-body {
+    input.input-border {
+        border: 1px solid $alto-white;
+        border-radius: 0.25rem;
     }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Report } from '../models/report';
 import { JobRun } from '../models/jobRun';
 import { ReportingService } from './reporting.service';
@@ -13,19 +13,24 @@ export class HttpService {
     }
 
     getReports() {
-        this.http.get<Report[]>('http://local.ihtsdotools.org:8086/authoring-services/jobs/Report').subscribe(result => {
+        this.http.get<Report[]>('http://local.ihtsdotools.org:8086/schedule-manager/jobs/Report').subscribe(result => {
             this.reportingService.reports.next(result);
         });
     }
     getReportRuns(name) {
-        this.http.get<JobRun[]>('http://local.ihtsdotools.org:8086/authoring-services/jobs/Report/' + name + '/runs').subscribe(result => {
+        this.http.get<JobRun[]>('http://local.ihtsdotools.org:8086/schedule-manager/jobs/Report/' + name + '/runs').subscribe(result => {
             this.reportingService.reportRuns.next(result);
         });
     }
-    runReport(job, name) {
-        this.http.post<JobRun[]>('http://local.ihtsdotools.org:8086/authoring-services/jobs/Report/' + name + '/runs', job)
-        .subscribe(result => {
-            this.reportingService.reportRuns.next(result);
+    postReportRun(job) {
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json'
+        });
+
+        let options = { headers: headers };
+
+        return this.http.post('http://local.ihtsdotools.org:8086/schedule-manager/jobs/Report/' + job.jobName + '/runs', JSON.stringify(job), options).subscribe(result => {
+            console.log('POST: ', result);
         });
     }
 }

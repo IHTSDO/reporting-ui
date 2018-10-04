@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Report } from '../../models/report';
+import { Job } from '../../models/job';
 import { JobRun } from '../../models/jobRun';
 import { ReportingService } from '../../services/reporting.service';
 import { HttpService } from '../../services/http.service';
-import {NgbModal, ModalDismissReasons, NgbPanelChangeEvent} from '@ng-bootstrap/ng-bootstrap';
-import {SubmitModal} from '../../components/submit-modal/submit-modal.component';
+import { NgbModal, ModalDismissReasons, NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-reporting',
@@ -18,20 +18,24 @@ export class ReportingComponent implements OnInit, OnDestroy {
     runsSubscription: Subscription;
     currentRuns: JobRun[];
     activeReport: string;
+    activeJob: Job;
     activeRun: JobRun;
     filterType: string;
     reports: Report[];
+    closeResult: string;
+    parameters: string[];
 
     constructor(private reportingService: ReportingService,
                 private httpService: HttpService,
-                private modalService: NgbModal) {
+                public modalService: NgbModal) {
     }
 
     ngOnInit() {
         this.reportSubscription = this.reportingService.getReports().subscribe(reports => {
             this.reports = reports;
         });
-        this.filterType = 'General QA'
+        this.filterType = 'Release Validation';
+        this.parameters = [''];
     }
 
     ngOnDestroy() {
@@ -54,13 +58,12 @@ export class ReportingComponent implements OnInit, OnDestroy {
             this.reportingService.getReportRuns($event.panelId).subscribe(runs => {
                 this.currentRuns = runs;
             });
-                
+
         } else {
             this.activeReport = null;
         }
     }
-    
-    
+
     activeRunSwitch(run) {
         if (this.activeRun !== run) {
             this.activeRun = run;
@@ -70,15 +73,50 @@ export class ReportingComponent implements OnInit, OnDestroy {
     }
 
     submitReport() {
-        let job = {};
-        const modalRef = this.modalService.open(SubmitModal);
-//        this.httpService.runReport(job, this.activeReport);
-//        this.httpService.getReportRuns(this.activeReport);
-//        this.reportingService.getReportRuns(this.activeReport).subscribe(runs => {
-//            this.currentRuns = runs;
-//        });
+        let params = {};
+
+        for(let i = 0; i < this.activeJob.parameterNames.length; i++) {
+            params[this.activeJob.parameterNames[i]] = this.parameters[i];
+        }
+
+        let temp = {
+            jobName: '',
+            parameters: {}
+        };
+
+        temp.jobName = this.activeJob.name;
+        temp.parameters = params;
+
+        this.httpService.postReportRun(temp);
     }
+
     viewReport() {
-        window.open(this.activeRun.result)
+        window.open(this.activeRun.resultUrl);
+    }
+
+    close(reason) {
+        this.closeResult = reason;
+
+        this.submitReport();
+
+        this.modalService.dismissAll(reason);
+    }
+
+    open(content) {
+        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+    }
+
+    private getDismissReason(reason: any): string {
+        if (reason === ModalDismissReasons.ESC) {
+            return 'by pressing ESC';
+        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        } else {
+            return `with: ${reason}`;
+        }
     }
 }
