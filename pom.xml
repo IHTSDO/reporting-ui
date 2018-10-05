@@ -140,6 +140,9 @@
                         <goals>
                             <goal>npm</goal>
                         </goals>
+                        <configuration>
+                            <arguments>npm rebuild node-sass</arguments>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>npm run build</id>
