@@ -13,12 +13,12 @@ export class HttpService {
     }
 
     getReports() {
-        this.http.get<Report[]>('http://local.ihtsdotools.org:8086/schedule-manager/jobs/Report').subscribe(result => {
+        this.http.get<Report[]>('/schedule-manager/jobs/Report').subscribe(result => {
             this.reportingService.reports.next(result);
         });
     }
     getReportRuns(name) {
-        this.http.get<JobRun[]>('http://local.ihtsdotools.org:8086/schedule-manager/jobs/Report/' + name + '/runs').subscribe(result => {
+        this.http.get<JobRun[]>('/schedule-manager/jobs/Report/' + name + '/runs').subscribe(result => {
             this.reportingService.reportRuns.next(result);
         });
     }
@@ -29,7 +29,7 @@ export class HttpService {
 
         let options = { headers: headers };
 
-        return this.http.post('http://local.ihtsdotools.org:8086/schedule-manager/jobs/Report/' + job.jobName + '/runs', JSON.stringify(job), options).subscribe(result => {
+        return this.http.post('/schedule-manager/jobs/Report/' + job.jobName + '/runs', JSON.stringify(job), options).subscribe(result => {
             console.log('POST: ', result);
         });
     }
