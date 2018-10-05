@@ -141,7 +141,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>npm rebuild node-sass</arguments>
+                            <arguments>rebuild node-sass</arguments>
                         </configuration>
                     </execution>
                     <execution>
