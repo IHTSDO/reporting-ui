@@ -119,7 +119,7 @@
                 <version>1.3</version>
                 <configuration>
                     <nodeVersion>v0.10.40</nodeVersion>
-                    <npmVersion>6.3.0</npmVersion>
+                    <npmVersion>3.3.12</npmVersion>
                     <workingDirectory>src/main/web/</workingDirectory>
                 </configuration>
                 <executions>
