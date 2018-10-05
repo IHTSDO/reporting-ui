@@ -136,6 +136,12 @@
                         </goals>
                     </execution>
                     <execution>
+                        <id>npm rebuild node-sass</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <id>npm run build</id>
                         <goals>
                             <goal>npm</goal>
