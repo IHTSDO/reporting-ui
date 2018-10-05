@@ -30,7 +30,7 @@
                             <signPackage>false</signPackage>
                             <dataSet>
                                 <data>
-                                    <src>${basedir}/dist</src>
+                                    <src>${basedir}/dist/reporting-UI</src>
                                     <type>directory</type>
                                     <mapper>
                                         <type>perm</type>
