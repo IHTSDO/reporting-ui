@@ -34,7 +34,6 @@ export class ReportingComponent implements OnInit, OnDestroy {
         this.reportSubscription = this.reportingService.getReports().subscribe(reports => {
             this.reports = reports;
         });
-        this.filterType = 'Release Validation';
         this.parameters = [''];
     }
 
@@ -87,7 +86,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
         temp.jobName = this.activeJob.name;
         temp.parameters = params;
 
-        this.httpService.postReportRun(temp);
+        this.httpService.postReportRun(temp, this.activeReport);
     }
 
     viewReport() {

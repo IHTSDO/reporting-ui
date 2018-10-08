@@ -3,13 +3,18 @@
 div.reporting {
     font-weight: 300;
 
+    h4.report-title {
+        font-weight: 300;
+        font-size: 1.4rem;
+    }
+
     ngb-accordion {
         div.title {
             font-weight: 300;
             color: $orient-blue;
         }
 
-        div.report-title {
+        div.query-title {
             border-bottom: 1px solid $alto-white;
 
             div.border-bar {

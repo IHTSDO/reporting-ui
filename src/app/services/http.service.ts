@@ -22,7 +22,7 @@ export class HttpService {
             this.reportingService.reportRuns.next(result);
         });
     }
-    postReportRun(job) {
+    postReportRun(job, activeReport) {
         let headers = new HttpHeaders({
             'Content-Type': 'application/json'
         });
@@ -31,6 +31,7 @@ export class HttpService {
 
         return this.http.post('/schedule-manager/jobs/Report/' + job.jobName + '/runs', JSON.stringify(job), options).subscribe(result => {
             console.log('POST: ', result);
+            this.getReportRuns(activeReport);
         });
     }
 }
