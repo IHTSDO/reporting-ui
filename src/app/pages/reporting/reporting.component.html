@@ -1,14 +1,14 @@
-<div class="container reporting">
-    <div class="row py-5 justify-content-center">
-        <label class="py-2 m-2">Categories:</label>
-        <div *ngFor="let report of reports">
-            <button class="btn-filter py-2 px-3 m-2"
-                    [class.active]="filterType === report.name"
-                    (click)="filterTypeSwitch(report.name)">{{report.name}}
-            </button>
-        </div>
-    </div>
-    <div class="row pt-3" *ngFor="let report of reports | type:filterType">
+<nav id="sidebar">
+    <h5 class="p-3 mb-0">Categories</h5>
+    <!--<input class="searchbar py-2 px-3" placeholder="Search...">-->
+    <div *ngFor="let report of reports"
+         class="category py-2 px-3"
+         (click)="filterTypeSwitch(report.name)"
+         [class.active]="report.name === filterType">{{report.name}}</div>
+</nav>
+
+<div id="reporting">
+    <div class="p-3" *ngFor="let report of reports | type:filterType">
         <h4 class="report-title">{{report.name}}</h4>
         <ngb-accordion [closeOthers]="true" (panelChange)="activeReportSwitch($event)" class="w-100 pb-3">
             <ngb-panel *ngFor="let job of report.jobs" [class.active]="activeReport === job" id="{{job.name}}">
@@ -27,29 +27,29 @@
                     </div>
                     <div class="row query-title run p-2">
                         <div class="col-sm-2 border-bar">Date</div>
-                        <div class="col-sm-2 border-bar">Issues</div>
-                        <div class="col-sm-4 border-bar" *ngFor="let parameter of job.parameterNames">{{parameter}}</div>
-                        <div class="col-sm-2 border-bar">User</div>
-                        <div class="col-sm-2">Status</div>
+                        <div class="col-sm-1 border-bar">Issues</div>
+                        <div class="col-sm-7 border-bar" *ngFor="let parameter of job.parameterNames">{{parameter}}</div>
+                        <div class="col-sm-1 border-bar">User</div>
+                        <div class="col-sm-1">Status</div>
                     </div>
                     <div *ngFor="let run of currentRuns"
                          class="row report run p-2"
                          [class.active]="activeRun === run"
                          (click)="activeRunSwitch(run)">
                         <div class="col-sm-2 border-bar">{{run.requestTime | date:'short'}}</div>
-                        <div class="col-sm-2 border-bar">{{run.issuesReported ? run.issuesReported : '0'}}</div>
-                        <div class="col-sm-4 border-bar" *ngFor="let item of run.parameters | keyvalue">
+                        <div class="col-sm-1 border-bar">{{run.issuesReported ? run.issuesReported : '0'}}</div>
+                        <div class="col-sm-7 border-bar" *ngFor="let item of run.parameters | keyvalue">
                             {{item.value}}
                         </div>
-                        <div class="col-sm-2 border-bar">{{run.user}}</div>
-                        <div class="col-sm-2">{{run.status}}</div>
+                        <div class="col-sm-1 border-bar">{{run.user}}</div>
+                        <div class="col-sm-1">{{run.status}}</div>
                     </div>
                 </ng-template>
             </ngb-panel>
         </ngb-accordion>
     </div>
 
-    <div class="row pt-5 text-right">
+    <div class="pt-5 text-right">
         <div class="col-sm">
             <button [disabled]="!activeRun || activeRun.status !== 'Complete'"
                     class="btn btn-primary m-3"
