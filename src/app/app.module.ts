@@ -10,12 +10,14 @@ import { ReportingService } from './services/reporting.service';
 import { HttpService } from './services/http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TypePipe } from './pipes/type.pipe';
+import { SnomedTypeaheadComponent } from './components/snomed-typeahead/snomed-typeahead.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         SnomedNavbarComponent,
         SnomedFooterComponent,
+        SnomedTypeaheadComponent,
         ReportingComponent,
         TypePipe
     ],

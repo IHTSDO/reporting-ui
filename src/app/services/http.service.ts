@@ -34,4 +34,8 @@ export class HttpService {
             this.getReportRuns(activeReport);
         });
     }
+
+    getReportRunsNew(name) {
+        return this.http.get<JobRun[]>('/schedule-manager/jobs/Report/' + name + '/runs');
+    }
 }

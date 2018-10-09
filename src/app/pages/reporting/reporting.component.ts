@@ -35,10 +35,19 @@ export class ReportingComponent implements OnInit, OnDestroy {
             this.reports = reports;
         });
         this.parameters = [''];
+        setInterval(() => this.refresh(), 5000);
     }
 
     ngOnDestroy() {
         this.reportSubscription.unsubscribe();
+    }
+
+    refresh() {
+        if(this.activeJob) {
+            this.httpService.getReportRunsNew(this.activeJob.name).subscribe(data => {
+                this.currentRuns = data;
+            });
+        }
     }
 
     filterTypeSwitch(type) {
