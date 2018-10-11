@@ -1,15 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { ConceptService } from '../../services/concept.service';
 
 @Component({
-  selector: 'app-snomed-typeahead',
-  templateUrl: './snomed-typeahead.component.html',
-  styleUrls: ['./snomed-typeahead.component.scss']
+    selector: 'app-snomed-typeahead',
+    templateUrl: './snomed-typeahead.component.html',
+    styleUrls: ['./snomed-typeahead.component.scss']
 })
-export class SnomedTypeaheadComponent implements OnInit {
+export class SnomedTypeaheadComponent implements OnInit, OnChanges {
 
-  constructor() { }
+    @Input() input: string;
+    @Output() conceptTypeaheadEmitter = new EventEmitter();
+    concepts: any;
 
-  ngOnInit() {
-  }
+    constructor(private conceptService: ConceptService) {
+    }
 
+    ngOnInit() {
+    }
+
+    ngOnChanges() {
+        if(this.input.length > 2) {
+            this.conceptService.getTypeaheadConcepts(this.input).subscribe(data => {
+                if(this.input.length > 2) {
+                    this.concepts = data.items;
+                } else {
+                    this.concepts = [];
+                }
+            });
+        } else {
+            this.concepts = [];
+        }
+    }
+
+    selectConcept(concept) {
+        this.conceptTypeaheadEmitter.emit(concept.fsn.term);
+    }
 }

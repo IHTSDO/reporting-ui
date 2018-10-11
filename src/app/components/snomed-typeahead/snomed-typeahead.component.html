@@ -1,3 +1,3 @@
-<p>
-  snomed-typeahead works!
-</p>
+<div class="typeahead" *ngFor="let concept of concepts" (click)="selectConcept(concept)">
+    |{{concept.id}}| {{concept.fsn.term}}
+</div>

@@ -8,7 +8,7 @@
 </nav>
 
 <div id="reporting">
-    <div class="p-3" *ngFor="let report of reports | type:filterType">
+    <div class="p-3" *ngFor="let report of reports | category:filterType">
         <h4 class="report-title">{{report.name}}</h4>
         <ngb-accordion [closeOthers]="true" (panelChange)="activeReportSwitch($event)" class="w-100 pb-3">
             <ngb-panel *ngFor="let job of report.jobs" [class.active]="activeReport === job" id="{{job.name}}">
@@ -22,7 +22,7 @@
                         {{job.description}}
                         <button [disabled]="activeRun"
                                 class="btn btn-primary float-right"
-                                (click)="open(content)">Run Report
+                                (click)="open(content)">Run Query
                         </button>
                     </div>
                     <div class="row query-title run p-2">
@@ -70,7 +70,8 @@
                 <div class="form-group">
                     <div *ngFor="let item of activeJob.parameterNames; let i = index">
                         <label for="{{item}}" class="col-sm-4">{{item}}</label>
-                        <input id="{{item}}" type="text" class="input-border col-sm-8" name="{{item}}" [(ngModel)]="parameters[i]">
+                        <input id="{{item}}" type="text" class="input-border col-sm-8" name="{{item}}" [(ngModel)]="parameters[i]" (input)="typeahead = true">
+                        <app-snomed-typeahead *ngIf="typeahead" [input]="parameters[i]" (conceptTypeaheadEmitter)="typeaheadFunc($event, i)"></app-snomed-typeahead>
                     </div>
                 </div>
             </form>

@@ -30,12 +30,27 @@ export class HttpService {
         let options = { headers: headers };
 
         return this.http.post('/schedule-manager/jobs/Report/' + job.jobName + '/runs', JSON.stringify(job), options).subscribe(result => {
-            console.log('POST: ', result);
             this.getReportRuns(activeReport);
         });
     }
 
     getReportRunsNew(name) {
         return this.http.get<JobRun[]>('/schedule-manager/jobs/Report/' + name + '/runs');
+    }
+
+    getTypeaheadConcepts(input) {
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json'
+        });
+
+        let options = { headers: headers };
+
+        let params = {
+            termFilter: input,
+            limit: 20,
+            expand: 'fsn()'
+        };
+
+        return this.http.post('/snowowl/snomed-ct/v2/MAIN/concepts/search', params, options);
     }
 }

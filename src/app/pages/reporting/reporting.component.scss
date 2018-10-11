@@ -11,21 +11,19 @@ nav#sidebar {
         border-bottom: 1px $ghost-grey solid;
     }
 
-    //div.searchbar {
-        input.searchbar {
-            background-color: $gallery-white;
-            width: 100%;
-            border-bottom: 1px $ghost-grey solid;
-            color: $scorpion-grey;
-            cursor: text;
-        }
+    input.searchbar {
+        background-color: $gallery-white;
+        width: 100%;
+        border-bottom: 1px $ghost-grey solid;
+        color: $scorpion-grey;
+        cursor: text;
+    }
 
-        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-            color: $regent-grey;
-            font-weight: 300;
-            opacity: 1; /* Firefox */
-        }
-    //}
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: $regent-grey;
+        font-weight: 300;
+        opacity: 1; /* Firefox */
+    }
 
     div.category {
         width: 100%;

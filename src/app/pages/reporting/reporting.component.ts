@@ -24,6 +24,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
     reports: Report[];
     closeResult: string;
     parameters: string[];
+    typeahead: boolean;
 
     constructor(private reportingService: ReportingService,
                 private httpService: HttpService,
@@ -40,6 +41,11 @@ export class ReportingComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.reportSubscription.unsubscribe();
+    }
+
+    typeaheadFunc(event, i) {
+        this.parameters[i] = event;
+        this.typeahead = false;
     }
 
     refresh() {

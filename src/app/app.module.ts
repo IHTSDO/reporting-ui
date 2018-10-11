@@ -5,12 +5,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
+import { SnomedTypeaheadComponent } from './components/snomed-typeahead/snomed-typeahead.component';
 import { ReportingComponent } from './pages/reporting/reporting.component';
 import { ReportingService } from './services/reporting.service';
+import { ConceptService } from './services/concept.service';
 import { HttpService } from './services/http.service';
 import { HttpClientModule } from '@angular/common/http';
-import { TypePipe } from './pipes/type.pipe';
-import { SnomedTypeaheadComponent } from './components/snomed-typeahead/snomed-typeahead.component';
+import { CategoryPipe } from './pipes/category.pipe';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,7 @@ import { SnomedTypeaheadComponent } from './components/snomed-typeahead/snomed-t
         SnomedFooterComponent,
         SnomedTypeaheadComponent,
         ReportingComponent,
-        TypePipe
+        CategoryPipe
     ],
     imports: [
         BrowserModule,
@@ -29,6 +30,7 @@ import { SnomedTypeaheadComponent } from './components/snomed-typeahead/snomed-t
     ],
     providers: [
         ReportingService,
+        ConceptService,
         HttpService
     ],
     entryComponents: [],

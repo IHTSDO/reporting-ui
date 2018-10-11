@@ -1,0 +1,10 @@
+@import 'src/variables.scss';
+
+div.typeahead {
+    font-size: 0.8rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $alto-white;
+    }
+}
