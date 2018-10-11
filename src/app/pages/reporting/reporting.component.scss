@@ -48,6 +48,17 @@ nav#sidebar {
 div#reporting {
     margin-left: 256px;
 
+    input.searchbar {
+        font-size: 1.4rem;
+        border-bottom: 1px $ghost-grey solid;
+        cursor: text;
+    }
+
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: $regent-grey;
+        opacity: 1; /* Firefox */
+    }
+
     h4.report-title {
         font-weight: 300;
         font-size: 1.4rem;

@@ -1,17 +1,20 @@
 <nav id="sidebar">
     <h5 class="p-3 mb-0">Categories</h5>
-    <!--<input class="searchbar py-2 px-3" placeholder="Search...">-->
-    <div *ngFor="let report of reports"
+    <input class="searchbar py-2 px-3" [(ngModel)]="categorySearch" placeholder="Search...">
+    <div *ngFor="let report of reports | category:categorySearch"
          class="category py-2 px-3"
          (click)="filterTypeSwitch(report.name)"
          [class.active]="report.name === filterType">{{report.name}}</div>
 </nav>
 
 <div id="reporting">
+    <div class="mx-3">
+        <input class="searchbar w-100 py-2" [(ngModel)]="jobSearch" placeholder="Search...">
+    </div>
     <div class="p-3" *ngFor="let report of reports | category:filterType">
-        <h4 class="report-title">{{report.name}}</h4>
+        <h4 *ngIf="(report.jobs | category:jobSearch).length !== 0" class="report-title">{{report.name}}</h4>
         <ngb-accordion [closeOthers]="true" (panelChange)="activeReportSwitch($event)" class="w-100 pb-3">
-            <ngb-panel *ngFor="let job of report.jobs" [class.active]="activeReport === job" id="{{job.name}}">
+            <ngb-panel *ngFor="let job of report.jobs | category:jobSearch" [class.active]="activeReport === job" id="{{job.name}}">
                 <ng-template ngbPanelTitle>
                     <div class="title" (click)="activeJob = job">
                         {{job.name}}

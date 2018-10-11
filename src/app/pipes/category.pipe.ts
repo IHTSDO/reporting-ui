@@ -9,8 +9,8 @@ export class CategoryPipe implements PipeTransform {
         if(!items) return [];
         if(!searchText) return items;
 
-        // searchText = searchText.toLowerCase();
-        items = items.filter(item => item.name.includes(searchText));
+        searchText = searchText.toLowerCase();
+        items = items.filter(item => item.name ? item.name.toLowerCase().includes(searchText) : item.jobName.toLowerCase().includes(searchText));
         return items;
     }
 }

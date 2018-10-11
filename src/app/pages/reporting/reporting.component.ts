@@ -20,6 +20,8 @@ export class ReportingComponent implements OnInit, OnDestroy {
     activeReport: string;
     activeJob: Job;
     activeRun: JobRun;
+    categorySearch: string;
+    jobSearch: string;
     filterType: string;
     reports: Report[];
     closeResult: string;
