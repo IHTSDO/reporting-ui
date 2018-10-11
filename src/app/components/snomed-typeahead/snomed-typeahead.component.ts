@@ -22,7 +22,7 @@ export class SnomedTypeaheadComponent implements OnInit, OnChanges {
         if(this.input.length > 2) {
             this.conceptService.getTypeaheadConcepts(this.input).subscribe(data => {
                 if(this.input.length > 2) {
-                    this.concepts = data.items;
+                    this.concepts = data;
                 } else {
                     this.concepts = [];
                 }
