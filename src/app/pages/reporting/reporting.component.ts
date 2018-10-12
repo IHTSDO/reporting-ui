@@ -1,10 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Report } from '../../models/report';
 import { Job } from '../../models/job';
 import { JobRun } from '../../models/jobRun';
 import { ReportingService } from '../../services/reporting.service';
-import { HttpService } from '../../services/http.service';
 import { NgbModal, ModalDismissReasons, NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -12,10 +10,8 @@ import { NgbModal, ModalDismissReasons, NgbPanelChangeEvent } from '@ng-bootstra
     templateUrl: './reporting.component.html',
     styleUrls: ['./reporting.component.scss']
 })
-export class ReportingComponent implements OnInit, OnDestroy {
+export class ReportingComponent implements OnInit {
 
-    reportSubscription: Subscription;
-    runsSubscription: Subscription;
     currentRuns: JobRun[];
     activeReport: string;
     activeJob: Job;
@@ -29,20 +25,16 @@ export class ReportingComponent implements OnInit, OnDestroy {
     typeahead: boolean;
 
     constructor(private reportingService: ReportingService,
-                private httpService: HttpService,
                 public modalService: NgbModal) {
     }
 
     ngOnInit() {
-        this.reportSubscription = this.reportingService.getReports().subscribe(reports => {
-            this.reports = reports;
+        this.reportingService.getReports().subscribe(data => {
+            this.reports = data;
         });
+
         this.parameters = [''];
         setInterval(() => this.refresh(), 5000);
-    }
-
-    ngOnDestroy() {
-        this.reportSubscription.unsubscribe();
     }
 
     typeaheadFunc(event, i) {
@@ -52,7 +44,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
 
     refresh() {
         if(this.activeJob) {
-            this.httpService.getReportRunsNew(this.activeJob.name).subscribe(data => {
+            this.reportingService.getReportRuns(this.activeJob.name).subscribe(data => {
                 this.currentRuns = data;
             });
         }
@@ -70,9 +62,8 @@ export class ReportingComponent implements OnInit, OnDestroy {
         if (this.activeReport !== $event.panelId) {
             this.currentRuns = null;
             this.activeReport = $event.panelId;
-            this.httpService.getReportRuns($event.panelId);
-            this.reportingService.getReportRuns($event.panelId).subscribe(runs => {
-                this.currentRuns = runs;
+            this.reportingService.getReportRuns($event.panelId).subscribe(data => {
+                this.currentRuns = data;
             });
 
         } else {
@@ -95,15 +86,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
             params[this.activeJob.parameterNames[i]] = this.parameters[i];
         }
 
-        let temp = {
-            jobName: '',
-            parameters: {}
-        };
-
-        temp.jobName = this.activeJob.name;
-        temp.parameters = params;
-
-        this.httpService.postReportRun(temp, this.activeReport);
+        this.reportingService.postReportRun(this.activeJob.name, params);
     }
 
     viewReport() {

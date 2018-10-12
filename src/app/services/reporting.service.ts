@@ -1,20 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { Report } from '../models/report';
-import { JobRun } from '../models/jobRun';
+import { HttpService } from './http.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ReportingService {
 
-    public reports = new Subject<Report[]>();
-    public reportRuns = new Subject<JobRun[]>();
-
-    getReports(): Observable<Report[]> {
-        return this.reports.asObservable();
+    constructor(private http: HttpService) {
     }
-    getReportRuns(name): Observable<JobRun[]> {
-        return this.reportRuns.asObservable();
+
+    getReports() {
+        return this.http.getReports();
+    }
+
+    getReportRuns(name) {
+        return this.http.getReportRuns(name);
+    }
+
+    postReportRun(name, parameters) {
+        let params = {
+            jobName: name,
+            parameters: parameters
+        };
+
+        this.http.postReportRun(params);
     }
 }

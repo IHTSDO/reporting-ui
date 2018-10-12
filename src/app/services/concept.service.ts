@@ -10,6 +10,12 @@ export class ConceptService {
     }
 
     getTypeaheadConcepts(input) {
-        return this.http.getTypeaheadConcepts(input);
+        let params = {
+            termFilter: input,
+            limit: 20,
+            expand: 'fsn()'
+        };
+
+        return this.http.getTypeaheadConcepts(params);
     }
 }
