@@ -82,8 +82,13 @@ export class ReportingComponent implements OnInit {
     submitReport() {
         let params = {};
 
-        for(let i = 0; i < this.activeJob.parameterNames.length; i++) {
-            params[this.activeJob.parameterNames[i]] = this.parameters[i];
+        if(!this.activeJob.parameterNames) {
+            params = null;
+        }
+        else {
+            for(let i = 0; i < this.activeJob.parameterNames.length; i++) {
+                params[this.activeJob.parameterNames[i]] = this.parameters[i];
+            }
         }
 
         this.reportingService.postReportRun(this.activeJob.name, params);
