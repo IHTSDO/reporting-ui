@@ -91,7 +91,9 @@ export class ReportingComponent implements OnInit {
             }
         }
 
-        this.reportingService.postReportRun(this.activeJob.name, params);
+        this.reportingService.postReportRun(this.activeJob.name, params).subscribe(data => {
+            console.log(data);
+        });
     }
 
     viewReport() {

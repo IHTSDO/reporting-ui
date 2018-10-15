@@ -33,6 +33,7 @@ export class SnomedTypeaheadComponent implements OnInit, OnChanges {
     }
 
     selectConcept(concept) {
-        this.conceptTypeaheadEmitter.emit(concept.fsn.term);
+        let string = concept.id + " |" + concept.fsn.term + "|";
+        this.conceptTypeaheadEmitter.emit(string);
     }
 }
