@@ -13,7 +13,8 @@ export class ConceptService {
         let params = {
             termFilter: input,
             limit: 20,
-            expand: 'fsn()'
+            expand: 'fsn()',
+            activeFilter: true
         };
 
         return this.http.getTypeaheadConcepts(params);
