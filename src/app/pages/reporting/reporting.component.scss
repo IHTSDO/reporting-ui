@@ -81,10 +81,6 @@ div#reporting {
                 }
             }
 
-            div.last-item {
-                //border-bottom: none;
-            }
-
             div.content {
                 border-bottom: 1px $alto-white solid;
                 border-top: none;
@@ -107,12 +103,20 @@ div#reporting {
                     border-bottom: 1px solid $alto-white;
 
                     &:hover {
-                        cursor: pointer;
                         background-color: $gallery-white;
                     }
 
                     div.border-bar {
                         border-right: 1px solid $alto-white;
+                    }
+
+                    div.completed {
+                        cursor: pointer;
+                        color: $forest-green;
+
+                        &:hover {
+                            color: $apple-green;
+                        }
                     }
                 }
 

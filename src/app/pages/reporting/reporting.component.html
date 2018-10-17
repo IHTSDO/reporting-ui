@@ -40,7 +40,9 @@
                             {{item.value}}
                         </div>
                         <div class="col-sm-1 border-bar">{{report.user}}</div>
-                        <div class="col-sm-1" (click)="viewReport(report)">{{report.status}}</div>
+                        <div class="col-sm-1" (click)="viewReport(report)" [class.completed]="report.status === 'Complete'">{{report.status}}
+                            <i *ngIf="report.status === 'Complete'" class="fas fa-external-link-alt ml-1"></i>
+                        </div>
                     </div>
                 </div>
 
