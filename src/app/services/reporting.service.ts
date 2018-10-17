@@ -9,12 +9,12 @@ export class ReportingService {
     constructor(private http: HttpService) {
     }
 
-    getReports() {
-        return this.http.getReports();
+    getCategories() {
+        return this.http.getCategories();
     }
 
-    getReportRuns(name) {
-        return this.http.getReportRuns(name);
+    getReportSet(name) {
+        return this.http.getReportSet(name);
     }
 
     postReportRun(name, parameters) {

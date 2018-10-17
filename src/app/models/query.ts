@@ -1,4 +1,4 @@
-export class Job {
+export class Query {
     name: string;
     description: string;
     parameterNames: string[];

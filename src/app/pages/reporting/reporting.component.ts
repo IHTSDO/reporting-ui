@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Report } from '../../models/report';
-import { Job } from '../../models/job';
-import { JobRun } from '../../models/jobRun';
 import { ReportingService } from '../../services/reporting.service';
-import { NgbModal, ModalDismissReasons, NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Category } from '../../models/category';
+import { Query } from '../../models/query';
+import { Report } from '../../models/report';
 
 @Component({
     selector: 'app-reporting',
@@ -12,14 +12,23 @@ import { NgbModal, ModalDismissReasons, NgbPanelChangeEvent } from '@ng-bootstra
 })
 export class ReportingComponent implements OnInit {
 
-    currentRuns: JobRun[];
-    activeReport: string;
-    activeJob: Job;
-    activeRun: JobRun;
+    // Pipe Filters
     categorySearch: string;
-    jobSearch: string;
-    filterType: string;
-    reports: Report[];
+    querySearch: string;
+    activeCategoryTitle: string;
+
+    // Item Arrays
+    categories: Category[];
+    activeReportSet: Report[];
+
+    // Active Items
+    activeCategory: Category;
+    activeQuery: Query;
+
+
+    // ------------------ New variables above
+    // ------------------ Old variables below
+
     closeResult: string;
     parameters: string[];
     typeahead: boolean;
@@ -29,76 +38,91 @@ export class ReportingComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.reportingService.getReports().subscribe(data => {
-            this.reports = data;
+        this.reportingService.getCategories().subscribe(data => {
+            this.categories = data;
         });
 
         this.parameters = [''];
         setInterval(() => this.refresh(), 5000);
     }
 
+    refresh() {
+        if(this.activeQuery) {
+            this.reportingService.getReportSet(this.activeQuery.name).subscribe(data => {
+                this.activeReportSet = data;
+            });
+        }
+        else {
+            this.activeReportSet = null;
+        }
+    }
+
+    switchActiveCategory(category) {
+        if (this.activeCategory !== category) {
+            this.activeCategory = category;
+            this.activeCategoryTitle = category.name;
+        }
+        else {
+            this.activeCategory = null;
+            this.activeCategoryTitle = null;
+        }
+    }
+
+    switchActiveQuery(query) {
+        if (this.activeQuery !== query) {
+            this.activeQuery = query;
+        }
+        else {
+            this.activeQuery = null;
+        }
+
+        this.switchActiveReportSet();
+    }
+
+    switchActiveReportSet() {
+        this.activeReportSet = null;
+
+        if(this.activeQuery) {
+            this.reportingService.getReportSet(this.activeQuery.name).subscribe(data => {
+                this.activeReportSet = data;
+            });
+        }
+        else {
+            this.activeReportSet = null;
+        }
+    }
+
+    viewReport(report) {
+        window.open(report.resultUrl);
+    }
+
+    // ------------------ New functions above
+    // ------------------ Old functions below
+
+
     typeaheadFunc(event, i) {
         this.parameters[i] = event;
         this.typeahead = false;
     }
 
-    refresh() {
-        if(this.activeJob) {
-            this.reportingService.getReportRuns(this.activeJob.name).subscribe(data => {
-                this.currentRuns = data;
-            });
-        }
-    }
-
-    filterTypeSwitch(type) {
-        if (this.filterType !== type) {
-            this.filterType = type;
-        } else {
-            this.filterType = null;
-        }
-    }
-
-    activeReportSwitch($event: NgbPanelChangeEvent) {
-        if (this.activeReport !== $event.panelId) {
-            this.currentRuns = null;
-            this.activeReport = $event.panelId;
-            this.reportingService.getReportRuns($event.panelId).subscribe(data => {
-                this.currentRuns = data;
-            });
-
-        } else {
-            this.activeReport = null;
-        }
-    }
-
-    activeRunSwitch(run) {
-        if (this.activeRun !== run) {
-            this.activeRun = run;
-        } else {
-            this.activeRun = null;
-        }
-    }
-
     submitReport() {
         let params = {};
 
-        if(!this.activeJob.parameterNames) {
+        if (!this.activeQuery.parameterNames) {
             params = null;
         }
         else {
-            for(let i = 0; i < this.activeJob.parameterNames.length; i++) {
-                params[this.activeJob.parameterNames[i]] = this.parameters[i];
+            for (let i = 0; i < this.activeQuery.parameterNames.length; i++) {
+                params[this.activeQuery.parameterNames[i]] = this.parameters[i];
             }
         }
 
-        this.reportingService.postReportRun(this.activeJob.name, params).subscribe(data => {
+        this.reportingService.postReportRun(this.activeQuery.name, params).subscribe(data => {
             console.log(data);
         });
     }
 
-    viewReport() {
-        window.open(this.activeRun.resultUrl);
-    }
+
 
     close(reason) {
         this.closeResult = reason;

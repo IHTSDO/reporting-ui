@@ -1,63 +1,50 @@
 <nav id="sidebar">
     <h5 class="p-3 mb-0">Categories</h5>
-    <input class="searchbar py-2 px-3" [(ngModel)]="categorySearch" placeholder="Search...">
-    <div *ngFor="let report of reports | category:categorySearch"
+    <input class="searchbar py-2 px-3" [(ngModel)]="categorySearch" placeholder="Filter Categories...">
+    <div *ngFor="let category of categories | category:categorySearch"
          class="category py-2 px-3"
-         (click)="filterTypeSwitch(report.name)"
-         [class.active]="report.name === filterType">{{report.name}}</div>
+         (click)="switchActiveCategory(category)"
+         [class.active]="activeCategory === category">{{category.name}}</div>
 </nav>
 
 <div id="reporting">
     <div class="mx-3">
-        <input class="searchbar w-100 py-2" [(ngModel)]="jobSearch" placeholder="Search...">
+        <input class="searchbar w-100 py-2" [(ngModel)]="querySearch" placeholder="Filter Queries...">
     </div>
-    <div class="p-3" *ngFor="let report of reports | category:filterType">
-        <h4 *ngIf="(report.jobs | category:jobSearch).length !== 0" class="report-title">{{report.name}}</h4>
-        <ngb-accordion [closeOthers]="true" (panelChange)="activeReportSwitch($event)" class="w-100 pb-3">
-            <ngb-panel *ngFor="let job of report.jobs | category:jobSearch" [class.active]="activeReport === job" id="{{job.name}}">
-                <ng-template ngbPanelTitle>
-                    <div class="title" (click)="activeJob = job">
-                        {{job.name}}
-                    </div>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                    <div class="px-2 pb-3 description">
-                        {{job.description}}
-                        <button [disabled]="activeRun"
-                                class="btn btn-primary float-right"
+    <div class="p-3" *ngFor="let category of categories | category:activeCategoryTitle">
+        <h4 *ngIf="(category.jobs | category:querySearch).length !== 0" class="report-title">{{category.name}}</h4>
+
+        <div class="accordion rounded mb-3">
+            <div class="query" *ngFor="let query of category.jobs | category:querySearch; let first = first; let last = last">
+                <div class="title" (click)="switchActiveQuery(query)" [class.rounded-top]="first" [class.rounded-bottom]="last" [class.last-item]="last">
+                    <h3 class="py-3 px-4 m-0">{{query.name}}</h3>
+                </div>
+                <div class="content" *ngIf="activeQuery === query">
+                    <div class="row description mx-0">
+                        <p class="py-3 px-4 m-0">{{query.description}}</p>
+                        <button class="btn btn-primary float-right m-2"
                                 (click)="open(content)">Run Query
                         </button>
                     </div>
-                    <div class="row query-title run p-2">
+                    <div class="row report-header run p-2 mx-0">
                         <div class="col-sm-2 border-bar">Date</div>
                         <div class="col-sm-1 border-bar">Issues</div>
-                        <div class="col-sm-7 border-bar" *ngFor="let parameter of job.parameterNames">{{parameter}}</div>
+                        <div class="col-sm-2 border-bar" *ngFor="let parameter of query.parameterNames">{{parameter}}</div>
                         <div class="col-sm-1 border-bar">User</div>
                         <div class="col-sm-1">Status</div>
                     </div>
-                    <div *ngFor="let run of currentRuns"
-                         class="row report run p-2"
-                         [class.active]="activeRun === run"
-                         (click)="activeRunSwitch(run)">
-                        <div class="col-sm-2 border-bar">{{run.requestTime | date:'short'}}</div>
-                        <div class="col-sm-1 border-bar">{{run.issuesReported ? run.issuesReported : '0'}}</div>
-                        <div class="col-sm-7 border-bar" *ngFor="let item of run.parameters | keyvalue">
+                    <div *ngFor="let report of activeReportSet; let last = last" class="row report run p-2 mx-0" [class.last-item]="last">
+                        <div class="col-sm-2 border-bar">{{report.requestTime | date:'short'}}</div>
+                        <div class="col-sm-1 border-bar">{{report.issuesReported ? report.issuesReported : '0'}}</div>
+                        <div class="col-sm-2 border-bar" *ngFor="let item of report.parameters | keyvalue">
                             {{item.value}}
                         </div>
-                        <div class="col-sm-1 border-bar">{{run.user}}</div>
-                        <div class="col-sm-1">{{run.status}}</div>
+                        <div class="col-sm-1 border-bar">{{report.user}}</div>
+                        <div class="col-sm-1" (click)="viewReport(report)">{{report.status}}</div>
                     </div>
-                </ng-template>
-            </ngb-panel>
-        </ngb-accordion>
-    </div>
+                </div>
 
-    <div class="pt-5 text-right">
-        <div class="col-sm">
-            <button [disabled]="!activeRun || activeRun.status !== 'Complete'"
-                    class="btn btn-primary m-3"
-                    (click)="viewReport()">View Report
-            </button>
+            </div>
         </div>
     </div>
 
@@ -71,10 +58,10 @@
         <div class="modal-body">
             <form>
                 <div class="form-group">
-                    <div *ngFor="let item of activeJob.parameterNames; let i = index">
+                    <div *ngFor="let item of activeQuery.parameterNames; let i = index">
                         <label for="{{item}}" class="col-sm-4">{{item}}</label>
                         <input id="{{item}}" type="text" class="input-border col-sm-8" name="{{item}}" [(ngModel)]="parameters[i]" (input)="typeahead = true">
-                        <app-snomed-typeahead *ngIf="typeahead" [input]="parameters[i]" (conceptTypeaheadEmitter)="typeaheadFunc($event, i)"></app-snomed-typeahead>
+                        <!--<app-snomed-typeahead *ngIf="typeahead" [input]="parameters[i]" (conceptTypeaheadEmitter)="typeaheadFunc($event, i)"></app-snomed-typeahead>-->
                     </div>
                 </div>
             </form>

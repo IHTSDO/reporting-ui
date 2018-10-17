@@ -64,64 +64,64 @@ div#reporting {
         font-size: 1.4rem;
     }
 
-    ngb-accordion {
-        div.title {
-            font-weight: 300;
-            color: $emperor-grey;
-        }
+    div.accordion {
+        border: 1px $alto-white solid;
+        border-bottom: none;
 
-        div.query-title {
-            border-bottom: 1px solid $alto-white;
 
-            div.border-bar {
-                border-right: 1px solid $alto-white;
-            }
-        }
-
-        div.report {
-            border-bottom: 1px solid $alto-white;
-
-            &:hover {
-                cursor: pointer;
+        div.query {
+            div.title {
+                border-bottom: 1px $alto-white solid;
                 background-color: $gallery-white;
+                overflow: hidden;
+
+                h3 {
+                    font-weight: 300;
+                    font-size: 1.1rem;
+                }
             }
 
-            &.active {
-                background-color: $onahau-blue;
+            div.last-item {
+                //border-bottom: none;
             }
 
-            div.border-bar {
-                border-right: 1px solid $alto-white;
-            }
+            div.content {
+                border-bottom: 1px $alto-white solid;
+                border-top: none;
 
-            &:last-child {
-                border-bottom: none;
+                div.description {
+                    button {
+                        font-weight: 300;
+                    }
+                }
+
+                div.report-header {
+                    border-bottom: 1px solid $alto-white;
+
+                    div.border-bar {
+                        border-right: 1px solid $alto-white;
+                    }
+                }
+
+                div.report {
+                    border-bottom: 1px solid $alto-white;
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $gallery-white;
+                    }
+
+                    div.border-bar {
+                        border-right: 1px solid $alto-white;
+                    }
+                }
+
+                div.last-item {
+                    border-bottom: none;
+                }
             }
         }
     }
-
-    button {
-        font-weight: 300;
-
-        &.btn-filter {
-            background-color: $gallery-white;
-            border-radius: 1.5rem;
-
-            &:hover {
-                background-color: $alto-white;
-            }
-        }
-
-        &.active {
-            background-color: $tropical-blue;
-
-            &:hover {
-                background-color: $jordy-blue;
-            }
-        }
-    }
-
-
 }
 
 div.modal-body {

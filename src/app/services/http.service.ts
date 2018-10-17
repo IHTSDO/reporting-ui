@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Report } from '../models/report';
-import { JobRun } from '../models/jobRun';
-import { Job } from '../models/job';
 import { TypeaheadConcept } from '../models/typeaheadConcept';
+import { Category } from '../models/category';
+import { Report } from '../models/report';
+import { Query } from '../models/query';
 
 @Injectable({
     providedIn: 'root'
@@ -24,16 +24,16 @@ export class HttpService {
         this.options = {headers: headers};
     }
 
-    getReports() {
-        return this.http.get<Report[]>('/schedule-manager/jobs/Report/');
+    getCategories() {
+        return this.http.get<Category[]>('/schedule-manager/jobs/Report/');
     }
 
-    getReportRuns(name) {
-        return this.http.get<JobRun[]>('/schedule-manager/jobs/Report/' + name + '/runs');
+    getReportSet(name) {
+        return this.http.get<Report[]>('/schedule-manager/jobs/Report/' + name + '/runs');
     }
 
     postReportRun(job) {
-        return this.http.post<Job>('/schedule-manager/jobs/Report/' + job.jobName + '/runs', JSON.stringify(job), this.options);
+        return this.http.post<Query>('/schedule-manager/jobs/Report/' + job.jobName + '/runs', JSON.stringify(job), this.options);
     }
 
     getTypeaheadConcepts(params) {
