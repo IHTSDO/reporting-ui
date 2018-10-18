@@ -32,7 +32,7 @@ export class HttpService {
         return this.http.get<Report[]>('/schedule-manager/jobs/Report/' + name + '/runs');
     }
 
-    postReportRun(job) {
+    postReport(job) {
         return this.http.post<Query>('/schedule-manager/jobs/Report/' + job.jobName + '/runs', JSON.stringify(job), this.options);
     }
 

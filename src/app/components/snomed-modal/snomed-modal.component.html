@@ -1,0 +1,23 @@
+<app-snomed-overlay (click)="modalService.toggleModal()"></app-snomed-overlay>
+
+<div class="modal" tabindex="-1" role="dialog" (click)="modalService.open = false">
+    <div class="modal-dialog" role="document" (click)="$event.stopPropagation()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Report Details</h5>
+                <button type="button" class="close" (click)="modalService.open = false">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngFor="let parameter of query.parameterNames; let i = index">
+                    <label for="{{parameter}}">{{parameter}}</label>
+                    <input id="{{parameter}}" name="{{parameter}}" [(ngModel)]="inputs[i]">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="submitReportRequest()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

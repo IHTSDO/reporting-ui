@@ -23,6 +23,6 @@ export class ReportingService {
             parameters: parameters
         };
 
-        return this.http.postReportRun(params);
+        return this.http.postReport(params);
     }
 }

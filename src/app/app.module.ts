@@ -12,6 +12,8 @@ import { ConceptService } from './services/concept.service';
 import { HttpService } from './services/http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoryPipe } from './pipes/category.pipe';
+import { SnomedOverlayComponent } from './components/snomed-overlay/snomed-overlay.component';
+import { SnomedModalComponent } from './components/snomed-modal/snomed-modal.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +22,9 @@ import { CategoryPipe } from './pipes/category.pipe';
         SnomedFooterComponent,
         SnomedTypeaheadComponent,
         ReportingComponent,
-        CategoryPipe
+        CategoryPipe,
+        SnomedOverlayComponent,
+        SnomedModalComponent
     ],
     imports: [
         BrowserModule,

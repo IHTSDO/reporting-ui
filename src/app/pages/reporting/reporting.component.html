@@ -23,7 +23,7 @@
                     <div class="row description mx-0">
                         <p class="py-3 px-4 m-0">{{query.description}}</p>
                         <button class="btn btn-primary float-right m-2"
-                                (click)="open(content)">Run Query
+                                (click)="modalService.open = true">Run Query
                         </button>
                     </div>
                     <div class="row report-header run p-2 mx-0">
@@ -50,28 +50,28 @@
         </div>
     </div>
 
-    <ng-template #content let-modal>
-        <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title">Report Details</h4>
-            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <form>
-                <div class="form-group">
-                    <div *ngFor="let item of activeQuery.parameterNames; let i = index">
-                        <label for="{{item}}" class="col-sm-4">{{item}}</label>
-                        <input id="{{item}}" type="text" class="input-border col-sm-8" name="{{item}}" [(ngModel)]="parameters[i]" (input)="typeahead = true">
+    <!--<ng-template #content let-modal>-->
+        <!--<div class="modal-header">-->
+            <!--<h4 class="modal-title" id="modal-basic-title">Report Details</h4>-->
+            <!--<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">-->
+                <!--<span aria-hidden="true">&times;</span>-->
+            <!--</button>-->
+        <!--</div>-->
+        <!--<div class="modal-body">-->
+            <!--<form>-->
+                <!--<div class="form-group">-->
+                    <!--<div *ngFor="let item of activeQuery.parameterNames; let i = index">-->
+                        <!--<label for="{{item}}" class="col-sm-4">{{item}}</label>-->
+                        <!--<input id="{{item}}" type="text" class="input-border col-sm-8" name="{{item}}" [(ngModel)]="parameters[i]" (input)="typeahead = true">-->
                         <!--<app-snomed-typeahead *ngIf="typeahead" [input]="parameters[i]" (conceptTypeaheadEmitter)="typeaheadFunc($event, i)"></app-snomed-typeahead>-->
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" (click)="close('Save click')">Run Report</button>
-        </div>
-    </ng-template>
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>-->
+        <!--<div class="modal-footer">-->
+            <!--<button type="button" class="btn btn-outline-dark" (click)="close('Save click')">Run Report</button>-->
+        <!--</div>-->
+    <!--</ng-template>-->
 </div>
 
-
+<app-snomed-modal *ngIf="modalService.open" [query]="activeQuery"></app-snomed-modal>
