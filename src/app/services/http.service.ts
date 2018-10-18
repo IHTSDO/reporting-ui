@@ -37,6 +37,6 @@ export class HttpService {
     }
 
     getTypeaheadConcepts(params) {
-        return this.http.post<TypeaheadConcept>('/snowowl/snomed-ct/v2/MAIN/concepts/search', params, this.options);
+        return this.http.post('/snowowl/snomed-ct/v2/MAIN/concepts/search', params, this.options);
     }
 }

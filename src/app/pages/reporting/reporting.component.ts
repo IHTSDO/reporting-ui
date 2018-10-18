@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportingService } from '../../services/reporting.service';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Category } from '../../models/category';
 import { Query } from '../../models/query';
 import { Report } from '../../models/report';
@@ -101,11 +100,11 @@ export class ReportingComponent implements OnInit {
     // ------------------ Old functions below
 
 
-    typeaheadFunc(event, i) {
-        this.parameters[i] = event;
-        this.typeahead = false;
-    }
-
+    // typeaheadFunc(event, i) {
+    //     this.parameters[i] = event;
+    //     this.typeahead = false;
+    // }
+    //
     // submitReport() {
     //     let params = {};
     //

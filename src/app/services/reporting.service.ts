@@ -25,4 +25,38 @@ export class ReportingService {
 
         return this.http.postReport(params);
     }
+
+    postReport(query, inputs) {
+        // let parameters = {};
+        //
+        // if (!query.parameterNames) {
+        //     parameters = null;
+        // }
+        // else {
+        //     for (let i = 0; i < query.parameterNames.length; i++) {
+        //         parameters[query.parameterNames[i]] = inputs[i];
+        //     }
+        // }
+        //
+        // let params = {
+        //     jobName: query.name,
+        //     parameters: parameters
+        // };
+
+        let params = {
+            jobName: query.name,
+            parameters: {}
+        };
+
+        if(!query.parameterNames) {
+            params.parameters = null
+        }
+        else {
+            for (let i = 0; i < query.parameterNames.length; i++) {
+                params.parameters[query.parameterNames[i]] = inputs[i];
+            }
+        }
+
+        return this.http.postReport(params);
+    }
 }

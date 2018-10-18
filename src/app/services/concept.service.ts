@@ -6,6 +6,8 @@ import { HttpService } from './http.service';
 })
 export class ConceptService {
 
+    typeaheadActive: boolean;
+
     constructor(private http: HttpService) {
     }
 

@@ -11,8 +11,9 @@
             </div>
             <div class="modal-body">
                 <div *ngFor="let parameter of query.parameterNames; let i = index">
-                    <label for="{{parameter}}">{{parameter}}</label>
-                    <input id="{{parameter}}" name="{{parameter}}" [(ngModel)]="inputs[i]">
+                    <div>{{parameter}}</div>
+                    <input id="{{parameter}}" name="{{parameter}}">
+                    <!--<app-snomed-typeahead *ngIf="conceptService.typeaheadActive" [input]="inputs[i]" (conceptTypeaheadEmitter)="setConcept($event, i)"></app-snomed-typeahead>-->
                 </div>
             </div>
             <div class="modal-footer">

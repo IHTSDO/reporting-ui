@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
@@ -29,8 +28,7 @@ import { SnomedModalComponent } from './components/snomed-modal/snomed-modal.com
     imports: [
         BrowserModule,
         HttpClientModule,
-        FormsModule,
-        NgbModule
+        FormsModule
     ],
     providers: [
         ReportingService,
