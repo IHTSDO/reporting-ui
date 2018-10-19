@@ -19,21 +19,12 @@ export class SnomedTypeaheadComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges() {
-        if(this.input.length > 2) {
-            this.conceptService.getTypeaheadConcepts(this.input).subscribe(data => {
-                if(this.input.length > 2) {
-                    this.concepts = data;
-                } else {
-                    this.concepts = [];
-                }
-            });
-        } else {
-            this.concepts = [];
-        }
+        this.conceptService.getTypeaheadConcepts(this.input).subscribe(data => {
+            this.concepts = data;
+        });
     }
 
     selectConcept(concept) {
-        let string = concept.id + " |" + concept.fsn.term + "|";
-        this.conceptTypeaheadEmitter.emit(string);
+        this.conceptTypeaheadEmitter.emit(concept.id + " |" + concept.fsn.term + "|");
     }
 }

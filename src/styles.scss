@@ -15,7 +15,7 @@ body {
 
 button, input, textarea {
     font-weight: 300;
-    letter-spacing: 1.5px;
+    letter-spacing: 0.5px;
     border: none;
     resize: none;
 
@@ -26,4 +26,8 @@ button, input, textarea {
     &:hover {
         cursor: pointer;
     }
+}
+
+button {
+    letter-spacing: 1.5px;
 }

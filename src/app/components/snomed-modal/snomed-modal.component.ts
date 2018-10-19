@@ -20,19 +20,29 @@ export class SnomedModalComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.query.parameterSubmissions = [''];
+
+        // for(let i = 0; i < this.query.parameterNames.length; i++) {
+        //     this.query.parameterSubmissions[i] = '';
+        // }
     }
 
-    activateTypeahead() {
-
+    activateTypeahead(input) {
+        if(input.length > 2) {
+            this.conceptService.typeaheadActive = true;
+        }
+        else {
+            this.conceptService.typeaheadActive = false;
+        }
     }
 
     setConcept(event, i) {
-        this.inputs[i] = event;
+        this.query.parameterSubmissions[i] = event;
         this.conceptService.typeaheadActive = false;
     }
 
     submitReportRequest() {
-        this.reportingService.postReport(this.query, this.inputs).subscribe(data => {
+        this.reportingService.postReport(this.query, this.query.parameterSubmissions).subscribe(data => {
             console.log(data);
         });
     }

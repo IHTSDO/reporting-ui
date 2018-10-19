@@ -7,4 +7,23 @@ div.modal {
     button {
         font-weight: 300;
     }
+
+    input {
+        cursor: text;
+        font-size: 0.9rem;
+
+        &.input-border {
+            border: 1px solid $alto-white;
+        }
+    }
+
+    app-snomed-typeahead {
+        margin-top: 24px;
+        max-height: 12rem;
+        position: absolute;
+        overflow: scroll;
+        background-color: $gallery-white;
+        border: 1px solid $alto-white;
+        z-index: 10002;
+    }
 }
