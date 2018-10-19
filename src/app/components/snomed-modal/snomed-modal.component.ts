@@ -20,11 +20,11 @@ export class SnomedModalComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.query.parameterSubmissions = [''];
+        this.query.parameterSubmissions = [];
 
-        // for(let i = 0; i < this.query.parameterNames.length; i++) {
-        //     this.query.parameterSubmissions[i] = '';
-        // }
+        for(let i = 0; i < this.query.parameterNames.length; i++) {
+            this.query.parameterSubmissions.push('');
+        }
     }
 
     activateTypeahead(input) {
