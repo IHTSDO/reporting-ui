@@ -44,6 +44,7 @@ export class SnomedModalComponent implements OnInit {
     submitReportRequest() {
         this.reportingService.postReport(this.query, this.query.parameterSubmissions).subscribe(data => {
             console.log(data);
+            this.modalService.open = false;
         });
     }
 }
