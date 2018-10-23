@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CategoryPipe } from './pipes/category.pipe';
 import { SnomedOverlayComponent } from './components/snomed-overlay/snomed-overlay.component';
 import { SnomedModalComponent } from './components/snomed-modal/snomed-modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTooltipModule } from '@angular/material';
 
 @NgModule({
     declarations: [
@@ -28,7 +30,9 @@ import { SnomedModalComponent } from './components/snomed-modal/snomed-modal.com
     imports: [
         BrowserModule,
         HttpClientModule,
-        FormsModule
+        FormsModule,
+        BrowserAnimationsModule,
+        MatTooltipModule
     ],
     providers: [
         ReportingService,

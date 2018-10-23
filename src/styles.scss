@@ -1,3 +1,6 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import 'src/variables.scss';
+
 html {
     font-size: 16px;
     position: relative;
@@ -28,4 +31,11 @@ button, input, textarea {
 
 button {
     letter-spacing: 1.5px;
+}
+
+.mat-tooltip {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: $gallery-white !important;
+    max-width: 30rem !important;
 }

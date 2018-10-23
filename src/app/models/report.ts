@@ -9,4 +9,5 @@ export class Report {
     resultUrl: string;
     user: string;
     issuesReported: string;
+    debugInfo: string;
 }

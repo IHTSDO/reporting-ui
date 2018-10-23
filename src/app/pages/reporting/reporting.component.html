@@ -11,7 +11,6 @@
     <div class="mx-3">
         <input class="searchbar w-100 py-2" [(ngModel)]="querySearch" placeholder="Filter Queries...">
     </div>
-    <button type="button" class="btn float-left" data-toggle="tooltip" data-placement="bottom" data-container="body" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
     <div class="p-3" *ngFor="let category of categories | category:activeCategoryTitle">
         <h4 *ngIf="(category.jobs | category:querySearch).length !== 0" class="report-title">{{category.name}}</h4>
 
@@ -45,7 +44,7 @@
                             <div *ngSwitchCase="'Complete'" class="col-sm-1 completed" (click)="viewReport(report)">{{report.status}}
                                 <i class="fas fa-external-link-alt ml-1"></i>
                             </div>
-                            <div *ngSwitchCase="'Failed'" class="col-sm-1 failed">{{report.status}}
+                            <div *ngSwitchCase="'Failed'" class="col-sm-1 failed" matTooltip="{{report?.debugInfo}}">{{report.status}}
                                 <i class="fas fa-times-circle ml-1"></i>
                             </div>
                             <div *ngSwitchDefault class="col-sm-1">{{report.status}}</div>

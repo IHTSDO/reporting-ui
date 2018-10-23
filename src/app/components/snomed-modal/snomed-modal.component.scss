@@ -1,7 +1,7 @@
 @import 'src/variables.scss';
 
 div.modal {
-    z-index: 10001;
+    z-index: 1001;
     display: initial;
 
     button {
@@ -24,6 +24,6 @@ div.modal {
         overflow: scroll;
         background-color: $gallery-white;
         border: 1px solid $alto-white;
-        z-index: 10002;
+        z-index: 1002;
     }
 }
