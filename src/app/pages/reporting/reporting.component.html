@@ -11,6 +11,7 @@
     <div class="mx-3">
         <input class="searchbar w-100 py-2" [(ngModel)]="querySearch" placeholder="Filter Queries...">
     </div>
+    <button type="button" class="btn float-left" data-toggle="tooltip" data-placement="bottom" data-container="body" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
     <div class="p-3" *ngFor="let category of categories | category:activeCategoryTitle">
         <h4 *ngIf="(category.jobs | category:querySearch).length !== 0" class="report-title">{{category.name}}</h4>
 
@@ -40,38 +41,20 @@
                             {{item.value}}
                         </div>
                         <div class="col-sm-1 border-bar">{{report.user}}</div>
-                        <div class="col-sm-1" (click)="viewReport(report)" [class.completed]="report.status === 'Complete'">{{report.status}}
-                            <i *ngIf="report.status === 'Complete'" class="fas fa-external-link-alt ml-1"></i>
-                        </div>
+                        <ng-container [ngSwitch]="report.status">
+                            <div *ngSwitchCase="'Complete'" class="col-sm-1 completed" (click)="viewReport(report)">{{report.status}}
+                                <i class="fas fa-external-link-alt ml-1"></i>
+                            </div>
+                            <div *ngSwitchCase="'Failed'" class="col-sm-1 failed">{{report.status}}
+                                <i class="fas fa-times-circle ml-1"></i>
+                            </div>
+                            <div *ngSwitchDefault class="col-sm-1">{{report.status}}</div>
+                        </ng-container>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
-    <!--<ng-template #content let-modal>-->
-        <!--<div class="modal-header">-->
-            <!--<h4 class="modal-title" id="modal-basic-title">Report Details</h4>-->
-            <!--<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">-->
-                <!--<span aria-hidden="true">&times;</span>-->
-            <!--</button>-->
-        <!--</div>-->
-        <!--<div class="modal-body">-->
-            <!--<form>-->
-                <!--<div class="form-group">-->
-                    <!--<div *ngFor="let item of activeQuery.parameterNames; let i = index">-->
-                        <!--<label for="{{item}}" class="col-sm-4">{{item}}</label>-->
-                        <!--<input id="{{item}}" type="text" class="input-border col-sm-8" name="{{item}}" [(ngModel)]="parameters[i]" (input)="typeahead = true">-->
-                        <!--<app-snomed-typeahead *ngIf="typeahead" [input]="parameters[i]" (conceptTypeaheadEmitter)="typeaheadFunc($event, i)"></app-snomed-typeahead>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</form>-->
-        <!--</div>-->
-        <!--<div class="modal-footer">-->
-            <!--<button type="button" class="btn btn-outline-dark" (click)="close('Save click')">Run Report</button>-->
-        <!--</div>-->
-    <!--</ng-template>-->
 </div>
 
 <app-snomed-modal *ngIf="modalService.open" [query]="activeQuery"></app-snomed-modal>

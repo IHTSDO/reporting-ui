@@ -118,6 +118,15 @@ div#reporting {
                             color: $apple-green;
                         }
                     }
+
+                    div.failed {
+                        cursor: pointer;
+                        color: $crimson-red;
+
+                        &:hover {
+                            color: $pomegranate-red;
+                        }
+                    }
                 }
 
                 div.last-item {

@@ -25,14 +25,6 @@ export class ReportingComponent implements OnInit {
     activeCategory: Category;
     activeQuery: Query;
 
-
-    // ------------------ New variables above
-    // ------------------ Old variables below
-
-    closeResult: string;
-    parameters: string[];
-    typeahead: boolean;
-
     constructor(private reportingService: ReportingService,
                 public modalService: ModalService) {
     }
@@ -42,7 +34,6 @@ export class ReportingComponent implements OnInit {
             this.categories = data;
         });
 
-        this.parameters = [''];
         setInterval(() => this.refresh(), 5000);
     }
 
@@ -95,58 +86,4 @@ export class ReportingComponent implements OnInit {
     viewReport(report) {
         window.open(report.resultUrl);
     }
-
-    // ------------------ New functions above
-    // ------------------ Old functions below
-
-
-    // typeaheadFunc(event, i) {
-    //     this.parameters[i] = event;
-    //     this.typeahead = false;
-    // }
-    //
-    // submitReport() {
-    //     let params = {};
-    //
-    //     if (!this.activeQuery.parameterNames) {
-    //         params = null;
-    //     }
-    //     else {
-    //         for (let i = 0; i < this.activeQuery.parameterNames.length; i++) {
-    //             params[this.activeQuery.parameterNames[i]] = this.parameters[i];
-    //         }
-    //     }
-    //
-    //     this.reportingService.postReportRun(this.activeQuery.name, params).subscribe(data => {
-    //         console.log(data);
-    //     });
-    // }
-    //
-    //
-    //
-    // close(reason) {
-    //     this.closeResult = reason;
-    //
-    //     this.submitReport();
-    //
-    //     this.modalService.dismissAll(reason);
-    // }
-    //
-    // open(content) {
-    //     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-    //         this.closeResult = `Closed with: ${result}`;
-    //     }, (reason) => {
-    //         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    //     });
-    // }
-    //
-    // private getDismissReason(reason: any): string {
-    //     if (reason === ModalDismissReasons.ESC) {
-    //         return 'by pressing ESC';
-    //     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-    //         return 'by clicking on a backdrop';
-    //     } else {
-    //         return `with: ${reason}`;
-    //     }
-    // }
 }
