@@ -12,43 +12,44 @@
         <input class="searchbar w-100 py-2" [(ngModel)]="querySearch" placeholder="Filter Queries...">
     </div>
     <div class="p-3" *ngFor="let category of categories | category:activeCategoryTitle">
-        <h4 *ngIf="(category.jobs | category:querySearch).length !== 0" class="report-title">{{category.name}}</h4>
-
-        <div class="accordion rounded mb-3">
-            <div class="query" *ngFor="let query of category.jobs | category:querySearch; let first = first; let last = last">
-                <div class="title" (click)="switchActiveQuery(query)" [class.rounded-top]="first" [class.rounded-bottom]="last" [class.last-item]="last">
-                    <h3 class="py-3 px-4 m-0">{{query.name}}</h3>
-                </div>
-                <div class="content" *ngIf="activeQuery === query">
-                    <div class="row description mx-0">
-                        <p class="py-3 px-4 m-0">{{query.description}}</p>
-                        <button class="btn btn-primary float-right m-2"
-                                (click)="modalService.open = true">Run Query
-                        </button>
+        <div *ngIf="(category.jobs | category:querySearch).length !== 0">
+            <h4 class="report-title">{{category.name}}</h4>
+            <div class="accordion rounded mb-3">
+                <div class="query" *ngFor="let query of category.jobs | category:querySearch; let first = first; let last = last">
+                    <div class="title" (click)="switchActiveQuery(query)" [class.rounded-top]="first" [class.rounded-bottom]="last" [class.last-item]="last">
+                        <h3 class="py-3 px-4 m-0">{{query.name}}</h3>
                     </div>
-                    <div class="row report-header run p-2 mx-0">
-                        <div class="col-sm-2 border-bar">Date</div>
-                        <div class="col-sm-1 border-bar">Issues</div>
-                        <div class="col-sm-2 border-bar" *ngFor="let parameter of query.parameterNames">{{parameter}}</div>
-                        <div class="col-sm-1 border-bar">User</div>
-                        <div class="col-sm-1">Status</div>
-                    </div>
-                    <div *ngFor="let report of activeReportSet; let last = last" class="row report run p-2 mx-0" [class.last-item]="last">
-                        <div class="col-sm-2 border-bar">{{report.requestTime | date:'short'}}</div>
-                        <div class="col-sm-1 border-bar">{{report.issuesReported ? report.issuesReported : '0'}}</div>
-                        <div class="col-sm-2 border-bar" *ngFor="let item of report.parameters | keyvalue">
-                            {{item.value}}
+                    <div class="content" *ngIf="activeQuery === query">
+                        <div class="row description mx-0">
+                            <p class="py-3 px-4 m-0">{{query.description}}</p>
+                            <button class="btn btn-primary float-right m-2"
+                                    (click)="(activeQuery.parameterNames) ? modalService.open = true : submitReportRequest()">Run Query
+                            </button>
                         </div>
-                        <div class="col-sm-1 border-bar">{{report.user}}</div>
-                        <ng-container [ngSwitch]="report.status">
-                            <div *ngSwitchCase="'Complete'" class="col-sm-1 completed" (click)="viewReport(report)">{{report.status}}
-                                <i class="fas fa-external-link-alt ml-1"></i>
+                        <div class="row report-header run p-2 mx-0">
+                            <div class="col-sm-2 border-bar">Date</div>
+                            <div class="col-sm-1 border-bar">Issues</div>
+                            <div class="col-sm-2 border-bar" *ngFor="let parameter of query.parameterNames">{{parameter}}</div>
+                            <div class="col-sm-1 border-bar">User</div>
+                            <div class="col-sm-1">Status</div>
+                        </div>
+                        <div *ngFor="let report of activeReportSet; let last = last" class="row report run p-2 mx-0" [class.last-item]="last">
+                            <div class="col-sm-2 border-bar">{{report.requestTime | date:'short'}}</div>
+                            <div class="col-sm-1 border-bar">{{report.issuesReported ? report.issuesReported : '0'}}</div>
+                            <div class="col-sm-2 border-bar" *ngFor="let item of report.parameters | keyvalue">
+                                {{item.value}}
                             </div>
-                            <div *ngSwitchCase="'Failed'" class="col-sm-1 failed" matTooltip="{{report?.debugInfo}}">{{report.status}}
-                                <i class="fas fa-times-circle ml-1"></i>
-                            </div>
-                            <div *ngSwitchDefault class="col-sm-1">{{report.status}}</div>
-                        </ng-container>
+                            <div class="col-sm-1 border-bar">{{report.user}}</div>
+                            <ng-container [ngSwitch]="report.status">
+                                <div *ngSwitchCase="'Complete'" class="col-sm-1 completed" (click)="viewReport(report)">{{report.status}}
+                                    <i class="fas fa-external-link-alt ml-1"></i>
+                                </div>
+                                <div *ngSwitchCase="'Failed'" class="col-sm-1 failed" matTooltip="{{report?.debugInfo}}">{{report.status}}
+                                    <i class="fas fa-times-circle ml-1"></i>
+                                </div>
+                                <div *ngSwitchDefault class="col-sm-1">{{report.status}}</div>
+                            </ng-container>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -56,4 +57,4 @@
     </div>
 </div>
 
-<app-snomed-modal *ngIf="modalService.open" [query]="activeQuery"></app-snomed-modal>
+<app-snomed-modal *ngIf="modalService.open" [query]="activeQuery" (submitEmitter)="submitReportRequest()"></app-snomed-modal>

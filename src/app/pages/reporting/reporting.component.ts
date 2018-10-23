@@ -86,4 +86,11 @@ export class ReportingComponent implements OnInit {
     viewReport(report) {
         window.open(report.resultUrl);
     }
+
+    submitReportRequest() {
+        this.reportingService.postReport(this.activeQuery, this.activeQuery.parameterSubmissions).subscribe(data => {
+            console.log(data);
+            this.modalService.open = false;
+        });
+    }
 }

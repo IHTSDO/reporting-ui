@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ModalService } from '../../services/modal.service';
 import { Query } from '../../models/query';
 import { ReportingService } from '../../services/reporting.service';
@@ -12,6 +12,7 @@ import { ConceptService } from '../../services/concept.service';
 export class SnomedModalComponent implements OnInit {
 
     @Input() query: Query;
+    @Output() submitEmitter = new EventEmitter();
     inputs: string[] = [''];
 
     constructor(public modalService: ModalService,
@@ -42,9 +43,6 @@ export class SnomedModalComponent implements OnInit {
     }
 
     submitReportRequest() {
-        this.reportingService.postReport(this.query, this.query.parameterSubmissions).subscribe(data => {
-            console.log(data);
-            this.modalService.open = false;
-        });
+        this.submitEmitter.emit();
     }
 }
