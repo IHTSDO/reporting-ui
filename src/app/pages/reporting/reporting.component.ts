@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ReportingService } from '../../services/reporting.service';
+import { ModalService } from '../../services/modal.service';
+
 import { Category } from '../../models/category';
 import { Query } from '../../models/query';
 import { Report } from '../../models/report';
-import { ModalService } from '../../services/modal.service';
 
 @Component({
     selector: 'app-reporting',

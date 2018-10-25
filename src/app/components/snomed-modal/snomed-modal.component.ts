@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 import { ModalService } from '../../services/modal.service';
-import { Query } from '../../models/query';
-import { ReportingService } from '../../services/reporting.service';
 import { ConceptService } from '../../services/concept.service';
+
+import { Query } from '../../models/query';
 
 @Component({
     selector: 'app-snomed-modal',
@@ -16,7 +17,6 @@ export class SnomedModalComponent implements OnInit {
     inputs: string[] = [''];
 
     constructor(public modalService: ModalService,
-                private reportingService: ReportingService,
                 public conceptService: ConceptService) {
     }
 
