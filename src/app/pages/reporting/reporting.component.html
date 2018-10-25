@@ -1,17 +1,10 @@
-<nav id="sidebar">
-    <h5 class="p-3 mb-0">Categories</h5>
-    <input class="searchbar py-2 px-3" [(ngModel)]="categorySearch" placeholder="Filter Categories...">
-    <div *ngFor="let category of categories | category:categorySearch"
-         class="category py-2 px-3"
-         (click)="switchActiveCategory(category)"
-         [class.active]="activeCategory === category">{{category.name}}</div>
-</nav>
+<app-snomed-left-sidebar [categories]="categories" (categoryEmitter)="setCategory($event)"></app-snomed-left-sidebar>
 
 <div id="reporting">
     <div class="mx-3">
         <input class="searchbar w-100 py-2" [(ngModel)]="querySearch" placeholder="Filter Queries...">
     </div>
-    <div class="p-3" *ngFor="let category of categories | category:activeCategoryTitle">
+    <div class="p-3" *ngFor="let category of categories | category:activeCategory?.name">
         <div *ngIf="(category.jobs | category:querySearch).length !== 0">
             <h4 class="report-title">{{category.name}}</h4>
             <div class="accordion rounded mb-3">

@@ -1,3 +1,8 @@
-<p>
-  snomed-left-sidebar works!
-</p>
+<nav id="sidebar">
+    <h5 class="p-3 mb-0">Categories</h5>
+    <input class="searchbar py-2 px-3" [(ngModel)]="categorySearch" placeholder="Filter Categories...">
+    <div *ngFor="let category of categories | category:categorySearch"
+         class="category py-2 px-3"
+         (click)="switchActiveCategory(category)"
+         [class.active]="activeCategory === category">{{category.name}}</div>
+</nav>

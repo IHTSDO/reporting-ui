@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+import { Category } from '../../models/category';
 
 @Component({
     selector: 'app-snomed-left-sidebar',
@@ -7,10 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SnomedLeftSidebarComponent implements OnInit {
 
+    categorySearch: string;
+    activeCategory: Category;
+
+    @Input() categories: Category[];
+    @Output() categoryEmitter = new EventEmitter();
+
     constructor() {
     }
 
     ngOnInit() {
+        this.activeCategory = new Category();
     }
 
+    switchActiveCategory(category) {
+        if (this.activeCategory !== category) {
+            this.activeCategory = category;
+            this.categoryEmitter.emit(this.activeCategory);
+        }
+        else {
+            this.activeCategory = null;
+            this.categoryEmitter.emit(null);
+        }
+    }
 }

@@ -1,50 +1,5 @@
 @import 'src/variables.scss';
 
-nav#sidebar {
-    position: fixed;
-    width: 256px;
-    height: calc(100vh - 56px);
-    background: $alto-white;
-
-    h5 {
-        font-weight: 300;
-        border-bottom: 1px $ghost-grey solid;
-    }
-
-    input.searchbar {
-        background-color: $gallery-white;
-        width: 100%;
-        border-bottom: 1px $ghost-grey solid;
-        color: $scorpion-grey;
-        cursor: text;
-    }
-
-    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-        color: $regent-grey;
-        font-weight: 300;
-        opacity: 1; /* Firefox */
-    }
-
-    div.category {
-        width: 100%;
-        color: $scorpion-grey;
-        cursor: pointer;
-        border-bottom: 1px $ghost-grey solid;
-
-        &:hover {
-            background-color: $ghost-grey;
-        }
-
-        &.active {
-            background-color: $tropical-blue;
-
-            &:hover {
-                background-color: $jordy-blue;
-            }
-        }
-    }
-}
-
 div#reporting {
     margin-left: 256px;
 

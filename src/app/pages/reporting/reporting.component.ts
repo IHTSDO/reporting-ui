@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ReportingService } from '../../services/reporting.service';
-import { ModalService } from '../../services/modal.service';
 
+import { ModalService } from '../../services/modal.service';
 import { Category } from '../../models/category';
 import { Query } from '../../models/query';
 import { Report } from '../../models/report';
@@ -15,9 +15,7 @@ import { Report } from '../../models/report';
 export class ReportingComponent implements OnInit {
 
     // Pipe Filters
-    categorySearch: string;
     querySearch: string;
-    activeCategoryTitle: string;
 
     // Item Arrays
     categories: Category[];
@@ -50,15 +48,8 @@ export class ReportingComponent implements OnInit {
         }
     }
 
-    switchActiveCategory(category) {
-        if (this.activeCategory !== category) {
-            this.activeCategory = category;
-            this.activeCategoryTitle = category.name;
-        }
-        else {
-            this.activeCategory = null;
-            this.activeCategoryTitle = null;
-        }
+    setCategory(event) {
+        this.activeCategory = event;
     }
 
     switchActiveQuery(query) {
