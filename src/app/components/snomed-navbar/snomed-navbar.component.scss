@@ -23,7 +23,7 @@ nav {
         }
     }
 
-    div.ng {
+    div.dev {
         position: absolute;
         top: 10px;
         left: -30px;
@@ -37,6 +37,22 @@ nav {
             padding: 0 30px;
             background-color: $crimson-red;
             border: 1px solid yellow;
+        }
+    }
+
+    button {
+        border: none;
+    }
+}
+
+div#navbarToggleExternalContent {
+    a {
+        color: $alto-white;
+        font-weight: 300;
+
+        &:hover {
+            color: $pacific-blue;
+            text-decoration: none;
         }
     }
 }

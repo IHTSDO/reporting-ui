@@ -1,7 +1,16 @@
-<nav class="navbar sticky-top bg-dark p-2 pr-2">
+<nav class="navbar sticky-top navbar-dark bg-dark p-2 pr-2">
     <a routerLink="/dashboard">
         <img class="logo mr-2 p-0" src="/reporting/assets/small_logo.png">
         <span class="title">SNOMED CT Reporting Platform</span>
     </a>
-    <div class="ng"></div>
+    <div class="dev"></div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 </nav>
+
+<div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-dark p-3">
+        <a href="https://prod-dailybuild.ihtsdotools.org/qa/" class="text-right d-block mb-0 px-2">Daily Build Browser<i class="fas fa-external-link-alt ml-2"></i></a>
+    </div>
+</div>
