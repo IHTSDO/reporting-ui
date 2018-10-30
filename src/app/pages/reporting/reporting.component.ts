@@ -40,7 +40,9 @@ export class ReportingComponent implements OnInit {
     refresh() {
         if(this.activeQuery) {
             this.reportingService.getReportSet(this.activeQuery.name).subscribe(data => {
-                this.activeReportSet = data;
+                if(JSON.stringify(data) !== JSON.stringify(this.activeReportSet)) {
+                    this.activeReportSet = data;
+                }
             });
         }
         else {
@@ -65,24 +67,21 @@ export class ReportingComponent implements OnInit {
 
     switchActiveReportSet() {
         this.activeReportSet = null;
-
-        if(this.activeQuery) {
-            this.reportingService.getReportSet(this.activeQuery.name).subscribe(data => {
-                this.activeReportSet = data;
-            });
-        }
-        else {
-            this.activeReportSet = null;
-        }
+        this.refresh();
     }
 
     viewReport(report) {
         window.open(report.resultUrl);
     }
 
+    deleteReport(report) {
+        this.reportingService.postDeleteReport(report).subscribe(() => {
+            this.refresh();
+        });
+    }
+
     submitReportRequest() {
-        this.reportingService.postReport(this.activeQuery, this.activeQuery.parameterSubmissions).subscribe(data => {
-            console.log(data);
+        this.reportingService.postReport(this.activeQuery, this.activeQuery.parameterSubmissions).subscribe(() => {
             this.modalService.open = false;
         });
     }

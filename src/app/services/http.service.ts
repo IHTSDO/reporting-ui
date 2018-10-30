@@ -32,8 +32,12 @@ export class HttpService {
         return this.http.get<Report[]>('/schedule-manager/jobs/Report/' + name + '/runs');
     }
 
-    postReport(job) {
-        return this.http.post<Query>('/schedule-manager/jobs/Report/' + job.jobName + '/runs', JSON.stringify(job), this.options);
+    postReport(params) {
+        return this.http.post<Query>('/schedule-manager/jobs/Report/' + params.jobName + '/runs', JSON.stringify(params), this.options);
+    }
+
+    postDeleteReport(params) {
+        return this.http.delete('/schedule-manager/jobs/Report/' + params.jobName + '/runs/' + params.id);
     }
 
     getTypeaheadConcepts(params) {

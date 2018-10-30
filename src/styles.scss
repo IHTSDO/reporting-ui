@@ -13,6 +13,10 @@ body {
     letter-spacing: 0.5px;
 }
 
+div, p, h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
+}
+
 .footer-margin {
     margin-bottom: 40px; /* Margin bottom by footer height */
 }

@@ -22,7 +22,7 @@ div#reporting {
     div.accordion {
         border: 1px $alto-white solid;
         border-bottom: none;
-
+        overflow: hidden;
 
         div.query {
             div.title {
@@ -34,17 +34,15 @@ div#reporting {
                     font-weight: 300;
                     font-size: 1.1rem;
                 }
+
+                button {
+                    font-weight: 300;
+                }
             }
 
             div.content {
                 border-bottom: 1px $alto-white solid;
                 border-top: none;
-
-                div.description {
-                    button {
-                        font-weight: 300;
-                    }
-                }
 
                 div.report-header {
                     border-bottom: 1px solid $alto-white;
@@ -55,10 +53,15 @@ div#reporting {
                 }
 
                 div.report {
+                    position: relative;
                     border-bottom: 1px solid $alto-white;
 
                     &:hover {
                         background-color: $gallery-white;
+
+                        > button.delete-button {
+                            display: block;
+                        }
                     }
 
                     div.border-bar {
@@ -77,6 +80,47 @@ div#reporting {
                     div.failed {
                         cursor: pointer;
                         color: $crimson-red;
+
+                        &:hover {
+                            color: $pomegranate-red;
+                        }
+                    }
+
+                    button.delete-button {
+                        display: none;
+                        position: absolute;
+                        right: -50px;
+                        //opacity: 0;
+                        background-color: transparent;
+                        color: $crimson-red;
+                        -webkit-animation: delete-move 200ms;
+                        -webkit-animation-delay: 500ms;
+                        -webkit-animation-fill-mode: forwards;
+                        animation: delete-move 200ms;
+                        animation-delay: 500ms;
+                        animation-fill-mode: forwards;
+
+                        @-webkit-keyframes delete-move {
+                            from {
+                                right: -50px;
+                                opacity: 0;
+                            }
+                            to {
+                                right: 0;
+                                opacity: 1;
+                            }
+                        }
+
+                        @keyframes delete-move {
+                            from {
+                                right: -50px;
+                                opacity: 0;
+                            }
+                            to {
+                                right: 0;
+                                opacity: 1;
+                            }
+                        }
 
                         &:hover {
                             color: $pomegranate-red;

@@ -17,32 +17,7 @@ export class ReportingService {
         return this.http.getReportSet(name);
     }
 
-    postReportRun(name, parameters) {
-        let params = {
-            jobName: name,
-            parameters: parameters
-        };
-
-        return this.http.postReport(params);
-    }
-
     postReport(query, inputs) {
-        // let parameters = {};
-        //
-        // if (!query.parameterNames) {
-        //     parameters = null;
-        // }
-        // else {
-        //     for (let i = 0; i < query.parameterNames.length; i++) {
-        //         parameters[query.parameterNames[i]] = inputs[i];
-        //     }
-        // }
-        //
-        // let params = {
-        //     jobName: query.name,
-        //     parameters: parameters
-        // };
-
         let params = {
             jobName: query.name,
             parameters: {}
@@ -58,5 +33,9 @@ export class ReportingService {
         }
 
         return this.http.postReport(params);
+    }
+
+    postDeleteReport(report) {
+        return this.http.postDeleteReport(report);
     }
 }
