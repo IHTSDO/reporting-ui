@@ -34,15 +34,25 @@ div#reporting {
                     font-weight: 300;
                     font-size: 1.1rem;
                 }
-
-                button {
-                    font-weight: 300;
-                }
             }
 
             div.content {
                 border-bottom: 1px $alto-white solid;
                 border-top: none;
+
+                div.description {
+                    position: relative;
+
+                    p {
+                        margin-right: 180px;
+                    }
+
+                    button {
+                        position: absolute;
+                        right: 0;
+                        font-weight: 300;
+                    }
+                }
 
                 div.report-header {
                     border-bottom: 1px solid $alto-white;
