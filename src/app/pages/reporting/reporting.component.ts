@@ -80,7 +80,9 @@ export class ReportingComponent implements OnInit {
         });
     }
 
-    submitReportRequest() {
+    submitReportRequest(event) {
+        event.stopPropagation();
+
         this.reportingService.postReport(this.activeQuery, this.activeQuery.parameterSubmissions).subscribe(() => {
             this.modalService.open = false;
         });
