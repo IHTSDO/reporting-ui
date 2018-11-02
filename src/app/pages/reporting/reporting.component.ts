@@ -50,6 +50,10 @@ export class ReportingComponent implements OnInit {
         }
     }
 
+    setText(event) {
+        this.querySearch = event;
+    }
+
     setCategory(event) {
         this.activeCategory = event;
     }

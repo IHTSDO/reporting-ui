@@ -9,17 +9,23 @@ import { Category } from '../../models/category';
 })
 export class SnomedLeftSidebarComponent implements OnInit {
 
-    categorySearch: string;
+    // categorySearch: string;
+    querySearch: string;
     activeCategory: Category;
 
     @Input() categories: Category[];
     @Output() categoryEmitter = new EventEmitter();
+    @Output() searchTextEmitter = new EventEmitter();
 
     constructor() {
     }
 
     ngOnInit() {
         this.activeCategory = new Category();
+    }
+
+    updateText() {
+        this.searchTextEmitter.emit(this.querySearch);
     }
 
     switchActiveCategory(category) {
