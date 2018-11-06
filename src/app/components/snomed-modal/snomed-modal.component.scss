@@ -21,7 +21,7 @@ div.modal {
         margin-top: 24px;
         max-height: 12rem;
         position: absolute;
-        overflow: scroll;
+        overflow-y: scroll;
         background-color: $gallery-white;
         border: 1px solid $alto-white;
         z-index: 10002;
