@@ -20,18 +20,20 @@ import { HttpService } from './services/http.service';
 import { ModalService } from './services/modal.service';
 
 import { CategoryPipe } from './pipes/category.pipe';
+import { ConceptsPipe } from './pipes/concepts.pipe';
 
 @NgModule({
     declarations: [
         AppComponent,
+        ReportingComponent,
         SnomedNavbarComponent,
         SnomedFooterComponent,
         SnomedTypeaheadComponent,
-        ReportingComponent,
-        CategoryPipe,
         SnomedOverlayComponent,
         SnomedModalComponent,
-        SnomedLeftSidebarComponent
+        SnomedLeftSidebarComponent,
+        CategoryPipe,
+        ConceptsPipe
     ],
     imports: [
         BrowserModule,

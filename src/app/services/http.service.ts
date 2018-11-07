@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { Category } from '../models/category';
 import { Report } from '../models/report';
 import { Query } from '../models/query';
+import { TypeaheadConcepts } from '../models/typeaheadConcepts';
 
 @Injectable({
     providedIn: 'root'
@@ -42,5 +44,9 @@ export class HttpService {
 
     getTypeaheadConcepts(params) {
         return this.http.post('/snowowl/snomed-ct/v2/MAIN/concepts/search', params, this.options);
+    }
+
+    getTypeaheadConcepts2(params): Observable<TypeaheadConcepts> {
+        return this.http.post<TypeaheadConcepts>('/snowowl/snomed-ct/v2/MAIN/concepts/search', params, this.options);
     }
 }
