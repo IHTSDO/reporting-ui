@@ -1,6 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, filter } from 'rxjs/internal/operators';
 
 import { ConceptService } from '../../services/concept.service';
+
+import { TypeaheadConcepts } from '../../models/typeaheadConcepts';
 
 @Component({
     selector: 'app-snomed-typeahead',
@@ -11,18 +15,27 @@ export class SnomedTypeaheadComponent implements OnInit, OnChanges {
 
     @Input() input: string;
     @Output() conceptTypeaheadEmitter = new EventEmitter();
-    concepts: any;
+    concepts: Observable<TypeaheadConcepts>;
+
+    private searchTerms = new Subject<string>();
 
     constructor(private conceptService: ConceptService) {
     }
 
     ngOnInit() {
+        this.concepts = this.searchTerms.pipe(
+            debounceTime(300),
+            filter((val: string) => (val.length > 2)),
+            distinctUntilChanged(),
+            switchMap((term: string) => this.conceptService.getTypeaheadConcepts(term))
+        );
+
     }
 
     ngOnChanges() {
-        this.conceptService.getTypeaheadConcepts(this.input).subscribe(data => {
-            this.concepts = data;
-        });
+        if(this.input.length > 2) {
+            this.searchTerms.next(this.input);
+        }
     }
 
     selectConcept(concept) {

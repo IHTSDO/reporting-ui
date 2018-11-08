@@ -10,19 +10,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!--<input #searchBox id="search-box" (keyup)="search(searchBox.value)">-->
-
-                <!--<ul>-->
-                    <!--<li style="color: cornflowerblue" *ngFor="let concept of concepts$ | async | concepts">-->
-                        <!--{{concept.fsn.term}}-->
-                    <!--</li>-->
-                <!--</ul>-->
-
                 <div *ngFor="let parameter of query.parameterNames; let i = index" class="position-relative">
                     <label class="col-sm-4" for="{{parameter}}">{{parameter}}</label>
-                    <app-snomed-typeahead *ngIf="query.parameterSubmissions[i].length > 2" [input]="query.parameterSubmissions[i]" class="col-sm-8 rounded px-0" (conceptTypeaheadEmitter)="setConcept($event, i)"></app-snomed-typeahead>
+                    <app-snomed-typeahead *ngIf="conceptService.typeaheadActive" [input]="query.parameterSubmissions[i]" class="col-sm-8 rounded px-0" (conceptTypeaheadEmitter)="setConcept($event, i)"></app-snomed-typeahead>
                     <input id="{{parameter}}" name="{{parameter}}" class="col-sm-8 rounded input-border px-1"
-                           [(ngModel)]="query.parameterSubmissions[i]" (input)="activateTypeahead(query.parameterSubmissions[i])">
+                           [(ngModel)]="query.parameterSubmissions[i]">
                 </div>
             </div>
             <div class="modal-footer">
