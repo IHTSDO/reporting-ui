@@ -7,6 +7,7 @@ export class ConceptsPipe implements PipeTransform {
 
     transform(items: any, args?: any): any {
         if(!items) return [];
+        if(!('items' in items)) return [];
 
         let values = [];
 

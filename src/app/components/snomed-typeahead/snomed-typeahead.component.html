@@ -1,9 +1,4 @@
-<div *ngIf="concepts; else loading">
-    <div class="typeahead px-1" *ngFor="let concept of concepts | async | concepts" (click)="selectConcept(concept)">
-        {{concept.id}} |{{concept.fsn.term}}|
-    </div>
+<div class="typeahead px-1" *ngFor="let concept of concepts | async | concepts" (click)="selectConcept(concept)">
+    <div *ngIf="concept.id">{{concept.id}} |{{concept.fsn.term}}|</div>
 </div>
 
-<ng-template #loading>
-    <div class="typeahead px-1">Loading...</div>
-</ng-template>

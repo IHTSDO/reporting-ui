@@ -17,6 +17,7 @@ export class SnomedTypeaheadComponent implements OnInit, OnChanges {
     @Output() conceptTypeaheadEmitter = new EventEmitter();
     concepts: Observable<TypeaheadConcepts>;
 
+    limit: number = 2;
     private searchTerms = new Subject<string>();
 
     constructor(private conceptService: ConceptService) {
@@ -24,18 +25,15 @@ export class SnomedTypeaheadComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this.concepts = this.searchTerms.pipe(
-            debounceTime(300),
-            filter((val: string) => (val.length > 2)),
+            debounceTime(500),
+            // filter((val: string) => (val.length > 2)),
             distinctUntilChanged(),
-            switchMap((term: string) => this.conceptService.getTypeaheadConcepts(term))
+            switchMap((term: string) => this.conceptService.getTypeaheadConcepts(term, this.limit))
         );
-
     }
 
     ngOnChanges() {
-        if(this.input.length > 2) {
-            this.searchTerms.next(this.input);
-        }
+        this.searchTerms.next(this.input);
     }
 
     selectConcept(concept) {
