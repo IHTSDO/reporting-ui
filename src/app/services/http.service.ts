@@ -42,7 +42,7 @@ export class HttpService {
         return this.http.delete('/schedule-manager/jobs/Report/' + params.jobName + '/runs/' + params.id);
     }
 
-    getTypeaheadConcepts(params): Observable<any> {
+    getTypeaheadConcepts(params): Observable<TypeaheadConcepts> {
         return this.http.post<TypeaheadConcepts>('/snowowl/snomed-ct/v2/MAIN/concepts/search', params, this.options);
     }
 }

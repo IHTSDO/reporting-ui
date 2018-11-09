@@ -8,12 +8,10 @@ import { TypeaheadConcepts } from '../models/typeaheadConcepts';
 })
 export class ConceptService {
 
-    typeaheadActive: boolean = true;
-
     constructor(private http: HttpService) {
     }
 
-    getTypeaheadConcepts(input, limit): Observable<TypeaheadConcepts> {
+    getTypeaheadConcepts(input): Observable<TypeaheadConcepts> {
         let params = {
             termFilter: input,
             limit: 20,
@@ -21,6 +19,6 @@ export class ConceptService {
             activeFilter: true
         };
 
-        return input.length > limit ? this.http.getTypeaheadConcepts(params) : of({});
+        return this.http.getTypeaheadConcepts(params);
     }
 }

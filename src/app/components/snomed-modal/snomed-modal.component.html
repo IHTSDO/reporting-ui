@@ -12,9 +12,8 @@
             <div class="modal-body">
                 <div *ngFor="let parameter of query.parameterNames; let i = index" class="position-relative">
                     <label class="col-sm-4" for="{{parameter}}">{{parameter}}</label>
-                    <app-snomed-typeahead *ngIf="conceptService.typeaheadActive" [input]="query.parameterSubmissions[i]" class="col-sm-8 rounded px-0" (conceptTypeaheadEmitter)="setConcept($event, i)"></app-snomed-typeahead>
-                    <input id="{{parameter}}" name="{{parameter}}" class="col-sm-8 rounded input-border px-1"
-                           [(ngModel)]="query.parameterSubmissions[i]">
+                    <app-snomed-typeahead *ngIf="typeahead" [input]="query.parameterSubmissions[i]" class="col-sm-8 rounded px-0" (conceptTypeaheadEmitter)="setConcept($event, i)"></app-snomed-typeahead>
+                    <input id="{{parameter}}" name="{{parameter}}" class="col-sm-8 rounded input-border px-1" [(ngModel)]="query.parameterSubmissions[i]" (keyup)="typeahead = true">
                 </div>
             </div>
             <div class="modal-footer">

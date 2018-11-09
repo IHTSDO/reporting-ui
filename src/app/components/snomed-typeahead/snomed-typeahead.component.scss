@@ -1,10 +1,15 @@
 @import 'src/variables.scss';
 
-div.typeahead {
-    font-size: 0.8rem;
-    cursor: pointer;
+div.typeahead-box {
+    background-color: $gallery-white;
+    border: 1px solid $alto-white;
 
-    &:hover {
-        background-color: $alto-white;
+    div.typeahead {
+        font-size: 0.8rem;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $alto-white;
+        }
     }
 }

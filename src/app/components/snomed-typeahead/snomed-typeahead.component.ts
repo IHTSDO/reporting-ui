@@ -1,10 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, filter } from 'rxjs/internal/operators';
+import { Observable, Subject, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/internal/operators';
 
 import { ConceptService } from '../../services/concept.service';
-
-import { TypeaheadConcepts } from '../../models/typeaheadConcepts';
 
 @Component({
     selector: 'app-snomed-typeahead',
@@ -15,9 +13,12 @@ export class SnomedTypeaheadComponent implements OnInit, OnChanges {
 
     @Input() input: string;
     @Output() conceptTypeaheadEmitter = new EventEmitter();
-    concepts: Observable<TypeaheadConcepts>;
+    concepts: Observable<any>;
 
-    limit: number = 2;
+    @Input() active: boolean;
+    isHidden: boolean;
+
+    minLength: number = 2;
     private searchTerms = new Subject<string>();
 
     constructor(private conceptService: ConceptService) {
@@ -25,18 +26,24 @@ export class SnomedTypeaheadComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this.concepts = this.searchTerms.pipe(
-            debounceTime(500),
-            // filter((val: string) => (val.length > 2)),
+            debounceTime(300),
             distinctUntilChanged(),
-            switchMap((term: string) => this.conceptService.getTypeaheadConcepts(term, this.limit))
+            switchMap((term: string) => (term.length > this.minLength) ? this.conceptService.getTypeaheadConcepts(term) : of({}))
         );
     }
 
     ngOnChanges() {
-        this.searchTerms.next(this.input);
+        if(this.input.length > this.minLength) {
+            this.searchTerms.next(this.input);
+            this.isHidden = false;
+        }
+        else {
+            this.isHidden = true;
+        }
     }
 
     selectConcept(concept) {
         this.conceptTypeaheadEmitter.emit(concept.id + " |" + concept.fsn.term + "|");
+        this.active = false;
     }
 }
