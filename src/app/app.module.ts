@@ -18,6 +18,7 @@ import { ReportingService } from './services/reporting.service';
 import { ConceptService } from './services/concept.service';
 import { HttpService } from './services/http.service';
 import { ModalService } from './services/modal.service';
+import { UserService } from './services/user.service';
 
 import { CategoryPipe } from './pipes/category.pipe';
 import { ConceptsPipe } from './pipes/concepts.pipe';
@@ -46,7 +47,8 @@ import { ConceptsPipe } from './pipes/concepts.pipe';
         ReportingService,
         ConceptService,
         HttpService,
-        ModalService
+        ModalService,
+        UserService
     ],
     entryComponents: [],
     bootstrap: [AppComponent]

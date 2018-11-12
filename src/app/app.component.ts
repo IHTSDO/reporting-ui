@@ -1,11 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from './services/user.service';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-    constructor() {
+export class AppComponent implements OnInit {
+
+    constructor(private userService: UserService) {
+    }
+
+    ngOnInit() {
+        this.userService.getLoggedInUser().subscribe(
+            user => {
+                if(!user) {
+                    window.location.replace('https://dev-ims.ihtsdotools.org/#/login?serviceReferer=' + window.location.href);
+                }
+            },
+            error => {
+                window.location.replace('https://dev-ims.ihtsdotools.org/#/login?serviceReferer=' + window.location.href);
+            });
     }
 }

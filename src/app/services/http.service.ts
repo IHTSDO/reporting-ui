@@ -26,6 +26,7 @@ export class HttpService {
         this.options = {headers: headers};
     }
 
+    // SCHEDULE-MANAGER ENDPOINTS
     getCategories() {
         return this.http.get<Category[]>('/schedule-manager/jobs/Report/');
     }
@@ -42,7 +43,12 @@ export class HttpService {
         return this.http.delete('/schedule-manager/jobs/Report/' + params.jobName + '/runs/' + params.id);
     }
 
+    // AUTHORING-SERVICES ENDPOINTS
     getTypeaheadConcepts(params): Observable<TypeaheadConcepts> {
         return this.http.post<TypeaheadConcepts>('/snowowl/snomed-ct/v2/MAIN/concepts/search', params, this.options);
+    }
+
+    getLoggedInUser() {
+        return this.http.get('/auth');
     }
 }
