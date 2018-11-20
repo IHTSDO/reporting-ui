@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './services/user.service';
+import { ConfigService } from './services/config.service';
 
 @Component({
     selector: 'app-root',
@@ -8,18 +9,28 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent implements OnInit {
 
-    constructor(private userService: UserService) {
+    imsEndpoint: string;
+
+    constructor(private userService: UserService, private configService: ConfigService) {
     }
 
     ngOnInit() {
+        this.configService.getUIConfig().subscribe(
+            config => {
+                this.imsEndpoint = config['endpoints'].imsEndpoint;
+            },
+            error => {
+                console.log('ERROR: UI Config failed to load');
+            });
+
         this.userService.getLoggedInUser().subscribe(
             user => {
                 if(!user) {
-                    window.location.replace('https://dev-ims.ihtsdotools.org/#/login?serviceReferer=' + window.location.href);
+                    window.location.replace(this.imsEndpoint + 'login?serviceReferer=' + window.location.href);
                 }
             },
             error => {
-                window.location.replace('https://dev-ims.ihtsdotools.org/#/login?serviceReferer=' + window.location.href);
+                window.location.replace(this.imsEndpoint + 'login?serviceReferer=' + window.location.href);
             });
     }
 }

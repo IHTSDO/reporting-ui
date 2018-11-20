@@ -19,6 +19,7 @@ import { ConceptService } from './services/concept.service';
 import { HttpService } from './services/http.service';
 import { ModalService } from './services/modal.service';
 import { UserService } from './services/user.service';
+import { ConfigService } from './services/config.service';
 
 import { CategoryPipe } from './pipes/category.pipe';
 import { ConceptsPipe } from './pipes/concepts.pipe';
@@ -48,7 +49,8 @@ import { ConceptsPipe } from './pipes/concepts.pipe';
         ConceptService,
         HttpService,
         ModalService,
-        UserService
+        UserService,
+        ConfigService
     ],
     entryComponents: [],
     bootstrap: [AppComponent]

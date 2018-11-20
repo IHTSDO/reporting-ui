@@ -51,4 +51,8 @@ export class HttpService {
     getLoggedInUser() {
         return this.http.get('/auth');
     }
+
+    getUIConfig() {
+        return this.http.get('/config/endpointConfig.json');
+    }
 }
