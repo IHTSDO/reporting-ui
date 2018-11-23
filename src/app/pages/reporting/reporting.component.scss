@@ -60,6 +60,26 @@ div#reporting {
                     div.border-bar {
                         border-right: 1px solid $alto-white;
                     }
+
+                    div.date {
+                        width: 11rem;
+                    }
+
+                    div.issues {
+                        width: 5rem;
+                    }
+
+                    div.parameters {
+                        width: 16rem;
+                    }
+
+                    div.user {
+                        width: 8rem;
+                    }
+
+                    div.status {
+                        width: 8rem;
+                    }
                 }
 
                 div.report {
@@ -76,6 +96,26 @@ div#reporting {
 
                     div.border-bar {
                         border-right: 1px solid $alto-white;
+                    }
+
+                    div.date {
+                        width: 11rem;
+                    }
+
+                    div.issues {
+                        width: 5rem;
+                    }
+
+                    div.parameters {
+                        width: 16rem;
+                    }
+
+                    div.user {
+                        width: 8rem;
+                    }
+
+                    div.status {
+                        width: 8rem;
                     }
 
                     div.completed {

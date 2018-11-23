@@ -4,6 +4,10 @@ div.modal {
     z-index: 10001;
     display: initial;
 
+    div.modal-dialog {
+        max-width: 700px;
+    }
+
     button {
         font-weight: 300;
     }
