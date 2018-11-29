@@ -31,7 +31,6 @@ export class ReportingComponent implements OnInit {
 
     ngOnInit() {
         this.reportingService.getCategories().subscribe(data => {
-            console.log('CATEGORIES: ', data);
             this.categories = data;
         });
 
@@ -41,7 +40,6 @@ export class ReportingComponent implements OnInit {
     refresh() {
         if(this.activeQuery) {
             this.reportingService.getReportSet(this.activeQuery.name).subscribe(data => {
-                console.log('REPORT SET: ', data);
                 if(JSON.stringify(data) !== JSON.stringify(this.activeReportSet)) {
                     this.activeReportSet = data;
                 }
