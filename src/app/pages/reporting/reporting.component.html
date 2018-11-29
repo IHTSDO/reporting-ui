@@ -17,14 +17,14 @@
                                     (click)="(activeQuery.parameters.parameterMap) ? modalService.open = true : submitReportRequest()">Run New Query
                             </button>
                         </div>
-                        <div class="row report-header run py-2 mx-0">
+                        <div class="row flex-nowrap report-header run py-2 mx-0">
                             <div class="px-2 border-bar date">Date</div>
                             <div class="px-2 border-bar issues">Issues</div>
                             <div class="px-2 border-bar parameters" *ngFor="let parameter of query.parameters.parameterMap | keyvalue">{{parameter.key}}</div>
                             <div class="px-2 border-bar user">User</div>
                             <div class="px-2 status">Status</div>
                         </div>
-                        <div *ngFor="let report of activeReportSet; let last = last" class="row report run py-2 mx-0" [class.last-item]="last">
+                        <div *ngFor="let report of activeReportSet; let last = last" class="row flex-nowrap report run py-2 mx-0" [class.last-item]="last">
                             <div class="px-2 border-bar date">{{report.requestTime | date:'short'}}</div>
                             <div class="px-2 border-bar issues">{{report.issuesReported ? report.issuesReported : '0'}}</div>
                             <div class="px-2 border-bar parameters" *ngFor="let parameter of query.parameters.parameterMap | keyvalue">
