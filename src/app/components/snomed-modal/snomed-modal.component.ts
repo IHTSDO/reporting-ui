@@ -19,16 +19,11 @@ export class SnomedModalComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.query.parameterSubmissions = [];
-
-        for (let i = 0; i < this.query.parameterNames.length; i++) {
-            this.query.parameterSubmissions.push('');
+        for(let key in this.query.parameters['parameterMap']) {
+            if(this.query.parameters['parameterMap'][key].type === 'BOOLEAN') {
+                this.query.parameters['parameterMap'][key].value = false
+            }
         }
-    }
-
-    setConcept(event, i) {
-        this.query.parameterSubmissions[i] = event;
-        this.typeahead = false;
     }
 
     submitReportRequest() {

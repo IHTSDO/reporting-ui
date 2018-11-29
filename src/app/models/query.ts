@@ -1,6 +1,8 @@
 export class Query {
     name: string;
     description: string;
-    parameterNames: string[];
-    parameterSubmissions: string[];
+    productionStatus: string;
+    parameters: object;
+    // parameterNames: string[];
+    // parameterSubmissions: string[];
 }

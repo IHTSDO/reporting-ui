@@ -1,7 +1,7 @@
 export class Report {
     id: string;
     jobName: string;
-    parameters: {};
+    parameters: object;
     terminologyServerUrl: string;
     requestTime: string;
     status: string;

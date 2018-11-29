@@ -10,10 +10,24 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div *ngFor="let parameter of query.parameterNames; let i = index" class="position-relative">
-                    <label class="col-sm-4" for="{{parameter}}">{{parameter}}</label>
-                    <app-snomed-typeahead *ngIf="typeahead" [input]="query.parameterSubmissions[i]" class="col-sm-8 rounded px-0" (conceptTypeaheadEmitter)="setConcept($event, i)"></app-snomed-typeahead>
-                    <input id="{{parameter}}" name="{{parameter}}" class="col-sm-8 rounded input-border px-1" [(ngModel)]="query.parameterSubmissions[i]" (keyup)="typeahead = true">
+                <div *ngFor="let parameter of query.parameters.parameterMap | keyvalue" class="pb-2 position-relative">
+                    <ng-container [ngSwitch]="parameter.value.type">
+                        <div *ngSwitchCase="'CONCEPT'">
+                            <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}}</label>
+                            <app-snomed-typeahead *ngIf="typeahead" [input]="parameter.value.value" class="w-100 rounded px-0" (conceptTypeaheadEmitter)="parameter.value.value = $event; this.typeahead = false"></app-snomed-typeahead>
+                            <input id="{{parameter.key}}" name="{{parameter.key}}" class="w-100 rounded input-border px-1" [(ngModel)]="parameter.value.value" (keyup)="typeahead = true">
+                        </div>
+                        <div *ngSwitchCase="'BOOLEAN'">
+                            <label class="m-0" for="{{parameter.key}}">{{parameter.key}}</label>
+                            <!--<span class="checkbox">-->
+                                <mat-checkbox id="{{parameter.key}}" name="{{parameter.key}}" [(ngModel)]="parameter.value.value" class="pl-2"></mat-checkbox>
+                            <!--</span>-->
+                        </div>
+                        <div *ngSwitchCase="'STRING'">
+                            <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}}</label>
+                            <input id="{{parameter.key}}" name="{{parameter.key}}" class="w-100 rounded input-border px-1" [(ngModel)]="parameter.value.value">
+                        </div>
+                    </ng-container>
                 </div>
             </div>
             <div class="modal-footer">

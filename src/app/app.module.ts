@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTooltipModule } from '@angular/material';
+import { MatTooltipModule, MatCheckboxModule } from '@angular/material';
 
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
@@ -42,7 +42,8 @@ import { ConceptsPipe } from './pipes/concepts.pipe';
         HttpClientModule,
         FormsModule,
         BrowserAnimationsModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatCheckboxModule
     ],
     providers: [
         ReportingService,

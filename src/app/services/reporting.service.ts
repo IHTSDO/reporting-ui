@@ -17,20 +17,20 @@ export class ReportingService {
         return this.http.getReportSet(name);
     }
 
-    postReport(query, inputs) {
+    postReport(query) {
         let params = {
             jobName: query.name,
-            parameters: {}
+            parameters: query.parameters
         };
 
-        if(!query.parameterNames) {
-            params.parameters = null
-        }
-        else {
-            for (let i = 0; i < query.parameterNames.length; i++) {
-                params.parameters[query.parameterNames[i]] = inputs[i];
-            }
-        }
+        // if(!query.parameterNames) {
+        //     params.parameters = null
+        // }
+        // else {
+        //     for (let i = 0; i < query.parameterNames.length; i++) {
+        //         params.parameters[query.parameterNames[i]] = inputs[i];
+        //     }
+        // }
 
         return this.http.postReport(params);
     }

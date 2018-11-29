@@ -11,27 +11,24 @@
 
                     </div>
                     <div class="content" *ngIf="activeQuery === query">
-                        <div class="row w-100 description d-inline-block mx-0">
+                        <div class="row w-100 description mx-0">
                             <p class="float-left py-3 px-4 mb-0">{{query.description}}</p>
                             <button *ngIf="query === activeQuery" class="btn btn-primary m-2"
-                                    (click)="(activeQuery.parameterNames) ? modalService.open = true : submitReportRequest()">Run New Query
+                                    (click)="(activeQuery.parameters.parameterMap) ? modalService.open = true : submitReportRequest()">Run New Query
                             </button>
                         </div>
                         <div class="row report-header run py-2 mx-0">
                             <div class="px-2 border-bar date">Date</div>
                             <div class="px-2 border-bar issues">Issues</div>
-                            <div class="px-2 border-bar parameters" *ngFor="let parameter of query.parameterNames">{{parameter}}</div>
+                            <div class="px-2 border-bar parameters" *ngFor="let parameter of query.parameters.parameterMap | keyvalue">{{parameter.key}}</div>
                             <div class="px-2 border-bar user">User</div>
                             <div class="px-2 status">Status</div>
                         </div>
                         <div *ngFor="let report of activeReportSet; let last = last" class="row report run py-2 mx-0" [class.last-item]="last">
                             <div class="px-2 border-bar date">{{report.requestTime | date:'short'}}</div>
                             <div class="px-2 border-bar issues">{{report.issuesReported ? report.issuesReported : '0'}}</div>
-                            <!--<div class="col-sm-2 border-bar" *ngFor="let item of report.parameters | keyvalue">-->
-                                <!--{{item.value}}-->
-                            <!--</div>-->
-                            <div class="px-2 border-bar parameters" *ngFor="let parameter of query.parameterNames">
-                                {{report.parameters[parameter]}}
+                            <div class="px-2 border-bar parameters" *ngFor="let parameter of query.parameters.parameterMap | keyvalue">
+                                {{report?.parameters.parameterMap[parameter.key].value}}
                             </div>
                             <div class="px-2 border-bar user">{{report.user}}</div>
                             <ng-container [ngSwitch]="report.status">
