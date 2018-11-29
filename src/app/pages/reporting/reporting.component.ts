@@ -25,8 +25,7 @@ export class ReportingComponent implements OnInit {
     activeCategory: Category;
     activeQuery: Query;
 
-    constructor(private reportingService: ReportingService,
-                public modalService: ModalService) {
+    constructor(private reportingService: ReportingService, public modalService: ModalService) {
     }
 
     ngOnInit() {

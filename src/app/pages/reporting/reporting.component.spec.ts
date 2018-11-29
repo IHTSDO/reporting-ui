@@ -4,10 +4,12 @@ import { ReportingComponent } from './reporting.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SnomedLeftSidebarComponent } from '../../components/snomed-left-sidebar/snomed-left-sidebar.component';
 import { CategoryPipe } from '../../pipes/category.pipe';
-import { MatTooltipModule } from '@angular/material';
+import { MatTooltipModule, MatCheckboxModule } from '@angular/material';
 import { SnomedModalComponent } from '../../components/snomed-modal/snomed-modal.component';
 import { FormsModule } from '@angular/forms';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { SnomedOverlayComponent } from '../../components/snomed-overlay/snomed-overlay.component';
+import { SnomedTypeaheadComponent } from '../../components/snomed-typeahead/snomed-typeahead.component';
+import { ConceptsPipe } from '../../pipes/concepts.pipe';
 
 describe('ReportingComponent', () => {
     let component: ReportingComponent;
@@ -19,16 +21,18 @@ describe('ReportingComponent', () => {
                 ReportingComponent,
                 SnomedLeftSidebarComponent,
                 CategoryPipe,
-                SnomedModalComponent
+                SnomedModalComponent,
+                SnomedOverlayComponent,
+                SnomedTypeaheadComponent,
+                ConceptsPipe
             ],
             imports: [
                 HttpClientModule,
                 MatTooltipModule,
-                FormsModule
+                FormsModule,
+                MatCheckboxModule
             ],
-            schemas: [
-                // NO_ERRORS_SCHEMA
-            ]
+            schemas: []
         }).compileComponents();
     }));
 
