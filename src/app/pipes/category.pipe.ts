@@ -11,14 +11,6 @@ export class CategoryPipe implements PipeTransform {
 
         searchText = searchText.toLowerCase();
         items = items.filter(item => item.name ? item.name.toLowerCase().includes(searchText) : item.jobName.toLowerCase().includes(searchText));
-        items = items.filter(item => {
-            if(item.name) {
-                item.name.toLowerCase().includes(searchText);
-            }
-            else if(item.jobName) {
-                item.jobName.toLowerCase().includes(searchText);
-            }
-        });
         return items;
     }
 }

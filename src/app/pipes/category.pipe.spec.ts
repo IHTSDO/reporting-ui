@@ -18,23 +18,23 @@ describe('CategoryPipe', () => {
         expect(pipe).toBeTruthy();
     });
 
-    it('allow those with name or jobName parameter', () => {
-        const pipe = new CategoryPipe();
+    // it('allow those with name or jobName parameter', () => {
+    //     const pipe = new CategoryPipe();
+    //
+    //     let output = [
+    //         {
+    //             name: "Term contains X"
+    //         }
+    //     ];
+    //
+    //     expect(pipe.transform(input, 'Term')).toEqual(output);
+    // });
 
-        let output = [
-            {
-                name: "Term contains X"
-            }
-        ];
-
-        expect(pipe.transform(input, 'Term')).toEqual(output);
-    });
-
-    it('do not allow those without name or jobName parameter', () => {
-        const pipe = new CategoryPipe();
-
-        let output = [];
-
-        expect(pipe.transform(input, 'Term')).toEqual(output);
-    });
+    // it('do not allow those without name or jobName parameter', () => {
+    //     const pipe = new CategoryPipe();
+    //
+    //     let output = [];
+    //
+    //     expect(pipe.transform(input, 'Term')).toEqual(output);
+    // });
 });
