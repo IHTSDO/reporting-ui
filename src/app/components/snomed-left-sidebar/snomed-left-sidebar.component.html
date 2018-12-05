@@ -1,8 +1,7 @@
 <nav id="sidebar" class="footer-margin">
     <h5 class="p-3 mb-0">Categories</h5>
     <input class="searchbar py-2 px-3" [(ngModel)]="querySearch" (input)="updateText()" placeholder="Filter Queries...">
-    <div *ngFor="let category of categories"
-         class="category py-2 px-3"
+    <div *ngFor="let category of categories" class="category py-2 px-3"
          (click)="switchActiveCategory(category)"
          [class.active]="activeCategory === category">{{category.name}}</div>
 </nav>

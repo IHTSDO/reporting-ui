@@ -23,15 +23,6 @@ export class ReportingService {
             parameters: query.parameters
         };
 
-        // if(!query.parameterNames) {
-        //     params.parameters = null
-        // }
-        // else {
-        //     for (let i = 0; i < query.parameterNames.length; i++) {
-        //         params.parameters[query.parameterNames[i]] = inputs[i];
-        //     }
-        // }
-
         return this.http.postReport(params);
     }
 

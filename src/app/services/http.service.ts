@@ -48,10 +48,12 @@ export class HttpService {
         return this.http.post<TypeaheadConcepts>('/snowowl/snomed-ct/v2/MAIN/concepts/search', params, this.options);
     }
 
+    // AUTHORIZATION ENDPOINT
     getLoggedInUser() {
         return this.http.get('/auth');
     }
 
+    // CONFIG ENDPOINT
     getUIConfig() {
         return this.http.get('/config/endpointConfig.json');
     }
