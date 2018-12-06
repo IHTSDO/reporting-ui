@@ -3,7 +3,7 @@
 <div id="reporting" class="footer-margin">
     <div *ngFor="let category of categories | category:activeCategory?.name">
         <div class="p-3" *ngIf="(category.jobs | category:querySearch).length !== 0">
-            <h4 class="report-title">{{category.name}}</h4>
+            <h2 class="report-title">{{category.name}}</h2>
             <div class="accordion rounded">
                 <div class="query" *ngFor="let query of category.jobs | category:querySearch; let first = first; let last = last">
                     <div class="title" (click)="switchActiveQuery(query)" [class.rounded-top]="first" [class.rounded-bottom]="last" [class.last-item]="last">

@@ -3,6 +3,7 @@
 nav {
     a {
         height: 40px;
+        font-size: 1.8rem;
 
         &:link {
             text-decoration: none;
@@ -10,7 +11,6 @@ nav {
 
         span.title {
             color: $alto-white;
-            font-size: 1rem;
             font-weight: 300;
             letter-spacing: 1.5px;
             line-height: 40px;

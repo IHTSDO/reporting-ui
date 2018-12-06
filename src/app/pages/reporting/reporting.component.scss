@@ -3,20 +3,8 @@
 div#reporting {
     margin-left: 192px;
 
-    input.searchbar {
-        font-size: 1.4rem;
-        border-bottom: 1px $ghost-grey solid;
-        cursor: text;
-    }
-
-    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-        color: $regent-grey;
-        opacity: 1; /* Firefox */
-    }
-
-    h4.report-title {
+    h2.report-title {
         font-weight: 300;
-        font-size: 1.4rem;
     }
 
     div.accordion {
@@ -32,7 +20,6 @@ div#reporting {
 
                 h3 {
                     font-weight: 300;
-                    font-size: 1.1rem;
                 }
             }
 
@@ -50,8 +37,29 @@ div#reporting {
                     button {
                         position: absolute;
                         right: 0;
+                        font-size: 1.4rem;
                         font-weight: 300;
                     }
+                }
+
+                div.date {
+                    width: 9rem;
+                }
+
+                div.issues {
+                    width: 7rem;
+                }
+
+                div.parameters {
+                    width: 20rem;
+                }
+
+                div.user {
+                    width: 10rem;
+                }
+
+                div.status {
+                    width: 12rem;
                 }
 
                 div.report-header {
@@ -60,26 +68,6 @@ div#reporting {
 
                     div.border-bar {
                         border-right: 1px solid $alto-white;
-                    }
-
-                    div.date {
-                        width: 11rem;
-                    }
-
-                    div.issues {
-                        width: 5rem;
-                    }
-
-                    div.parameters {
-                        width: 16rem;
-                    }
-
-                    div.user {
-                        width: 8rem;
-                    }
-
-                    div.status {
-                        width: 8rem;
                     }
                 }
 
@@ -97,26 +85,6 @@ div#reporting {
 
                     div.border-bar {
                         border-right: 1px solid $alto-white;
-                    }
-
-                    div.date {
-                        width: 11rem;
-                    }
-
-                    div.issues {
-                        width: 5rem;
-                    }
-
-                    div.parameters {
-                        width: 16rem;
-                    }
-
-                    div.user {
-                        width: 8rem;
-                    }
-
-                    div.status {
-                        width: 8rem;
                     }
 
                     div.completed {

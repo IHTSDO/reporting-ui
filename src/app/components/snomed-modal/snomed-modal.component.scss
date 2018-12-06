@@ -6,16 +6,17 @@ div.modal {
 
     button {
         font-weight: 300;
+        font-size: 1.4rem;
     }
 
     label {
-        font-size: 0.8rem;
+        font-size: 1.4rem;
+        color: $scorpion-grey;
         line-height: 1rem;
     }
 
     input {
         cursor: text;
-        font-size: 0.9rem;
 
         &.input-border {
             border: 1px solid $alto-white;
@@ -24,12 +25,11 @@ div.modal {
 
     mat-checkbox {
         position: absolute;
-        top: 4px;
+        top: 2px;
     }
 
     app-snomed-typeahead {
-        //margin-top: 24px;
-        max-height: 12rem;
+        max-height: 20rem;
         position: absolute;
         top: 48px;
         left: 0;
