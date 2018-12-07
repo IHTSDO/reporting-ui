@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SnomedLeftSidebarComponent } from '../../components/snomed-left-sidebar/snomed-left-sidebar.component';
 import { CategoryPipe } from '../../pipes/category.pipe';
 import { MatTooltipModule, MatCheckboxModule } from '@angular/material';
-import { SnomedModalComponent } from '../../components/snomed-modal/snomed-modal.component';
+import { SnomedQueryModalComponent } from '../../components/snomed-query-modal/snomed-query-modal.component';
 import { FormsModule } from '@angular/forms';
 import { SnomedOverlayComponent } from '../../components/snomed-overlay/snomed-overlay.component';
 import { SnomedTypeaheadComponent } from '../../components/snomed-typeahead/snomed-typeahead.component';
@@ -21,7 +21,7 @@ describe('ReportingComponent', () => {
                 ReportingComponent,
                 SnomedLeftSidebarComponent,
                 CategoryPipe,
-                SnomedModalComponent,
+                SnomedQueryModalComponent,
                 SnomedOverlayComponent,
                 SnomedTypeaheadComponent,
                 ConceptsPipe

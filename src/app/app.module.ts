@@ -10,7 +10,7 @@ import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
 import { SnomedTypeaheadComponent } from './components/snomed-typeahead/snomed-typeahead.component';
 import { SnomedOverlayComponent } from './components/snomed-overlay/snomed-overlay.component';
-import { SnomedModalComponent } from './components/snomed-modal/snomed-modal.component';
+import { SnomedQueryModalComponent } from './components/snomed-query-modal/snomed-query-modal.component';
 import { SnomedLeftSidebarComponent } from './components/snomed-left-sidebar/snomed-left-sidebar.component';
 import { ReportingComponent } from './pages/reporting/reporting.component';
 
@@ -23,6 +23,7 @@ import { ConfigService } from './services/config.service';
 
 import { CategoryPipe } from './pipes/category.pipe';
 import { ConceptsPipe } from './pipes/concepts.pipe';
+import { SnomedDeleteModalComponent } from './components/snomed-delete-modal/snomed-delete-modal.component';
 
 @NgModule({
     declarations: [
@@ -30,10 +31,11 @@ import { ConceptsPipe } from './pipes/concepts.pipe';
         ReportingComponent,
         SnomedNavbarComponent,
         SnomedFooterComponent,
-        SnomedTypeaheadComponent,
-        SnomedOverlayComponent,
-        SnomedModalComponent,
         SnomedLeftSidebarComponent,
+        SnomedQueryModalComponent,
+        SnomedDeleteModalComponent,
+        SnomedOverlayComponent,
+        SnomedTypeaheadComponent,
         CategoryPipe,
         ConceptsPipe
     ],

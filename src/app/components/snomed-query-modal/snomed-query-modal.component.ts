@@ -5,11 +5,11 @@ import { ModalService } from '../../services/modal.service';
 import { Query } from '../../models/query';
 
 @Component({
-    selector: 'app-snomed-modal',
-    templateUrl: './snomed-modal.component.html',
-    styleUrls: ['./snomed-modal.component.scss']
+    selector: 'app-snomed-query-modal',
+    templateUrl: './snomed-query-modal.component.html',
+    styleUrls: ['./snomed-query-modal.component.scss']
 })
-export class SnomedModalComponent implements OnInit {
+export class SnomedQueryModalComponent implements OnInit {
 
     @Input() query: Query;
     @Output() submitEmitter = new EventEmitter();
