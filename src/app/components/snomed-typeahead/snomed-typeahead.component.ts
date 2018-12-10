@@ -18,7 +18,7 @@ export class SnomedTypeaheadComponent implements OnInit, OnChanges {
     @Input() active: boolean;
     isHidden: boolean;
 
-    minLength: number = 2;
+    minLength: number = 3;
     private searchTerms = new Subject<string>();
 
     constructor(private conceptService: ConceptService) {
@@ -28,12 +28,12 @@ export class SnomedTypeaheadComponent implements OnInit, OnChanges {
         this.concepts = this.searchTerms.pipe(
             debounceTime(300),
             distinctUntilChanged(),
-            switchMap((term: string) => (term.length > this.minLength) ? this.conceptService.getTypeaheadConcepts(term) : of({}))
+            switchMap((term: string) => (term.length >= this.minLength) ? this.conceptService.getTypeaheadConcepts(term) : of({}))
         );
     }
 
     ngOnChanges() {
-        if(this.input.length > this.minLength) {
+        if(this.input.length >= this.minLength) {
             this.searchTerms.next(this.input);
             this.isHidden = false;
         }
@@ -47,3 +47,6 @@ export class SnomedTypeaheadComponent implements OnInit, OnChanges {
         this.active = false;
     }
 }
+
+// 132587000
+// Shiba

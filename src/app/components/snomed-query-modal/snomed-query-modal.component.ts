@@ -13,7 +13,6 @@ export class SnomedQueryModalComponent implements OnInit {
 
     @Input() query: Query;
     @Output() submitEmitter = new EventEmitter();
-    typeahead: boolean = false;
 
     constructor(public modalService: ModalService) {
     }
