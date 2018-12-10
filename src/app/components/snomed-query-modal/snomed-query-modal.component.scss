@@ -4,9 +4,22 @@ div.modal {
     z-index: 10001;
     display: initial;
 
+    div.modal-header {
+        button > span {
+            font-size: 2rem;
+        }
+    }
+
+    div.modal-body {
+
+    }
+
+    div.modal-footer {
+
+    }
+
     button {
         font-weight: 300;
-        font-size: 1.4rem;
     }
 
     label {

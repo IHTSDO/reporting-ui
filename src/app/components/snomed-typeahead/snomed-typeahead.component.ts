@@ -47,6 +47,3 @@ export class SnomedTypeaheadComponent implements OnInit, OnChanges {
         this.active = false;
     }
 }
-
-// 132587000
-// Shiba
