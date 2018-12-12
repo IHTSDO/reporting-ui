@@ -8,7 +8,6 @@ import { MatTooltipModule, MatCheckboxModule } from '@angular/material';
 
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
-import { SnomedTypeaheadComponent } from './components/snomed-typeahead/snomed-typeahead.component';
 import { SnomedOverlayComponent } from './components/snomed-overlay/snomed-overlay.component';
 import { SnomedQueryModalComponent } from './components/snomed-query-modal/snomed-query-modal.component';
 import { SnomedLeftSidebarComponent } from './components/snomed-left-sidebar/snomed-left-sidebar.component';
@@ -35,7 +34,6 @@ import { SnomedDeleteModalComponent } from './components/snomed-delete-modal/sno
         SnomedQueryModalComponent,
         SnomedDeleteModalComponent,
         SnomedOverlayComponent,
-        SnomedTypeaheadComponent,
         CategoryPipe,
         ConceptsPipe
     ],

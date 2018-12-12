@@ -12,41 +12,29 @@ div.modal {
 
     div.modal-body {
 
-    }
+        label {
+            font-size: 1.4rem;
+            color: $scorpion-grey;
+            line-height: 1rem;
+        }
 
-    div.modal-footer {
+        input {
+            cursor: text;
 
-    }
+            &.input-border {
+                border: 1px solid $alto-white;
+            }
+        }
 
-    button {
-        font-weight: 300;
-    }
-
-    label {
-        font-size: 1.4rem;
-        color: $scorpion-grey;
-        line-height: 1rem;
-    }
-
-    input {
-        cursor: text;
-
-        &.input-border {
-            border: 1px solid $alto-white;
+        mat-checkbox {
+            position: absolute;
+            top: 2px;
         }
     }
 
-    mat-checkbox {
-        position: absolute;
-        top: 2px;
-    }
-
-    app-snomed-typeahead {
-        max-height: 20rem;
-        position: absolute;
-        top: 48px;
-        left: 0;
-        overflow-y: scroll;
-        z-index: 10002;
+    div.modal-footer {
+        button {
+            font-weight: 300;
+        }
     }
 }

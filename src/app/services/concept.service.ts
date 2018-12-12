@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpService } from './http.service';
 import { TypeaheadConcepts } from '../models/typeaheadConcepts';
 
@@ -11,9 +11,13 @@ export class ConceptService {
     constructor(private http: HttpService) {
     }
 
-    getTypeaheadConcepts(input): Observable<TypeaheadConcepts> {
+    getTypeaheadConcepts(term): Observable<TypeaheadConcepts> {
+        if(!term.trim()) {
+            return of(new TypeaheadConcepts());
+        }
+
         let params = {
-            termFilter: input,
+            termFilter: term,
             limit: 20,
             expand: 'fsn()',
             activeFilter: true

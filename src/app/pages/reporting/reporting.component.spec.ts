@@ -8,7 +8,6 @@ import { MatTooltipModule, MatCheckboxModule } from '@angular/material';
 import { SnomedQueryModalComponent } from '../../components/snomed-query-modal/snomed-query-modal.component';
 import { FormsModule } from '@angular/forms';
 import { SnomedOverlayComponent } from '../../components/snomed-overlay/snomed-overlay.component';
-import { SnomedTypeaheadComponent } from '../../components/snomed-typeahead/snomed-typeahead.component';
 import { ConceptsPipe } from '../../pipes/concepts.pipe';
 
 describe('ReportingComponent', () => {
@@ -23,7 +22,6 @@ describe('ReportingComponent', () => {
                 CategoryPipe,
                 SnomedQueryModalComponent,
                 SnomedOverlayComponent,
-                SnomedTypeaheadComponent,
                 ConceptsPipe
             ],
             imports: [

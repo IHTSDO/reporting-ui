@@ -1,8 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Observable, Subject, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { typeaheadMinimumLength } from 'src/globals';
 
 import { ModalService } from '../../services/modal.service';
+import { ConceptService } from '../../services/concept.service';
 
 import { Query } from '../../models/query';
+import { TypeaheadConcepts } from '../../models/typeaheadConcepts';
+
 
 @Component({
     selector: 'app-snomed-query-modal',
@@ -14,7 +20,10 @@ export class SnomedQueryModalComponent implements OnInit {
     @Input() query: Query;
     @Output() submitEmitter = new EventEmitter();
 
-    constructor(public modalService: ModalService) {
+    private searchTerms = new Subject<string>();
+    results: Observable<TypeaheadConcepts>;
+
+    constructor(public modalService: ModalService, private conceptService: ConceptService) {
     }
 
     ngOnInit() {
@@ -23,9 +32,24 @@ export class SnomedQueryModalComponent implements OnInit {
                 this.query.parameters['parameterMap'][key].value = false
             }
         }
+
+        this.results = this.searchTerms.pipe(
+            debounceTime(300),
+            distinctUntilChanged(),
+            switchMap((term: string) => (term.length >= typeaheadMinimumLength) ? this.conceptService.getTypeaheadConcepts(term) : of(new TypeaheadConcepts()))
+        );
     }
 
     submitReportRequest() {
         this.submitEmitter.emit();
+    }
+
+    search(term: string): void {
+        this.searchTerms.next(term);
+    }
+
+    selectConcept(result) {
+        this.searchTerms.next('');
+        return result.id + ' |' + result.fsn.term + '|';
     }
 }

@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SnomedQueryModalComponent } from './snomed-query-modal.component';
-import { SnomedTypeaheadComponent } from '../snomed-typeahead/snomed-typeahead.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ConceptsPipe } from '../../pipes/concepts.pipe';
@@ -16,7 +15,6 @@ describe('SnomedQueryModalComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 SnomedQueryModalComponent,
-                SnomedTypeaheadComponent,
                 ConceptsPipe,
                 SnomedOverlayComponent
             ],
