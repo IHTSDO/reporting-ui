@@ -16,7 +16,6 @@ import { ReportingComponent } from './pages/reporting/reporting.component';
 import { ReportingService } from './services/reporting.service';
 import { ConceptService } from './services/concept.service';
 import { HttpService } from './services/http.service';
-import { ModalService } from './services/modal.service';
 import { UserService } from './services/user.service';
 import { ConfigService } from './services/config.service';
 
@@ -49,7 +48,6 @@ import { SnomedDeleteModalComponent } from './components/snomed-delete-modal/sno
         ReportingService,
         ConceptService,
         HttpService,
-        ModalService,
         UserService,
         ConfigService
     ],

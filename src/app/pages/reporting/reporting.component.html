@@ -13,7 +13,7 @@
                         <div class="row w-100 description mx-0">
                             <p class="float-left py-3 px-4 mb-0">{{query.description}}</p>
                             <button *ngIf="query === activeQuery" class="btn btn-primary m-2"
-                                    (click)="(activeQuery.parameters.parameterMap) ? modalService.open = true : submitReportRequest()">Run New Query
+                                    (click)="(activeQuery.parameters.parameterMap) ? openQueryModal = true : submitReportRequest()">Run New Query
                             </button>
                         </div>
                         <div class="row flex-nowrap report-header run py-2 mx-0">
@@ -48,4 +48,5 @@
     </div>
 </div>
 
-<app-snomed-query-modal *ngIf="modalService.open" [query]="activeQuery" (submitEmitter)="submitReportRequest()"></app-snomed-query-modal>
+<app-snomed-query-modal *ngIf="openQueryModal" [query]="activeQuery" (submitEmitter)="submitReportRequest()" (closeEmitter)="closeModal()"></app-snomed-query-modal>
+<app-snomed-delete-modal *ngIf="openDeleteModal" [report]="activeReport" (closeEmitter)="closeModal()"></app-snomed-delete-modal>

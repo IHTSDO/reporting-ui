@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { ReportingService } from '../../services/reporting.service';
 
-import { ModalService } from '../../services/modal.service';
 import { Category } from '../../models/category';
 import { Query } from '../../models/query';
 import { Report } from '../../models/report';
@@ -24,8 +23,13 @@ export class ReportingComponent implements OnInit {
     // Active Items
     activeCategory: Category;
     activeQuery: Query;
+    activeReport: Report;
 
-    constructor(private reportingService: ReportingService, public modalService: ModalService) {
+    // Modal Flags
+    openQueryModal: boolean = false;
+    openDeleteModal: boolean = false;
+
+    constructor(private reportingService: ReportingService) {
     }
 
     ngOnInit() {
@@ -78,14 +82,18 @@ export class ReportingComponent implements OnInit {
     }
 
     deleteReport(report) {
-        this.reportingService.postDeleteReport(report).subscribe(() => {
-            this.refresh();
-        });
+        this.activeReport = report;
+        this.openDeleteModal = true;
     }
 
     submitReportRequest() {
         this.reportingService.postReport(this.activeQuery).subscribe(() => {
-            this.modalService.open = false;
+            this.refresh();
         });
+    }
+
+    closeModal() {
+        this.openQueryModal = false;
+        this.openDeleteModal = false;
     }
 }

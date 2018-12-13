@@ -1,16 +1,19 @@
-<app-snomed-overlay (click)="modalService.toggleModal()"></app-snomed-overlay>
+<app-snomed-overlay (click)="closeEmitter.emit()"></app-snomed-overlay>
 
-<div class="modal" tabindex="-1" role="dialog" (click)="modalService.open = false">
+<div class="modal" tabindex="-1" role="dialog" (click)="closeEmitter.emit()">
     <div class="modal-dialog" role="document" (click)="$event.stopPropagation()">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Delete Report</h3>
-                <button type="button" class="close" (click)="modalService.open = false">
+                <button type="button" class="close" (click)="closeEmitter.emit()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <div class="modal-body">
+                Are you sure you want to delete this report?
+            </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="submitReportRequest()">Delete Concept</button>
+                <button type="button" class="btn btn-primary" (click)="submitReportRequest()">Delete Report</button>
             </div>
         </div>
     </div>

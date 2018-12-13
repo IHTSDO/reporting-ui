@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ModalService } from '../../services/modal.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ReportingService } from '../../services/reporting.service';
-import { Query } from '../../models/query';
+import { Report } from '../../models/report';
 
 @Component({
     selector: 'app-snomed-delete-modal',
@@ -10,17 +9,18 @@ import { Query } from '../../models/query';
 })
 export class SnomedDeleteModalComponent implements OnInit {
 
-    @Input() query: Query;
+    @Input() report: Report;
+    @Output() closeEmitter = new EventEmitter();
 
-    constructor(public modalService: ModalService, private reportingService: ReportingService) {
+    constructor(private reportingService: ReportingService) {
     }
 
     ngOnInit() {
     }
 
     submitReportRequest() {
-        this.reportingService.postReport(this.query).subscribe(() => {
-            this.modalService.open = false;
+        this.reportingService.postDeleteReport(this.report).subscribe(() => {
+            this.closeEmitter.emit();
         });
     }
 }

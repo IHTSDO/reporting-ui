@@ -3,7 +3,6 @@ import { Observable, Subject, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { typeaheadMinimumLength } from 'src/globals';
 
-import { ModalService } from '../../services/modal.service';
 import { ConceptService } from '../../services/concept.service';
 
 import { Query } from '../../models/query';
@@ -19,11 +18,12 @@ export class SnomedQueryModalComponent implements OnInit {
 
     @Input() query: Query;
     @Output() submitEmitter = new EventEmitter();
+    @Output() closeEmitter = new EventEmitter();
 
     private searchTerms = new Subject<string>();
     results: Observable<TypeaheadConcepts>;
 
-    constructor(public modalService: ModalService, private conceptService: ConceptService) {
+    constructor(private conceptService: ConceptService) {
     }
 
     ngOnInit() {
@@ -42,6 +42,7 @@ export class SnomedQueryModalComponent implements OnInit {
 
     submitReportRequest() {
         this.submitEmitter.emit();
+        this.closeEmitter.emit();
     }
 
     search(term: string): void {

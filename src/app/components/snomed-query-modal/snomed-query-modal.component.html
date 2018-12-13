@@ -1,11 +1,11 @@
-<app-snomed-overlay (click)="modalService.toggleModal()"></app-snomed-overlay>
+<app-snomed-overlay (click)="closeEmitter.emit()"></app-snomed-overlay>
 
-<div class="modal" tabindex="-1" role="dialog" (click)="modalService.open = false">
+<div class="modal" tabindex="-1" role="dialog" (click)="closeEmitter.emit()">
     <div class="modal-dialog" role="document" (click)="$event.stopPropagation()">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Report Details</h3>
-                <button type="button" class="close" (click)="modalService.open = false">
+                <button type="button" class="close" (click)="closeEmitter.emit()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
