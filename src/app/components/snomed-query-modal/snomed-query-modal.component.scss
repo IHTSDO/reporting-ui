@@ -16,6 +16,10 @@ div.modal {
             font-size: 1.4rem;
             color: $scorpion-grey;
             line-height: 1rem;
+
+            span {
+                font-size: 1.2rem;
+            }
         }
 
         input, textarea {

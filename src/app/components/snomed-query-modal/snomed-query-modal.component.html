@@ -11,9 +11,10 @@
             </div>
             <div class="modal-body">
                 <div *ngFor="let parameter of query.parameters.parameterMap | keyvalue" class="pb-2 position-relative">
+                    <!--{{parameter.value | json}}-->
                     <ng-container [ngSwitch]="parameter.value.type">
                         <div *ngSwitchCase="'CONCEPT'">
-                            <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}}</label>
+                            <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                             <input #searchBox class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" (keyup)="search(searchBox.value)">
                             <div class="typeahead-box w-100 rounded px-0">
                                 <div *ngFor="let result of results | async | concepts" class="typeahead px-1" (click)="parameter.value.value = selectConcept(result)">
@@ -26,7 +27,7 @@
                             <mat-checkbox id="{{parameter.key}}" name="{{parameter.key}}" [(ngModel)]="parameter.value.value" class="pl-2"></mat-checkbox>
                         </div>
                         <div *ngSwitchCase="'STRING'">
-                            <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}}</label>
+                            <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                             <input id="{{parameter.key}}" name="{{parameter.key}}" class="w-100 rounded input-border px-1" [(ngModel)]="parameter.value.value">
                         </div>
                         <div *ngSwitchCase="'CONCEPT_LIST'">
