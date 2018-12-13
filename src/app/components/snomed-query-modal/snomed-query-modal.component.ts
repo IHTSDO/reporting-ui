@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Observable, Subject, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { typeaheadMinimumLength } from 'src/globals';
@@ -19,6 +19,8 @@ export class SnomedQueryModalComponent implements OnInit {
     @Input() query: Query;
     @Output() submitEmitter = new EventEmitter();
     @Output() closeEmitter = new EventEmitter();
+
+    @ViewChild('searchBox') inputElement: ElementRef;
 
     private searchTerms = new Subject<string>();
     results: Observable<TypeaheadConcepts>;
@@ -49,8 +51,30 @@ export class SnomedQueryModalComponent implements OnInit {
         this.searchTerms.next(term);
     }
 
+    appendSearch(term: string): void {
+        if(term.includes(',')) {
+            term.indexOf(',');
+            term = term.slice(term.lastIndexOf(','));
+        }
+
+        this.searchTerms.next(term);
+    }
+
     selectConcept(result) {
         this.searchTerms.next('');
         return result.id + ' |' + result.fsn.term + '|';
+    }
+
+    appendConcept(parameter, result) {
+        this.searchTerms.next('');
+
+        this.inputElement.nativeElement.focus();
+
+        if(parameter.includes(',')) {
+            return parameter.slice(0, parameter.lastIndexOf(',')) + ', ' + result.id + ' |' + result.fsn.term + '|';
+        }
+        else {
+            return result.id + ' |' + result.fsn.term + '|';
+        }
     }
 }

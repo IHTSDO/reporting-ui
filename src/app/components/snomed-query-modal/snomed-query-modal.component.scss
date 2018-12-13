@@ -18,7 +18,7 @@ div.modal {
             line-height: 1rem;
         }
 
-        input {
+        input, textarea {
             cursor: text;
 
             &.input-border {
@@ -26,9 +26,23 @@ div.modal {
             }
         }
 
+        textarea {
+            height: 8rem;
+            resize: none;
+        }
+
+        div.typeahead-textarea {
+            top: 103px;
+        }
+
         mat-checkbox {
             position: absolute;
             top: 2px;
+        }
+
+        div.note {
+            font-size: 1.2rem;
+            color: $scorpion-grey;
         }
     }
 
