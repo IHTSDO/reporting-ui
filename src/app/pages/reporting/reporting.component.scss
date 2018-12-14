@@ -3,8 +3,9 @@
 div#reporting {
     margin-left: 192px;
 
-    h2.report-title {
+    h3.report-title {
         font-weight: 300;
+        line-height: 1.6rem;
     }
 
     div.accordion {
@@ -18,7 +19,7 @@ div#reporting {
                 background-color: $gallery-white;
                 overflow: hidden;
 
-                h3 {
+                h4 {
                     font-weight: 300;
                 }
             }
