@@ -1,0 +1,6 @@
+<div class="typeahead-box w-100 rounded px-0">
+    <div *ngFor="let result of results | async | concepts" class="typeahead px-1" (click)="selectConcept(result)">
+        {{result.id}} |{{result.fsn.term}}|
+    </div>
+</div>
+

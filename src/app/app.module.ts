@@ -22,6 +22,8 @@ import { ConfigService } from './services/config.service';
 import { CategoryPipe } from './pipes/category.pipe';
 import { ConceptsPipe } from './pipes/concepts.pipe';
 import { SnomedDeleteModalComponent } from './components/snomed-delete-modal/snomed-delete-modal.component';
+import { SnomedTypeaheadComponent } from './components/snomed-typeahead/snomed-typeahead.component';
+import { SnomedTypeaheadListComponent } from './components/snomed-typeahead-list/snomed-typeahead-list.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +36,9 @@ import { SnomedDeleteModalComponent } from './components/snomed-delete-modal/sno
         SnomedDeleteModalComponent,
         SnomedOverlayComponent,
         CategoryPipe,
-        ConceptsPipe
+        ConceptsPipe,
+        SnomedTypeaheadComponent,
+        SnomedTypeaheadListComponent
     ],
     imports: [
         BrowserModule,
