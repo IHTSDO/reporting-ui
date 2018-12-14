@@ -21,7 +21,7 @@
                             <div class="px-2 border-bar issues">Issues</div>
                             <div class="px-2 border-bar parameters" *ngFor="let parameter of query.parameters.parameterMap | keyvalue">{{parameter.key}}</div>
                             <div class="px-2 border-bar user">User</div>
-                            <div class="px-2 status">Status</div>
+                            <div class="px-2 pr-3 status">Status</div>
                         </div>
                         <div *ngFor="let report of activeReportSet; let last = last" class="row flex-nowrap report run py-2 mx-0" [class.last-item]="last">
                             <div class="px-2 pl-3  border-bar date">{{report.requestTime | date:'short'}}</div>
@@ -31,13 +31,13 @@
                             </div>
                             <div class="px-2 border-bar user">{{report.user}}</div>
                             <ng-container [ngSwitch]="report.status">
-                                <div *ngSwitchCase="'Complete'" class="px-2 status completed" (click)="viewReport(report)">{{report.status}}
+                                <div *ngSwitchCase="'Complete'" class="px-2 pr-3 status completed" (click)="viewReport(report)">{{report.status}}
                                     <i class="fas fa-external-link-alt ml-1"></i>
                                 </div>
-                                <div *ngSwitchCase="'Failed'" class="px-2 status failed" matTooltip="{{report?.debugInfo}}">{{report.status}}
+                                <div *ngSwitchCase="'Failed'" class="px-2 pr-3 status failed" matTooltip="{{report?.debugInfo}}">{{report.status}}
                                     <i class="fas fa-times-circle ml-1"></i>
                                 </div>
-                                <div *ngSwitchDefault class="px-2 status">{{report.status}}</div>
+                                <div *ngSwitchDefault class="px-2 pr-3 status">{{report.status}}</div>
                             </ng-container>
                             <button class="delete-button" (click)="deleteReport(report)"><i class="fas fa-minus"></i></button>
                         </div>
