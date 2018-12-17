@@ -36,8 +36,9 @@ export class SnomedTypeaheadListComponent implements OnInit {
 
     search(term: string): void {
         if(term && term.includes(',')) {
+            term = term.trim();
             term.indexOf(',');
-            term = term.slice(term.lastIndexOf(','));
+            term = term.slice(term.lastIndexOf(',') + 1);
         }
 
         this.searchTerms.next(term);
