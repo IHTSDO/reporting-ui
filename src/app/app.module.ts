@@ -24,6 +24,7 @@ import { ConceptsPipe } from './pipes/concepts.pipe';
 import { SnomedDeleteModalComponent } from './components/snomed-delete-modal/snomed-delete-modal.component';
 import { SnomedTypeaheadComponent } from './components/snomed-typeahead/snomed-typeahead.component';
 import { SnomedTypeaheadListComponent } from './components/snomed-typeahead-list/snomed-typeahead-list.component';
+import { DisplayOrderPipe } from './pipes/display-order.pipe';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { SnomedTypeaheadListComponent } from './components/snomed-typeahead-list
         CategoryPipe,
         ConceptsPipe,
         SnomedTypeaheadComponent,
-        SnomedTypeaheadListComponent
+        SnomedTypeaheadListComponent,
+        DisplayOrderPipe
     ],
     imports: [
         BrowserModule,

@@ -21,14 +21,14 @@
                             <tr>
                                 <th class="pl-3">Date</th>
                                 <th>Issues</th>
-                                <th *ngFor="let parameter of query.parameters.parameterMap | keyvalue">{{parameter.key}}</th>
+                                <th *ngFor="let parameter of query.parameters.parameterMap | keyvalue | displayOrder:parameter">{{parameter.key}}</th>
                                 <th>User</th>
                                 <th>Status</th>
                             </tr>
                             <tr *ngFor="let report of activeReportSet">
                                 <td class="pl-3">{{report.requestTime | date:'short'}}</td>
                                 <td>{{report.issuesReported ? report.issuesReported : '0'}}</td>
-                                <td *ngFor="let parameter of query.parameters.parameterMap | keyvalue">{{report?.parameters.parameterMap[parameter.key].value}}</td>
+                                <td *ngFor="let parameter of query.parameters.parameterMap | keyvalue | displayOrder:parameter">{{report?.parameters.parameterMap[parameter.key].value}}</td>
                                 <td>{{report.user}}</td>
                                 <ng-container [ngSwitch]="report.status">
                                     <td *ngSwitchCase="'Complete'" class="completed" (click)="viewReport(report)">{{report.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
