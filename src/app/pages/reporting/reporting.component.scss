@@ -25,9 +25,6 @@ div#reporting {
             }
 
             div.content {
-                border-bottom: 1px $alto-white solid;
-                border-top: none;
-
                 div.description {
                     position: relative;
 
@@ -42,66 +39,51 @@ div#reporting {
                     }
                 }
 
-                div.date {
-                    width: 10rem;
-                }
-
-                div.issues {
-                    width: 7rem;
-                }
-
-                div.parameters {
-                    width: 20rem;
-                }
-
-                div.user {
-                    width: 10rem;
-                }
-
-                div.status {
-                    width: 12rem;
-                }
-
-                div.report-header {
-                    border-bottom: 1px solid $alto-white;
-                    overflow-y: scroll;
-
-                    div.border-bar {
-                        border-right: 1px solid $alto-white;
-                    }
-                }
-
-                div.report {
+                table {
                     position: relative;
-                    border-bottom: 1px solid $alto-white;
+                    border: none;
 
-                    &:hover {
-                        background-color: $gallery-white;
+                    th:first-child, td:first-child {
+                        border-left: none;
+                    }
 
-                        > button.delete-button {
-                            display: block;
+                    th:last-child, td:last-child {
+                        border-right: none;
+                    }
+
+                    tr {
+                        position: relative;
+
+                        &:hover {
+                            background-color: $gallery-white;
+
+                            > button.delete-button {
+                                display: block;
+                            }
                         }
                     }
 
-                    div.border-bar {
-                        border-right: 1px solid $alto-white;
+                    th {
+                        font-weight: 400;
                     }
 
-                    div.completed {
-                        cursor: pointer;
-                        color: $forest-green;
+                    td {
+                        &.completed {
+                            cursor: pointer;
+                            color: $forest-green;
 
-                        &:hover {
-                            color: $apple-green;
+                            &:hover {
+                                color: $apple-green;
+                            }
                         }
-                    }
 
-                    div.failed {
-                        cursor: pointer;
-                        color: $crimson-red;
+                        &.failed {
+                            cursor: pointer;
+                            color: $crimson-red;
 
-                        &:hover {
-                            color: $pomegranate-red;
+                            &:hover {
+                                color: $pomegranate-red;
+                            }
                         }
                     }
 
