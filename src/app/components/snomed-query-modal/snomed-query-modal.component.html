@@ -31,11 +31,6 @@
                             <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                             <textarea #textareaTypeahead class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" (keyup)="searchTerm = parameter.value.value"></textarea>
                             <app-snomed-typeahead-list [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = appendConcept(parameter.value.value, $event)"></app-snomed-typeahead-list>
-                            <div class="typeahead-box typeahead-textarea w-100 rounded px-0">
-                                <div *ngFor="let result of results | async | concepts" class="typeahead px-1" (click)="parameter.value.value = appendConcept(parameter.value.value, result)">
-                                    {{result.id}} |{{result.fsn.term}}|
-                                </div>
-                            </div>
                             <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
                         </div>
                     </ng-container>
