@@ -3,7 +3,6 @@
     <groupId>org.ihtsdo.otf</groupId>
     <artifactId>reporting-ui</artifactId>
     <version>1.0.6</version>
-
     <properties>
         <packageName>${project.artifactId}</packageName>
     </properties>
