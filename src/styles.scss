@@ -1,4 +1,4 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import 'src/variables.scss';
 
 html {
@@ -68,4 +68,9 @@ div.typeahead-box {
             background-color: $alto-white;
         }
     }
+}
+
+div.modal {
+    z-index: 10001;
+    display: initial;
 }

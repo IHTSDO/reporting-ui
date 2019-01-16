@@ -6,6 +6,7 @@ import { Category } from '../models/category';
 import { Report } from '../models/report';
 import { Query } from '../models/query';
 import { TypeaheadConcepts } from '../models/typeaheadConcepts';
+import { Template } from '../models/template';
 
 @Injectable({
     providedIn: 'root'
@@ -46,6 +47,11 @@ export class HttpService {
     // AUTHORING-SERVICES ENDPOINTS
     getTypeaheadConcepts(params): Observable<TypeaheadConcepts> {
         return this.http.post<TypeaheadConcepts>('/snowowl/snomed-ct/v2/MAIN/concepts/search', params, this.options);
+    }
+
+    // TEMPLATE-SERVICE ENDPOINTS
+    getTemplateConcepts() {
+        return this.http.get<Template[]>('/template-service/templates');
     }
 
     // AUTHORIZATION ENDPOINT

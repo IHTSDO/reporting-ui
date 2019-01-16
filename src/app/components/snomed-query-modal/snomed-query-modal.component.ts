@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 
 import { Query } from '../../models/query';
+import { TemplateService } from '../../services/template.service';
+import { Template } from '../../models/template';
 
 
 @Component({
@@ -17,11 +19,17 @@ export class SnomedQueryModalComponent implements OnInit {
     @ViewChild('textareaTypeahead') inputElement: ElementRef;
 
     searchTerm: string;
+    templates: Template[];
 
-    constructor() {
+    constructor(private templateService: TemplateService) {
     }
 
     ngOnInit() {
+        this.templateService.getTemplateConcepts().subscribe(data => {
+            this.templates = data;
+            console.log('TEMPLATES: ', this.templates);
+        });
+
         for(let key in this.query.parameters['parameterMap']) {
             if(this.query.parameters['parameterMap'][key].type === 'BOOLEAN') {
                 this.query.parameters['parameterMap'][key].value = false

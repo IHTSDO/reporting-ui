@@ -1,9 +1,6 @@
 @import 'src/variables.scss';
 
-div.modal {
-    z-index: 10001;
-    display: initial;
-
+div.modal-content {
     div.modal-header {
         button > span {
             font-size: 2rem;
