@@ -29,13 +29,21 @@
                                 <td class="pl-3">{{report.requestTime | date:'short'}}</td>
                                 <td>{{report.issuesReported ? report.issuesReported : '0'}}</td>
                                 <td *ngFor="let parameter of query.parameters.parameterMap | keyvalue | displayOrder:parameter">{{report?.parameters.parameterMap[parameter.key].value}}</td>
-                                <td>{{report.user}}</td>
+                                <td>{{report.user}}
+                                    <button class="delete-button pt-1 mt-2" (click)="deleteReport(report)" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-minus"></i></button>
+                                </td>
                                 <ng-container [ngSwitch]="report.status">
-                                    <td *ngSwitchCase="'Complete'" class="completed" (click)="viewReport(report)">{{report.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
-                                    <td *ngSwitchCase="'Failed'" class="failed" matTooltip="{{report?.debugInfo}}">{{report.status}}<i class="fas fa-times-circle ml-1"></i></td>
-                                    <td *ngSwitchDefault>{{report.status}}</td>
+                                    <td *ngSwitchCase="'Complete'" class="completed" (click)="viewReport(report)">{{report.status}}<i class="fas fa-external-link-alt ml-1"></i>
+                                        <button class="delete-button pt-1 mt-2" (click)="deleteReport(report)" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-minus"></i></button>
+                                    </td>
+                                    <td *ngSwitchCase="'Failed'" class="failed" matTooltip="{{report?.debugInfo}}">{{report.status}}<i class="fas fa-times-circle ml-1"></i>
+                                        <button class="delete-button pt-1 mt-2" (click)="deleteReport(report)" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-minus"></i></button>
+                                    </td>
+                                    <td *ngSwitchDefault>{{report.status}}
+                                        <button class="delete-button pt-1 mt-2" (click)="deleteReport(report)" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-minus"></i></button>
+                                    </td>
                                 </ng-container>
-                                <button class="delete-button pt-1 mt-2" (click)="deleteReport(report)" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-minus"></i></button>
+                                <!--<button class="delete-button pt-1 mt-2" (click)="deleteReport(report)" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-minus"></i></button>-->
                             </tr>
                         </table>
                     </div>
