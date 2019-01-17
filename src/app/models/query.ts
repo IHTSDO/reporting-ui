@@ -3,6 +3,4 @@ export class Query {
     description: string;
     productionStatus: string;
     parameters: object;
-    // parameterNames: string[];
-    // parameterSubmissions: string[];
 }
