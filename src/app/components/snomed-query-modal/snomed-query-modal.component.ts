@@ -3,7 +3,6 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef }
 import { Query } from '../../models/query';
 import { TemplateService } from '../../services/template.service';
 import { Template } from '../../models/template';
-import { ConfigService } from '../../services/config.service';
 
 
 @Component({
@@ -22,38 +21,25 @@ export class SnomedQueryModalComponent implements OnInit {
     searchTerm: string;
     templates: Template[];
 
-    constructor(private templateService: TemplateService, private configService: ConfigService) {
+    constructor(private templateService: TemplateService) {
     }
 
     ngOnInit() {
         this.templateService.getTemplateConcepts().subscribe(data => {
             this.templates = data;
+            console.log('TEMPLATES: ', this.templates);
         });
 
         for(let key in this.query.parameters['parameterMap']) {
-            let parameter = this.query.parameters['parameterMap'][key];
-            if(parameter.type === 'BOOLEAN') {
-                parameter.value = false
+            if(this.query.parameters['parameterMap'][key].type === 'BOOLEAN') {
+                this.query.parameters['parameterMap'][key].value = false
             }
         }
     }
 
     submitReportRequest() {
-        for(let key in this.query.parameters['parameterMap']) {
-            let parameter = this.query.parameters['parameterMap'][key];
-            if(parameter.type === 'TEMPLATE') {
-                parameter.value = this.buildTemplateUrl(parameter.value);
-            }
-        }
-
-        debugger;
-
         this.submitEmitter.emit();
         this.closeEmitter.emit();
-    }
-
-    buildTemplateUrl(input: string) {
-        return this.configService.environmentEndpoint + 'template-service/templates/' + input;
     }
 
     appendConcept(parameter, result) {
@@ -66,9 +52,5 @@ export class SnomedQueryModalComponent implements OnInit {
         else {
             return result;
         }
-    }
-
-    test() {
-        console.log('CHANGED');
     }
 }
