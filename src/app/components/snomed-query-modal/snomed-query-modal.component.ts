@@ -40,8 +40,6 @@ export class SnomedQueryModalComponent implements OnInit {
                 parameter.value = this.configService.environmentEndpoint + 'template-service';
             }
         }
-
-        console.log('PARAMS: ', this.query.parameters['parameterMap']);
     }
 
     submitReportRequest() {
