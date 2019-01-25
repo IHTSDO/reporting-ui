@@ -10,7 +10,6 @@ export class ConfigService {
 
     constructor(private http: HttpService) {
         this.environmentEndpoint = window.location.origin + '/';
-        // this.environmentEndpoint = 'dev-authoring.ihtsdotools.org';
     }
 
     getUIConfig() {

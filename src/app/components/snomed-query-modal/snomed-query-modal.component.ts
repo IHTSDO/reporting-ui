@@ -5,7 +5,6 @@ import { TemplateService } from '../../services/template.service';
 import { Template } from '../../models/template';
 import { ConfigService } from '../../services/config.service';
 
-
 @Component({
     selector: 'app-snomed-query-modal',
     templateUrl: './snomed-query-modal.component.html',
@@ -38,7 +37,7 @@ export class SnomedQueryModalComponent implements OnInit {
             }
 
             if(parameter.type === 'HIDDEN') {
-                parameter.value = this.configService.environmentEndpoint;
+                parameter.value = this.configService.environmentEndpoint + 'template-service';
             }
         }
     }
