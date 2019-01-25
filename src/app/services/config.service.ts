@@ -9,7 +9,7 @@ export class ConfigService {
     public environmentEndpoint: string;
 
     constructor(private http: HttpService) {
-        this.environmentEndpoint = window.location.host + '/';
+        this.environmentEndpoint = window.location.origin + '/';
         // this.environmentEndpoint = 'dev-authoring.ihtsdotools.org';
     }
 
