@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef }
 import { Query } from '../../models/query';
 import { TemplateService } from '../../services/template.service';
 import { Template } from '../../models/template';
+import { ConfigService } from '../../services/config.service';
 
 
 @Component({
@@ -21,18 +22,23 @@ export class SnomedQueryModalComponent implements OnInit {
     searchTerm: string;
     templates: Template[];
 
-    constructor(private templateService: TemplateService) {
+    constructor(private templateService: TemplateService, private configService: ConfigService) {
     }
 
     ngOnInit() {
         this.templateService.getTemplateConcepts().subscribe(data => {
             this.templates = data;
-            console.log('TEMPLATES: ', this.templates);
         });
 
         for(let key in this.query.parameters['parameterMap']) {
-            if(this.query.parameters['parameterMap'][key].type === 'BOOLEAN') {
-                this.query.parameters['parameterMap'][key].value = false
+            let parameter = this.query.parameters['parameterMap'][key];
+
+            if(parameter.type === 'BOOLEAN') {
+                parameter.value = false
+            }
+
+            if(parameter.type === 'HIDDEN') {
+                parameter.value = this.configService.environmentEndpoint;
             }
         }
     }

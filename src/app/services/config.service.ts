@@ -6,7 +6,11 @@ import { HttpService } from './http.service';
 })
 export class ConfigService {
 
+    public environmentEndpoint: string;
+
     constructor(private http: HttpService) {
+        this.environmentEndpoint = window.location.host + '/';
+        // this.environmentEndpoint = 'dev-authoring.ihtsdotools.org';
     }
 
     getUIConfig() {
