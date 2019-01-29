@@ -28,6 +28,7 @@ export class ReportingComponent implements OnInit {
     // Modal Flags
     openQueryModal: boolean = false;
     openDeleteModal: boolean = false;
+    openWhitelistModal: boolean = false;
 
     constructor(private reportingService: ReportingService) {
     }
@@ -95,5 +96,6 @@ export class ReportingComponent implements OnInit {
     closeModal() {
         this.openQueryModal = false;
         this.openDeleteModal = false;
+        this.openWhitelistModal = false;
     }
 }

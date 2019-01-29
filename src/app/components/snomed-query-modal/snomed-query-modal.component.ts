@@ -42,6 +42,10 @@ export class SnomedQueryModalComponent implements OnInit {
         }
     }
 
+    convertConceptObjectToString(concept) {
+        return concept.id + ' |' + concept.fsn.term + '|';
+    }
+
     submitReportRequest() {
         this.submitEmitter.emit();
         this.closeEmitter.emit();

@@ -12,7 +12,7 @@
                     <div *ngSwitchCase="'CONCEPT'">
                         <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                         <input class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" (keyup)="searchTerm = parameter.value.value">
-                        <app-snomed-typeahead *ngIf="parameter.value.value && !parameter.value.value.includes('|')" [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = $event"></app-snomed-typeahead>
+                        <app-snomed-typeahead *ngIf="parameter.value.value && !parameter.value.value.includes('|')" [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = convertConceptObjectToString($event)"></app-snomed-typeahead>
                     </div>
                     <div *ngSwitchCase="'BOOLEAN'">
                         <label class="m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
@@ -27,12 +27,13 @@
                     <div *ngSwitchCase="'CONCEPT_LIST'">
                         <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                         <textarea #textareaTypeahead class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" (keyup)="searchTerm = parameter.value.value"></textarea>
-                        <app-snomed-typeahead-list [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = appendConcept(parameter.value.value, $event)"></app-snomed-typeahead-list>
+                        <app-snomed-typeahead-list [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = appendConcept(parameter.value.value, convertConceptObjectToString($event))"></app-snomed-typeahead-list>
                         <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
                     </div>
                     <div *ngSwitchCase="'TEMPLATE_NAME'">
                         <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                         <select id="{{parameter.key}}" class="form-control" [(ngModel)]="parameter.value.value">
+                            <option selected></option>
                             <option *ngFor="let template of templates">{{template.name}}</option>
                         </select>
                     </div>

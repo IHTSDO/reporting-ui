@@ -1,0 +1,110 @@
+@import 'src/variables.scss';
+
+div.modal-content {
+    div.modal-header {
+        h3 > span {
+            color: $dove-grey;
+            font-weight: 300;
+            font-size: 1.4rem;
+        }
+
+        button > span {
+            font-size: 2rem;
+        }
+    }
+
+    div.modal-body {
+        input {
+            cursor: text;
+
+            &.input-border {
+                border: 1px solid $alto-white;
+            }
+        }
+
+        table {
+            position: relative;
+            border: none;
+
+            th:first-child, td:first-child {
+                border-left: none;
+            }
+
+            th:last-child, td:last-child {
+                border-right: none;
+            }
+
+            tr:last-child {
+                th, td {
+                    border-bottom: none;
+                }
+            }
+
+            tr {
+                &:hover {
+                    td {
+                        position: relative;
+                        background-color: $gallery-white;
+
+                        > button.delete-button {
+                            display: block;
+                        }
+                    }
+                }
+            }
+
+            th {
+                font-weight: 400;
+            }
+
+            td {
+                button.delete-button {
+                    display: none;
+                    position: absolute;
+                    top: 0;
+                    right: -50px;
+                    background-color: transparent;
+                    color: $crimson-red;
+                    -webkit-animation: delete-move 200ms;
+                    -webkit-animation-delay: 500ms;
+                    -webkit-animation-fill-mode: forwards;
+                    animation: delete-move 200ms;
+                    animation-delay: 500ms;
+                    animation-fill-mode: forwards;
+
+                    @-webkit-keyframes delete-move {
+                        from {
+                            right: -50px;
+                            opacity: 0;
+                        }
+                        to {
+                            right: 0;
+                            opacity: 1;
+                        }
+                    }
+
+                    @keyframes delete-move {
+                        from {
+                            right: -50px;
+                            opacity: 0;
+                        }
+                        to {
+                            right: 0;
+                            opacity: 1;
+                        }
+                    }
+
+                    &:hover {
+                        color: $pomegranate-red;
+                    }
+                }
+            }
+        }
+    }
+
+    div.modal-footer {
+        button {
+            font-weight: 300;
+        }
+    }
+}

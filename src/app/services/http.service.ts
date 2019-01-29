@@ -7,6 +7,7 @@ import { Report } from '../models/report';
 import { Query } from '../models/query';
 import { TypeaheadConcepts } from '../models/typeaheadConcepts';
 import { Template } from '../models/template';
+import { Concept } from '../models/concept';
 
 @Injectable({
     providedIn: 'root'
@@ -42,6 +43,14 @@ export class HttpService {
 
     postDeleteReport(params) {
         return this.http.delete('/schedule-manager/jobs/Report/' + params.jobName + '/runs/' + params.id);
+    }
+
+    getWhitelist(name) {
+        return this.http.get<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist')
+    }
+
+    postWhitelist(name, params) {
+        return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist', JSON.stringify(params), this.options);
     }
 
     // AUTHORING-SERVICES ENDPOINTS
