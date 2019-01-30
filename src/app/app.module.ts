@@ -27,6 +27,7 @@ import { SnomedTypeaheadListComponent } from './components/snomed-typeahead-list
 import { DisplayOrderPipe } from './pipes/display-order.pipe';
 import { HiddenPipe } from './pipes/hidden.pipe';
 import { SnomedWhitelistModalComponent } from './components/snomed-whitelist-modal/snomed-whitelist-modal.component';
+import { OrderByPipe } from './pipes/order-by.pipe';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { SnomedWhitelistModalComponent } from './components/snomed-whitelist-mod
         SnomedTypeaheadListComponent,
         DisplayOrderPipe,
         HiddenPipe,
-        SnomedWhitelistModalComponent
+        SnomedWhitelistModalComponent,
+        OrderByPipe
     ],
     imports: [
         BrowserModule,

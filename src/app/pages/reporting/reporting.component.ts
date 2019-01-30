@@ -54,6 +54,14 @@ export class ReportingComponent implements OnInit {
         }
     }
 
+    parameterValue(report, parameter) {
+        // console.log('REPORT: ', report);
+        // console.log('PARAM: ', parameter);
+        // console.log('VALUE: ', report.parameters.parameterMap[parameter.key].value);
+        // debugger;
+        return report.parameters.parameterMap[parameter.key].value;
+    }
+
     setText(event) {
         this.querySearch = event;
     }
