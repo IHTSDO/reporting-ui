@@ -55,11 +55,12 @@ export class ReportingComponent implements OnInit {
     }
 
     parameterValue(report, parameter) {
-        // console.log('REPORT: ', report);
-        // console.log('PARAM: ', parameter);
-        // console.log('VALUE: ', report.parameters.parameterMap[parameter.key].value);
-        // debugger;
-        return report.parameters.parameterMap[parameter.key].value;
+        if(report.parameters.hasOwnProperty('parameterMap') && report.parameters.parameterMap.hasOwnProperty(parameter.key)) {
+            return report.parameters.parameterMap[parameter.key].value;
+        }
+        else  {
+            return '';
+        }
     }
 
     setText(event) {
