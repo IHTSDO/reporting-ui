@@ -6,14 +6,14 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body p-0">
-            <div class="m-3 position-relative">
+        <div class="modal-body">
+            <div class="position-relative">
                 <label class="w-100 m-0">Add concept to whitelist</label>
                 <input class="w-100 rounded input-border" [(ngModel)]="searchTerm">
-                <app-snomed-typeahead [searchTerm]="searchTerm" (selectEmitter)="addToWhitelist($event)"></app-snomed-typeahead>
+                <app-snomed-typeahead [searchTerm]="searchTerm" [activeFilter]="null" (selectEmitter)="addToWhitelist($event)"></app-snomed-typeahead>
             </div>
 
-            <table class="table table-bordered mb-0 overflow-hidden">
+            <table class="table table-bordered rounded mt-3 mb-0 overflow-hidden">
                 <tr>
                     <th>ID</th>
                     <th>Name</th>

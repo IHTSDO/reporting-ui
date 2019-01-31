@@ -26,20 +26,6 @@ div.modal-content {
             position: relative;
             border: none;
 
-            th:first-child, td:first-child {
-                border-left: none;
-            }
-
-            th:last-child, td:last-child {
-                border-right: none;
-            }
-
-            tr:last-child {
-                th, td {
-                    border-bottom: none;
-                }
-            }
-
             tr {
                 &:hover {
                     td {
@@ -55,6 +41,7 @@ div.modal-content {
 
             th {
                 font-weight: 400;
+                background-color: $gallery-white;
             }
 
             td {

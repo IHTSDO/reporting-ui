@@ -13,7 +13,7 @@
                         <div class="w-100 description mx-0">
                             <p class="float-left py-3 px-3 mb-0">{{query.description}}</p>
                             <div class="float-right m-2">
-                                <button class="btn btn-link p-2 px-3" data-toggle="modal" data-target="#whitelistModal"
+                                <button class="btn btn-outline-primary p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
                                 (click)="openWhitelistModal = true">
                                     Whitelist
                                 </button>
@@ -35,7 +35,6 @@
                             <tr *ngFor="let report of activeReportSet">
                                 <td class="pl-3">{{report.requestTime | date:'short'}}</td>
                                 <td>{{report.issuesReported ? report.issuesReported : '0'}}</td>
-                                <!--<td *ngFor="let parameter of query.parameters.parameterMap | keyvalue | displayOrder:parameter | hidden">{{report?.parameters.parameterMap[parameter.key].value}}</td>-->
                                 <td *ngFor="let parameter of query.parameters.parameterMap | keyvalue | displayOrder:parameter | hidden">{{parameterValue(report, parameter)}}</td>
                                 <ng-container [ngSwitch]="report.status">
                                     <td *ngSwitchCase="'Complete'" class="completed" (click)="viewReport(report)">{{report.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
