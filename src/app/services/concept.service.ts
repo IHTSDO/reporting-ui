@@ -11,7 +11,7 @@ export class ConceptService {
     constructor(private http: HttpService) {
     }
 
-    getTypeaheadConcepts(term): Observable<TypeaheadConcepts> {
+    getTypeaheadConcepts(term, activeFilter): Observable<TypeaheadConcepts> {
         if(!term.trim()) {
             return of(new TypeaheadConcepts());
         }
@@ -20,7 +20,7 @@ export class ConceptService {
             termFilter: term,
             limit: 20,
             expand: 'fsn()',
-            activeFilter: true
+            activeFilter: activeFilter
         };
 
         return this.http.getTypeaheadConcepts(params);

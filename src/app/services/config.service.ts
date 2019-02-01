@@ -6,7 +6,10 @@ import { HttpService } from './http.service';
 })
 export class ConfigService {
 
+    public environmentEndpoint: string;
+
     constructor(private http: HttpService) {
+        this.environmentEndpoint = window.location.origin + '/';
     }
 
     getUIConfig() {

@@ -1,9 +1,6 @@
 @import 'src/variables.scss';
 
-div.modal {
-    z-index: 10001;
-    display: initial;
-
+div.modal-content {
     div.modal-header {
         button > span {
             font-size: 2rem;
@@ -29,6 +26,12 @@ div.modal {
                 border: 1px solid $alto-white;
             }
         }
+
+        select {
+            font-size: 1.4rem;
+            font-weight: 300;
+        }
+
 
         textarea {
             height: 8rem;

@@ -28,6 +28,7 @@ export class ReportingComponent implements OnInit {
     // Modal Flags
     openQueryModal: boolean = false;
     openDeleteModal: boolean = false;
+    openWhitelistModal: boolean = false;
 
     constructor(private reportingService: ReportingService) {
     }
@@ -50,6 +51,15 @@ export class ReportingComponent implements OnInit {
         }
         else {
             this.activeReportSet = null;
+        }
+    }
+
+    parameterValue(report, parameter) {
+        if(report.parameters.hasOwnProperty('parameterMap') && report.parameters.parameterMap.hasOwnProperty(parameter.key)) {
+            return report.parameters.parameterMap[parameter.key].value;
+        }
+        else  {
+            return '';
         }
     }
 
@@ -95,5 +105,6 @@ export class ReportingComponent implements OnInit {
     closeModal() {
         this.openQueryModal = false;
         this.openDeleteModal = false;
+        this.openWhitelistModal = false;
     }
 }
