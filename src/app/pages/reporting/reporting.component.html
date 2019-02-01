@@ -18,7 +18,7 @@
                                     Whitelist
                                 </button>
                                 <button class="btn btn-primary p-2" data-toggle="modal" data-target="#queryModal"
-                                        (click)="(activeQuery.parameters.parameterMap) ? openQueryModal = true : submitReportRequest()">
+                                        (click)="queryModalOpenLogic() ? openQueryModal = true : submitReportRequest()">
                                     Run New Query
                                 </button>
                             </div>

@@ -63,6 +63,20 @@ export class ReportingComponent implements OnInit {
         }
     }
 
+    queryModalOpenLogic() {
+        this.openQueryModal = false;
+
+        if(this.activeQuery.parameters['parameterMap']) {
+            for(let key in this.activeQuery.parameters['parameterMap']) {
+                if(this.activeQuery.parameters['parameterMap'][key].type === 'HIDDEN') {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     setText(event) {
         this.querySearch = event;
     }
