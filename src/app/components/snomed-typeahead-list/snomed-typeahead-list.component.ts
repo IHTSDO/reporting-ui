@@ -53,6 +53,6 @@ export class SnomedTypeaheadListComponent implements OnInit {
 
     selectConcept(result) {
         this.searchTerms.next('');
-        this.selectEmitter.emit(result.id + ' |' + result.fsn.term + '|');
+        this.selectEmitter.emit(result);
     }
 }
