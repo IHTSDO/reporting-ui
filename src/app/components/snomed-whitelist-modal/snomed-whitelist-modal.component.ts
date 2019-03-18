@@ -10,13 +10,17 @@ import { Query } from '../../models/query';
 })
 export class SnomedWhitelistModalComponent implements OnInit {
 
-    searchTerm: string = '';
+    searchTerm = '';
     whitelist: Concept[] = [];
 
     @Input() query: Query;
     @Output() closeEmitter = new EventEmitter();
 
     constructor(private whitelistService: WhitelistService) {
+    }
+
+    static convertTypeaheadToConcept(result) {
+        return { sctId: result.id, fsn: result.fsn.term };
     }
 
     ngOnInit() {
@@ -26,23 +30,21 @@ export class SnomedWhitelistModalComponent implements OnInit {
     }
 
     addToWhitelist(result) {
-        this.whitelist.push(this.convertTypeaheadToConcept(result));
+        this.whitelist.push(SnomedWhitelistModalComponent.convertTypeaheadToConcept(result));
         this.searchTerm = '';
     }
 
-    convertTypeaheadToConcept(result) {
-        return { sctId: result.id, fsn: result.fsn.term };
-    }
+
 
     removeFromWhitelist(concept) {
         this.whitelist = this.whitelist.filter(item => {
-            return item.sctId != concept.sctId
+            return item.sctId !== concept.sctId;
         });
     }
 
     saveWhitelist() {
         this.whitelistService.postWhitelist(this.query.name, this.whitelist).subscribe(() => {
             this.closeEmitter.emit();
-        })
+        });
     }
 }

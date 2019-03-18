@@ -26,9 +26,9 @@ export class ReportingComponent implements OnInit {
     activeReport: Report;
 
     // Modal Flags
-    openQueryModal: boolean = false;
-    openDeleteModal: boolean = false;
-    openWhitelistModal: boolean = false;
+    openQueryModal = false;
+    openDeleteModal = false;
+    openWhitelistModal = false;
 
     constructor(private reportingService: ReportingService) {
     }
@@ -42,23 +42,21 @@ export class ReportingComponent implements OnInit {
     }
 
     refresh() {
-        if(this.activeQuery) {
+        if (this.activeQuery) {
             this.reportingService.getReportSet(this.activeQuery.name).subscribe(data => {
-                if(JSON.stringify(data) !== JSON.stringify(this.activeReportSet)) {
+                if (JSON.stringify(data) !== JSON.stringify(this.activeReportSet)) {
                     this.activeReportSet = data;
                 }
             });
-        }
-        else {
+        } else {
             this.activeReportSet = null;
         }
     }
 
     parameterValue(report, parameter) {
-        if(report.parameters.hasOwnProperty('parameterMap') && report.parameters.parameterMap.hasOwnProperty(parameter.key)) {
+        if (report.parameters.hasOwnProperty('parameterMap') && report.parameters.parameterMap.hasOwnProperty(parameter.key)) {
             return report.parameters.parameterMap[parameter.key].value;
-        }
-        else  {
+        } else  {
             return '';
         }
     }
@@ -74,8 +72,7 @@ export class ReportingComponent implements OnInit {
     switchActiveQuery(query) {
         if (this.activeQuery !== query) {
             this.activeQuery = query;
-        }
-        else {
+        } else {
             this.activeQuery = null;
         }
 

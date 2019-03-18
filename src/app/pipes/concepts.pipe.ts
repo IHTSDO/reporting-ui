@@ -6,10 +6,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ConceptsPipe implements PipeTransform {
 
     transform(items: any, args?: any): any {
-        if(!items) return [];
-        if(!('items' in items)) return [];
+        if (!items) {
+            return [];
+        }
+        if (!('items' in items)) {
+            return [];
+        }
 
-        let values = [];
+        const values = [];
 
         items.items.forEach((item) => {
             values.push(item);
@@ -17,5 +21,4 @@ export class ConceptsPipe implements PipeTransform {
 
         return values;
     }
-
 }

@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SnomedNavbarComponent } from './snomed-navbar.component';
 
 describe('SnomedNavbarComponent', () => {
@@ -8,9 +7,10 @@ describe('SnomedNavbarComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [SnomedNavbarComponent]
-        })
-            .compileComponents();
+            declarations: [
+                SnomedNavbarComponent
+            ]
+        }).compileComponents();
     }));
 
     beforeEach(() => {

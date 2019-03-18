@@ -29,15 +29,17 @@ export class SnomedQueryModalComponent implements OnInit {
             this.templates = data;
         });
 
-        for(let key in this.query.parameters['parameterMap']) {
-            let parameter = this.query.parameters['parameterMap'][key];
+        for (const key in this.query.parameters['parameterMap']) {
+            if (this.query.parameters['parameterMap'].hasOwnProperty(key)) {
+                const parameter = this.query.parameters['parameterMap'][key];
 
-            if(parameter.type === 'BOOLEAN') {
-                parameter.value = false
-            }
+                if (parameter.type === 'BOOLEAN') {
+                    parameter.value = false;
+                }
 
-            if(parameter.type === 'HIDDEN') {
-                parameter.value = this.configService.environmentEndpoint + 'template-service';
+                if (parameter.type === 'HIDDEN') {
+                    parameter.value = this.configService.environmentEndpoint + 'template-service';
+                }
             }
         }
     }
@@ -55,10 +57,9 @@ export class SnomedQueryModalComponent implements OnInit {
 
         this.inputElement.nativeElement.focus();
 
-        if(parameter.includes(',')) {
+        if (parameter.includes(',')) {
             return parameter.slice(0, parameter.lastIndexOf(',')) + ', ' + result;
-        }
-        else {
+        } else {
             return result;
         }
     }

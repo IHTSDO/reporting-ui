@@ -32,8 +32,7 @@ export class SnomedLeftSidebarComponent implements OnInit {
         if (this.activeCategory !== category) {
             this.activeCategory = category;
             this.categoryEmitter.emit(this.activeCategory);
-        }
-        else {
+        } else {
             this.activeCategory = null;
             this.categoryEmitter.emit(null);
         }

@@ -8,7 +8,6 @@ import { MatTooltipModule, MatCheckboxModule } from '@angular/material';
 
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
-import { SnomedOverlayComponent } from './components/snomed-overlay/snomed-overlay.component';
 import { SnomedQueryModalComponent } from './components/snomed-query-modal/snomed-query-modal.component';
 import { SnomedLeftSidebarComponent } from './components/snomed-left-sidebar/snomed-left-sidebar.component';
 import { ReportingComponent } from './pages/reporting/reporting.component';
@@ -38,7 +37,6 @@ import { OrderByPipe } from './pipes/order-by.pipe';
         SnomedLeftSidebarComponent,
         SnomedQueryModalComponent,
         SnomedDeleteModalComponent,
-        SnomedOverlayComponent,
         CategoryPipe,
         ConceptsPipe,
         SnomedTypeaheadComponent,

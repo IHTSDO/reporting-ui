@@ -18,7 +18,7 @@ export class ReportingService {
     }
 
     postReport(query) {
-        let params = {
+        const params = {
             jobName: query.name,
             parameters: query.parameters
         };

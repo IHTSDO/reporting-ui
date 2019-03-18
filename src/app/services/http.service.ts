@@ -21,7 +21,7 @@ export class HttpService {
     }
 
     createHeaders(): void {
-        let headers = new HttpHeaders({
+        const headers = new HttpHeaders({
             'Content-Type': 'application/json'
         });
 
@@ -46,7 +46,7 @@ export class HttpService {
     }
 
     getWhitelist(name) {
-        return this.http.get<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist')
+        return this.http.get<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist');
     }
 
     postWhitelist(name, params) {
