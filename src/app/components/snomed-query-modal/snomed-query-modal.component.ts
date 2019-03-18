@@ -4,6 +4,7 @@ import { Query } from '../../models/query';
 import { TemplateService } from '../../services/template.service';
 import { Template } from '../../models/template';
 import { ConfigService } from '../../services/config.service';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
     selector: 'app-snomed-query-modal',
@@ -20,13 +21,18 @@ export class SnomedQueryModalComponent implements OnInit {
 
     searchTerm: string;
     templates: Template[];
+    projects: object[];
 
-    constructor(private templateService: TemplateService, private configService: ConfigService) {
+    constructor(private templateService: TemplateService, private configService: ConfigService, private projectService: ProjectService) {
     }
 
     ngOnInit() {
         this.templateService.getTemplateConcepts().subscribe(data => {
             this.templates = data;
+        });
+
+        this.projectService.getProjects().subscribe(data => {
+            this.projects = data;
         });
 
         for (const key in this.query.parameters['parameterMap']) {
