@@ -7,7 +7,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <div *ngFor="let parameter of query.parameters.parameterMap | keyvalue | displayOrder:parameter" class="pb-2 position-relative">
+            <div *ngFor="let parameter of query?.parameters.parameterMap | keyvalue | displayOrder:parameter" class="pb-2 position-relative">
                 <ng-container [ngSwitch]="parameter.value.type">
                     <div *ngSwitchCase="'CONCEPT'">
                         <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
