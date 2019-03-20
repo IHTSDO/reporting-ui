@@ -14,13 +14,20 @@ div.modal-content {
     }
 
     div.modal-body {
-        input {
+        textarea {
             cursor: text;
+            height: 8rem;
+            resize: none;
 
             &.input-border {
                 border: 1px solid $alto-white;
             }
         }
+
+        div.typeahead-textarea {
+            top: 8rem;
+        }
+
 
         table {
             position: relative;

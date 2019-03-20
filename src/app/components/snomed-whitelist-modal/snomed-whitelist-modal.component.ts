@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef } from '@angular/core';
 import { WhitelistService } from '../../services/whitelist.service';
 import { Concept } from '../../models/concept';
 import { Query } from '../../models/query';
@@ -16,11 +16,22 @@ export class SnomedWhitelistModalComponent implements OnInit {
     @Input() query: Query;
     @Output() closeEmitter = new EventEmitter();
 
+    @ViewChild('textareaTypeahead') inputElement: ElementRef;
+
     constructor(private whitelistService: WhitelistService) {
     }
 
-    static convertTypeaheadToConcept(result) {
-        return { sctId: result.id, fsn: result.fsn.term };
+    static convertTypeaheadObjectToString(input) {
+        return input.id + ' |' + input.fsn.term + '|';
+    }
+
+    static convertStringToConceptObject(input) {
+        input = input.trim();
+
+        const sctId = Number(input.match(/\d+/)[0]);
+        const fsn = input.slice(input.indexOf('|') + 1, input.lastIndexOf('|'));
+
+        return { sctId: sctId, fsn: fsn};
     }
 
     ngOnInit() {
@@ -29,22 +40,35 @@ export class SnomedWhitelistModalComponent implements OnInit {
         });
     }
 
-    addToWhitelist(result) {
-        this.whitelist.push(SnomedWhitelistModalComponent.convertTypeaheadToConcept(result));
-        this.searchTerm = '';
+    addToSearchTerm(result) {
+        this.searchTerm = this.appendConcept(SnomedWhitelistModalComponent.convertTypeaheadObjectToString(result));
     }
 
+    appendConcept(result) {
 
+        this.inputElement.nativeElement.focus();
+
+        if (this.searchTerm.includes(',')) {
+            return this.searchTerm.slice(0, this.searchTerm.lastIndexOf(',')) + ', ' + result;
+        } else {
+            return result;
+        }
+    }
+
+    saveWhitelist() {
+        if (this.searchTerm) {
+            this.searchTerm.split(',').forEach(item => {
+                this.whitelist.push(SnomedWhitelistModalComponent.convertStringToConceptObject(item));
+            });
+
+            this.searchTerm = '';
+        }
+        this.whitelistService.postWhitelist(this.query.name, this.whitelist).subscribe();
+    }
 
     removeFromWhitelist(concept) {
         this.whitelist = this.whitelist.filter(item => {
             return item.sctId !== concept.sctId;
-        });
-    }
-
-    saveWhitelist() {
-        this.whitelistService.postWhitelist(this.query.name, this.whitelist).subscribe(() => {
-            this.closeEmitter.emit();
         });
     }
 }

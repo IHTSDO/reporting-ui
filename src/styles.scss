@@ -55,7 +55,7 @@ div.typeahead-box {
     //border: 1px solid $alto-white;
     max-height: 20rem;
     position: absolute;
-    top: 46px;
+    top: 4.5rem;
     left: 0;
     overflow-y: scroll;
     z-index: 10002;
@@ -68,6 +68,10 @@ div.typeahead-box {
             background-color: $alto-white;
         }
     }
+}
+
+div.typeahead-textarea {
+    top: 10rem;
 }
 
 div.modal {
