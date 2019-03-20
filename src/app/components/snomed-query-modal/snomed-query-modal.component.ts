@@ -40,7 +40,7 @@ export class SnomedQueryModalComponent implements OnInit {
                 const parameter = this.query.parameters['parameterMap'][key];
 
                 if (parameter.type === 'BOOLEAN') {
-                    parameter.value = false;
+                    parameter.value = JSON.parse(parameter.defaultValue);
                 }
 
                 if (parameter.type === 'HIDDEN') {
