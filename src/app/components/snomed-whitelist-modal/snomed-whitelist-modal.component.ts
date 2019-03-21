@@ -2,14 +2,31 @@ import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef }
 import { WhitelistService } from '../../services/whitelist.service';
 import { Concept } from '../../models/concept';
 import { Query } from '../../models/query';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
     selector: 'app-snomed-whitelist-modal',
     templateUrl: './snomed-whitelist-modal.component.html',
-    styleUrls: ['./snomed-whitelist-modal.component.scss']
+    styleUrls: ['./snomed-whitelist-modal.component.scss'],
+    animations: [
+        trigger('slide', [
+            state('start', style({ opacity: 0, transform: 'translateY(200%)'})),
+            state('end', style({ opacity: 0, transform: 'translateY(-200%)'})),
+            transition('start <=> end', [
+                animate('2000ms ease-in', keyframes([
+                    style({opacity: 0, transform: 'translateY(200%)', offset: 0}),
+                    style({opacity: 1, transform: 'translateY(0)', offset: 0.1}),
+                    style({opacity: 1, transform: 'translateY(0)', offset: 0.8}),
+                    style({opacity: 0, transform: 'translateY(-200%)', offset: 1.0})
+                ]))
+            ])
+        ])
+    ]
 })
 export class SnomedWhitelistModalComponent implements OnInit {
 
+    saved = 'start';
+    saveResponse: string;
     searchTerm = '';
     whitelist: Concept[] = [];
 
@@ -63,7 +80,18 @@ export class SnomedWhitelistModalComponent implements OnInit {
 
             this.searchTerm = '';
         }
-        this.whitelistService.postWhitelist(this.query.name, this.whitelist).subscribe();
+        this.whitelistService.postWhitelist(this.query.name, this.whitelist).subscribe(
+            () => {
+                this.saveAnimation(true);
+            },
+            () => {
+                this.saveAnimation(false);
+            });
+    }
+
+    saveAnimation (success) {
+        this.saveResponse = success ? 'Saved' : 'Error';
+        this.saved = (this.saved === 'start' ? 'end' : 'start');
     }
 
     removeFromWhitelist(concept) {

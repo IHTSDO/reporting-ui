@@ -28,6 +28,7 @@
             </table>
         </div>
         <div class="modal-footer">
+            <div [@slide]="saved" class="px-3 saved">{{saveResponse}}</div>
             <button type="button" class="btn btn-primary" (click)="saveWhitelist()">Save Whitelist</button>
         </div>
     </div>

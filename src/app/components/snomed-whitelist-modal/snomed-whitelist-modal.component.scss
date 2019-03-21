@@ -97,6 +97,16 @@ div.modal-content {
     }
 
     div.modal-footer {
+        overflow: hidden;
+
+        div.saved {
+            color: $forest-green;
+        }
+
+        div.error {
+            color: $crimson-red;
+        }
+
         button {
             font-weight: 300;
         }
