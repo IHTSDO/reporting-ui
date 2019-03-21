@@ -5,6 +5,7 @@ import { TemplateService } from '../../services/template.service';
 import { Template } from '../../models/template';
 import { ConfigService } from '../../services/config.service';
 import { ProjectService } from '../../services/project.service';
+import { UtilityService } from '../../services/utility.service';
 
 @Component({
     selector: 'app-snomed-query-modal',
@@ -50,8 +51,8 @@ export class SnomedQueryModalComponent implements OnInit {
         }
     }
 
-    convertConceptObjectToString(concept) {
-        return concept.id + ' |' + concept.fsn.term + '|';
+    convertConceptObjectToString(input) {
+        return UtilityService.convertConceptObjectToString(input);
     }
 
     submitReportRequest() {
@@ -59,14 +60,14 @@ export class SnomedQueryModalComponent implements OnInit {
         this.closeEmitter.emit();
     }
 
-    appendConcept(parameter, result) {
+    appendConcept(stringList, string) {
 
         this.inputElement.nativeElement.focus();
 
-        if (parameter.includes(',')) {
-            return parameter.slice(0, parameter.lastIndexOf(',')) + ', ' + result;
+        if (stringList.includes(',')) {
+            return UtilityService.appendStringToStringList(stringList, string);
         } else {
-            return result;
+            return string;
         }
     }
 }

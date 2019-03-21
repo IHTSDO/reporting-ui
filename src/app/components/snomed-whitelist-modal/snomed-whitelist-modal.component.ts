@@ -3,6 +3,7 @@ import { WhitelistService } from '../../services/whitelist.service';
 import { Concept } from '../../models/concept';
 import { Query } from '../../models/query';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { UtilityService } from '../../services/utility.service';
 
 @Component({
     selector: 'app-snomed-whitelist-modal',
@@ -38,19 +39,6 @@ export class SnomedWhitelistModalComponent implements OnInit {
     constructor(private whitelistService: WhitelistService) {
     }
 
-    static convertTypeaheadObjectToString(input) {
-        return input.id + ' |' + input.fsn.term + '|';
-    }
-
-    static convertStringToConceptObject(input) {
-        input = input.trim();
-
-        const sctId = Number(input.match(/\d+/)[0]);
-        const fsn = input.slice(input.indexOf('|') + 1, input.lastIndexOf('|'));
-
-        return { sctId: sctId, fsn: fsn};
-    }
-
     ngOnInit() {
         this.whitelistService.getWhitelist(this.query.name).subscribe(data => {
             this.whitelist = data;
@@ -58,24 +46,24 @@ export class SnomedWhitelistModalComponent implements OnInit {
     }
 
     addToSearchTerm(result) {
-        this.searchTerm = this.appendConcept(SnomedWhitelistModalComponent.convertTypeaheadObjectToString(result));
+        this.searchTerm = this.appendConcept(this.searchTerm, UtilityService.convertConceptObjectToString(result));
     }
 
-    appendConcept(result) {
+    appendConcept(stringList, string) {
 
         this.inputElement.nativeElement.focus();
 
-        if (this.searchTerm.includes(',')) {
-            return this.searchTerm.slice(0, this.searchTerm.lastIndexOf(',')) + ', ' + result;
+        if (stringList.includes(',')) {
+            return UtilityService.appendStringToStringList(stringList, string);
         } else {
-            return result;
+            return string;
         }
     }
 
     saveWhitelist() {
         if (this.searchTerm) {
             this.searchTerm.split(',').forEach(item => {
-                this.whitelist.push(SnomedWhitelistModalComponent.convertStringToConceptObject(item));
+                this.whitelist.push(UtilityService.convertStringToConceptObject(item));
             });
 
             this.searchTerm = '';
