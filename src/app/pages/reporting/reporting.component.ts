@@ -79,6 +79,17 @@ export class ReportingComponent implements OnInit {
         this.switchActiveReportSet();
     }
 
+    parametersExistCheck(params) {
+        for (const param in params) {
+            if (params.hasOwnProperty(param)) {
+                if (params[param].type !== 'HIDDEN') {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     switchActiveReportSet() {
         this.activeReportSet = null;
         this.refresh();

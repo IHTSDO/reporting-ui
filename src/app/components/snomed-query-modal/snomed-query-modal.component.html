@@ -52,6 +52,7 @@
                             <option *ngFor="let project of projects | orderBy:'title'">{{project.title}}</option>
                         </select>
                     </div>
+                    <div *ngSwitchCase="'HIDDEN'"></div>
                     <div *ngSwitchDefault>
                         <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}}</label>
                         <input id="{{parameter.key}}" name="{{parameter.key}}" class="w-100 rounded input-border px-1" [(ngModel)]="parameter.value.value">
