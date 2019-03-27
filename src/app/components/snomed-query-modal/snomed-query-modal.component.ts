@@ -39,11 +39,12 @@ export class SnomedQueryModalComponent implements OnInit {
         for (const key in this.query.parameters['parameterMap']) {
             if (this.query.parameters['parameterMap'].hasOwnProperty(key)) {
                 const parameter = this.query.parameters['parameterMap'][key];
-
                 if (parameter.type === 'BOOLEAN') {
                     parameter.value = JSON.parse(parameter.defaultValue);
                 }
-
+                if (parameter.type === 'PROJECT') {
+                    parameter.value = 'MAIN';
+                }
                 if (parameter.type === 'HIDDEN') {
                     parameter.value = this.configService.environmentEndpoint + 'template-service';
                 }

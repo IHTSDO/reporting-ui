@@ -48,8 +48,8 @@
                     <div *ngSwitchCase="'PROJECT'">
                         <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                         <select id="{{parameter.key}}" class="form-control" [(ngModel)]="parameter.value.value">
-                            <option selected></option>
-                            <option *ngFor="let project of projects | orderBy:'title'">{{project.title}}</option>
+                            <option selected>MAIN</option>
+                            <option *ngFor="let project of projects | orderBy:'title'">{{project.key}}</option>
                         </select>
                     </div>
                     <div *ngSwitchCase="'HIDDEN'"></div>
