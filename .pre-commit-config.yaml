@@ -11,3 +11,12 @@ repos:
             -   id: detect-private-key
                 name: Detect Private Key
                 description: Checks for the existence of private keys
+    -   repo: git://github.com/awebdeveloper/pre-commit-tslint/
+        rev: v0.0.2
+        hooks:
+            -   id: tslint
+                name: tslint
+                entry: tslint
+                language: node
+                files: \.(ts)$
+                args: []
