@@ -12,11 +12,11 @@ export class ConceptService {
     }
 
     getTypeaheadConcepts(term, activeFilter): Observable<TypeaheadConcepts> {
-        if(!term.trim()) {
+        if (!term.trim()) {
             return of(new TypeaheadConcepts());
         }
 
-        let params = {
+        const params = {
             termFilter: term,
             limit: 20,
             expand: 'fsn()',

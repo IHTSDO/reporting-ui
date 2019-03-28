@@ -21,7 +21,7 @@ export class HttpService {
     }
 
     createHeaders(): void {
-        let headers = new HttpHeaders({
+        const headers = new HttpHeaders({
             'Content-Type': 'application/json'
         });
 
@@ -46,16 +46,21 @@ export class HttpService {
     }
 
     getWhitelist(name) {
-        return this.http.get<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist')
+        return this.http.get<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist');
     }
 
     postWhitelist(name, params) {
         return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist', JSON.stringify(params), this.options);
     }
 
-    // AUTHORING-SERVICES ENDPOINTS
+    // SNOWOWL ENDPOINTS
     getTypeaheadConcepts(params): Observable<TypeaheadConcepts> {
         return this.http.post<TypeaheadConcepts>('/snowowl/snomed-ct/v2/MAIN/concepts/search', params, this.options);
+    }
+
+    // AUTHORING-SERVICES ENDPOINTS
+    getProjects(): Observable<object[]> {
+        return this.http.get<object[]>('/authoring-services/projects');
     }
 
     // TEMPLATE-SERVICE ENDPOINTS

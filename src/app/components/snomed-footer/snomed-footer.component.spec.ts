@@ -8,9 +8,10 @@ describe('SnomedFooterComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [SnomedFooterComponent]
-        })
-            .compileComponents();
+            declarations: [
+                SnomedFooterComponent
+            ]
+        }).compileComponents();
     }));
 
     beforeEach(() => {

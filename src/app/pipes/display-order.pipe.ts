@@ -6,10 +6,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DisplayOrderPipe implements PipeTransform {
 
     transform(items: any, args?: any): any {
-        if(!items) return [];
+        if (!items) {
+            return [];
+        }
 
-        items.sort(function(a,b){
-            return a.value.displayOrder - b.value.displayOrder
+        items.sort(function(a, b) {
+            return a.value.displayOrder - b.value.displayOrder;
         });
 
         return items;

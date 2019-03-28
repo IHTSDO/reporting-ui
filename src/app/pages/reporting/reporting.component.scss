@@ -41,15 +41,90 @@ div#reporting {
                     position: relative;
                     border: none;
 
-                    th:first-child, td:first-child {
+                    th {
+                        font-weight: 400;
+                    }
+
+                    th:first-child {
                         border-left: none;
                     }
 
-                    th:last-child, td:last-child {
+                    th:last-child {
                         border-right: none;
                     }
 
                     tr {
+                        td {
+                            &.completed {
+                                cursor: pointer;
+                                color: $forest-green;
+
+                                &:hover {
+                                    color: $apple-green;
+                                }
+                            }
+
+                            &.failed {
+                                cursor: pointer;
+                                color: $crimson-red;
+
+                                &:hover {
+                                    color: $pomegranate-red;
+                                }
+                            }
+
+                            button.delete-button {
+                                display: none;
+                                position: absolute;
+                                top: 0;
+                                right: -50px;
+                                background-color: transparent;
+                                color: $crimson-red;
+                                -webkit-animation: delete-move 200ms;
+                                -webkit-animation-delay: 500ms;
+                                -webkit-animation-fill-mode: forwards;
+                                animation: delete-move 200ms;
+                                animation-delay: 500ms;
+                                animation-fill-mode: forwards;
+
+                                @-webkit-keyframes delete-move {
+                                    from {
+                                        right: -50px;
+                                        opacity: 0;
+                                    }
+
+                                    to {
+                                        right: 0;
+                                        opacity: 1;
+                                    }
+                                }
+
+                                @keyframes delete-move {
+                                    from {
+                                        right: -50px;
+                                        opacity: 0;
+                                    }
+
+                                    to {
+                                        right: 0;
+                                        opacity: 1;
+                                    }
+                                }
+
+                                &:hover {
+                                    color: $pomegranate-red;
+                                }
+                            }
+                        }
+
+                        td:first-child {
+                            border-left: none;
+                        }
+
+                        td:last-child {
+                            border-right: none;
+                        }
+
                         &:hover {
                             td {
                                 background-color: $gallery-white;
@@ -58,71 +133,6 @@ div#reporting {
                                 > button.delete-button {
                                     display: block;
                                 }
-                            }
-                        }
-                    }
-
-                    th {
-                        font-weight: 400;
-                    }
-
-                    td {
-                        &.completed {
-                            cursor: pointer;
-                            color: $forest-green;
-
-                            &:hover {
-                                color: $apple-green;
-                            }
-                        }
-
-                        &.failed {
-                            cursor: pointer;
-                            color: $crimson-red;
-
-                            &:hover {
-                                color: $pomegranate-red;
-                            }
-                        }
-
-                        button.delete-button {
-                            display: none;
-                            position: absolute;
-                            top: 0;
-                            right: -50px;
-                            background-color: transparent;
-                            color: $crimson-red;
-                            -webkit-animation: delete-move 200ms;
-                            -webkit-animation-delay: 500ms;
-                            -webkit-animation-fill-mode: forwards;
-                            animation: delete-move 200ms;
-                            animation-delay: 500ms;
-                            animation-fill-mode: forwards;
-
-                            @-webkit-keyframes delete-move {
-                                from {
-                                    right: -50px;
-                                    opacity: 0;
-                                }
-                                to {
-                                    right: 0;
-                                    opacity: 1;
-                                }
-                            }
-
-                            @keyframes delete-move {
-                                from {
-                                    right: -50px;
-                                    opacity: 0;
-                                }
-                                to {
-                                    right: 0;
-                                    opacity: 1;
-                                }
-                            }
-
-                            &:hover {
-                                color: $pomegranate-red;
                             }
                         }
                     }

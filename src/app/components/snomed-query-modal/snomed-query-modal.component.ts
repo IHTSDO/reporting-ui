@@ -4,6 +4,8 @@ import { Query } from '../../models/query';
 import { TemplateService } from '../../services/template.service';
 import { Template } from '../../models/template';
 import { ConfigService } from '../../services/config.service';
+import { ProjectService } from '../../services/project.service';
+import { UtilityService } from '../../services/utility.service';
 
 @Component({
     selector: 'app-snomed-query-modal',
@@ -20,8 +22,9 @@ export class SnomedQueryModalComponent implements OnInit {
 
     searchTerm: string;
     templates: Template[];
+    projects: object[];
 
-    constructor(private templateService: TemplateService, private configService: ConfigService) {
+    constructor(private templateService: TemplateService, private configService: ConfigService, private projectService: ProjectService) {
     }
 
     ngOnInit() {
@@ -29,21 +32,28 @@ export class SnomedQueryModalComponent implements OnInit {
             this.templates = data;
         });
 
-        for(let key in this.query.parameters['parameterMap']) {
-            let parameter = this.query.parameters['parameterMap'][key];
+        this.projectService.getProjects().subscribe(data => {
+            this.projects = data;
+        });
 
-            if(parameter.type === 'BOOLEAN') {
-                parameter.value = false
-            }
-
-            if(parameter.type === 'HIDDEN') {
-                parameter.value = this.configService.environmentEndpoint + 'template-service';
+        for (const key in this.query.parameters['parameterMap']) {
+            if (this.query.parameters['parameterMap'].hasOwnProperty(key)) {
+                const parameter = this.query.parameters['parameterMap'][key];
+                if (parameter.type === 'BOOLEAN') {
+                    parameter.value = JSON.parse(parameter.defaultValue);
+                }
+                if (parameter.type === 'PROJECT') {
+                    parameter.value = 'MAIN';
+                }
+                if (parameter.type === 'HIDDEN') {
+                    parameter.value = this.configService.environmentEndpoint + 'template-service';
+                }
             }
         }
     }
 
-    convertConceptObjectToString(concept) {
-        return concept.id + ' |' + concept.fsn.term + '|';
+    convertConceptObjectToString(input) {
+        return UtilityService.convertConceptObjectToString(input);
     }
 
     submitReportRequest() {
@@ -51,15 +61,14 @@ export class SnomedQueryModalComponent implements OnInit {
         this.closeEmitter.emit();
     }
 
-    appendConcept(parameter, result) {
+    appendConcept(stringList, string) {
 
         this.inputElement.nativeElement.focus();
 
-        if(parameter.includes(',')) {
-            return parameter.slice(0, parameter.lastIndexOf(',')) + ', ' + result;
-        }
-        else {
-            return result;
+        if (stringList.includes(',')) {
+            return UtilityService.appendStringToStringList(stringList, string);
+        } else {
+            return string;
         }
     }
 }

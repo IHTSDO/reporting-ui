@@ -1,20 +1,40 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef } from '@angular/core';
 import { WhitelistService } from '../../services/whitelist.service';
 import { Concept } from '../../models/concept';
 import { Query } from '../../models/query';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { UtilityService } from '../../services/utility.service';
 
 @Component({
     selector: 'app-snomed-whitelist-modal',
     templateUrl: './snomed-whitelist-modal.component.html',
-    styleUrls: ['./snomed-whitelist-modal.component.scss']
+    styleUrls: ['./snomed-whitelist-modal.component.scss'],
+    animations: [
+        trigger('slide', [
+            state('start', style({ opacity: 0, transform: 'translateY(200%)'})),
+            state('end', style({ opacity: 0, transform: 'translateY(-200%)'})),
+            transition('start <=> end', [
+                animate('2000ms ease-in', keyframes([
+                    style({opacity: 0, transform: 'translateY(200%)', offset: 0}),
+                    style({opacity: 1, transform: 'translateY(0)', offset: 0.1}),
+                    style({opacity: 1, transform: 'translateY(0)', offset: 0.8}),
+                    style({opacity: 0, transform: 'translateY(-200%)', offset: 1.0})
+                ]))
+            ])
+        ])
+    ]
 })
 export class SnomedWhitelistModalComponent implements OnInit {
 
-    searchTerm: string = '';
+    saved = 'start';
+    saveResponse: string;
+    searchTerm = '';
     whitelist: Concept[] = [];
 
     @Input() query: Query;
     @Output() closeEmitter = new EventEmitter();
+
+    @ViewChild('textareaTypeahead') inputElement: ElementRef;
 
     constructor(private whitelistService: WhitelistService) {
     }
@@ -25,24 +45,46 @@ export class SnomedWhitelistModalComponent implements OnInit {
         });
     }
 
-    addToWhitelist(result) {
-        this.whitelist.push(this.convertTypeaheadToConcept(result));
-        this.searchTerm = '';
+    addToSearchTerm(result) {
+        this.searchTerm = this.appendConcept(this.searchTerm, UtilityService.convertConceptObjectToString(result));
     }
 
-    convertTypeaheadToConcept(result) {
-        return { sctId: result.id, fsn: result.fsn.term };
+    appendConcept(stringList, string) {
+
+        this.inputElement.nativeElement.focus();
+
+        if (stringList.includes(',')) {
+            return UtilityService.appendStringToStringList(stringList, string);
+        } else {
+            return string;
+        }
+    }
+
+    saveWhitelist() {
+        if (this.searchTerm) {
+            this.searchTerm.split(',').forEach(item => {
+                this.whitelist.push(UtilityService.convertStringToConceptObject(item));
+            });
+
+            this.searchTerm = '';
+        }
+        this.whitelistService.postWhitelist(this.query.name, this.whitelist).subscribe(
+            () => {
+                this.saveAnimation(true);
+            },
+            () => {
+                this.saveAnimation(false);
+            });
+    }
+
+    saveAnimation (success) {
+        this.saveResponse = success ? 'Saved' : 'Error';
+        this.saved = (this.saved === 'start' ? 'end' : 'start');
     }
 
     removeFromWhitelist(concept) {
         this.whitelist = this.whitelist.filter(item => {
-            return item.sctId != concept.sctId
+            return item.sctId !== concept.sctId;
         });
-    }
-
-    saveWhitelist() {
-        this.whitelistService.postWhitelist(this.query.name, this.whitelist).subscribe(() => {
-            this.closeEmitter.emit();
-        })
     }
 }

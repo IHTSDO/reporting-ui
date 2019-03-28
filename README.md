@@ -1,6 +1,9 @@
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/IHTSDO/reporting-ui.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/IHTSDO/reporting-ui/context:javascript)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/IHTSDO/reporting-ui.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/IHTSDO/reporting-ui/alerts/)
+
 # ReportingUI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.1.
 
 ## Development server
 

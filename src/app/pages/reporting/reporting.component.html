@@ -13,12 +13,12 @@
                         <div class="w-100 description mx-0">
                             <p class="float-left py-3 px-3 mb-0">{{query.description}}</p>
                             <div class="float-right m-2">
-                                <button class="btn btn-outline-primary p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
+                                <button class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
                                 (click)="openWhitelistModal = true">
                                     Whitelist
                                 </button>
                                 <button class="btn btn-primary p-2" data-toggle="modal" data-target="#queryModal"
-                                        (click)="(activeQuery.parameters.parameterMap) ? openQueryModal = true : submitReportRequest()">
+                                        (click)="parametersExistCheck(activeQuery.parameters['parameterMap']) ? openQueryModal = true : submitReportRequest()">
                                     Run New Query
                                 </button>
                             </div>

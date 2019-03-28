@@ -1,25 +1,31 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { async, TestBed } from '@angular/core/testing';
 import { SnomedTypeaheadComponent } from './snomed-typeahead.component';
+import { ConceptsPipe } from '../../pipes/concepts.pipe';
+import { HttpClientModule } from '@angular/common/http';
+import { ConceptService } from '../../services/concept.service';
 
 describe('SnomedTypeaheadComponent', () => {
-  let component: SnomedTypeaheadComponent;
-  let fixture: ComponentFixture<SnomedTypeaheadComponent>;
+    let component: SnomedTypeaheadComponent;
+    let conceptService: ConceptService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SnomedTypeaheadComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                SnomedTypeaheadComponent,
+                ConceptsPipe
+            ],
+            imports: [
+                HttpClientModule
+            ]
+        }).compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SnomedTypeaheadComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        conceptService = new ConceptService(null);
+        component = new SnomedTypeaheadComponent(conceptService);
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

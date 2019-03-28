@@ -1,17 +1,21 @@
-import { TestBed, inject } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
-
+import { TestBed } from '@angular/core/testing';
 import { HttpService } from './http.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('HttpService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [HttpService],
-            imports: [HttpClientModule]
+            providers: [
+                HttpService
+            ],
+            imports: [
+                HttpClientModule
+            ]
         });
     });
 
-    it('should be created', inject([HttpService], (service: HttpService) => {
+    it('should be created', () => {
+        const service: HttpService = TestBed.get(HttpService);
         expect(service).toBeTruthy();
-    }));
+    });
 });

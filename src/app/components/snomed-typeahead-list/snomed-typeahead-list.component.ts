@@ -14,7 +14,7 @@ export class SnomedTypeaheadListComponent implements OnInit {
 
     term: string;
 
-    @Input() activeFilter: boolean = true;
+    @Input() activeFilter = true;
     @Input() set searchTerm(value: string) {
         this.term = value;
         this.search(this.term);
@@ -31,12 +31,18 @@ export class SnomedTypeaheadListComponent implements OnInit {
         this.results = this.searchTerms.pipe(
             debounceTime(300),
             distinctUntilChanged(),
-            switchMap((term: string) => (term.length >= typeaheadMinimumLength) ? this.conceptService.getTypeaheadConcepts(term, this.activeFilter) : of(new TypeaheadConcepts()))
+            switchMap((term: string) => {
+                if (term.length >= typeaheadMinimumLength) {
+                    return this.conceptService.getTypeaheadConcepts(term, this.activeFilter);
+                } else {
+                    return of(new TypeaheadConcepts());
+                }
+            })
         );
     }
 
     search(term: string): void {
-        if(term && term.includes(',')) {
+        if (term && term.includes(',')) {
             term = term.trim();
             term.indexOf(',');
             term = term.slice(term.lastIndexOf(',') + 1);
@@ -47,6 +53,6 @@ export class SnomedTypeaheadListComponent implements OnInit {
 
     selectConcept(result) {
         this.searchTerms.next('');
-        this.selectEmitter.emit(result.id + ' |' + result.fsn.term + '|');
+        this.selectEmitter.emit(result);
     }
 }

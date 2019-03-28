@@ -7,7 +7,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <div *ngFor="let parameter of query.parameters.parameterMap | keyvalue | displayOrder:parameter" class="pb-2 position-relative">
+            <div *ngFor="let parameter of query?.parameters['parameterMap'] | keyvalue | displayOrder" class="pb-2 position-relative">
                 <ng-container [ngSwitch]="parameter.value.type">
                     <div *ngSwitchCase="'CONCEPT'">
                         <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
@@ -44,6 +44,18 @@
                     <div *ngSwitchCase="'ECL'">
                         <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                         <textarea class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value"></textarea>
+                    </div>
+                    <div *ngSwitchCase="'PROJECT'">
+                        <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
+                        <select id="{{parameter.key}}" class="form-control" [(ngModel)]="parameter.value.value">
+                            <option selected>MAIN</option>
+                            <option *ngFor="let project of projects | orderBy:'title'">{{project.key}}</option>
+                        </select>
+                    </div>
+                    <div *ngSwitchCase="'HIDDEN'"></div>
+                    <div *ngSwitchDefault>
+                        <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}}</label>
+                        <input id="{{parameter.key}}" name="{{parameter.key}}" class="w-100 rounded input-border px-1" [(ngModel)]="parameter.value.value">
                     </div>
                 </ng-container>
             </div>

@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
         this.userService.getLoggedInUser().subscribe(
             user => {
-                if(!user) {
+                if (!user) {
                     window.location.replace(this.imsEndpoint + 'login?serviceReferer=' + window.location.href);
                 }
             },

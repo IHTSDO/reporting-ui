@@ -8,9 +8,15 @@ import { CategoryPipe } from './pipes/category.pipe';
 import { MatCheckboxModule, MatTooltipModule } from '@angular/material';
 import { SnomedQueryModalComponent } from './components/snomed-query-modal/snomed-query-modal.component';
 import { FormsModule } from '@angular/forms';
-import { SnomedOverlayComponent } from './components/snomed-overlay/snomed-overlay.component';
 import { ConceptsPipe } from './pipes/concepts.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { HiddenPipe } from './pipes/hidden.pipe';
+import { DisplayOrderPipe } from './pipes/display-order.pipe';
+import { SnomedDeleteModalComponent } from './components/snomed-delete-modal/snomed-delete-modal.component';
+import { SnomedWhitelistModalComponent } from './components/snomed-whitelist-modal/snomed-whitelist-modal.component';
+import { SnomedTypeaheadComponent } from './components/snomed-typeahead/snomed-typeahead.component';
+import { SnomedTypeaheadListComponent } from './components/snomed-typeahead-list/snomed-typeahead-list.component';
+import { OrderByPipe } from './pipes/order-by.pipe';
 
 describe('AppComponent', () => {
     beforeEach(async(() => {
@@ -24,7 +30,13 @@ describe('AppComponent', () => {
                 CategoryPipe,
                 ConceptsPipe,
                 SnomedQueryModalComponent,
-                SnomedOverlayComponent
+                HiddenPipe,
+                DisplayOrderPipe,
+                SnomedDeleteModalComponent,
+                SnomedWhitelistModalComponent,
+                SnomedTypeaheadComponent,
+                SnomedTypeaheadListComponent,
+                OrderByPipe
             ],
             imports: [
                 MatTooltipModule,
