@@ -28,12 +28,56 @@ div.modal-content {
             top: 8rem;
         }
 
-
         table {
             position: relative;
             border: none;
 
             tr {
+                td {
+                    button.delete-button {
+                        display: none;
+                        position: absolute;
+                        top: 0;
+                        right: -50px;
+                        background-color: transparent;
+                        color: $crimson-red;
+                        -webkit-animation: delete-move 200ms;
+                        -webkit-animation-delay: 500ms;
+                        -webkit-animation-fill-mode: forwards;
+                        animation: delete-move 200ms;
+                        animation-delay: 500ms;
+                        animation-fill-mode: forwards;
+
+                        @-webkit-keyframes delete-move {
+                            from {
+                                right: -50px;
+                                opacity: 0;
+                            }
+
+                            to {
+                                right: 0;
+                                opacity: 1;
+                            }
+                        }
+
+                        @keyframes delete-move {
+                            from {
+                                right: -50px;
+                                opacity: 0;
+                            }
+
+                            to {
+                                right: 0;
+                                opacity: 1;
+                            }
+                        }
+
+                        &:hover {
+                            color: $pomegranate-red;
+                        }
+                    }
+                }
+
                 &:hover {
                     td {
                         position: relative;
@@ -49,49 +93,6 @@ div.modal-content {
             th {
                 font-weight: 400;
                 background-color: $gallery-white;
-            }
-
-            td {
-                button.delete-button {
-                    display: none;
-                    position: absolute;
-                    top: 0;
-                    right: -50px;
-                    background-color: transparent;
-                    color: $crimson-red;
-                    -webkit-animation: delete-move 200ms;
-                    -webkit-animation-delay: 500ms;
-                    -webkit-animation-fill-mode: forwards;
-                    animation: delete-move 200ms;
-                    animation-delay: 500ms;
-                    animation-fill-mode: forwards;
-
-                    @-webkit-keyframes delete-move {
-                        from {
-                            right: -50px;
-                            opacity: 0;
-                        }
-                        to {
-                            right: 0;
-                            opacity: 1;
-                        }
-                    }
-
-                    @keyframes delete-move {
-                        from {
-                            right: -50px;
-                            opacity: 0;
-                        }
-                        to {
-                            right: 0;
-                            opacity: 1;
-                        }
-                    }
-
-                    &:hover {
-                        color: $pomegranate-red;
-                    }
-                }
             }
         }
     }
