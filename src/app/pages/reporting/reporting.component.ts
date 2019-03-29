@@ -5,6 +5,7 @@ import { ReportingService } from '../../services/reporting.service';
 import { Category } from '../../models/category';
 import { Query } from '../../models/query';
 import { Report } from '../../models/report';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
     selector: 'app-reporting',
@@ -30,7 +31,7 @@ export class ReportingComponent implements OnInit {
     openDeleteModal = false;
     openWhitelistModal = false;
 
-    constructor(private reportingService: ReportingService) {
+    constructor(private reportingService: ReportingService, private configService: ConfigService) {
     }
 
     ngOnInit() {
@@ -79,11 +80,13 @@ export class ReportingComponent implements OnInit {
         this.switchActiveReportSet();
     }
 
-    parametersExistCheck(params) {
-        for (const param in params) {
-            if (params.hasOwnProperty(param)) {
-                if (params[param].type !== 'HIDDEN') {
+    parametersExistCheck() {
+        for (const param in this.activeQuery.parameters['parameterMap']) {
+            if (this.activeQuery.parameters['parameterMap'].hasOwnProperty(param)) {
+                if (this.activeQuery.parameters['parameterMap'][param].type !== 'HIDDEN') {
                     return true;
+                } else {
+                    this.activeQuery.parameters['parameterMap'][param].value = this.configService.environmentEndpoint + 'template-service';
                 }
             }
         }
