@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -29,7 +29,6 @@
     "jquery": "^3.3.1",
     "popper.js": "^1.14.6",
     "rxjs": "^6.3.3",
-    "terser": "^3.14.1",
     "tslib": "^1.9.0",
     "zone.js": "^0.8.27"
   },
