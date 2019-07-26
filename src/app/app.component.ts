@@ -1,36 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './services/user.service';
-import { ConfigService } from './services/config.service';
+import { ProjectService } from './services/project.service';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent implements OnInit {
 
-    imsEndpoint: string;
-
-    constructor(private userService: UserService, private configService: ConfigService) {
+    constructor(private userService: UserService, private projectService: ProjectService) {
     }
 
     ngOnInit() {
-        this.configService.getUIConfig().subscribe(
-            config => {
-                this.imsEndpoint = config['endpoints'].imsEndpoint;
+        this.projectService.getUIConfiguration().subscribe(
+            data => {
+                this.projectService.uiConfiguration = data;
             },
             error => {
-                console.log('ERROR: UI Config failed to load');
+                console.error('ERROR: UI Config failed to load');
             });
 
         this.userService.getLoggedInUser().subscribe(
             user => {
                 if (!user) {
-                    window.location.replace(this.imsEndpoint + 'login?serviceReferer=' + window.location.href);
+                    window.location.replace(this.projectService.uiConfiguration.endpoints.imsEndpoint
+                        + 'login?serviceReferer=' + window.location.href);
                 }
             },
             error => {
-                window.location.replace(this.imsEndpoint + 'login?serviceReferer=' + window.location.href);
+                window.location.replace(this.projectService.uiConfiguration.endpoints.imsEndpoint
+                    + 'login?serviceReferer=' + window.location.href);
             });
+
+
     }
 }

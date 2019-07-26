@@ -9,12 +9,12 @@ import { ConceptsPipe } from '../../pipes/concepts.pipe';
 import { DisplayOrderPipe } from '../../pipes/display-order.pipe';
 import { OrderByPipe } from '../../pipes/order-by.pipe';
 import { TemplateService } from '../../services/template.service';
-import { ConfigService } from '../../services/config.service';
+import { ProjectService } from '../../services/project.service';
 
 describe('SnomedQueryModalComponent', () => {
     let component: SnomedQueryModalComponent;
     let templateService: TemplateService;
-    let configService: ConfigService;
+    let projectService: ProjectService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -37,8 +37,8 @@ describe('SnomedQueryModalComponent', () => {
 
     beforeEach(() => {
         templateService = new TemplateService(null);
-        configService = new ConfigService(null);
-        component = new SnomedQueryModalComponent(templateService, configService);
+        projectService = new ProjectService(null);
+        component = new SnomedQueryModalComponent(templateService, projectService);
     });
 
     it('should create', () => {

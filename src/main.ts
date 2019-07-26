@@ -10,3 +10,5 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
     .catch(err => console.log(err));
+
+console.log('RP Platform UI v1.2.5');

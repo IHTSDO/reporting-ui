@@ -8,6 +8,7 @@ import { Query } from '../models/query';
 import { TypeaheadConcepts } from '../models/typeaheadConcepts';
 import { Template } from '../models/template';
 import { Concept } from '../models/concept';
+import { UIConfiguration } from '../models/uiConfiguration';
 
 @Injectable({
     providedIn: 'root'
@@ -63,6 +64,10 @@ export class HttpService {
         return this.http.get<object[]>('/authoring-services/projects');
     }
 
+    getUIConfiguration(): Observable<UIConfiguration> {
+        return this.http.get<UIConfiguration>('/authoring-services/ui-configuration');
+    }
+
     // TEMPLATE-SERVICE ENDPOINTS
     getTemplateConcepts() {
         return this.http.get<Template[]>('/template-service/templates');
@@ -71,10 +76,5 @@ export class HttpService {
     // AUTHORIZATION ENDPOINT
     getLoggedInUser() {
         return this.http.get('/auth');
-    }
-
-    // CONFIG ENDPOINT
-    getUIConfig() {
-        return this.http.get('/config/endpointConfig.json');
     }
 }

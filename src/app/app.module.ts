@@ -16,7 +16,6 @@ import { ReportingService } from './services/reporting.service';
 import { ConceptService } from './services/concept.service';
 import { HttpService } from './services/http.service';
 import { UserService } from './services/user.service';
-import { ConfigService } from './services/config.service';
 import { UtilityService } from './services/utility.service';
 import { ProjectService } from './services/project.service';
 import { TemplateService } from './services/template.service';
@@ -66,7 +65,6 @@ import { SnomedWhitelistModalComponent } from './components/snomed-whitelist-mod
         ConceptService,
         HttpService,
         UserService,
-        ConfigService,
         UtilityService,
         ProjectService,
         TemplateService,

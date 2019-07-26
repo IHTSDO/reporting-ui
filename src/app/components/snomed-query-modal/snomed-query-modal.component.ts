@@ -3,7 +3,6 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef }
 import { Query } from '../../models/query';
 import { TemplateService } from '../../services/template.service';
 import { Template } from '../../models/template';
-import { ConfigService } from '../../services/config.service';
 import { ProjectService } from '../../services/project.service';
 import { UtilityService } from '../../services/utility.service';
 
@@ -24,7 +23,7 @@ export class SnomedQueryModalComponent implements OnInit {
     templates: Template[];
     projects: object[];
 
-    constructor(private templateService: TemplateService, private configService: ConfigService, private projectService: ProjectService) {
+    constructor(private templateService: TemplateService, private projectService: ProjectService) {
     }
 
     ngOnInit() {
@@ -46,7 +45,7 @@ export class SnomedQueryModalComponent implements OnInit {
                     parameter.value = 'MAIN';
                 }
                 if (parameter.type === 'HIDDEN') {
-                    parameter.value = this.configService.environmentEndpoint + 'template-service';
+                    parameter.value = this.projectService.environmentEndpoint + 'template-service';
                 }
             }
         }
