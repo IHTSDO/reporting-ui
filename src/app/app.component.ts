@@ -14,6 +14,8 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log('AppComponent Initialization');
+
         this.authoringService.getUIConfiguration().subscribe(
             data => {
                 this.authoringService.uiConfiguration = data;
