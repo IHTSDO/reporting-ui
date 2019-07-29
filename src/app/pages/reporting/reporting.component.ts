@@ -44,7 +44,7 @@ export class ReportingComponent implements OnInit {
 
     refresh() {
         if (this.activeQuery) {
-            this.reportingService.getReportSet(this.activeQuery.name).subscribe(data => {
+            this.reportingService.getReportRuns(this.activeQuery.name).subscribe(data => {
                 if (JSON.stringify(data) !== JSON.stringify(this.activeReportSet)) {
                     this.activeReportSet = data;
                 }

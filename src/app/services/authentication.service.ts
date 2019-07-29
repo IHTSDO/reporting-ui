@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Template } from '../models/template';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TemplateService {
+export class AuthenticationService {
 
     constructor(private http: HttpClient) {
     }
 
-    getTemplateConcepts() {
-        return this.http.get<Template[]>('/template-service/templates');
+    getLoggedInUser() {
+        return this.http.get('/auth');
     }
 }

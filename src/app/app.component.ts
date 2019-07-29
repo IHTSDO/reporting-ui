@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './services/user.service';
 import { AuthoringService } from './services/authoring.service';
+import { AuthenticationService } from './services/authentication.service';
 
 @Component({
     selector: 'app-root',
@@ -10,7 +10,7 @@ import { AuthoringService } from './services/authoring.service';
 
 export class AppComponent implements OnInit {
 
-    constructor(private userService: UserService, private authoringService: AuthoringService) {
+    constructor(private authenticationService: AuthenticationService, private authoringService: AuthoringService) {
     }
 
     ngOnInit() {
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
                 console.error('ERROR: UI Config failed to load');
             });
 
-        this.userService.getLoggedInUser().subscribe(
+        this.authenticationService.getLoggedInUser().subscribe(
             user => {
                 if (!user) {
                     window.location.replace(this.authoringService.uiConfiguration.endpoints.imsEndpoint

@@ -19,7 +19,7 @@ export class SnomedDeleteModalComponent implements OnInit {
     }
 
     submitReportRequest() {
-        this.reportingService.postDeleteReport(this.report).subscribe(() => {
+        this.reportingService.deleteReport(this.report).subscribe(() => {
             this.closeEmitter.emit();
         });
     }

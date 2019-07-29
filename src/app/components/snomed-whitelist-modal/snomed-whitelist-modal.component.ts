@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef } from '@angular/core';
-import { WhitelistService } from '../../services/whitelist.service';
 import { Concept } from '../../models/concept';
 import { Query } from '../../models/query';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { UtilityService } from '../../services/utility.service';
+import { ReportingService } from '../../services/reporting.service';
 
 @Component({
     selector: 'app-snomed-whitelist-modal',
@@ -36,11 +36,11 @@ export class SnomedWhitelistModalComponent implements OnInit {
 
     @ViewChild('textareaTypeahead') inputElement: ElementRef;
 
-    constructor(private whitelistService: WhitelistService) {
+    constructor(private reportingService: ReportingService) {
     }
 
     ngOnInit() {
-        this.whitelistService.getWhitelist(this.query.name).subscribe(data => {
+        this.reportingService.getWhitelist(this.query.name).subscribe(data => {
             this.whitelist = data;
         });
     }
@@ -68,7 +68,7 @@ export class SnomedWhitelistModalComponent implements OnInit {
 
             this.searchTerm = '';
         }
-        this.whitelistService.postWhitelist(this.query.name, this.whitelist).subscribe(
+        this.reportingService.postWhitelist(this.query.name, this.whitelist).subscribe(
             () => {
                 this.saveAnimation(true);
             },

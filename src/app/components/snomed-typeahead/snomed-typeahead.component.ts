@@ -3,7 +3,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { typeaheadMinimumLength } from '../../../globals';
 import { Observable, of, Subject } from 'rxjs';
 import { TypeaheadConcepts } from '../../models/typeaheadConcepts';
-import { ConceptService } from '../../services/concept.service';
+import { TerminologyServerService } from '../../services/terminologyServer.service';
 
 @Component({
     selector: 'app-snomed-typeahead',
@@ -24,7 +24,7 @@ export class SnomedTypeaheadComponent implements OnInit {
     private searchTerms = new Subject<string>();
     results: Observable<TypeaheadConcepts>;
 
-    constructor(private conceptService: ConceptService) {
+    constructor(private terminologyServerService: TerminologyServerService) {
     }
 
     ngOnInit() {
@@ -33,7 +33,7 @@ export class SnomedTypeaheadComponent implements OnInit {
             distinctUntilChanged(),
             switchMap((term: string) => {
                 if (term.length >= typeaheadMinimumLength) {
-                    return this.conceptService.getTypeaheadConcepts(term, this.activeFilter);
+                    return this.terminologyServerService.getTypeaheadConcepts(term, this.activeFilter);
                 } else {
                     return of(new TypeaheadConcepts());
                 }
