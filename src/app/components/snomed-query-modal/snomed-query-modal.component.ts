@@ -3,8 +3,8 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef }
 import { Query } from '../../models/query';
 import { TemplateService } from '../../services/template.service';
 import { Template } from '../../models/template';
-import { ProjectService } from '../../services/project.service';
 import { UtilityService } from '../../services/utility.service';
+import { AuthoringService } from '../../services/authoring.service';
 
 @Component({
     selector: 'app-snomed-query-modal',
@@ -23,7 +23,7 @@ export class SnomedQueryModalComponent implements OnInit {
     templates: Template[];
     projects: object[];
 
-    constructor(private templateService: TemplateService, private projectService: ProjectService) {
+    constructor(private templateService: TemplateService, private authoringService: AuthoringService) {
     }
 
     ngOnInit() {
@@ -31,7 +31,7 @@ export class SnomedQueryModalComponent implements OnInit {
             this.templates = data;
         });
 
-        this.projectService.getProjects().subscribe(data => {
+        this.authoringService.getProjects().subscribe(data => {
             this.projects = data;
         });
 
@@ -45,7 +45,7 @@ export class SnomedQueryModalComponent implements OnInit {
                     parameter.value = 'MAIN';
                 }
                 if (parameter.type === 'HIDDEN') {
-                    parameter.value = this.projectService.environmentEndpoint + 'template-service';
+                    parameter.value = this.authoringService.environmentEndpoint + 'template-service';
                 }
             }
         }

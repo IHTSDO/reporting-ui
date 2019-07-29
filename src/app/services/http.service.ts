@@ -8,7 +8,6 @@ import { Query } from '../models/query';
 import { TypeaheadConcepts } from '../models/typeaheadConcepts';
 import { Template } from '../models/template';
 import { Concept } from '../models/concept';
-import { UIConfiguration } from '../models/uiConfiguration';
 
 @Injectable({
     providedIn: 'root'
@@ -57,15 +56,6 @@ export class HttpService {
     // SNOWOWL ENDPOINTS
     getTypeaheadConcepts(params): Observable<TypeaheadConcepts> {
         return this.http.post<TypeaheadConcepts>('/snowowl/snomed-ct/v2/MAIN/concepts/search', params, this.options);
-    }
-
-    // AUTHORING-SERVICES ENDPOINTS
-    getProjects(): Observable<object[]> {
-        return this.http.get<object[]>('/authoring-services/projects');
-    }
-
-    getUIConfiguration(): Observable<UIConfiguration> {
-        return this.http.get<UIConfiguration>('/authoring-services/ui-configuration');
     }
 
     // TEMPLATE-SERVICE ENDPOINTS

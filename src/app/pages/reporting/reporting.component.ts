@@ -5,7 +5,7 @@ import { ReportingService } from '../../services/reporting.service';
 import { Category } from '../../models/category';
 import { Query } from '../../models/query';
 import { Report } from '../../models/report';
-import { ProjectService } from '../../services/project.service';
+import { AuthoringService } from '../../services/authoring.service';
 
 @Component({
     selector: 'app-reporting',
@@ -31,7 +31,7 @@ export class ReportingComponent implements OnInit {
     openDeleteModal = false;
     openWhitelistModal = false;
 
-    constructor(private reportingService: ReportingService, private projectService: ProjectService) {
+    constructor(private reportingService: ReportingService, private authoringService: AuthoringService) {
     }
 
     ngOnInit() {
@@ -86,7 +86,8 @@ export class ReportingComponent implements OnInit {
                 if (this.activeQuery.parameters['parameterMap'][param].type !== 'HIDDEN') {
                     return true;
                 } else {
-                    this.activeQuery.parameters['parameterMap'][param].value = this.projectService.environmentEndpoint + 'template-service';
+                    this.activeQuery.parameters['parameterMap'][param].value = this.authoringService.environmentEndpoint
+                        + 'template-service';
                 }
             }
         }

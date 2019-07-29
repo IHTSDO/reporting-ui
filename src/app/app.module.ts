@@ -17,16 +17,16 @@ import { ConceptService } from './services/concept.service';
 import { HttpService } from './services/http.service';
 import { UserService } from './services/user.service';
 import { UtilityService } from './services/utility.service';
-import { ProjectService } from './services/project.service';
 import { TemplateService } from './services/template.service';
 import { WhitelistService } from './services/whitelist.service';
+import { AuthoringService } from './services/authoring.service';
 
 import { CategoryPipe } from './pipes/category.pipe';
 import { ConceptsPipe } from './pipes/concepts.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { DisplayOrderPipe } from './pipes/display-order.pipe';
-import { HiddenPipe } from './pipes/hidden.pipe';
 
+import { HiddenPipe } from './pipes/hidden.pipe';
 import { SnomedDeleteModalComponent } from './components/snomed-delete-modal/snomed-delete-modal.component';
 import { SnomedTypeaheadComponent } from './components/snomed-typeahead/snomed-typeahead.component';
 import { SnomedTypeaheadListComponent } from './components/snomed-typeahead-list/snomed-typeahead-list.component';
@@ -66,9 +66,9 @@ import { SnomedWhitelistModalComponent } from './components/snomed-whitelist-mod
         HttpService,
         UserService,
         UtilityService,
-        ProjectService,
         TemplateService,
-        WhitelistService
+        WhitelistService,
+        AuthoringService
     ],
     entryComponents: [],
     bootstrap: [AppComponent]
