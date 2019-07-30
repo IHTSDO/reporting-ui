@@ -68,11 +68,11 @@ import { SnomedWhitelistModalComponent } from './components/snomed-whitelist-mod
         AuthoringService,
         AuthenticationService,
         TerminologyServerService,
-        // {
-        //     provide: HTTP_INTERCEPTORS,
-        //     useClass: HeaderInterceptor,
-        //     multi: true,
-        // }
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HeaderInterceptor,
+            multi: true,
+        }
     ],
     entryComponents: [],
     bootstrap: [AppComponent]

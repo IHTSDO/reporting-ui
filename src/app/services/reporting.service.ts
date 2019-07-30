@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Category } from '../models/category';
 import { Report } from '../models/report';
 import { Query } from '../models/query';
@@ -10,14 +10,7 @@ import { Concept } from '../models/concept';
 })
 export class ReportingService {
 
-    options: object;
-
     constructor(private http: HttpClient) {
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json'
-        });
-
-        this.options = {headers: headers};
     }
 
     // CATEGORIES ENDPOINTS
@@ -36,7 +29,7 @@ export class ReportingService {
             parameters: query.parameters
         };
 
-        return this.http.post<Query>('/schedule-manager/jobs/Report/' + params.jobName + '/runs', JSON.stringify(params), this.options);
+        return this.http.post<Query>('/schedule-manager/jobs/Report/' + params.jobName + '/runs', JSON.stringify(params));
     }
 
     deleteReport(params) {
@@ -49,6 +42,6 @@ export class ReportingService {
     }
 
     postWhitelist(name, params) {
-        return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist', JSON.stringify(params), this.options);
+        return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist', JSON.stringify(params));
     }
 }
