@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthoringService } from './services/authoring.service';
 import { AuthenticationService } from './services/authentication.service';
+// @ts-ignore
+import { version } from './../../package.json';
 
 @Component({
     selector: 'app-root',
@@ -10,11 +12,13 @@ import { AuthenticationService } from './services/authentication.service';
 
 export class AppComponent implements OnInit {
 
+    public version: string = version;
+
     constructor(private authenticationService: AuthenticationService, private authoringService: AuthoringService) {
     }
 
     ngOnInit() {
-        console.log('AppComponent Initialization');
+        console.log('Version:', version);
 
         this.authoringService.getUIConfiguration().subscribe(
             data => {
