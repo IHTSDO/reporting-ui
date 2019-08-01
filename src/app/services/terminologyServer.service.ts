@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { TypeaheadConcepts } from '../models/typeaheadConcepts';
+import { AuthoringService } from './authoring.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TerminologyServerService {
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private authoringService: AuthoringService) {
     }
 
     getTypeaheadConcepts(term, activeFilter): Observable<TypeaheadConcepts> {
@@ -22,7 +23,7 @@ export class TerminologyServerService {
             expand: 'fsn()',
             activeFilter: activeFilter
         };
-
-        return this.http.post<TypeaheadConcepts>('/snowowl/snomed-ct/v2/MAIN/concepts/search', params);
+        return this.http.post<TypeaheadConcepts>( this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
+            'MAIN/concepts/search', params);
     }
 }
