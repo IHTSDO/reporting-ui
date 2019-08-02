@@ -17,7 +17,7 @@ export class SnomedQueryModalComponent implements OnInit {
     @Output() submitEmitter = new EventEmitter();
     @Output() closeEmitter = new EventEmitter();
 
-    @ViewChild('textareaTypeahead') inputElement: ElementRef;
+    @ViewChild('textareaTypeahead', { static: false }) inputElement: ElementRef;
 
     searchTerm: string;
     templates: Template[];

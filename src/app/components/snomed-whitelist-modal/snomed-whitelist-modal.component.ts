@@ -34,7 +34,7 @@ export class SnomedWhitelistModalComponent implements OnInit {
     @Input() query: Query;
     @Output() closeEmitter = new EventEmitter();
 
-    @ViewChild('textareaTypeahead') inputElement: ElementRef;
+    @ViewChild('textareaTypeahead', { static: true }) inputElement: ElementRef;
 
     constructor(private reportingService: ReportingService) {
     }
