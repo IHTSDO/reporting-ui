@@ -2,7 +2,7 @@ import { SnomedQueryModalComponent } from './snomed-query-modal.component';
 import { async, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { MatCheckboxModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SnomedTypeaheadComponent } from '../snomed-typeahead/snomed-typeahead.component';
 import { SnomedTypeaheadListComponent } from '../snomed-typeahead-list/snomed-typeahead-list.component';
 import { ConceptsPipe } from '../../pipes/concepts.pipe';

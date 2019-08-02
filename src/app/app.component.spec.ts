@@ -5,7 +5,8 @@ import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.
 import { ReportingComponent } from './pages/reporting/reporting.component';
 import { SnomedLeftSidebarComponent } from './components/snomed-left-sidebar/snomed-left-sidebar.component';
 import { CategoryPipe } from './pipes/category.pipe';
-import { MatCheckboxModule, MatTooltipModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { SnomedQueryModalComponent } from './components/snomed-query-modal/snomed-query-modal.component';
 import { FormsModule } from '@angular/forms';
 import { ConceptsPipe } from './pipes/concepts.pipe';
