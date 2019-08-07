@@ -1,0 +1,172 @@
+@import 'src/variables.scss';
+
+app-modal {
+    /* modals are hidden by default */
+    display: none;
+
+    div.modal-dialog {
+        z-index: 1000;
+
+        overflow: auto;
+
+        div.modal-content {
+            div.modal-header {
+                h3 > span {
+                    color: $dove-grey;
+                    font-weight: 300;
+                    font-size: 1.4rem;
+                }
+
+                button > span {
+                    font-size: 2rem;
+                }
+            }
+
+            div.modal-body {
+                label {
+                    font-size: 1.4rem;
+                    color: $scorpion-grey;
+                    line-height: 1rem;
+
+                    span {
+                        font-size: 1.2rem;
+                    }
+                }
+
+                input, textarea {
+                    cursor: text;
+
+                    &.input-border {
+                        border: 1px solid $alto-white;
+                    }
+                }
+
+                select {
+                    font-size: 1.4rem;
+                    font-weight: 300;
+                }
+
+                textarea {
+                    cursor: text;
+                    height: 8rem;
+                    resize: none;
+                }
+
+                div.typeahead-textarea {
+                    top: 8rem;
+                }
+
+                div.note {
+                    font-size: 1.2rem;
+                    color: $scorpion-grey;
+                }
+
+                table {
+                    position: relative;
+                    border: none;
+
+                    tr {
+                        td {
+                            button.delete-button {
+                                display: none;
+                                position: absolute;
+                                top: 0;
+                                right: -50px;
+                                background-color: transparent;
+                                color: $crimson-red;
+                                -webkit-animation: delete-move 200ms;
+                                -webkit-animation-delay: 500ms;
+                                -webkit-animation-fill-mode: forwards;
+                                animation: delete-move 200ms;
+                                animation-delay: 500ms;
+                                animation-fill-mode: forwards;
+
+                                @-webkit-keyframes delete-move {
+                                    from {
+                                        right: -50px;
+                                        opacity: 0;
+                                    }
+
+                                    to {
+                                        right: 0;
+                                        opacity: 1;
+                                    }
+                                }
+
+                                @keyframes delete-move {
+                                    from {
+                                        right: -50px;
+                                        opacity: 0;
+                                    }
+
+                                    to {
+                                        right: 0;
+                                        opacity: 1;
+                                    }
+                                }
+
+                                &:hover {
+                                    color: $pomegranate-red;
+                                }
+                            }
+                        }
+
+                        &:hover {
+                            td {
+                                position: relative;
+                                background-color: $gallery-white;
+
+                                > button.delete-button {
+                                    display: block;
+                                }
+                            }
+                        }
+                    }
+
+                    th {
+                        font-weight: 400;
+                        background-color: $gallery-white;
+                    }
+                }
+            }
+
+            div.modal-footer {
+                overflow: hidden;
+
+                div {
+                    display: inline-block;
+                }
+
+                div.saved {
+                    color: $forest-green;
+                }
+
+                div.error {
+                    color: $crimson-red;
+                }
+
+                button {
+                    font-weight: 300;
+                }
+            }
+        }
+    }
+
+    .app-modal-background {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        background-color: #000;
+        opacity: 0.75;
+
+        z-index: 900;
+    }
+}
+
+body.app-modal-open {
+    /* body overflow is hidden to hide main scrollbar when modal window is open */
+    overflow: hidden;
+}

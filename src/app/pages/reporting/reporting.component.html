@@ -13,14 +13,21 @@
                         <div class="w-100 description mx-0">
                             <p class="float-left py-3 px-3 mb-0">{{query.description}}</p>
                             <div class="float-right m-2">
+                                <div>{{activeQuery.whitelist | json}}</div>
                                 <button class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
-                                (click)="openWhitelistModal = true">
+                                (click)="openModal('whitelist-modal')">
                                     Whitelist
                                 </button>
-                                <button class="btn btn-primary p-2" data-toggle="modal" data-target="#queryModal"
-                                        (click)="parametersExistCheck() ? openQueryModal = true : submitReportRequest()">
-                                    Run New Query
-                                </button>
+                                <ng-container *ngIf="parametersExistCheck()">
+                                    <button class="btn btn-primary p-2" data-toggle="modal" data-target="#queryModal" (click)="openModal('query-modal'); activeQuery = query">
+                                        Run New Query
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="!parametersExistCheck()">
+                                    <button class="btn btn-primary p-2" data-toggle="modal" data-target="#queryModal" (click)="submitReport()">
+                                        Run New Query
+                                    </button>
+                                </ng-container>
                             </div>
                         </div>
 
@@ -42,7 +49,7 @@
                                     <td *ngSwitchDefault>{{report.status}}</td>
                                 </ng-container>
                                 <td>{{report.user}}
-                                    <button class="delete-button pt-1 mt-2" (click)="deleteReport(report)" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-minus"></i></button>
+                                    <button class="delete-button pt-1 mt-2" (click)="openModal('delete-modal'); activeReport = report" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-minus"></i></button>
                                 </td>
                             </tr>
                         </table>
@@ -53,6 +60,52 @@
     </div>
 </div>
 
-<app-snomed-query-modal id="queryModal" class="modal" tabIndex="-1" role="dialog" *ngIf="openQueryModal" [query]="activeQuery" (submitEmitter)="submitReportRequest()" (closeEmitter)="closeModal()"></app-snomed-query-modal>
-<app-snomed-delete-modal id="deleteModal" class="modal" tabIndex="-1" role="dialog" *ngIf="openDeleteModal" [report]="activeReport" (closeEmitter)="closeModal()"></app-snomed-delete-modal>
-<app-snomed-whitelist-modal id="whitelistModal" class="modal" tabindex="-1" role="dialog" *ngIf="openWhitelistModal" [query]="activeQuery" (closeEmitter)="closeModal()"></app-snomed-whitelist-modal>
+<!-- DELETE MODAL -->
+<app-modal id="delete-modal" class="modal">
+    <div header>Delete Report</div>
+    <div body>Are you sure you want to delete this report?</div>
+    <div footer>
+        <button type="button" class="btn btn-primary" (click)="deleteReport(); closeModal('delete-modal')">Delete Report</button>
+    </div>
+</app-modal>
+
+<!-- QUERY MODAL -->
+<app-modal id="query-modal" class="modal">
+    <div header>Report Details</div>
+    <div body>
+        <app-query-parameters [query]="activeQuery"></app-query-parameters>
+    </div>
+    <div footer>
+        <button type="button" class="btn btn-primary" (click)="submitReport(); closeModal('query-modal')">Run Query</button>
+    </div>
+</app-modal>
+
+<!-- WHITELIST MODAL -->
+<app-modal id="whitelist-modal" class="modal">
+    <div header>Whitelist</div>
+    <div body>
+        <div class="position-relative">
+            <label class="w-100 m-0">Add concept to whitelist</label>
+            <textarea #textareaTypeahead class="w-100 rounded input-border" [(ngModel)]="whitelistSearchTerm" (keyup.enter)="saveWhitelist()"></textarea>
+            <app-snomed-typeahead-list [searchTerm]="whitelistSearchTerm" [activeFilter]="null" (selectEmitter)="addToSearchTerm($event)"></app-snomed-typeahead-list>
+            <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
+        </div>
+
+        <table class="table table-bordered rounded mt-3 mb-0 overflow-hidden">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+            <tr *ngFor="let concept of activeQuery?.whiteList">
+                <td>{{concept.sctId}}</td>
+                <td>{{concept.fsn}}
+                    <button class="delete-button pt-1 mt-2" (click)="removeFromWhitelist(concept)"><i class="fas fa-minus"></i></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div footer>
+        <div [@slide]="saved" class="px-3 saved">{{saveResponse}}</div>
+        <button type="button" class="btn btn-primary" (click)="saveWhitelist()">Save Whitelist</button>
+    </div>
+</app-modal>

@@ -11,7 +11,6 @@ import { HeaderInterceptor } from './interceptors/header.interceptor';
 
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
-import { SnomedQueryModalComponent } from './components/snomed-query-modal/snomed-query-modal.component';
 import { SnomedLeftSidebarComponent } from './components/snomed-left-sidebar/snomed-left-sidebar.component';
 import { ReportingComponent } from './pages/reporting/reporting.component';
 
@@ -28,10 +27,11 @@ import { OrderByPipe } from './pipes/order-by.pipe';
 
 import { DisplayOrderPipe } from './pipes/display-order.pipe';
 import { HiddenPipe } from './pipes/hidden.pipe';
-import { SnomedDeleteModalComponent } from './components/snomed-delete-modal/snomed-delete-modal.component';
 import { SnomedTypeaheadComponent } from './components/snomed-typeahead/snomed-typeahead.component';
 import { SnomedTypeaheadListComponent } from './components/snomed-typeahead-list/snomed-typeahead-list.component';
-import { SnomedWhitelistModalComponent } from './components/snomed-whitelist-modal/snomed-whitelist-modal.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { ModalService } from './services/modal.service';
+import { QueryParametersComponent } from './components/query-parameters/query-parameters.component';
 
 
 
@@ -43,16 +43,15 @@ import { SnomedWhitelistModalComponent } from './components/snomed-whitelist-mod
         SnomedNavbarComponent,
         SnomedFooterComponent,
         SnomedLeftSidebarComponent,
-        SnomedQueryModalComponent,
-        SnomedDeleteModalComponent,
         CategoryPipe,
         ConceptsPipe,
         SnomedTypeaheadComponent,
         SnomedTypeaheadListComponent,
         DisplayOrderPipe,
         HiddenPipe,
-        SnomedWhitelistModalComponent,
-        OrderByPipe
+        OrderByPipe,
+        ModalComponent,
+        QueryParametersComponent
     ],
     imports: [
         BrowserModule,
@@ -69,6 +68,7 @@ import { SnomedWhitelistModalComponent } from './components/snomed-whitelist-mod
         AuthoringService,
         AuthenticationService,
         TerminologyServerService,
+        ModalService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: HeaderInterceptor,
