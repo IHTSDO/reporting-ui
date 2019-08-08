@@ -51,11 +51,11 @@ export class QueryParametersComponent implements OnChanges {
 
     }
 
-    convertConceptObjectToString(input) {
+    convertConceptObjectToString(input): string {
         return UtilityService.convertConceptObjectToString(input);
     }
 
-    appendConcept(stringList, string) {
+    appendConcept(stringList, string): string {
 
         this.inputElement.nativeElement.focus();
 

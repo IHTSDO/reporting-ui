@@ -64,7 +64,7 @@ export class ReportingComponent implements OnInit {
         setInterval(() => this.refresh(), 5000);
     }
 
-    refresh() {
+    refresh(): void {
         if (this.activeQuery) {
             this.reportingService.getReportRuns(this.activeQuery.name).subscribe(data => {
                 if (JSON.stringify(data) !== JSON.stringify(this.activeReportSet)) {
@@ -84,15 +84,7 @@ export class ReportingComponent implements OnInit {
         }
     }
 
-    setText(event) {
-        this.querySearch = event;
-    }
-
-    setCategory(event) {
-        this.activeCategory = event;
-    }
-
-    switchActiveQuery(query) {
+    switchActiveQuery(query): void {
         if (this.activeQuery !== query) {
             this.activeQuery = query;
 
@@ -120,36 +112,36 @@ export class ReportingComponent implements OnInit {
         return false;
     }
 
-    switchActiveReportSet() {
+    switchActiveReportSet(): void {
         this.activeReportSet = null;
         this.refresh();
     }
 
-    viewReport(report) {
+    viewReport(report): void {
         window.open(report.resultUrl);
     }
 
-    openModal(id: string) {
+    openModal(id: string): void {
         this.modalService.open(id);
     }
 
-    closeModal(id: string) {
+    closeModal(id: string): void {
         this.modalService.close(id);
     }
 
-    deleteReport() {
+    deleteReport(): void {
         this.reportingService.deleteReport(this.activeReport).subscribe(() => {
             this.refresh();
         });
     }
 
-    submitReport() {
+    submitReport(): void {
         this.reportingService.postReport(this.activeQuery).subscribe(() => {
             this.refresh();
         });
     }
 
-    saveWhitelist() {
+    saveWhitelist(): void {
         // this takes the string entered and converts it to objects for the actual whitelist
         if (this.whitelistSearchTerm) {
             this.whitelistSearchTerm.split(',').forEach(text => {
@@ -183,7 +175,7 @@ export class ReportingComponent implements OnInit {
             });
     }
 
-    addToSearchTerm(result) {
+    addToSearchTerm(result): void {
         this.whitelistSearchTerm = this.appendConcept(this.whitelistSearchTerm, UtilityService.convertConceptObjectToString(result));
     }
 
@@ -198,7 +190,7 @@ export class ReportingComponent implements OnInit {
         }
     }
 
-    removeFromWhitelist(concept) {
+    removeFromWhitelist(concept): void {
         this.activeQuery.whiteList = this.activeQuery.whiteList.filter(item => {
             return item.sctId !== concept.sctId;
         });

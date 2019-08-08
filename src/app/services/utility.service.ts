@@ -13,7 +13,7 @@ export class UtilityService {
         return input.id + ' |' + input.fsn.term + '|';
     }
 
-    static convertStringToConceptObject(input): Concept {
+    static convertStringToConceptObject(input: string): Concept {
         input = input.trim();
 
         // const sctId = Number(input.match(/\d+/)[0]);
@@ -23,7 +23,7 @@ export class UtilityService {
         return { sctId: sctId, fsn: fsn};
     }
 
-    static appendStringToStringList(stringList, string): string {
-        return stringList.slice(0, stringList.lastIndexOf(',')) + ', ' + string;
+    static appendStringToStringList(stringList: string, text: string): string {
+        return stringList.slice(0, stringList.lastIndexOf(',')) + ', ' + text;
     }
 }

@@ -33,7 +33,7 @@ export class SnomedTypeaheadComponent implements OnInit {
                 if (term.length >= typeaheadMinimumLength) {
                     return this.terminologyServerService.getTypeaheadConcepts(term);
                 } else {
-                    return of(new Object());
+                    return of({});
                 }
             })
         );
@@ -43,7 +43,7 @@ export class SnomedTypeaheadComponent implements OnInit {
         this.searchTerms.next(term);
     }
 
-    selectConcept(result) {
+    selectConcept(result): void {
         this.searchTerms.next('');
         this.selectEmitter.emit(result);
     }

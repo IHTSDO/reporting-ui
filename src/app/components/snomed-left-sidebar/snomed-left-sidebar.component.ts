@@ -9,7 +9,6 @@ import { Category } from '../../models/category';
 })
 export class SnomedLeftSidebarComponent implements OnInit {
 
-    // categorySearch: string;
     querySearch: string;
     activeCategory: Category;
 
@@ -24,11 +23,11 @@ export class SnomedLeftSidebarComponent implements OnInit {
         this.activeCategory = new Category();
     }
 
-    updateText() {
+    updateText(): void {
         this.searchTextEmitter.emit(this.querySearch);
     }
 
-    switchActiveCategory(category) {
+    switchActiveCategory(category): void {
         if (this.activeCategory !== category) {
             this.activeCategory = category;
             this.categoryEmitter.emit(this.activeCategory);
