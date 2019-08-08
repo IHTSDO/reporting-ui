@@ -5,11 +5,11 @@ import { typeaheadMinimumLength } from '../../../globals';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 
 @Component({
-    selector: 'app-snomed-typeahead-list',
-    templateUrl: './snomed-typeahead-list.component.html',
-    styleUrls: ['./snomed-typeahead-list.component.scss']
+    selector: 'app-typeahead-list',
+    templateUrl: './typeahead-list.component.html',
+    styleUrls: ['./typeahead-list.component.scss']
 })
-export class SnomedTypeaheadListComponent implements OnInit {
+export class TypeaheadListComponent implements OnInit {
 
     term: string;
 

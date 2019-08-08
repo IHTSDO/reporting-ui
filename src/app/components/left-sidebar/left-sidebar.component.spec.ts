@@ -1,16 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SnomedLeftSidebarComponent } from './snomed-left-sidebar.component';
+import { LeftSidebarComponent } from './snomed-left-sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
-describe('SnomedLeftSidebarComponent', () => {
-    let component: SnomedLeftSidebarComponent;
-    let fixture: ComponentFixture<SnomedLeftSidebarComponent>;
+describe('LeftSidebarComponent', () => {
+    let component: LeftSidebarComponent;
+    let fixture: ComponentFixture<LeftSidebarComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [SnomedLeftSidebarComponent],
+            declarations: [LeftSidebarComponent],
             imports: [
                 HttpClientModule,
                 FormsModule
@@ -19,7 +19,7 @@ describe('SnomedLeftSidebarComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SnomedLeftSidebarComponent);
+        fixture = TestBed.createComponent(LeftSidebarComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

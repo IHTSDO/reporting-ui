@@ -3,11 +3,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Category } from '../../models/category';
 
 @Component({
-    selector: 'app-snomed-left-sidebar',
-    templateUrl: './snomed-left-sidebar.component.html',
-    styleUrls: ['./snomed-left-sidebar.component.scss']
+    selector: 'app-left-sidebar',
+    templateUrl: './left-sidebar.component.html',
+    styleUrls: ['./left-sidebar.component.scss']
 })
-export class SnomedLeftSidebarComponent implements OnInit {
+export class LeftSidebarComponent implements OnInit {
 
     querySearch: string;
     activeCategory: Category;

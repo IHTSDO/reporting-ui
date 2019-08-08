@@ -13,7 +13,7 @@ export class TerminologyServerService {
 
     getTypeaheadConcepts(term): Observable<object> {
         if (!term.trim()) {
-            return of(new Object());
+            return of({});
         }
 
         const params = {

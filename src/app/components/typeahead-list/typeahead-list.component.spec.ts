@@ -1,17 +1,17 @@
 import { async, TestBed } from '@angular/core/testing';
-import { SnomedTypeaheadListComponent } from './snomed-typeahead-list.component';
+import { TypeaheadListComponent } from './snomed-typeahead-list.component';
 import { ConceptsPipe } from '../../pipes/concepts.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { ConceptService } from '../../services/concept.service';
 
 describe('SnomedTypeaheadListComponent', () => {
-    let component: SnomedTypeaheadListComponent;
+    let component: TypeaheadListComponent;
     let conceptService: ConceptService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                SnomedTypeaheadListComponent,
+                TypeaheadListComponent,
                 ConceptsPipe
             ],
             imports: [
@@ -22,7 +22,7 @@ describe('SnomedTypeaheadListComponent', () => {
 
     beforeEach(() => {
         conceptService = new ConceptService(null);
-        component = new SnomedTypeaheadListComponent(conceptService);
+        component = new TypeaheadListComponent(conceptService);
     });
 
     it('should create', () => {

@@ -11,8 +11,8 @@ import { HeaderInterceptor } from './interceptors/header.interceptor';
 
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
-import { SnomedLeftSidebarComponent } from './components/snomed-left-sidebar/snomed-left-sidebar.component';
-import { ReportingComponent } from './pages/reporting/reporting.component';
+import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
+import { ReportingComponent } from './components/reporting/reporting.component';
 
 import { ReportingService } from './services/reporting.service';
 import { UtilityService } from './services/utility.service';
@@ -27,8 +27,8 @@ import { OrderByPipe } from './pipes/order-by.pipe';
 
 import { DisplayOrderPipe } from './pipes/display-order.pipe';
 import { HiddenPipe } from './pipes/hidden.pipe';
-import { SnomedTypeaheadComponent } from './components/snomed-typeahead/snomed-typeahead.component';
-import { SnomedTypeaheadListComponent } from './components/snomed-typeahead-list/snomed-typeahead-list.component';
+import { TypeaheadComponent } from './components/typeahead/typeahead.component';
+import { TypeaheadListComponent } from './components/typeahead-list/typeahead-list.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { ModalService } from './services/modal.service';
 import { QueryParametersComponent } from './components/query-parameters/query-parameters.component';
@@ -42,11 +42,11 @@ import { QueryParametersComponent } from './components/query-parameters/query-pa
         ReportingComponent,
         SnomedNavbarComponent,
         SnomedFooterComponent,
-        SnomedLeftSidebarComponent,
+        LeftSidebarComponent,
         CategoryPipe,
         ConceptsPipe,
-        SnomedTypeaheadComponent,
-        SnomedTypeaheadListComponent,
+        TypeaheadComponent,
+        TypeaheadListComponent,
         DisplayOrderPipe,
         HiddenPipe,
         OrderByPipe,
