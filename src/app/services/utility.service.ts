@@ -16,7 +16,8 @@ export class UtilityService {
     static convertStringToConceptObject(input): Concept {
         input = input.trim();
 
-        const sctId = Number(input.match(/\d+/)[0]);
+        // const sctId = Number(input.match(/\d+/)[0]);
+        const sctId = String(input.match(/\d+/)[0]);
         const fsn = input.slice(input.indexOf('|') + 1, input.lastIndexOf('|'));
 
         return { sctId: sctId, fsn: fsn};

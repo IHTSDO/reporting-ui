@@ -145,26 +145,37 @@ export class ReportingComponent implements OnInit {
     }
 
     saveWhitelist() {
+        // this takes the string entered and converts it to objects for the actual whitelist
         if (this.whitelistSearchTerm) {
-            this.whitelistSearchTerm.split(',').forEach(item => {
-                this.activeQuery.whiteList.push(UtilityService.convertStringToConceptObject(item));
+            this.whitelistSearchTerm.split(',').forEach(text => {
+                const concept = UtilityService.convertStringToConceptObject(text);
+                let exists = false;
+
+                // prevents duplicates being pushed
+                this.activeQuery.whiteList.filter((item) => {
+                    if (item.sctId === concept.sctId) {
+                        exists = true;
+                    }
+                });
+
+                if (!exists) {
+                    this.activeQuery.whiteList.push(concept);
+                }
             });
 
             this.whitelistSearchTerm = '';
         }
 
+        // actually posts the whitelist doing relevant animations based on response
         this.reportingService.postWhitelist(this.activeQuery.name, this.activeQuery.whiteList).subscribe(
             () => {
-                this.saveAnimation(true);
+                this.saveResponse = 'Saved';
+                this.saved = (this.saved === 'start' ? 'end' : 'start');
             },
             () => {
-                this.saveAnimation(false);
+                this.saveResponse = 'Error';
+                this.saved = (this.saved === 'start' ? 'end' : 'start');
             });
-    }
-
-    saveAnimation (success) {
-        this.saveResponse = success ? 'Saved' : 'Error';
-        this.saved = (this.saved === 'start' ? 'end' : 'start');
     }
 
     addToSearchTerm(result) {

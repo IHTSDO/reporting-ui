@@ -1,4 +1,4 @@
 export class Concept {
-    sctId: number;
+    sctId: string;
     fsn: string;
 }
