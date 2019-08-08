@@ -87,7 +87,7 @@
         <div class="position-relative">
             <label class="w-100 m-0">Add concept to whitelist</label>
             <textarea #textareaTypeahead class="w-100 rounded input-border" [(ngModel)]="whitelistSearchTerm" (keyup.enter)="saveWhitelist()"></textarea>
-            <app-snomed-typeahead-list [searchTerm]="whitelistSearchTerm" [activeFilter]="null" (selectEmitter)="addToSearchTerm($event)"></app-snomed-typeahead-list>
+            <app-snomed-typeahead-list [searchTerm]="whitelistSearchTerm" (selectEmitter)="addToSearchTerm($event)"></app-snomed-typeahead-list>
             <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
         </div>
 

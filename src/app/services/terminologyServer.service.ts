@@ -12,7 +12,7 @@ export class TerminologyServerService {
     constructor(private http: HttpClient, private authoringService: AuthoringService) {
     }
 
-    getTypeaheadConcepts(term, activeFilter): Observable<TypeaheadConcepts> {
+    getTypeaheadConcepts(term): Observable<TypeaheadConcepts> {
         if (!term.trim()) {
             return of(new TypeaheadConcepts());
         }
@@ -21,8 +21,14 @@ export class TerminologyServerService {
             termFilter: term,
             limit: 20,
             expand: 'fsn()',
-            activeFilter: activeFilter
+            activeFilter: true,
+            termActive: true
         };
+
+        if (this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint.includes('snowowl')) {
+            delete params.termActive;
+        }
+
         return this.http.post<TypeaheadConcepts>( this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
             'MAIN/concepts/search', params);
     }
