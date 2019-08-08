@@ -62,7 +62,7 @@
 
 <!-- DELETE MODAL -->
 <app-modal id="delete-modal" class="modal">
-    <div header>Delete Report</div>
+    <div header><h3 class="mb-0">Delete<span class="px-2">{{activeQuery?.name}}</span></h3></div>
     <div body>Are you sure you want to delete this report?</div>
     <div footer>
         <button type="button" class="btn btn-primary" (click)="deleteReport(); closeModal('delete-modal')">Delete Report</button>
@@ -71,7 +71,7 @@
 
 <!-- QUERY MODAL -->
 <app-modal id="query-modal" class="modal">
-    <div header>Report Details</div>
+    <div header><h3 class="mb-0">Details<span class="px-2">{{activeQuery?.name}}</span></h3></div>
     <div body>
         <app-query-parameters [query]="activeQuery"></app-query-parameters>
     </div>
@@ -82,7 +82,7 @@
 
 <!-- WHITELIST MODAL -->
 <app-modal id="whitelist-modal" class="modal">
-    <div header>Whitelist</div>
+    <div header><h3 class="mb-0">Whitelist<span class="px-2">{{activeQuery?.name}}</span></h3></div>
     <div body>
         <div class="position-relative">
             <label class="w-100 m-0">Add concept to whitelist</label>

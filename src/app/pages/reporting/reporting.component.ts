@@ -48,7 +48,9 @@ export class ReportingComponent implements OnInit {
     whitelistSearchTerm: string;
     @ViewChild('textareaTypeahead', { static: true }) inputElement: ElementRef;
 
-    constructor(private reportingService: ReportingService, private authoringService: AuthoringService, private modalService: ModalService) {
+    constructor(private reportingService: ReportingService,
+                private authoringService: AuthoringService,
+                private modalService: ModalService) {
     }
 
     ngOnInit() {

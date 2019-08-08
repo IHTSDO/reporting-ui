@@ -11,11 +11,20 @@ app-modal {
 
         div.modal-content {
             div.modal-header {
-                h3 > span {
-                    color: $dove-grey;
-                    font-weight: 300;
-                    font-size: 1.4rem;
+                div {
+                    display: inherit;
                 }
+
+                h3 {
+                    line-height: inherit;
+
+                    span {
+                        color: $dove-grey;
+                        font-weight: 300;
+                        font-size: 1.4rem;
+                    }
+                }
+
 
                 button > span {
                     font-size: 2rem;
