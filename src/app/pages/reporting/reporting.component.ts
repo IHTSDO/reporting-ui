@@ -31,22 +31,25 @@ import { animate, keyframes, state, style, transition, trigger } from '@angular/
 })
 export class ReportingComponent implements OnInit {
 
-    // Pipe Filters
+    // pipe filters
     querySearch: string;
 
-    // Item Arrays
+    // whitelist
+    whitelistSearchTerm: string;
+    @ViewChild('textareaTypeahead', { static: true }) inputElement: ElementRef;
+
+    // item arrays
     categories: Category[];
 
-    // Active Items
+    // active Items
     activeCategory: Category;
     activeQuery: Query;
     activeReport: Report;
     activeReportSet: Report[];
 
+    // animations
     saved = 'start';
     saveResponse: string;
-    whitelistSearchTerm: string;
-    @ViewChild('textareaTypeahead', { static: true }) inputElement: ElementRef;
 
     constructor(private reportingService: ReportingService,
                 private authoringService: AuthoringService,
@@ -73,7 +76,7 @@ export class ReportingComponent implements OnInit {
         }
     }
 
-    parameterValue(report, parameter) {
+    parameterValue(report, parameter): string {
         if (report.parameters.hasOwnProperty('parameterMap') && report.parameters.parameterMap.hasOwnProperty(parameter.key)) {
             return report.parameters.parameterMap[parameter.key].value;
         } else  {
@@ -103,7 +106,7 @@ export class ReportingComponent implements OnInit {
         this.switchActiveReportSet();
     }
 
-    parametersExistCheck() {
+    parametersExistCheck(): boolean {
         for (const param in this.activeQuery.parameters['parameterMap']) {
             if (this.activeQuery.parameters['parameterMap'].hasOwnProperty(param)) {
                 if (this.activeQuery.parameters['parameterMap'][param].type !== 'HIDDEN') {
@@ -184,7 +187,7 @@ export class ReportingComponent implements OnInit {
         this.whitelistSearchTerm = this.appendConcept(this.whitelistSearchTerm, UtilityService.convertConceptObjectToString(result));
     }
 
-    appendConcept(stringList, string) {
+    appendConcept(stringList, string): string {
 
         this.inputElement.nativeElement.focus();
 

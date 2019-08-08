@@ -3,8 +3,4 @@ export class UIConfiguration {
         imsEndpoint: string;
         terminologyServerEndpoint: string;
     };
-    features: {
-        templatesDisabled: false;
-        axiomDisabled: false;
-    };
 }

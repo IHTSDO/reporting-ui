@@ -4,6 +4,7 @@ import { Category } from '../models/category';
 import { Report } from '../models/report';
 import { Query } from '../models/query';
 import { Concept } from '../models/concept';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -14,16 +15,16 @@ export class ReportingService {
     }
 
     // CATEGORIES ENDPOINTS
-    getCategories() {
+    getCategories(): Observable<Category[]> {
         return this.http.get<Category[]>('/schedule-manager/jobs/Report/');
     }
 
     // REPORT ENDPOINTS
-    getReportRuns(name) {
+    getReportRuns(name): Observable<Report[]> {
         return this.http.get<Report[]>('/schedule-manager/jobs/Report/' + name + '/runs');
     }
 
-    postReport(query) {
+    postReport(query): Observable<Query> {
         const params = {
             jobName: query.name,
             parameters: query.parameters
@@ -37,11 +38,11 @@ export class ReportingService {
     }
 
     // WHITELIST ENDPOINTS
-    getWhitelist(name) {
+    getWhitelist(name): Observable<Concept[]> {
         return this.http.get<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist');
     }
 
-    postWhitelist(name, params) {
+    postWhitelist(name, params): Observable<Concept[]> {
         return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist', JSON.stringify(params));
     }
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { TypeaheadConcepts } from '../models/typeaheadConcepts';
 import { AuthoringService } from './authoring.service';
 
 @Injectable({
@@ -12,9 +11,9 @@ export class TerminologyServerService {
     constructor(private http: HttpClient, private authoringService: AuthoringService) {
     }
 
-    getTypeaheadConcepts(term): Observable<TypeaheadConcepts> {
+    getTypeaheadConcepts(term): Observable<object> {
         if (!term.trim()) {
-            return of(new TypeaheadConcepts());
+            return of(new Object());
         }
 
         const params = {
@@ -29,7 +28,7 @@ export class TerminologyServerService {
             delete params.termActive;
         }
 
-        return this.http.post<TypeaheadConcepts>( this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
+        return this.http.post<object>( this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
             'MAIN/concepts/search', params);
     }
 }

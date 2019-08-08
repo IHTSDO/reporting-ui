@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { TypeaheadConcepts } from '../../models/typeaheadConcepts';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { typeaheadMinimumLength } from '../../../globals';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
@@ -21,7 +20,7 @@ export class SnomedTypeaheadListComponent implements OnInit {
     @Output() selectEmitter = new EventEmitter();
 
     private searchTerms = new Subject<string>();
-    results: Observable<TypeaheadConcepts>;
+    results: Observable<object>;
 
     constructor(private terminologyServerService: TerminologyServerService) {
     }
@@ -34,7 +33,7 @@ export class SnomedTypeaheadListComponent implements OnInit {
                 if (term.length >= typeaheadMinimumLength) {
                     return this.terminologyServerService.getTypeaheadConcepts(term);
                 } else {
-                    return of(new TypeaheadConcepts());
+                    return of(new Object());
                 }
             })
         );

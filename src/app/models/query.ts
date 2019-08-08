@@ -6,6 +6,4 @@ export class Query {
     productionStatus: string;
     parameters: object;
     whiteList: Concept[];
-    // parameterNames: string[];
-    // parameterSubmissions: string[];
 }
