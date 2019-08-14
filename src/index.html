@@ -10,5 +10,14 @@
 </head>
 <body id="main-body">
 <app-root></app-root>
+
+<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
+    "triggerFunction": function(showCollectorDialog) {
+        jQuery("#jiraIssueCollector").click(function(e) {
+            e.preventDefault();
+            showCollectorDialog();
+        });
+    }};</script>
+
 </body>
 </html>
