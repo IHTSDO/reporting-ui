@@ -25,13 +25,11 @@ export class AppComponent implements OnInit {
         this.authoringService.getUIConfiguration().subscribe(
             data => {
                 this.authoringService.uiConfiguration = data;
-                debugger;
+
                 // $('<script>').attr({src: 'https://dev-workflow.ihtsdotools.org/s/eae63851c7444cb91c1a2fe49b048a36-T/9qqnuc/713005/8b99849fa1d8eaa169fd4a5dd7253186/2.0.31/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=dd01c5f4'}).appendTo('body');
                 if (this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint.includes('snowowl')) {
-                    console.log('SNOWOWL COLLECTOR');
                     $('<script>').attr({src: '/config/endpointConfig.json'}).appendTo('body');
                 } else {
-                    console.log('SNOWSTORM COLLECTOR');
                     $('<script>').attr({src: this.authoringService.uiConfiguration.endpoints.collectorEndpoint}).appendTo('body');
                 }
             },
