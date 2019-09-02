@@ -22,4 +22,8 @@ export class AuthoringService {
     getUIConfiguration(): Observable<UIConfiguration> {
         return this.http.get<UIConfiguration>('/authoring-services/ui-configuration');
     }
+
+    getSnowowlConfiguration(): Observable<UIConfiguration> {
+        return this.http.get<UIConfiguration>('/config/endpointConfig.json');
+    }
 }

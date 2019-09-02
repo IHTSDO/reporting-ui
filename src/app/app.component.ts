@@ -3,7 +3,6 @@ import { AuthoringService } from './services/authoring.service';
 import { AuthenticationService } from './services/authentication.service';
 // @ts-ignore
 import { version } from './../../package.json';
-
 import 'jquery';
 
 @Component({
@@ -27,8 +26,14 @@ export class AppComponent implements OnInit {
                 this.authoringService.uiConfiguration = data;
 
                 // $('<script>').attr({src: 'https://dev-workflow.ihtsdotools.org/s/eae63851c7444cb91c1a2fe49b048a36-T/9qqnuc/713005/8b99849fa1d8eaa169fd4a5dd7253186/2.0.31/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=dd01c5f4'}).appendTo('body');
+                // $('<script>').attr({src: 'https://dev-workflow.ihtsdotools.org/s/8e3b7f1ebfb8a3c28e478b9f9c2355f6-T/xsqioh/78004/8b99849fa1d8eaa169fd4a5dd7253186/2.0.27/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=dd01c5f4'}).appendTo('body');
+
+
                 if (this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint.includes('snowowl')) {
-                    $('<script>').attr({src: '/config/endpointConfig.json'}).appendTo('body');
+                    this.authoringService.getSnowowlConfiguration().subscribe(
+                        snowowlData => {
+                            $('<script>').attr({src: snowowlData.endpoints.collectorEndpoint}).appendTo('body');
+                        });
                 } else {
                     $('<script>').attr({src: this.authoringService.uiConfiguration.endpoints.collectorEndpoint}).appendTo('body');
                 }
