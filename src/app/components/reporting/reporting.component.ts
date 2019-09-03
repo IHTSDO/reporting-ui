@@ -9,6 +9,10 @@ import { AuthoringService } from '../../services/authoring.service';
 import { ModalService } from '../../services/modal.service';
 import { UtilityService } from '../../services/utility.service';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { TerminologyServerService } from '../../services/terminologyServer.service';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { typeaheadMinimumLength } from '../../../globals';
+import { Observable, of, Subject } from 'rxjs';
 
 @Component({
     selector: 'app-reporting',
@@ -37,6 +41,8 @@ export class ReportingComponent implements OnInit {
     // whitelist
     whitelistSearchTerm: string;
     @ViewChild('textareaTypeahead', { static: true }) inputElement: ElementRef;
+    private searchConcepts = new Subject<string>();
+    conceptList: Observable<object>;
 
     // item arrays
     categories: Category[];
@@ -53,7 +59,8 @@ export class ReportingComponent implements OnInit {
 
     constructor(private reportingService: ReportingService,
                 private authoringService: AuthoringService,
-                private modalService: ModalService) {
+                private modalService: ModalService,
+                private terminologyService: TerminologyServerService) {
     }
 
     ngOnInit() {
@@ -62,6 +69,14 @@ export class ReportingComponent implements OnInit {
         });
 
         setInterval(() => this.refresh(), 5000);
+
+        this.conceptList = this.searchConcepts.pipe(
+            debounceTime(250),
+            distinctUntilChanged(),
+            switchMap((idList) => {
+                return this.terminologyService.getConceptsById(idList);
+            })
+        );
     }
 
     refresh(): void {
@@ -139,6 +154,22 @@ export class ReportingComponent implements OnInit {
         this.reportingService.postReport(this.activeQuery).subscribe(() => {
             this.refresh();
         });
+    }
+
+    retrieveConceptsById(): void {
+        let idList = [];
+        if (this.whitelistSearchTerm) {
+            idList = this.whitelistSearchTerm.replace(/\s/g, '').split(',');
+        }
+
+        this.terminologyService.getConceptsById(idList).subscribe(
+            data => {
+                // @ts-ignore
+                data.items.forEach(concept => {
+                   this.whitelistSearchTerm = this.whitelistSearchTerm.replace(concept.id,
+                       UtilityService.convertConceptObjectToString(concept));
+                });
+            });
     }
 
     saveWhitelist(): void {

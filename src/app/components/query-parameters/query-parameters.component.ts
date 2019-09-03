@@ -48,7 +48,6 @@ export class QueryParametersComponent implements OnChanges {
                 }
             }
         }
-
     }
 
     convertConceptObjectToString(input): string {
