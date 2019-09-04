@@ -1,6 +1,8 @@
 export class User {
-    login: string;
+    email: string;
     firstName: string;
     lastName: string;
-    email: string;
+    login: string;
+    langKey: string;
+    roles: string[];
 }

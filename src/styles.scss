@@ -14,6 +14,17 @@ body#main-body {
     letter-spacing: 0.5px;
 }
 
+@font-face {
+    font-family: 'Roboto';
+    src: url('assets/Roboto-Light.ttf');
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('assets/Roboto-Regular.ttf');
+}
+
 div, p, h1, h2, h3, h4, h5, h6 {
     font-weight: 300;
 }
@@ -73,7 +84,7 @@ div.typeahead-textarea {
     top: 10rem;
 }
 
-div.modal {
-    z-index: 10001;
-    display: initial;
-}
+//div.modal {
+//    z-index: 10001;
+//    display: initial;
+//}
