@@ -27,8 +27,4 @@ export class UtilityService {
 
         return {sctId: sctId, fsn: fsn};
     }
-
-    static appendStringToStringList(stringList: string, text: string): string {
-        return stringList.slice(0, stringList.lastIndexOf(',')) + ', ' + text;
-    }
 }

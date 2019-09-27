@@ -50,12 +50,15 @@ export class QueryParametersComponent implements OnChanges {
                     if (parameter.type === 'HIDDEN') {
                         parameter.value = this.authoringService.environmentEndpoint + 'template-service';
                     }
+                    if (parameter.type === 'CONCEPT_LIST') {
+                        parameter.value = '';
+                    }
                 }
             }
         }
     }
 
-    retrieveConceptsById(input): void {
+    retrieveConceptsById(input, key): void {
         let idList = [];
         if (input) {
             idList = input.replace(/\s/g, '').split(',');
@@ -66,33 +69,21 @@ export class QueryParametersComponent implements OnChanges {
                 data => {
                     // @ts-ignore
                     data.items.forEach(concept => {
-                        this.addToWhitelistReadyConcepts(concept);
+                        this.addToWhitelistReadyConcepts(concept, key);
                     });
                 });
         }
+
+        // this.query.parameters['parameterMap'][key].value = input;
     }
 
-    addToWhitelistReadyConcepts(concept): void {
+    addToWhitelistReadyConcepts(concept, key): void {
         this.readyConceptSearchTerm = '';
+        this.query.parameters['parameterMap'][key].value += UtilityService.convertShortConceptToString(concept) + ',';
         this.readyConcepts.push(UtilityService.convertFullConceptToShortConcept(concept));
     }
 
-    convertStringToShortConcept(input): object {
-        return UtilityService.convertStringToShortConcept(input);
-    }
-
-    convertShortConceptToString(input): string {
+    convertShortConceptToString(input: Concept): string {
         return UtilityService.convertShortConceptToString(input);
-    }
-
-    appendConcept(stringList, string): string {
-
-        this.inputElement.nativeElement.focus();
-
-        if (stringList.includes(',')) {
-            return UtilityService.appendStringToStringList(stringList, string);
-        } else {
-            return string;
-        }
     }
 }

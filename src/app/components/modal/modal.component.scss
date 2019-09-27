@@ -73,6 +73,12 @@ app-modal {
                     color: $scorpion-grey;
                 }
 
+                span.ready-concept {
+                    font-size: 1.2rem;
+                    background: $jordy-blue;
+                    border-radius: 1rem;
+                }
+
                 table {
                     position: relative;
                     border: none;

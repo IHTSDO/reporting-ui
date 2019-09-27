@@ -18,17 +18,10 @@
             </div>
             <div *ngSwitchCase="'CONCEPT_LIST'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <!--<textarea #textareaTypeahead class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" (keyup)="searchTerm = parameter.value.value"></textarea>-->
-                <!--<app-typeahead-list [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = appendConcept(parameter.value.value, convertShortConceptToString($event))"></app-typeahead-list>-->
-                <!--<div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>-->
-
-                <input #textareaTypeahead class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="readyConceptSearchTerm" (keyup)="retrieveConceptsById(readyConceptSearchTerm)">
-                <app-typeaheadv2 [searchTerm]="searchTerm" (selectEmitter)="addToWhitelistReadyConcepts($event)"></app-typeaheadv2>
+                <input #textareaTypeahead class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="readyConceptSearchTerm" (keyup)="retrieveConceptsById(readyConceptSearchTerm, parameter.key)">
+                <app-typeaheadv2 [searchTerm]="readyConceptSearchTerm" (selectEmitter)="addToWhitelistReadyConcepts($event, parameter.key)"></app-typeaheadv2>
                 <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
-                <div>
-                    <span *ngFor="let readyConcept of convertStringToShortConcept(parameter.value.value)" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}</span>
-                </div>
-
+                <span *ngFor="let readyConcept of readyConcepts" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}</span>
             </div>
             <div *ngSwitchCase="'TEMPLATE_NAME'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
