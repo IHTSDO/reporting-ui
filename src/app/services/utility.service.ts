@@ -27,4 +27,17 @@ export class UtilityService {
 
         return {sctId: sctId, fsn: fsn};
     }
+
+    static convertStringListToShortConceptList(input: string): Concept[] {
+        input = input.trim();
+        const stringArray = input.replace(/,\s*$/, '').split(',');
+
+        const output: Concept[] = [];
+
+        stringArray.forEach(text => {
+            output.push(this.convertStringToShortConcept(text));
+        });
+
+        return output;
+    }
 }

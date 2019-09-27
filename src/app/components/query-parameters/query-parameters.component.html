@@ -21,7 +21,7 @@
                 <input #textareaTypeahead class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="readyConceptSearchTerm" (keyup)="retrieveConceptsById(readyConceptSearchTerm, parameter.key)">
                 <app-typeaheadv2 [searchTerm]="readyConceptSearchTerm" (selectEmitter)="addToWhitelistReadyConcepts($event, parameter.key)"></app-typeaheadv2>
                 <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
-                <span *ngFor="let readyConcept of readyConcepts" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}</span>
+                <span *ngFor="let readyConcept of convertStringListToShortConceptList(parameter.value.value)" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}</span>
             </div>
             <div *ngSwitchCase="'TEMPLATE_NAME'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>

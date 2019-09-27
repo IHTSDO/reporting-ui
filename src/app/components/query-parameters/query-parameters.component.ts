@@ -18,7 +18,6 @@ export class QueryParametersComponent implements OnChanges {
 
     @ViewChild('textareaTypeahead', { static: false }) inputElement: ElementRef;
 
-    readyConcepts: Concept[] = [];
     readyConceptSearchTerm: string;
     searchTerm: string;
     templates: Template[];
@@ -74,16 +73,26 @@ export class QueryParametersComponent implements OnChanges {
                 });
         }
 
-        // this.query.parameters['parameterMap'][key].value = input;
+
     }
 
     addToWhitelistReadyConcepts(concept, key): void {
         this.readyConceptSearchTerm = '';
-        this.query.parameters['parameterMap'][key].value += UtilityService.convertShortConceptToString(concept) + ',';
-        this.readyConcepts.push(UtilityService.convertFullConceptToShortConcept(concept));
+
+        if (this.query.parameters['parameterMap'][key].value.length > 1) {
+            this.query.parameters['parameterMap'][key].value += ', ' + UtilityService.convertShortConceptToString(concept);
+        } else {
+            this.query.parameters['parameterMap'][key].value += UtilityService.convertShortConceptToString(concept);
+        }
     }
 
     convertShortConceptToString(input: Concept): string {
         return UtilityService.convertShortConceptToString(input);
+    }
+
+    convertStringListToShortConceptList(input: string): Concept[] {
+        if (input) {
+            return UtilityService.convertStringListToShortConceptList(input);
+        }
     }
 }
