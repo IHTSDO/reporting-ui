@@ -9,11 +9,15 @@ export class UtilityService {
     constructor() {
     }
 
-    static convertConceptObjectToString(input): string {
+    static convertShortConceptToString(input): string {
         return input.id + ' |' + input.fsn.term + '|';
     }
 
-    static convertStringToConceptObject(input: string): Concept {
+    static convertFullConceptToShortConcept(input): Concept {
+        return { sctId: input.id, fsn: input.fsn.term};
+    }
+
+    static convertStringToShortConcept(input: string): Concept {
         input = input.trim();
 
         const sctId = String(input.match(/\d+/)[0]);
@@ -21,7 +25,7 @@ export class UtilityService {
 
         input.includes('|') ? fsn = input.slice(input.indexOf('|') + 1, input.lastIndexOf('|')) : fsn = '';
 
-        return { sctId: sctId, fsn: fsn};
+        return {sctId: sctId, fsn: fsn};
     }
 
     static appendStringToStringList(stringList: string, text: string): string {

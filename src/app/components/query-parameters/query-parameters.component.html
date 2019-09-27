@@ -4,7 +4,7 @@
             <div *ngSwitchCase="'CONCEPT'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <input class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" (keyup)="searchTerm = parameter.value.value">
-                <app-typeahead *ngIf="parameter.value.value && !parameter.value.value.includes('|')" [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = convertConceptObjectToString($event)"></app-typeahead>
+                <app-typeahead *ngIf="parameter.value.value && !parameter.value.value.includes('|')" [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = convertShortConceptToString($event)"></app-typeahead>
             </div>
             <div *ngSwitchCase="'BOOLEAN'">
                 <label class="m-0" for="{{parameter.key}}">{{parameter.key}}</label>
@@ -18,9 +18,17 @@
             </div>
             <div *ngSwitchCase="'CONCEPT_LIST'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <textarea #textareaTypeahead class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" (keyup)="searchTerm = parameter.value.value"></textarea>
-                <app-typeahead-list [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = appendConcept(parameter.value.value, convertConceptObjectToString($event))"></app-typeahead-list>
+                <!--<textarea #textareaTypeahead class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" (keyup)="searchTerm = parameter.value.value"></textarea>-->
+                <!--<app-typeahead-list [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = appendConcept(parameter.value.value, convertShortConceptToString($event))"></app-typeahead-list>-->
+                <!--<div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>-->
+
+                <input #textareaTypeahead class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="readyConceptSearchTerm" (keyup)="retrieveConceptsById(readyConceptSearchTerm)">
+                <app-typeaheadv2 [searchTerm]="searchTerm" (selectEmitter)="addToWhitelistReadyConcepts($event)"></app-typeaheadv2>
                 <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
+                <div>
+                    <span *ngFor="let readyConcept of convertStringToShortConcept(parameter.value.value)" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}</span>
+                </div>
+
             </div>
             <div *ngSwitchCase="'TEMPLATE_NAME'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>

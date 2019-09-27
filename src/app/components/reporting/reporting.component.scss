@@ -145,3 +145,11 @@ div#reporting {
         }
     }
 }
+
+app-modal#whitelist-modal {
+    span.ready-concept {
+        font-size: 1.2rem;
+        background: $jordy-blue;
+        border-radius: 1rem;
+    }
+}

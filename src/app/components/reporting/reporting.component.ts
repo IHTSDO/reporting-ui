@@ -1,7 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-
 import { ReportingService } from '../../services/reporting.service';
-
 import { Category } from '../../models/category';
 import { Query } from '../../models/query';
 import { Report } from '../../models/report';
@@ -11,8 +9,8 @@ import { UtilityService } from '../../services/utility.service';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { typeaheadMinimumLength } from '../../../globals';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { Concept } from '../../models/concept';
 
 @Component({
     selector: 'app-reporting',
@@ -40,6 +38,7 @@ export class ReportingComponent implements OnInit {
 
     // whitelist
     whitelistSearchTerm: string;
+    whitelistReadyConcepts: Concept[] = [];
     @ViewChild('textareaTypeahead', { static: true }) inputElement: ElementRef;
     private searchConcepts = new Subject<string>();
     conceptList: Observable<object>;
@@ -162,25 +161,22 @@ export class ReportingComponent implements OnInit {
             idList = this.whitelistSearchTerm.replace(/\s/g, '').split(',');
         }
 
-        this.terminologyService.getConceptsById(idList).subscribe(
-            data => {
-                // @ts-ignore
-                data.items.forEach(concept => {
-                   this.whitelistSearchTerm = this.whitelistSearchTerm.replace(concept.id,
-                       UtilityService.convertConceptObjectToString(concept));
+        if (idList.length > 0) {
+            this.terminologyService.getConceptsById(idList).subscribe(
+                data => {
+                    // @ts-ignore
+                    data.items.forEach(concept => {
+                        this.addToWhitelistReadyConcepts(concept);
+                    });
                 });
-            });
+        }
     }
 
     saveWhitelist(): void {
-        // this takes the string entered and converts it to objects for the actual whitelist
-        if (this.whitelistSearchTerm) {
-            this.whitelistSearchTerm.split(',').forEach(text => {
-                const concept = UtilityService.convertStringToConceptObject(text);
+        if (this.whitelistReadyConcepts && this.whitelistReadyConcepts.length > 0) {
+            this.whitelistReadyConcepts.forEach(concept => {
                 let exists = false;
-
-                // prevents duplicates being pushed
-                this.activeQuery.whiteList.filter((item) => {
+                this.activeQuery.whiteList.filter(item => {
                     if (item.sctId === concept.sctId) {
                         exists = true;
                     }
@@ -190,8 +186,7 @@ export class ReportingComponent implements OnInit {
                     this.activeQuery.whiteList.push(concept);
                 }
             });
-
-            this.whitelistSearchTerm = '';
+            this.whitelistReadyConcepts = [];
         }
 
         // actually posts the whitelist doing relevant animations based on response
@@ -206,19 +201,9 @@ export class ReportingComponent implements OnInit {
             });
     }
 
-    addToSearchTerm(result): void {
-        this.whitelistSearchTerm = this.appendConcept(this.whitelistSearchTerm, UtilityService.convertConceptObjectToString(result));
-    }
-
-    appendConcept(stringList, string): string {
-
-        this.inputElement.nativeElement.focus();
-
-        if (stringList.includes(',')) {
-            return UtilityService.appendStringToStringList(stringList, string);
-        } else {
-            return string;
-        }
+    addToWhitelistReadyConcepts(concept): void {
+        this.whitelistSearchTerm = '';
+        this.whitelistReadyConcepts.push(UtilityService.convertFullConceptToShortConcept(concept));
     }
 
     removeFromWhitelist(concept): void {

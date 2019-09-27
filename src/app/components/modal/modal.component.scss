@@ -3,10 +3,10 @@
 app-modal {
     /* modals are hidden by default */
     display: none;
+    max-height: 90vh;
 
     div.modal-dialog {
         z-index: 1000;
-
         overflow: auto;
 
         div.modal-content {
@@ -32,6 +32,9 @@ app-modal {
             }
 
             div.modal-body {
+                overflow: scroll !important;
+                max-height: calc(90vh - 12rem);
+
                 label {
                     font-size: 1.4rem;
                     color: $scorpion-grey;

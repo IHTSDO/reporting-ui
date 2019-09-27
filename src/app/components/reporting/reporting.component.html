@@ -86,9 +86,12 @@
     <div body>
         <div class="position-relative">
             <label class="w-100 m-0">Add concept to whitelist</label>
-            <textarea #textareaTypeahead class="w-100 rounded input-border" [(ngModel)]="whitelistSearchTerm" (keyup.enter)="saveWhitelist()" (keyup)="retrieveConceptsById()"></textarea>
-            <app-typeahead-list [searchTerm]="whitelistSearchTerm" (selectEmitter)="addToSearchTerm($event)"></app-typeahead-list>
+            <input #textareaTypeahead class="w-100 rounded input-border px-1" [(ngModel)]="whitelistSearchTerm" (keyup)="retrieveConceptsById()">
+            <app-typeaheadv2 [searchTerm]="whitelistSearchTerm" (selectEmitter)="addToWhitelistReadyConcepts($event)"></app-typeaheadv2>
             <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
+            <div>
+                <span *ngFor="let readyConcept of whitelistReadyConcepts" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}</span>
+            </div>
         </div>
 
         <table class="table table-bordered rounded mt-3 mb-0 overflow-hidden">

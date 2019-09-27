@@ -22,9 +22,9 @@ export class AppComponent implements OnInit {
             data => {
                 this.versions = data;
 
-                console.log('Reporting UI Version:', data.versions['reporting-ui']);
-                console.log('Schedule Manager Version:', data.versions['schedule-manager']);
-                console.log('Snowstorm Version:', data.versions['snowstorm']);
+                console.log('Reporting UI Version:', data.versions['reporting-ui'].split('~', 1)[0]);
+                console.log('Schedule Manager Version:', data.versions['schedule-manager'].split('~', 1)[0]);
+                console.log('Snowstorm Version:', data.versions['snowstorm'].split('~', 1)[0]);
             }
         );
 
