@@ -5,11 +5,11 @@ import { Observable, of, Subject } from 'rxjs';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 
 @Component({
-    selector: 'app-typeaheadv2',
-    templateUrl: './typeaheadv2.component.html',
-    styleUrls: ['./typeaheadv2.component.scss']
+    selector: 'app-typeahead',
+    templateUrl: './typeahead.component.html',
+    styleUrls: ['./typeahead.component.scss']
 })
-export class Typeaheadv2Component implements OnInit {
+export class TypeaheadComponent implements OnInit {
 
     term: string;
 

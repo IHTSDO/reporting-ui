@@ -4,7 +4,7 @@
             <div *ngSwitchCase="'CONCEPT'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <input class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" (keyup)="searchTerm = parameter.value.value">
-                <app-typeaheadv2 *ngIf="parameter.value.value && !parameter.value.value.includes('|')" [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = convertShortConceptToString($event)"></app-typeaheadv2>
+                <app-typeahead *ngIf="parameter.value.value && !parameter.value.value.includes('|')" [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = convertShortConceptToString($event)"></app-typeahead>
             </div>
             <div *ngSwitchCase="'BOOLEAN'">
                 <label class="m-0" for="{{parameter.key}}">{{parameter.key}}</label>
@@ -19,7 +19,7 @@
             <div *ngSwitchCase="'CONCEPT_LIST'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <input #textareaTypeahead class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="readyConceptSearchTerm" (keyup)="retrieveConceptsById(readyConceptSearchTerm, parameter.key)">
-                <app-typeaheadv2 [searchTerm]="readyConceptSearchTerm" (selectEmitter)="addToWhitelistReadyConcepts($event, parameter.key)"></app-typeaheadv2>
+                <app-typeahead [searchTerm]="readyConceptSearchTerm" (selectEmitter)="addToWhitelistReadyConcepts($event, parameter.key)"></app-typeahead>
                 <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
                 <span *ngFor="let readyConcept of convertStringListToShortConceptList(parameter.value.value)" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}</span>
             </div>
