@@ -4,7 +4,7 @@
             <div *ngSwitchCase="'CONCEPT'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <input class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" (keyup)="searchTerm = parameter.value.value">
-                <app-typeahead *ngIf="parameter.value.value && !parameter.value.value.includes('|')" [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = convertShortConceptToString($event)"></app-typeahead>
+                <app-typeaheadv2 *ngIf="parameter.value.value && !parameter.value.value.includes('|')" [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = convertShortConceptToString($event)"></app-typeaheadv2>
             </div>
             <div *ngSwitchCase="'BOOLEAN'">
                 <label class="m-0" for="{{parameter.key}}">{{parameter.key}}</label>

@@ -31,12 +31,6 @@ import { OrderByPipe } from './pipes/order-by.pipe';
 import { DisplayOrderPipe } from './pipes/display-order.pipe';
 import { HiddenPipe } from './pipes/hidden.pipe';
 
-import { TypeaheadComponent } from './components/typeahead/typeahead.component';
-import { TypeaheadListComponent } from './components/typeahead-list/typeahead-list.component';
-
-
-
-
 @NgModule({
     declarations: [
         AppComponent,
@@ -46,8 +40,6 @@ import { TypeaheadListComponent } from './components/typeahead-list/typeahead-li
         LeftSidebarComponent,
         CategoryPipe,
         ConceptsPipe,
-        TypeaheadComponent,
-        TypeaheadListComponent,
         DisplayOrderPipe,
         HiddenPipe,
         OrderByPipe,
