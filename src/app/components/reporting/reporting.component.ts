@@ -126,6 +126,10 @@ export class ReportingComponent implements OnInit {
         return false;
     }
 
+    convertDate(date) {
+        return date.replace(/T|Z/g, ' ');
+    }
+
     switchActiveReportSet(): void {
         this.activeReportSet = null;
         this.refresh();

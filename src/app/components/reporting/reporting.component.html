@@ -40,7 +40,7 @@
                                 <th>User</th>
                             </tr>
                             <tr *ngFor="let report of activeReportSet">
-                                <td class="pl-3">{{report.requestTime}}</td>
+                                <td class="pl-3">{{convertDate(report.requestTime)}}UTC</td>
                                 <td>{{report.issuesReported ? report.issuesReported : '0'}}</td>
                                 <td *ngFor="let parameter of query.parameters.parameterMap | keyvalue | displayOrder:parameter | hidden">{{parameterValue(report, parameter)}}</td>
                                 <ng-container [ngSwitch]="report.status">
