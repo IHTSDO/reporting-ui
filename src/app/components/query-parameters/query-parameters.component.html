@@ -1,9 +1,9 @@
-<div *ngIf="query">
+<div *ngIf="query" id="query-parameters">
     <div *ngFor="let parameter of query?.parameters['parameterMap'] | keyvalue | displayOrder" class="pb-2 position-relative">
         <ng-container [ngSwitch]="parameter.value.type">
             <div *ngSwitchCase="'CONCEPT'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <input class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" (keyup)="searchTerm = parameter.value.value">
+                <input class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" (keyup)="searchTerm = parameter.value.value" [required]="parameter.value.mandatory">
                 <app-typeahead *ngIf="parameter.value.value && !parameter.value.value.includes('|')" [searchTerm]="searchTerm" (selectEmitter)="parameter.value.value = convertShortConceptToString($event)"></app-typeahead>
             </div>
             <div *ngSwitchCase="'BOOLEAN'">
@@ -14,33 +14,33 @@
             </div>
             <div *ngSwitchCase="'STRING'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <input id="{{parameter.key}}" name="{{parameter.key}}" class="w-100 rounded input-border px-1" [(ngModel)]="parameter.value.value">
+                <input id="{{parameter.key}}" name="{{parameter.key}}" class="w-100 rounded input-border px-1" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory">
             </div>
             <div *ngSwitchCase="'CONCEPT_LIST'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <input #textareaTypeahead class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="readyConceptSearchTerm" (keyup)="retrieveConceptsById(readyConceptSearchTerm, parameter.key)">
+                <input #textareaTypeahead class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="readyConceptSearchTerm" (keyup)="retrieveConceptsById(readyConceptSearchTerm, parameter.key)" [required]="parameter.value.mandatory && (parameter.value.value === '')">
                 <app-typeahead [searchTerm]="readyConceptSearchTerm" (selectEmitter)="addToWhitelistReadyConcepts($event, parameter.key)"></app-typeahead>
                 <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
                 <span *ngFor="let readyConcept of convertStringListToShortConceptList(parameter.value.value)" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}</span>
             </div>
             <div *ngSwitchCase="'TEMPLATE_NAME'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <select id="{{parameter.key}}" class="form-control" [(ngModel)]="parameter.value.value">
+                <select id="{{parameter.key}}" class="form-control" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory">
                     <option selected></option>
                     <option *ngFor="let template of templates | orderBy:'name'">{{template.name}}</option>
                 </select>
             </div>
             <div *ngSwitchCase="'TEMPLATE'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <textarea class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value"></textarea>
+                <textarea class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory"></textarea>
             </div>
             <div *ngSwitchCase="'ECL'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <textarea class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value"></textarea>
+                <textarea class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory"></textarea>
             </div>
             <div *ngSwitchCase="'PROJECT'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <select id="{{parameter.key}}" class="form-control" [(ngModel)]="parameter.value.value">
+                <select id="{{parameter.key}}" class="form-control" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory">
                     <option selected>MAIN</option>
                     <option *ngFor="let project of projects | orderBy:'title'">{{project.key}}</option>
                 </select>
