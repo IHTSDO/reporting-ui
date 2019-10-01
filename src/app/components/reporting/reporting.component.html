@@ -89,9 +89,7 @@
             <input #textareaTypeahead class="w-100 rounded input-border px-1" [(ngModel)]="whitelistSearchTerm" (keyup)="retrieveConceptsById()">
             <app-typeahead [searchTerm]="whitelistSearchTerm" (selectEmitter)="addToWhitelistReadyConcepts($event)"></app-typeahead>
             <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
-            <div>
-                <span *ngFor="let readyConcept of whitelistReadyConcepts" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}</span>
-            </div>
+            <span *ngFor="let readyConcept of whitelistReadyConcepts" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}</span>
         </div>
 
         <table class="table table-bordered rounded mt-3 mb-0 overflow-hidden">
