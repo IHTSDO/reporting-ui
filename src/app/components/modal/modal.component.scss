@@ -7,7 +7,6 @@ app-modal {
 
     div.modal-dialog {
         z-index: 1000;
-        overflow: auto;
 
         div.modal-content {
             div.modal-header {
@@ -32,7 +31,6 @@ app-modal {
             }
 
             div.modal-body {
-                overflow: scroll;
                 max-height: calc(90vh - 12rem);
 
                 label {
