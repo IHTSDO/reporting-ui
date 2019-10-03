@@ -126,6 +126,28 @@ export class ReportingComponent implements OnInit {
         return false;
     }
 
+    missingFieldsCheck(): void {
+        let missingFields = false;
+        for (const param in this.activeQuery.parameters['parameterMap']) {
+            if (this.activeQuery.parameters['parameterMap'].hasOwnProperty(param)) {
+                const field = this.activeQuery.parameters['parameterMap'][param];
+                if (field.mandatory && (field.type !== 'BOOLEAN')) {
+                    if (field.value === '' || field.value === null || field.value === undefined) {
+                        missingFields = true;
+                    }
+                }
+            }
+        }
+
+        if (missingFields) {
+            this.saveResponse = 'Missing Fields';
+            this.saved = (this.saved === 'start' ? 'end' : 'start');
+        } else {
+            this.submitReport();
+            this.closeModal('query-modal');
+        }
+    }
+
     convertDate(date) {
         return date.replace(/T|Z/g, ' ');
     }

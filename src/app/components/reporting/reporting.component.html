@@ -76,7 +76,8 @@
         <app-query-parameters [query]="activeQuery"></app-query-parameters>
     </div>
     <div footer>
-        <button type="button" class="btn btn-primary" (click)="submitReport(); closeModal('query-modal')">Run Query</button>
+        <div [@slide]="saved" class="px-3 error">{{saveResponse}}</div>
+        <button type="button" class="btn btn-primary" (click)="missingFieldsCheck()">Run Query</button>
     </div>
 </app-modal>
 
