@@ -6,6 +6,8 @@ import { AuthoringService } from '../../services/authoring.service';
 import { UtilityService } from '../../services/utility.service';
 import { Concept } from '../../models/concept';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-query-parameters',
@@ -22,6 +24,17 @@ export class QueryParametersComponent implements OnChanges {
     searchTerm: string;
     templates: Template[];
     projects: object[];
+
+    // typeahead
+    public model: any;
+    formatter = (result: string) => result['fsn'].term;
+    search = (text$: Observable<string>) =>
+        text$.pipe(
+            debounceTime(300),
+            distinctUntilChanged(),
+            switchMap(term => term.length < 2 ? []
+                : this.terminologyService.getTypeahead(term))
+        )
 
     constructor(private templateService: TemplateService, private authoringService: AuthoringService,
                 private terminologyService: TerminologyServerService) {

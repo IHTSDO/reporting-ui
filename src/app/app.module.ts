@@ -30,6 +30,7 @@ import { ConceptsPipe } from './pipes/concepts.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { DisplayOrderPipe } from './pipes/display-order.pipe';
 import { HiddenPipe } from './pipes/hidden.pipe';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -53,7 +54,8 @@ import { HiddenPipe } from './pipes/hidden.pipe';
         FormsModule,
         BrowserAnimationsModule,
         MatTooltipModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        NgbTypeaheadModule
     ],
     providers: [
         ReportingService,

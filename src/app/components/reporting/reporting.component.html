@@ -1,6 +1,8 @@
 <app-left-sidebar [categories]="categories" (categoryEmitter)="activeCategory = $event" (searchTextEmitter)="querySearch = $event"></app-left-sidebar>
 
 <div id="reporting" class="footer-margin">
+    <!--<input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="model" [resultFormatter]="formatter" [inputFormatter]="formatter" [ngbTypeahead]="search"/>-->
+
     <div *ngFor="let category of categories | category:activeCategory?.name">
         <div class="p-4" *ngIf="(category.jobs | category:querySearch).length !== 0">
             <h3 class="report-title">{{category.name}}</h3>

@@ -8,7 +8,7 @@ import { ModalService } from '../../services/modal.service';
 import { UtilityService } from '../../services/utility.service';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { Concept } from '../../models/concept';
 
@@ -55,6 +55,17 @@ export class ReportingComponent implements OnInit {
     // animations
     saved = 'start';
     saveResponse: string;
+
+    // typeahead
+    public model: any;
+    formatter = (result: string) => result['fsn'].term;
+    search = (text$: Observable<string>) =>
+        text$.pipe(
+            debounceTime(300),
+            distinctUntilChanged(),
+            switchMap(term => term.length < 2 ? []
+                : this.terminologyService.getTypeahead(term))
+        )
 
     constructor(private reportingService: ReportingService,
                 private authoringService: AuthoringService,
