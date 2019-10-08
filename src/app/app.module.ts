@@ -15,7 +15,6 @@ import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.com
 import { ReportingComponent } from './components/reporting/reporting.component';
 import { QueryParametersComponent } from './components/query-parameters/query-parameters.component';
 import { ModalComponent } from './components/modal/modal.component';
-import { TypeaheadComponent } from './components/typeahead/typeahead.component';
 
 import { ReportingService } from './services/reporting.service';
 import { UtilityService } from './services/utility.service';
@@ -45,8 +44,7 @@ import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
         HiddenPipe,
         OrderByPipe,
         ModalComponent,
-        QueryParametersComponent,
-        TypeaheadComponent
+        QueryParametersComponent
     ],
     imports: [
         BrowserModule,

@@ -1,8 +1,6 @@
 <app-left-sidebar [categories]="categories" (categoryEmitter)="activeCategory = $event" (searchTextEmitter)="querySearch = $event"></app-left-sidebar>
 
 <div id="reporting" class="footer-margin">
-    <!--<input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="model" [resultFormatter]="formatter" [inputFormatter]="formatter" [ngbTypeahead]="search"/>-->
-
     <div *ngFor="let category of categories | category:activeCategory?.name">
         <div class="p-4" *ngIf="(category.jobs | category:querySearch).length !== 0">
             <h3 class="report-title">{{category.name}}</h3>
@@ -17,7 +15,7 @@
                             <div class="float-right m-2">
                                 <div>{{activeQuery.whitelist | json}}</div>
                                 <button class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
-                                (click)="openModal('whitelist-modal'); whitelistSearchTerm = ''">
+                                (click)="openModal('whitelist-modal'); searchTerm = ''">
                                     Whitelist
                                 </button>
                                 <ng-container *ngIf="parametersExistCheck()">
@@ -89,8 +87,7 @@
     <div body>
         <div class="position-relative">
             <label class="w-100 m-0">Add concept to whitelist</label>
-            <input #textareaTypeahead class="w-100 rounded input-border px-1" [(ngModel)]="whitelistSearchTerm" (keyup)="retrieveConceptsById()">
-            <app-typeahead [searchTerm]="whitelistSearchTerm" (selectEmitter)="addToWhitelistReadyConcepts($event)"></app-typeahead>
+            <input type="text" class="form-control" [(ngModel)]="searchTerm" [ngbTypeahead]="search" (keyup.enter)="retrieveConceptsById(searchTerm)"/>
             <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
             <span *ngFor="let readyConcept of whitelistReadyConcepts" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}</span>
         </div>

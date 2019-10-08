@@ -1,4 +1,4 @@
-@import 'src/variables.scss';
+@import '~src/variables.scss';
 
 app-modal {
     /* modals are hidden by default */
@@ -45,6 +45,9 @@ app-modal {
 
                 input, textarea {
                     cursor: text;
+                    font-size: 1.4rem;
+                    font-weight: 300;
+                    color: $black;
 
                     &.input-border {
                         border: 1px solid $alto-white;

@@ -37,11 +37,8 @@ export class ReportingComponent implements OnInit {
     querySearch: string;
 
     // whitelist
-    whitelistSearchTerm: string;
     whitelistReadyConcepts: Concept[] = [];
     @ViewChild('textareaTypeahead', { static: true }) inputElement: ElementRef;
-    private searchConcepts = new Subject<string>();
-    conceptList: Observable<object>;
 
     // item arrays
     categories: Category[];
@@ -57,8 +54,7 @@ export class ReportingComponent implements OnInit {
     saveResponse: string;
 
     // typeahead
-    public model: any;
-    formatter = (result: string) => result['fsn'].term;
+    searchTerm: string;
     search = (text$: Observable<string>) =>
         text$.pipe(
             debounceTime(300),
@@ -79,14 +75,6 @@ export class ReportingComponent implements OnInit {
         });
 
         setInterval(() => this.refresh(), 5000);
-
-        this.conceptList = this.searchConcepts.pipe(
-            debounceTime(250),
-            distinctUntilChanged(),
-            switchMap((idList) => {
-                return this.terminologyService.getConceptsById(idList);
-            })
-        );
     }
 
     refresh(): void {
@@ -191,10 +179,10 @@ export class ReportingComponent implements OnInit {
         });
     }
 
-    retrieveConceptsById(): void {
+    retrieveConceptsById(input): void {
         let idList = [];
-        if (this.whitelistSearchTerm) {
-            idList = this.whitelistSearchTerm.replace(/\s/g, '').split(',');
+        if (input) {
+            idList = input.replace(/[^0-9,]/g, '').split(',');
         }
 
         if (idList.length > 0) {
@@ -238,7 +226,7 @@ export class ReportingComponent implements OnInit {
     }
 
     addToWhitelistReadyConcepts(concept): void {
-        this.whitelistSearchTerm = '';
+        this.searchTerm = '';
         this.whitelistReadyConcepts.push(UtilityService.convertFullConceptToShortConcept(concept));
     }
 

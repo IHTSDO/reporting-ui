@@ -8,6 +8,7 @@ import { Concept } from '../../models/concept';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { typeaheadMinimumLength } from '../../../globals';
 
 @Component({
     selector: 'app-query-parameters',
@@ -20,19 +21,16 @@ export class QueryParametersComponent implements OnChanges {
 
     @ViewChild('textareaTypeahead', { static: false }) inputElement: ElementRef;
 
-    readyConceptSearchTerm: string;
-    searchTerm: string;
     templates: Template[];
     projects: object[];
 
     // typeahead
-    public model: any;
-    formatter = (result: string) => result['fsn'].term;
+    searchTerm: string;
     search = (text$: Observable<string>) =>
         text$.pipe(
             debounceTime(300),
             distinctUntilChanged(),
-            switchMap(term => term.length < 2 ? []
+            switchMap(term => term.length < typeaheadMinimumLength ? []
                 : this.terminologyService.getTypeahead(term))
         )
 
@@ -73,7 +71,7 @@ export class QueryParametersComponent implements OnChanges {
     retrieveConceptsById(input, key): void {
         let idList = [];
         if (input) {
-            idList = input.replace(/\s/g, '').split(',');
+            idList = input.replace(/[^0-9,]/g, '').split(',');
         }
 
         if (idList.length > 0) {
@@ -90,7 +88,7 @@ export class QueryParametersComponent implements OnChanges {
     }
 
     addToWhitelistReadyConcepts(concept, key): void {
-        this.readyConceptSearchTerm = '';
+        this.searchTerm = '';
 
         if (this.query.parameters[key].value.length > 1) {
             this.query.parameters[key].value += ', ' + UtilityService.convertShortConceptToString(concept);
