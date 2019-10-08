@@ -50,9 +50,9 @@ export class QueryParametersComponent implements OnChanges {
                 this.projects = data;
             });
 
-            for (const key in this.query.parameters['parameterMap']) {
-                if (this.query.parameters['parameterMap'].hasOwnProperty(key)) {
-                    const parameter = this.query.parameters['parameterMap'][key];
+            for (const key in this.query.parameters) {
+                if (this.query.parameters.hasOwnProperty(key)) {
+                    const parameter = this.query.parameters[key];
                     if (parameter.type === 'BOOLEAN') {
                         parameter.value = JSON.parse(parameter.defaultValue);
                     }
@@ -92,10 +92,10 @@ export class QueryParametersComponent implements OnChanges {
     addToWhitelistReadyConcepts(concept, key): void {
         this.readyConceptSearchTerm = '';
 
-        if (this.query.parameters['parameterMap'][key].value.length > 1) {
-            this.query.parameters['parameterMap'][key].value += ', ' + UtilityService.convertShortConceptToString(concept);
+        if (this.query.parameters[key].value.length > 1) {
+            this.query.parameters[key].value += ', ' + UtilityService.convertShortConceptToString(concept);
         } else {
-            this.query.parameters['parameterMap'][key].value += UtilityService.convertShortConceptToString(concept);
+            this.query.parameters[key].value += UtilityService.convertShortConceptToString(concept);
         }
     }
 

@@ -102,8 +102,8 @@ export class ReportingComponent implements OnInit {
     }
 
     parameterValue(report, parameter): string {
-        if (report.parameters.hasOwnProperty('parameterMap') && report.parameters.parameterMap.hasOwnProperty(parameter.key)) {
-            return report.parameters.parameterMap[parameter.key].value;
+        if (report.parameters && report.parameters.hasOwnProperty(parameter.key)) {
+            return report.parameters[parameter.key].value;
         } else  {
             return '';
         }
@@ -124,13 +124,12 @@ export class ReportingComponent implements OnInit {
     }
 
     parametersExistCheck(): boolean {
-        for (const param in this.activeQuery.parameters['parameterMap']) {
-            if (this.activeQuery.parameters['parameterMap'].hasOwnProperty(param)) {
-                if (this.activeQuery.parameters['parameterMap'][param].type !== 'HIDDEN') {
+        for (const param in this.activeQuery.parameters) {
+            if (this.activeQuery.parameters.hasOwnProperty(param)) {
+                if (this.activeQuery.parameters[param].type !== 'HIDDEN') {
                     return true;
                 } else {
-                    this.activeQuery.parameters['parameterMap'][param].value = this.authoringService.environmentEndpoint
-                        + 'template-service';
+                    this.activeQuery.parameters[param].value = this.authoringService.environmentEndpoint + 'template-service';
                 }
             }
         }
@@ -139,9 +138,9 @@ export class ReportingComponent implements OnInit {
 
     missingFieldsCheck(): void {
         let missingFields = false;
-        for (const param in this.activeQuery.parameters['parameterMap']) {
-            if (this.activeQuery.parameters['parameterMap'].hasOwnProperty(param)) {
-                const field = this.activeQuery.parameters['parameterMap'][param];
+        for (const param in this.activeQuery.parameters) {
+            if (this.activeQuery.parameters.hasOwnProperty(param)) {
+                const field = this.activeQuery.parameters[param];
                 if (field.mandatory && (field.type !== 'BOOLEAN')) {
                     if (field.value === '' || field.value === null || field.value === undefined) {
                         missingFields = true;

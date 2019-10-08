@@ -1,5 +1,5 @@
 <div *ngIf="query" id="query-parameters">
-    <div *ngFor="let parameter of query?.parameters['parameterMap'] | keyvalue | displayOrder" class="pb-2 position-relative">
+    <div *ngFor="let parameter of query?.parameters | keyvalue | displayOrder" class="pb-2 position-relative">
         <ng-container [ngSwitch]="parameter.value.type">
             <div *ngSwitchCase="'CONCEPT'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
