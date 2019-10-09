@@ -15,7 +15,7 @@
                             <div class="float-right m-2">
                                 <div>{{activeQuery.whitelist | json}}</div>
                                 <button class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
-                                (click)="openModal('whitelist-modal'); searchTerm = ''">
+                                (click)="openModal('whitelist-modal'); searchTerm = ''; whitelistReadyConcepts = []">
                                     Whitelist
                                 </button>
                                 <ng-container *ngIf="parametersExistCheck()">
@@ -42,7 +42,8 @@
                             <tr *ngFor="let report of activeReportSet">
                                 <td class="pl-3">{{convertDate(report.requestTime)}}UTC</td>
                                 <td>{{report.issuesReported ? report.issuesReported : '0'}}</td>
-                                <td *ngFor="let parameter of query.parameters | keyvalue | displayOrder:parameter | hidden">{{parameterValue(report, parameter)}}</td>
+                                <!--<td *ngFor="let parameter of query.parameters | keyvalue | displayOrder:parameter | hidden">{{parameterValue(report, parameter)}}</td>-->
+                                <td *ngFor="let parameter of query.parameters | keyvalue | displayOrder:parameter | hidden">{{report?.parameters ? report.parameters[parameter.key].value : ''}}</td>
                                 <ng-container [ngSwitch]="report.status">
                                     <td *ngSwitchCase="'Complete'" class="completed" (click)="viewReport(report)">{{report.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
                                     <td *ngSwitchCase="'Failed'" class="failed" matTooltip="{{report?.debugInfo}}">{{report.status}}<i class="fas fa-times-circle ml-1"></i></td>
@@ -89,7 +90,9 @@
             <label class="w-100 m-0">Add concept to whitelist</label>
             <input type="text" class="form-control" [(ngModel)]="searchTerm" [ngbTypeahead]="search" (keyup.enter)="retrieveConceptsById(searchTerm)"/>
             <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
-            <span *ngFor="let readyConcept of whitelistReadyConcepts" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}</span>
+            <span *ngFor="let readyConcept of whitelistReadyConcepts" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}
+                <span class="remove-ready-concept text-center rounded-circle px-1" (click)="removeFromWhitelistReadyConcepts(readyConcept)"><i class="fas fa-times"></i></span>
+            </span>
         </div>
 
         <table class="table table-bordered rounded mt-3 mb-0 overflow-hidden">

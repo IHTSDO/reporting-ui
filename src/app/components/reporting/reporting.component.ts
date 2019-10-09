@@ -89,14 +89,6 @@ export class ReportingComponent implements OnInit {
         }
     }
 
-    parameterValue(report, parameter): string {
-        if (report.parameters && report.parameters.hasOwnProperty(parameter.key)) {
-            return report.parameters[parameter.key].value;
-        } else  {
-            return '';
-        }
-    }
-
     switchActiveQuery(query): void {
         if (this.activeQuery !== query) {
             this.activeQuery = query;
@@ -111,6 +103,41 @@ export class ReportingComponent implements OnInit {
         this.switchActiveReportSet();
     }
 
+    switchActiveReportSet(): void {
+        this.activeReportSet = null;
+        this.refresh();
+    }
+
+    convertDate(date) {
+        return date.replace(/T|Z/g, ' ');
+    }
+
+    viewReport(report): void {
+        window.open(report.resultUrl);
+    }
+
+    deleteReport(): void {
+        this.reportingService.deleteReport(this.activeReport).subscribe(() => {
+            this.refresh();
+        });
+    }
+
+    submitReport(): void {
+        this.reportingService.postReport(this.activeQuery).subscribe(() => {
+            this.refresh();
+        });
+    }
+
+    // Modal Functions
+    openModal(id: string): void {
+        this.modalService.open(id);
+    }
+
+    closeModal(id: string): void {
+        this.modalService.close(id);
+    }
+
+    // Query Modal Functions
     parametersExistCheck(): boolean {
         for (const param in this.activeQuery.parameters) {
             if (this.activeQuery.parameters.hasOwnProperty(param)) {
@@ -146,39 +173,7 @@ export class ReportingComponent implements OnInit {
         }
     }
 
-    convertDate(date) {
-        return date.replace(/T|Z/g, ' ');
-    }
-
-    switchActiveReportSet(): void {
-        this.activeReportSet = null;
-        this.refresh();
-    }
-
-    viewReport(report): void {
-        window.open(report.resultUrl);
-    }
-
-    openModal(id: string): void {
-        this.modalService.open(id);
-    }
-
-    closeModal(id: string): void {
-        this.modalService.close(id);
-    }
-
-    deleteReport(): void {
-        this.reportingService.deleteReport(this.activeReport).subscribe(() => {
-            this.refresh();
-        });
-    }
-
-    submitReport(): void {
-        this.reportingService.postReport(this.activeQuery).subscribe(() => {
-            this.refresh();
-        });
-    }
-
+    // Whitelist Modal Functions
     retrieveConceptsById(input): void {
         let idList = [];
         if (input) {
@@ -194,6 +189,17 @@ export class ReportingComponent implements OnInit {
                     });
                 });
         }
+    }
+
+    addToWhitelistReadyConcepts(concept): void {
+        this.searchTerm = '';
+        this.whitelistReadyConcepts.push(UtilityService.convertFullConceptToShortConcept(concept));
+    }
+
+    removeFromWhitelistReadyConcepts(concept): void {
+        this.whitelistReadyConcepts = this.whitelistReadyConcepts.filter(item => {
+            return item.sctId !== concept.sctId;
+        });
     }
 
     saveWhitelist(): void {
@@ -223,11 +229,6 @@ export class ReportingComponent implements OnInit {
                 this.saveResponse = 'Error';
                 this.saved = (this.saved === 'start' ? 'end' : 'start');
             });
-    }
-
-    addToWhitelistReadyConcepts(concept): void {
-        this.searchTerm = '';
-        this.whitelistReadyConcepts.push(UtilityService.convertFullConceptToShortConcept(concept));
     }
 
     removeFromWhitelist(concept): void {
