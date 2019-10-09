@@ -32,7 +32,7 @@ app-modal {
 
             div.modal-body {
                 max-height: calc(90vh - 12rem);
-                overflow: scroll;
+                //overflow: scroll;
 
                 label {
                     font-size: 1.4rem;
@@ -80,6 +80,7 @@ app-modal {
                     background: $jordy-blue;
                     border-radius: 1rem;
                     position: relative;
+                    cursor: default;
 
                     span.remove-ready-concept {
                         display: none;
@@ -94,71 +95,63 @@ app-modal {
                     }
                 }
 
-                table {
-                    position: relative;
-                    border: none;
+                div.table-container {
+                    max-height: 32rem;
+                    overflow: scroll;
 
-                    tr {
-                        td {
-                            button.delete-button {
-                                display: none;
-                                position: absolute;
-                                top: 0;
-                                right: -50px;
-                                background-color: transparent;
-                                color: $crimson-red;
-                                -webkit-animation: delete-move 200ms;
-                                -webkit-animation-delay: 500ms;
-                                -webkit-animation-fill-mode: forwards;
-                                animation: delete-move 200ms;
-                                animation-delay: 500ms;
-                                animation-fill-mode: forwards;
+                    table {
+                        position: relative;
+                        border: none;
 
-                                @-webkit-keyframes delete-move {
-                                    from {
-                                        right: -50px;
-                                        opacity: 0;
-                                    }
+                        tr {
+                            border-bottom: 1px solid #DEE2E6;
 
-                                    to {
-                                        right: 0;
-                                        opacity: 1;
-                                    }
-                                }
-
-                                @keyframes delete-move {
-                                    from {
-                                        right: -50px;
-                                        opacity: 0;
-                                    }
-
-                                    to {
-                                        right: 0;
-                                        opacity: 1;
-                                    }
-                                }
-
-                                &:hover {
-                                    color: $pomegranate-red;
-                                }
-                            }
-                        }
-
-                        &:hover {
-                            td {
-                                position: relative;
+                            th {
+                                font-weight: 400;
                                 background-color: $gallery-white;
+                                position: sticky;
+                                top: 0;
+                                z-index: 3;
+                                border-bottom: 1px solid #DEE2E6;
 
-                                > button.delete-button {
-                                    display: block;
+                                &:first-child {
+                                    border-right: 1px solid #DEE2E6;
                                 }
                             }
-                        }
-                    }
 
-                    th {
-                        font-weight: 400;
-                        background-color: $gallery-white;
+                            td {
+                                button.delete-button {
+                                    display: none;
+                                    position: absolute;
+                                    right: 0;
+                                    background-color: transparent;
+                                    color: $crimson-red;
+
+                                    &:hover {
+                                        color: $pomegranate-red;
+                                    }
+                                }
+
+                                &:first-child {
+                                    border-right: 1px solid #DEE2E6;
+                                }
+                            }
+
+                            &:hover {
+                                td {
+                                    background-color: $gallery-white;
+
+                                    > button.delete-button {
+                                        display: inline-block;
+                                        z-index: 2;
+                                    }
+                                }
+                            }
+
+                            &:last-child {
+                                border-bottom: none;
+                            }
+                        }
                     }
                 }
             }
