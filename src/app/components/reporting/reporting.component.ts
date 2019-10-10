@@ -1,7 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-
 import { ReportingService } from '../../services/reporting.service';
-
 import { Category } from '../../models/category';
 import { Query } from '../../models/query';
 import { Report } from '../../models/report';
@@ -10,9 +8,9 @@ import { ModalService } from '../../services/modal.service';
 import { UtilityService } from '../../services/utility.service';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { typeaheadMinimumLength } from '../../../globals';
-import { Observable, of, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { Concept } from '../../models/concept';
 
 @Component({
     selector: 'app-reporting',
@@ -39,10 +37,8 @@ export class ReportingComponent implements OnInit {
     querySearch: string;
 
     // whitelist
-    whitelistSearchTerm: string;
+    whitelistReadyConcepts: Concept[] = [];
     @ViewChild('textareaTypeahead', { static: true }) inputElement: ElementRef;
-    private searchConcepts = new Subject<string>();
-    conceptList: Observable<object>;
 
     // item arrays
     categories: Category[];
@@ -57,6 +53,16 @@ export class ReportingComponent implements OnInit {
     saved = 'start';
     saveResponse: string;
 
+    // typeahead
+    searchTerm: string;
+    search = (text$: Observable<string>) =>
+        text$.pipe(
+            debounceTime(300),
+            distinctUntilChanged(),
+            switchMap(term => term.length < 2 ? []
+                : this.terminologyService.getTypeahead(term))
+        )
+
     constructor(private reportingService: ReportingService,
                 private authoringService: AuthoringService,
                 private modalService: ModalService,
@@ -69,14 +75,6 @@ export class ReportingComponent implements OnInit {
         });
 
         setInterval(() => this.refresh(), 5000);
-
-        this.conceptList = this.searchConcepts.pipe(
-            debounceTime(250),
-            distinctUntilChanged(),
-            switchMap((idList) => {
-                return this.terminologyService.getConceptsById(idList);
-            })
-        );
     }
 
     refresh(): void {
@@ -88,14 +86,6 @@ export class ReportingComponent implements OnInit {
             });
         } else {
             this.activeReportSet = null;
-        }
-    }
-
-    parameterValue(report, parameter): string {
-        if (report.parameters.hasOwnProperty('parameterMap') && report.parameters.parameterMap.hasOwnProperty(parameter.key)) {
-            return report.parameters.parameterMap[parameter.key].value;
-        } else  {
-            return '';
         }
     }
 
@@ -113,35 +103,17 @@ export class ReportingComponent implements OnInit {
         this.switchActiveReportSet();
     }
 
-    parametersExistCheck(): boolean {
-        for (const param in this.activeQuery.parameters['parameterMap']) {
-            if (this.activeQuery.parameters['parameterMap'].hasOwnProperty(param)) {
-                if (this.activeQuery.parameters['parameterMap'][param].type !== 'HIDDEN') {
-                    return true;
-                } else {
-                    this.activeQuery.parameters['parameterMap'][param].value = this.authoringService.environmentEndpoint
-                        + 'template-service';
-                }
-            }
-        }
-        return false;
-    }
-
     switchActiveReportSet(): void {
         this.activeReportSet = null;
         this.refresh();
     }
 
+    convertDate(date) {
+        return date.replace(/T|Z/g, ' ');
+    }
+
     viewReport(report): void {
         window.open(report.resultUrl);
-    }
-
-    openModal(id: string): void {
-        this.modalService.open(id);
-    }
-
-    closeModal(id: string): void {
-        this.modalService.close(id);
     }
 
     deleteReport(): void {
@@ -156,31 +128,85 @@ export class ReportingComponent implements OnInit {
         });
     }
 
-    retrieveConceptsById(): void {
-        let idList = [];
-        if (this.whitelistSearchTerm) {
-            idList = this.whitelistSearchTerm.replace(/\s/g, '').split(',');
+    // Modal Functions
+    openModal(id: string): void {
+        this.modalService.open(id);
+    }
+
+    closeModal(id: string): void {
+        this.modalService.close(id);
+    }
+
+    // Query Modal Functions
+    parametersExistCheck(): boolean {
+        for (const param in this.activeQuery.parameters) {
+            if (this.activeQuery.parameters.hasOwnProperty(param)) {
+                if (this.activeQuery.parameters[param].type !== 'HIDDEN') {
+                    return true;
+                } else {
+                    this.activeQuery.parameters[param].value = this.authoringService.environmentEndpoint + 'template-service';
+                }
+            }
+        }
+        return false;
+    }
+
+    missingFieldsCheck(): void {
+        let missingFields = false;
+        for (const param in this.activeQuery.parameters) {
+            if (this.activeQuery.parameters.hasOwnProperty(param)) {
+                const field = this.activeQuery.parameters[param];
+                if (field.mandatory && (field.type !== 'BOOLEAN')) {
+                    if (field.value === '' || field.value === null || field.value === undefined) {
+                        missingFields = true;
+                    }
+                }
+            }
         }
 
-        this.terminologyService.getConceptsById(idList).subscribe(
-            data => {
-                // @ts-ignore
-                data.items.forEach(concept => {
-                   this.whitelistSearchTerm = this.whitelistSearchTerm.replace(concept.id,
-                       UtilityService.convertConceptObjectToString(concept));
+        if (missingFields) {
+            this.saveResponse = 'Missing Fields';
+            this.saved = (this.saved === 'start' ? 'end' : 'start');
+        } else {
+            this.submitReport();
+            this.closeModal('query-modal');
+        }
+    }
+
+    // Whitelist Modal Functions
+    retrieveConceptsById(input): void {
+        let idList = [];
+        if (input) {
+            idList = input.replace(/[^0-9,]/g, '').split(',');
+        }
+
+        if (idList.length > 0) {
+            this.terminologyService.getConceptsById(idList).subscribe(
+                data => {
+                    // @ts-ignore
+                    data.items.forEach(concept => {
+                        this.addToWhitelistReadyConcepts(concept);
+                    });
                 });
-            });
+        }
+    }
+
+    addToWhitelistReadyConcepts(concept): void {
+        this.searchTerm = '';
+        this.whitelistReadyConcepts.push(UtilityService.convertFullConceptToShortConcept(concept));
+    }
+
+    removeFromWhitelistReadyConcepts(concept): void {
+        this.whitelistReadyConcepts = this.whitelistReadyConcepts.filter(item => {
+            return item.sctId !== concept.sctId;
+        });
     }
 
     saveWhitelist(): void {
-        // this takes the string entered and converts it to objects for the actual whitelist
-        if (this.whitelistSearchTerm) {
-            this.whitelistSearchTerm.split(',').forEach(text => {
-                const concept = UtilityService.convertStringToConceptObject(text);
+        if (this.whitelistReadyConcepts && this.whitelistReadyConcepts.length > 0) {
+            this.whitelistReadyConcepts.forEach(concept => {
                 let exists = false;
-
-                // prevents duplicates being pushed
-                this.activeQuery.whiteList.filter((item) => {
+                this.activeQuery.whiteList.filter(item => {
                     if (item.sctId === concept.sctId) {
                         exists = true;
                     }
@@ -190,8 +216,7 @@ export class ReportingComponent implements OnInit {
                     this.activeQuery.whiteList.push(concept);
                 }
             });
-
-            this.whitelistSearchTerm = '';
+            this.whitelistReadyConcepts = [];
         }
 
         // actually posts the whitelist doing relevant animations based on response
@@ -204,21 +229,6 @@ export class ReportingComponent implements OnInit {
                 this.saveResponse = 'Error';
                 this.saved = (this.saved === 'start' ? 'end' : 'start');
             });
-    }
-
-    addToSearchTerm(result): void {
-        this.whitelistSearchTerm = this.appendConcept(this.whitelistSearchTerm, UtilityService.convertConceptObjectToString(result));
-    }
-
-    appendConcept(stringList, string): string {
-
-        this.inputElement.nativeElement.focus();
-
-        if (stringList.includes(',')) {
-            return UtilityService.appendStringToStringList(stringList, string);
-        } else {
-            return string;
-        }
     }
 
     removeFromWhitelist(concept): void {

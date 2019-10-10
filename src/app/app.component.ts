@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthoringService } from './services/authoring.service';
 import { AuthenticationService } from './services/authentication.service';
-// @ts-ignore
-import { version } from './../../package.json';
 import 'jquery';
+import { Versions } from './models/versions';
 
 @Component({
     selector: 'app-root',
@@ -13,13 +12,21 @@ import 'jquery';
 
 export class AppComponent implements OnInit {
 
-    public version: string = version;
+    versions: Versions;
 
     constructor(private authenticationService: AuthenticationService, private authoringService: AuthoringService) {
     }
 
     ngOnInit() {
-        console.log('Version:', version);
+        this.authoringService.getVersion().subscribe(
+            data => {
+                this.versions = data;
+
+                console.log('Reporting UI Version:', data.versions['reporting-ui']);
+                console.log('Schedule Manager Version:', data.versions['schedule-manager']);
+                console.log('Snowstorm Version:', data.versions['snowstorm']);
+            }
+        );
 
         this.authoringService.getUIConfiguration().subscribe(
             data => {
@@ -27,7 +34,6 @@ export class AppComponent implements OnInit {
 
                 // $('<script>').attr({src: 'https://dev-workflow.ihtsdotools.org/s/eae63851c7444cb91c1a2fe49b048a36-T/9qqnuc/713005/8b99849fa1d8eaa169fd4a5dd7253186/2.0.31/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=dd01c5f4'}).appendTo('body');
                 // $('<script>').attr({src: 'https://dev-workflow.ihtsdotools.org/s/8e3b7f1ebfb8a3c28e478b9f9c2355f6-T/xsqioh/78004/8b99849fa1d8eaa169fd4a5dd7253186/2.0.27/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=dd01c5f4'}).appendTo('body');
-
 
                 if (this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint.includes('snowowl')) {
                     this.authoringService.getSnowowlConfiguration().subscribe(

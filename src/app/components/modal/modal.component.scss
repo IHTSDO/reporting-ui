@@ -1,13 +1,12 @@
-@import 'src/variables.scss';
+@import '~src/variables.scss';
 
 app-modal {
     /* modals are hidden by default */
     display: none;
+    max-height: 90vh;
 
     div.modal-dialog {
         z-index: 1000;
-
-        overflow: auto;
 
         div.modal-content {
             div.modal-header {
@@ -32,6 +31,9 @@ app-modal {
             }
 
             div.modal-body {
+                max-height: calc(90vh - 12rem);
+                //overflow: scroll;
+
                 label {
                     font-size: 1.4rem;
                     color: $scorpion-grey;
@@ -44,6 +46,9 @@ app-modal {
 
                 input, textarea {
                     cursor: text;
+                    font-size: 1.4rem;
+                    font-weight: 300;
+                    color: $black;
 
                     &.input-border {
                         border: 1px solid $alto-white;
@@ -70,71 +75,83 @@ app-modal {
                     color: $scorpion-grey;
                 }
 
-                table {
+                span.ready-concept {
+                    font-size: 1.2rem;
+                    background: $jordy-blue;
+                    border-radius: 1rem;
                     position: relative;
-                    border: none;
+                    cursor: default;
 
-                    tr {
-                        td {
-                            button.delete-button {
-                                display: none;
-                                position: absolute;
-                                top: 0;
-                                right: -50px;
-                                background-color: transparent;
-                                color: $crimson-red;
-                                -webkit-animation: delete-move 200ms;
-                                -webkit-animation-delay: 500ms;
-                                -webkit-animation-fill-mode: forwards;
-                                animation: delete-move 200ms;
-                                animation-delay: 500ms;
-                                animation-fill-mode: forwards;
-
-                                @-webkit-keyframes delete-move {
-                                    from {
-                                        right: -50px;
-                                        opacity: 0;
-                                    }
-
-                                    to {
-                                        right: 0;
-                                        opacity: 1;
-                                    }
-                                }
-
-                                @keyframes delete-move {
-                                    from {
-                                        right: -50px;
-                                        opacity: 0;
-                                    }
-
-                                    to {
-                                        right: 0;
-                                        opacity: 1;
-                                    }
-                                }
-
-                                &:hover {
-                                    color: $pomegranate-red;
-                                }
-                            }
-                        }
-
-                        &:hover {
-                            td {
-                                position: relative;
-                                background-color: $gallery-white;
-
-                                > button.delete-button {
-                                    display: block;
-                                }
-                            }
-                        }
+                    span.remove-ready-concept {
+                        display: none;
+                        position: absolute;
+                        right: 0;
+                        background-color: $horizon-blue;
+                        width: 1.8rem;
                     }
 
-                    th {
-                        font-weight: 400;
-                        background-color: $gallery-white;
+                    &:hover > span.remove-ready-concept {
+                        display: inline-block;
+                    }
+                }
+
+                div.table-container {
+                    max-height: 32rem;
+                    overflow: scroll;
+
+                    table {
+                        position: relative;
+                        border: none;
+
+                        tr {
+                            border-bottom: 1px solid #DEE2E6;
+
+                            th {
+                                font-weight: 400;
+                                background-color: $gallery-white;
+                                position: sticky;
+                                top: 0;
+                                z-index: 3;
+                                border-bottom: 1px solid #DEE2E6;
+
+                                &:first-child {
+                                    border-right: 1px solid #DEE2E6;
+                                }
+                            }
+
+                            td {
+                                button.delete-button {
+                                    display: none;
+                                    position: absolute;
+                                    right: 0;
+                                    background-color: transparent;
+                                    color: $crimson-red;
+
+                                    &:hover {
+                                        color: $pomegranate-red;
+                                    }
+                                }
+
+                                &:first-child {
+                                    border-right: 1px solid #DEE2E6;
+                                }
+                            }
+
+                            &:hover {
+                                td {
+                                    background-color: $gallery-white;
+
+                                    > button.delete-button {
+                                        display: inline-block;
+                                        z-index: 2;
+                                    }
+                                }
+                            }
+
+                            &:last-child {
+                                border-bottom: none;
+                            }
+                        }
                     }
                 }
             }

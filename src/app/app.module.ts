@@ -13,6 +13,8 @@ import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { ReportingComponent } from './components/reporting/reporting.component';
+import { QueryParametersComponent } from './components/query-parameters/query-parameters.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 import { ReportingService } from './services/reporting.service';
 import { UtilityService } from './services/utility.service';
@@ -20,21 +22,14 @@ import { TemplateService } from './services/template.service';
 import { AuthoringService } from './services/authoring.service';
 import { AuthenticationService } from './services/authentication.service';
 import { TerminologyServerService } from './services/terminologyServer.service';
+import { ModalService } from './services/modal.service';
 
 import { CategoryPipe } from './pipes/category.pipe';
 import { ConceptsPipe } from './pipes/concepts.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
-
 import { DisplayOrderPipe } from './pipes/display-order.pipe';
 import { HiddenPipe } from './pipes/hidden.pipe';
-import { TypeaheadComponent } from './components/typeahead/typeahead.component';
-import { TypeaheadListComponent } from './components/typeahead-list/typeahead-list.component';
-import { ModalComponent } from './components/modal/modal.component';
-import { ModalService } from './services/modal.service';
-import { QueryParametersComponent } from './components/query-parameters/query-parameters.component';
-
-
-
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -45,8 +40,6 @@ import { QueryParametersComponent } from './components/query-parameters/query-pa
         LeftSidebarComponent,
         CategoryPipe,
         ConceptsPipe,
-        TypeaheadComponent,
-        TypeaheadListComponent,
         DisplayOrderPipe,
         HiddenPipe,
         OrderByPipe,
@@ -59,7 +52,8 @@ import { QueryParametersComponent } from './components/query-parameters/query-pa
         FormsModule,
         BrowserAnimationsModule,
         MatTooltipModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        NgbTypeaheadModule
     ],
     providers: [
         ReportingService,

@@ -4,6 +4,11 @@ import { Template } from '../../models/template';
 import { TemplateService } from '../../services/template.service';
 import { AuthoringService } from '../../services/authoring.service';
 import { UtilityService } from '../../services/utility.service';
+import { Concept } from '../../models/concept';
+import { TerminologyServerService } from '../../services/terminologyServer.service';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { typeaheadMinimumLength } from '../../../globals';
 
 @Component({
     selector: 'app-query-parameters',
@@ -16,11 +21,21 @@ export class QueryParametersComponent implements OnChanges {
 
     @ViewChild('textareaTypeahead', { static: false }) inputElement: ElementRef;
 
-    searchTerm: string;
     templates: Template[];
     projects: object[];
 
-    constructor(private templateService: TemplateService, private authoringService: AuthoringService) {
+    // typeahead
+    searchTerm: string;
+    search = (text$: Observable<string>) =>
+        text$.pipe(
+            debounceTime(300),
+            distinctUntilChanged(),
+            switchMap(term => term.length < typeaheadMinimumLength ? []
+                : this.terminologyService.getTypeahead(term))
+        )
+
+    constructor(private templateService: TemplateService, private authoringService: AuthoringService,
+                private terminologyService: TerminologyServerService) {
     }
 
     ngOnChanges(): void {
@@ -33,9 +48,9 @@ export class QueryParametersComponent implements OnChanges {
                 this.projects = data;
             });
 
-            for (const key in this.query.parameters['parameterMap']) {
-                if (this.query.parameters['parameterMap'].hasOwnProperty(key)) {
-                    const parameter = this.query.parameters['parameterMap'][key];
+            for (const key in this.query.parameters) {
+                if (this.query.parameters.hasOwnProperty(key)) {
+                    const parameter = this.query.parameters[key];
                     if (parameter.type === 'BOOLEAN') {
                         parameter.value = JSON.parse(parameter.defaultValue);
                     }
@@ -45,23 +60,55 @@ export class QueryParametersComponent implements OnChanges {
                     if (parameter.type === 'HIDDEN') {
                         parameter.value = this.authoringService.environmentEndpoint + 'template-service';
                     }
+                    if (parameter.type === 'CONCEPT_LIST') {
+                        parameter.value = '';
+                    }
                 }
             }
         }
     }
 
-    convertConceptObjectToString(input): string {
-        return UtilityService.convertConceptObjectToString(input);
+    retrieveConceptsById(input, key): void {
+        let idList = [];
+        if (input) {
+            idList = input.replace(/[^0-9,]/g, '').split(',');
+        }
+
+        if (idList.length > 0) {
+            this.terminologyService.getConceptsById(idList).subscribe(
+                data => {
+                    // @ts-ignore
+                    data.items.forEach(concept => {
+                        this.addToWhitelistReadyConcepts(concept, key);
+                    });
+                });
+        }
+
+
     }
 
-    appendConcept(stringList, string): string {
+    addToWhitelistReadyConcepts(concept, key): void {
+        this.searchTerm = '';
 
-        this.inputElement.nativeElement.focus();
-
-        if (stringList.includes(',')) {
-            return UtilityService.appendStringToStringList(stringList, string);
+        if (this.query.parameters[key].value.length > 1) {
+            this.query.parameters[key].value += ', ' + UtilityService.convertShortConceptToString(concept);
         } else {
-            return string;
+            this.query.parameters[key].value += UtilityService.convertShortConceptToString(concept);
+        }
+    }
+
+    removeFromWhitelistReadyConcepts(concept, key): void {
+        const re = new RegExp(concept.sctId + '[^,]+(, )?');
+        this.query.parameters[key].value = this.query.parameters[key].value.replace(re, '');
+    }
+
+    convertShortConceptToString(input: Concept): string {
+        return UtilityService.convertShortConceptToString(input);
+    }
+
+    convertStringListToShortConceptList(input: string): Concept[] {
+        if (input) {
+            return UtilityService.convertStringListToShortConceptList(input);
         }
     }
 }
