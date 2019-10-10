@@ -97,6 +97,11 @@ export class QueryParametersComponent implements OnChanges {
         }
     }
 
+    removeFromWhitelistReadyConcepts(concept, key): void {
+        const re = new RegExp(concept.sctId + '[^,]+(, )?');
+        this.query.parameters[key].value = this.query.parameters[key].value.replace(re, '');
+    }
+
     convertShortConceptToString(input: Concept): string {
         return UtilityService.convertShortConceptToString(input);
     }
