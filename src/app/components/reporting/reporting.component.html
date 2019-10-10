@@ -88,7 +88,7 @@
     <div body>
         <div class="position-relative pb-3">
             <label class="w-100 m-0">Add concept to whitelist</label>
-            <input type="text" class="form-control" [(ngModel)]="searchTerm" [ngbTypeahead]="search" (keyup.enter)="retrieveConceptsById(searchTerm)"/>
+            <input type="text" class="form-control" [(ngModel)]="searchTerm" [ngbTypeahead]="search" (keyup.enter)="retrieveConceptsById(searchTerm)" (ngModelChange)="searchTerm === 'No results found' ? searchTerm = '' : searchTerm"/>
             <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
             <span *ngFor="let readyConcept of whitelistReadyConcepts" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}
                 <span class="remove-ready-concept text-center rounded-circle px-1" (click)="removeFromWhitelistReadyConcepts(readyConcept)"><i class="fas fa-times"></i></span>
