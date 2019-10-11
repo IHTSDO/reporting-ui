@@ -193,7 +193,14 @@ export class ReportingComponent implements OnInit {
 
     addToWhitelistReadyConcepts(concept): void {
         this.searchTerm = '';
-        this.whitelistReadyConcepts.push(UtilityService.convertFullConceptToShortConcept(concept));
+
+        const temp = this.whitelistReadyConcepts.find(item => {
+            return item.sctId === concept.id;
+        });
+
+        if (temp === undefined) {
+            this.whitelistReadyConcepts.push(UtilityService.convertFullConceptToShortConcept(concept));
+        }
     }
 
     removeFromWhitelistReadyConcepts(concept): void {

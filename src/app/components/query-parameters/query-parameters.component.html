@@ -17,7 +17,7 @@
             </div>
             <div *ngSwitchCase="'CONCEPT_LIST'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <input type="text" class="form-control" [(ngModel)]="searchTerm" [ngbTypeahead]="search" (keyup.enter)="retrieveConceptsById(searchTerm, parameter.key)"/>
+                <input type="text" class="form-control" [(ngModel)]="searchTerm" [ngbTypeahead]="search" (keyup)="retrieveConceptsById(searchTerm, parameter.key)"/>
                 <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
                 <span *ngFor="let readyConcept of convertStringListToShortConceptList(parameter.value.value)" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}
                     <span class="remove-ready-concept text-center rounded-circle px-1" (click)="removeFromWhitelistReadyConcepts(readyConcept, parameter.key)"><i class="fas fa-times"></i></span>
