@@ -83,8 +83,6 @@ export class QueryParametersComponent implements OnChanges {
                     });
                 });
         }
-
-
     }
 
     addToWhitelistReadyConcepts(concept, key): void {

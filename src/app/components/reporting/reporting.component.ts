@@ -37,7 +37,6 @@ export class ReportingComponent implements OnInit {
     querySearch: string;
 
     // whitelist
-    whitelistReadyConcepts: Concept[] = [];
     @ViewChild('textareaTypeahead', { static: true }) inputElement: ElementRef;
 
     // item arrays
@@ -185,48 +184,30 @@ export class ReportingComponent implements OnInit {
                 data => {
                     // @ts-ignore
                     data.items.forEach(concept => {
-                        this.addToWhitelistReadyConcepts(concept);
+                        // this.addToWhitelistReadyConcepts(concept);
+                        this.addToWhitelist(concept);
                     });
                 });
         }
     }
 
-    addToWhitelistReadyConcepts(concept): void {
+    addToWhitelist(concept) {
         this.searchTerm = '';
 
-        const temp = this.whitelistReadyConcepts.find(item => {
+        const exists = this.activeQuery.whiteList.find(item => {
             return item.sctId === concept.id;
         });
 
-        if (temp === undefined) {
-            this.whitelistReadyConcepts.push(UtilityService.convertFullConceptToShortConcept(concept));
+        if (exists === undefined) {
+            this.activeQuery.whiteList.push(UtilityService.convertFullConceptToShortConcept(concept));
         }
-    }
-
-    removeFromWhitelistReadyConcepts(concept): void {
-        this.whitelistReadyConcepts = this.whitelistReadyConcepts.filter(item => {
-            return item.sctId !== concept.sctId;
-        });
     }
 
     saveWhitelist(): void {
-        if (this.whitelistReadyConcepts && this.whitelistReadyConcepts.length > 0) {
-            this.whitelistReadyConcepts.forEach(concept => {
-                let exists = false;
-                this.activeQuery.whiteList.filter(item => {
-                    if (item.sctId === concept.sctId) {
-                        exists = true;
-                    }
-                });
+        this.activeQuery.whiteList.forEach(item => {
+            delete item.new;
+        });
 
-                if (!exists) {
-                    this.activeQuery.whiteList.push(concept);
-                }
-            });
-            this.whitelistReadyConcepts = [];
-        }
-
-        // actually posts the whitelist doing relevant animations based on response
         this.reportingService.postWhitelist(this.activeQuery.name, this.activeQuery.whiteList).subscribe(
             () => {
                 this.saveResponse = 'Saved';

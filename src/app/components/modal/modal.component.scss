@@ -137,6 +137,10 @@ app-modal {
                                 }
                             }
 
+                            &.new {
+                                color: $curious-blue;
+                            }
+
                             &:hover {
                                 td {
                                     background-color: $gallery-white;
