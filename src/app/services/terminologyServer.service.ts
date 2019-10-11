@@ -26,13 +26,9 @@ export class TerminologyServerService {
             .pipe(map(responseData => {
                 const typeaheads = [];
 
-                if (responseData['items'].length > 0) {
-                    responseData['items'].forEach((item) => {
-                        typeaheads.push(item.id + ' |' + item.fsn.term + '|');
-                    });
-                } else {
-                    return ['No results found'];
-                }
+                responseData['items'].forEach((item) => {
+                    typeaheads.push(item.id + ' |' + item.fsn.term + '|');
+                });
 
                 return typeaheads;
             }));
