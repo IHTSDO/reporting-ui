@@ -14,7 +14,7 @@ export class UtilityService {
     }
 
     static convertFullConceptToShortConcept(input): Concept {
-        return { sctId: input.id, fsn: input.fsn.term};
+        return { sctId: input.id, fsn: input.fsn.term, new: true};
     }
 
     static convertStringToShortConcept(input: string): Concept {
@@ -25,7 +25,7 @@ export class UtilityService {
 
         input.includes('|') ? fsn = input.slice(input.indexOf('|') + 1, input.lastIndexOf('|')) : fsn = '';
 
-        return {sctId: sctId, fsn: fsn};
+        return {sctId: sctId, fsn: fsn, new: null};
     }
 
     static convertStringListToShortConceptList(input: string): Concept[] {
