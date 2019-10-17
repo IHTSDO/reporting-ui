@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ReportingService } from '../../services/reporting.service';
 import { Category } from '../../models/category';
 import { Query } from '../../models/query';
@@ -32,6 +32,9 @@ import { Concept } from '../../models/concept';
     ]
 })
 export class ReportingComponent implements OnInit {
+
+    // Config
+    @Input() managedService: boolean;
 
     // pipe filters
     querySearch: string;
@@ -182,9 +185,7 @@ export class ReportingComponent implements OnInit {
         if (idList.length > 0) {
             this.terminologyService.getConceptsById(idList).subscribe(
                 data => {
-                    // @ts-ignore
-                    data.items.forEach(concept => {
-                        // this.addToWhitelistReadyConcepts(concept);
+                    data['items'].forEach(concept => {
                         this.addToWhitelist(concept);
                     });
                 });

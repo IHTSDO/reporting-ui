@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -7,10 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SnomedNavbarComponent implements OnInit {
 
-    environment: string;
+    @Input() environment: string;
 
     constructor() {
-        this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
     }
 
     ngOnInit() {

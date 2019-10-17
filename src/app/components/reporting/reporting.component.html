@@ -15,7 +15,7 @@
                             <div class="float-right m-2">
                                 <div>{{activeQuery.whitelist | json}}</div>
                                 <button class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
-                                (click)="openModal('whitelist-modal'); searchTerm = ''; whitelistReadyConcepts = []">
+                                (click)="openModal('whitelist-modal'); searchTerm = ''">
                                     Whitelist
                                 </button>
                                 <ng-container *ngIf="parametersExistCheck()">

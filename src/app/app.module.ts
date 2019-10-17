@@ -8,6 +8,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HeaderInterceptor } from './interceptors/header.interceptor';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
@@ -25,11 +26,10 @@ import { TerminologyServerService } from './services/terminologyServer.service';
 import { ModalService } from './services/modal.service';
 
 import { CategoryPipe } from './pipes/category.pipe';
-import { ConceptsPipe } from './pipes/concepts.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { DisplayOrderPipe } from './pipes/display-order.pipe';
 import { HiddenPipe } from './pipes/hidden.pipe';
-import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { TagsPipe } from './pipes/tags.pipe';
 
 @NgModule({
     declarations: [
@@ -39,12 +39,12 @@ import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
         SnomedFooterComponent,
         LeftSidebarComponent,
         CategoryPipe,
-        ConceptsPipe,
         DisplayOrderPipe,
         HiddenPipe,
         OrderByPipe,
         ModalComponent,
-        QueryParametersComponent
+        QueryParametersComponent,
+        TagsPipe
     ],
     imports: [
         BrowserModule,
