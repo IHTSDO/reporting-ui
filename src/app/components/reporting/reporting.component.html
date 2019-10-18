@@ -2,7 +2,7 @@
 
 <div id="reporting" class="footer-margin">
     <div *ngFor="let category of categories | category:activeCategory?.name | orderBy:'name'">
-        <div class="p-4" *ngIf="(category.jobs | tags:managedService | category:querySearch).length !== 0">
+        <div class="p-4" *ngIf="(category.jobs | tags:managedService | category:querySearch).length !== 0; else noJobs">
             <h3 class="report-title">{{category.name}}</h3>
             <div class="accordion rounded">
                 <div class="query" *ngFor="let query of category.jobs | tags:managedService | category:querySearch | orderBy:'name'; let first = first; let last = last">
@@ -58,6 +58,9 @@
                 </div>
             </div>
         </div>
+        <ng-template #noJobs>
+            <p *ngIf="activeCategory" class="p-5 text-center" style="font-size: 2rem">- No Reports -</p>
+        </ng-template>
     </div>
 </div>
 
