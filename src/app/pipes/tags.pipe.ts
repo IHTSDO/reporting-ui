@@ -11,9 +11,9 @@ export class TagsPipe implements PipeTransform {
         }
 
         if (managedService) {
-            items = items.filter( item => item.tags ? item.tags.contains('MS') : true);
+            items = items.filter( item => item.tags ? item.tags.includes('MS') : false);
         } else {
-            items = items.filter(item => item.tags ? item.tags.contains('INT') : true);
+            items = items.filter(item => item.tags ? item.tags.includes('INT') : false);
         }
 
         return items;
