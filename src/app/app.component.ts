@@ -12,12 +12,17 @@ import { Versions } from './models/versions';
 
 export class AppComponent implements OnInit {
 
+    environment: string;
+    managedService: boolean;
     versions: Versions;
 
     constructor(private authenticationService: AuthenticationService, private authoringService: AuthoringService) {
     }
 
     ngOnInit() {
+        this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
+        this.managedService = window.location.host.split(/[.]/)[0].includes('ms-');
+
         this.authoringService.getVersion().subscribe(
             data => {
                 this.versions = data;
@@ -31,9 +36,6 @@ export class AppComponent implements OnInit {
         this.authoringService.getUIConfiguration().subscribe(
             data => {
                 this.authoringService.uiConfiguration = data;
-
-                // $('<script>').attr({src: 'https://dev-workflow.ihtsdotools.org/s/eae63851c7444cb91c1a2fe49b048a36-T/9qqnuc/713005/8b99849fa1d8eaa169fd4a5dd7253186/2.0.31/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=dd01c5f4'}).appendTo('body');
-                // $('<script>').attr({src: 'https://dev-workflow.ihtsdotools.org/s/8e3b7f1ebfb8a3c28e478b9f9c2355f6-T/xsqioh/78004/8b99849fa1d8eaa169fd4a5dd7253186/2.0.27/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=dd01c5f4'}).appendTo('body');
 
                 if (this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint.includes('snowowl')) {
                     this.authoringService.getSnowowlConfiguration().subscribe(

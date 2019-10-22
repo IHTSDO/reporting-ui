@@ -77,8 +77,7 @@ export class QueryParametersComponent implements OnChanges {
         if (idList.length > 0) {
             this.terminologyService.getConceptsById(idList).subscribe(
                 data => {
-                    // @ts-ignore
-                    data.items.forEach(concept => {
+                    data['items'].forEach(concept => {
                         this.addToWhitelistReadyConcepts(concept, key);
                     });
                 });
