@@ -179,7 +179,7 @@ export class ReportingComponent implements OnInit {
     retrieveConceptsById(input): void {
         let idList = [];
         if (input) {
-            idList = input.replace(/[^0-9,]/g, '').split(',');
+            idList = input.match(/[0-9]{4,16}/g);
         }
 
         if (idList.length > 0) {

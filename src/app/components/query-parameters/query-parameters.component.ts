@@ -71,8 +71,9 @@ export class QueryParametersComponent implements OnChanges {
     retrieveConceptsById(input, key): void {
         let idList = [];
         if (input) {
-            idList = input.replace(/[^0-9,]/g, '').split(',');
+            idList = input.match(/[0-9]{4,16}/g);
         }
+
 
         if (idList.length > 0) {
             this.terminologyService.getConceptsById(idList).subscribe(

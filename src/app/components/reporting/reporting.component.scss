@@ -76,40 +76,10 @@ div#reporting {
                             button.delete-button {
                                 display: none;
                                 position: absolute;
-                                top: 0;
-                                right: -50px;
+                                top: 0.6rem;
+                                right: 0;
                                 background-color: transparent;
                                 color: $crimson-red;
-                                -webkit-animation: delete-move 200ms;
-                                -webkit-animation-delay: 500ms;
-                                -webkit-animation-fill-mode: forwards;
-                                animation: delete-move 200ms;
-                                animation-delay: 500ms;
-                                animation-fill-mode: forwards;
-
-                                @-webkit-keyframes delete-move {
-                                    from {
-                                        right: -50px;
-                                        opacity: 0;
-                                    }
-
-                                    to {
-                                        right: 0;
-                                        opacity: 1;
-                                    }
-                                }
-
-                                @keyframes delete-move {
-                                    from {
-                                        right: -50px;
-                                        opacity: 0;
-                                    }
-
-                                    to {
-                                        right: 0;
-                                        opacity: 1;
-                                    }
-                                }
 
                                 &:hover {
                                     color: $pomegranate-red;
