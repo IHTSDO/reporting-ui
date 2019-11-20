@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { UIConfiguration } from 'src/app/models/uiConfiguration';
 
 @Component({
     selector: 'app-snomed-footer',
@@ -7,11 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SnomedFooterComponent implements OnInit {
 
-    year: number = new Date().getFullYear();
+    @Input()
+    uiConfiguration: UIConfiguration ;
+
     constructor() {
     }
 
     ngOnInit() {
+        this.uiConfiguration = new UIConfiguration({},{});
     }
 
 }
