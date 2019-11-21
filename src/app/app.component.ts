@@ -3,6 +3,7 @@ import { AuthoringService } from './services/authoring.service';
 import { AuthenticationService } from './services/authentication.service';
 import 'jquery';
 import { Versions } from './models/versions';
+import { UIConfiguration } from './models/uiConfiguration';
 
 @Component({
     selector: 'app-root',
@@ -15,7 +16,7 @@ export class AppComponent implements OnInit {
     environment: string;
     managedService: boolean;
     versions: Versions;
-
+    uiConfiguration: UIConfiguration;
     constructor(private authenticationService: AuthenticationService, private authoringService: AuthoringService) {
     }
 
@@ -36,14 +37,14 @@ export class AppComponent implements OnInit {
         this.authoringService.getUIConfiguration().subscribe(
             data => {
                 this.authoringService.uiConfiguration = data;
-
+                this.uiConfiguration = data;
                 if (this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint.includes('snowowl')) {
                     this.authoringService.getSnowowlConfiguration().subscribe(
                         snowowlData => {
-                            $('<script>').attr({src: snowowlData.endpoints.collectorEndpoint}).appendTo('body');
+                            $('<script>').attr({ src: snowowlData.endpoints.collectorEndpoint }).appendTo('body');
                         });
                 } else {
-                    $('<script>').attr({src: this.authoringService.uiConfiguration.endpoints.collectorEndpoint}).appendTo('body');
+                    $('<script>').attr({ src: this.authoringService.uiConfiguration.endpoints.collectorEndpoint }).appendTo('body');
                 }
             },
             error => {

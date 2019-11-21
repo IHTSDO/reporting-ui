@@ -3,5 +3,10 @@ export class UIConfiguration {
         imsEndpoint: string;
         terminologyServerEndpoint: string;
         collectorEndpoint: string;
+        reportingUserGuideEndpoint: string;
+        contactUsEndpoint: string ;
+    };
+    features: {
+        copyrightNotice: string;
     };
 }
