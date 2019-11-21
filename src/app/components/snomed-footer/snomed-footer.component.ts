@@ -8,14 +8,12 @@ import { UIConfiguration } from 'src/app/models/uiConfiguration';
 })
 export class SnomedFooterComponent implements OnInit {
 
-    @Input()
-    uiConfiguration: UIConfiguration ;
+    @Input() uiConfiguration: UIConfiguration;
+    year: number = new Date().getFullYear();
 
     constructor() {
     }
 
     ngOnInit() {
-        this.uiConfiguration = new UIConfiguration({},{});
     }
-
 }

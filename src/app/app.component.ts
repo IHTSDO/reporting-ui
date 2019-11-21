@@ -38,15 +38,6 @@ export class AppComponent implements OnInit {
             data => {
                 this.authoringService.uiConfiguration = data;
                 this.uiConfiguration = data;
-                if (!this.uiConfiguration.features.copyrightNotice) {
-                    this.uiConfiguration.features.copyrightNotice = 'Copyright © ' + new Date().getFullYear() + ' SNOMED International';
-                }
-                if (!this.uiConfiguration.endpoints.reportingUserGuideEndpoint) {
-                    this.uiConfiguration.endpoints.reportingUserGuideEndpoint = 'https://confluence.ihtsdotools.org/display/SIAPUG/Reporting+Platform';
-                }
-                if (!this.uiConfiguration.endpoints.contactUsEndpoint) {
-                    this.uiConfiguration.endpoints.contactUsEndpoint = 'http://www.snomed.org/contact-us/';
-                }
                 if (this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint.includes('snowowl')) {
                     this.authoringService.getSnowowlConfiguration().subscribe(
                         snowowlData => {

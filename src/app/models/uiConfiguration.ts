@@ -6,12 +6,7 @@ export class UIConfiguration {
         reportingUserGuideEndpoint: string;
         contactUsEndpoint: string ;
     };
-    features : {
+    features: {
         copyrightNotice: string;
-    };    
-
-    constructor(endpoints, features) {
-        this.endpoints = endpoints;
-        this.features = features;
     };
 }
