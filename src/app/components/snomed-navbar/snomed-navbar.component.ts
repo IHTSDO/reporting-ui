@@ -64,6 +64,10 @@ export class SnomedNavbarComponent implements OnInit {
                 }
             }            
         }
+        if (filteredProjects.length === 1) {
+           this.activeProject =  filteredProjects[0]['key'];
+           this.eventService.notify({ eventName: 'call_reporting_component', value: this.activeProject });
+        }
 
         this.projects = filteredProjects;
     }
