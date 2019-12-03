@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ReportingService } from '../../services/reporting.service';
 import { Category } from '../../models/category';
 import { Query } from '../../models/query';
@@ -9,8 +9,9 @@ import { UtilityService } from '../../services/utility.service';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { Concept } from '../../models/concept';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
     selector: 'app-reporting',
@@ -31,7 +32,7 @@ import { Concept } from '../../models/concept';
         ])
     ]
 })
-export class ReportingComponent implements OnInit {
+export class ReportingComponent implements OnInit, OnDestroy {
 
     // Config
     @Input() managedService: boolean;
@@ -50,10 +51,14 @@ export class ReportingComponent implements OnInit {
     activeQuery: Query;
     activeReport: Report;
     activeReportSet: Report[];
+    activeProject: string = null;
 
     // animations
     saved = 'start';
     saveResponse: string;
+
+    // subcription
+    subscribe : Subscription;
 
     // typeahead
     searchTerm: string;
@@ -68,15 +73,25 @@ export class ReportingComponent implements OnInit {
     constructor(private reportingService: ReportingService,
                 private authoringService: AuthoringService,
                 private modalService: ModalService,
-                private terminologyService: TerminologyServerService) {
+                private terminologyService: TerminologyServerService,
+                private eventService: EventService) {
     }
 
     ngOnInit() {
         this.reportingService.getCategories().subscribe(data => {
             this.categories = data;
         });
-
+        
+        this.subscribe = this.eventService.notifyObservable.subscribe((res) => {
+            if (res.hasOwnProperty('eventName') && res.eventName === 'call_reporting_component') {                
+                this.activeProject = res.value;
+            }
+        });
         setInterval(() => this.refresh(), 5000);
+    }
+
+    ngOnDestroy() {
+        this.subscribe.unsubscribe();
     }
 
     refresh(): void {
@@ -125,6 +140,15 @@ export class ReportingComponent implements OnInit {
     }
 
     submitReport(): void {
+        if (this.activeQuery) {
+            for (const param in this.activeQuery.parameters) {            
+                if (param === 'Project') {
+                    let field = this.activeQuery.parameters[param];
+                    field.value = this.activeProject;
+                }
+            }
+        }
+        
         this.reportingService.postReport(this.activeQuery).subscribe(() => {
             this.refresh();
         });

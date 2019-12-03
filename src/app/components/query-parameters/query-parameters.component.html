@@ -38,13 +38,7 @@
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <textarea class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory"></textarea>
             </div>
-            <div *ngSwitchCase="'PROJECT'">
-                <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <select id="{{parameter.key}}" class="form-control" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory">
-                    <option selected>MAIN</option>
-                    <option *ngFor="let project of projects | orderBy:'title'">{{project.key}}</option>
-                </select>
-            </div>
+            <div *ngSwitchCase="'PROJECT'"></div>
             <div *ngSwitchCase="'HIDDEN'"></div>
             <div *ngSwitchDefault>
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}}</label>

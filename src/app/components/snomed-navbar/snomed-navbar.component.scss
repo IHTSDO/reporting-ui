@@ -64,6 +64,14 @@ nav {
     button {
         border: none;
     }
+
+    label {
+        color: $alto-white;
+    }
+
+    .min-w-100 {
+        min-width: 7em;
+    }
 }
 
 div#navbarToggleExternalContent {

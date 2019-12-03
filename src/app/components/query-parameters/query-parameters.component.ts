@@ -9,6 +9,7 @@ import { TerminologyServerService } from '../../services/terminologyServer.servi
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { typeaheadMinimumLength } from '../../../globals';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
     selector: 'app-query-parameters',
@@ -22,8 +23,7 @@ export class QueryParametersComponent implements OnChanges {
     @ViewChild('textareaTypeahead', { static: false }) inputElement: ElementRef;
 
     templates: Template[];
-    projects: object[];
-
+    
     // typeahead
     searchTerm: string;
     search = (text$: Observable<string>) =>
@@ -42,10 +42,6 @@ export class QueryParametersComponent implements OnChanges {
         if (this.query) {
             this.templateService.getTemplateConcepts().subscribe(data => {
                 this.templates = data;
-            });
-
-            this.authoringService.getProjects().subscribe(data => {
-                this.projects = data;
             });
 
             for (const key in this.query.parameters) {
