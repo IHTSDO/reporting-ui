@@ -2,6 +2,8 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthoringService } from 'src/app/services/authoring.service';
 import { EventService } from 'src/app/services/event.service';
 import { forkJoin } from 'rxjs';
+import { Event } from 'src/app/models/event';
+import { Project } from 'src/app/models/project';
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -11,13 +13,25 @@ import { forkJoin } from 'rxjs';
 export class SnomedNavbarComponent implements OnInit {
 
     @Input() environment: string;
-    projects: object[] = [];
-    activeProject: string = 'MAIN';
+    projects: Project[] = [];
+    activeProject: Project;
 
     constructor(private authoringService: AuthoringService, private eventService: EventService) {
     }
 
     ngOnInit() {
+        this.setDefaultProject();
+        this.getAndFilterMyProjects();
+    }
+
+    notifyReportingComponent(): void {
+        const event = new Event();
+        event.eventName = 'call_reporting_component';
+        event.value = <object> this.activeProject;
+        this.eventService.notify(event);
+    }
+
+    private getAndFilterMyProjects(): void {
         let taskDone = false;
         let projectDone = false;
         let tasks = [];
@@ -39,22 +53,10 @@ export class SnomedNavbarComponent implements OnInit {
                 this.filterMyProjects(projects, tasks);
             }
         });
-
-        this.eventService.notify({ eventName: 'call_reporting_component', value: this.activeProject });
-    }    
-
-    projectOnChange(project): void {
-        if (this.activeProject !== project) {
-            this.activeProject = project;
-            this.eventService.notify({ eventName: 'call_reporting_component', value: this.activeProject });
-        } else {
-            this.activeProject = null;
-            this.eventService.notify({ eventName: 'call_reporting_component', value: null });
-        }
     }
 
     private filterMyProjects(projects, tasks): void {
-        let filteredProjects = [];
+        const filteredProjects = [];
         if (projects.length !== 0) {
             for (let i = 0; i < projects.length; i++) {
                 for (let j = 0; j < tasks.length; j++) {
@@ -62,13 +64,23 @@ export class SnomedNavbarComponent implements OnInit {
                         filteredProjects.push(projects[i]);
                     }
                 }
-            }            
-        }
-        if (filteredProjects.length === 1) {
-           this.activeProject =  filteredProjects[0]['key'];
-           this.eventService.notify({ eventName: 'call_reporting_component', value: this.activeProject });
+            }
         }
 
-        this.projects = filteredProjects;
+        filteredProjects.sort(function(a, b) { return a['key'].localeCompare(b['key']); });
+        this.projects = this.projects.concat(filteredProjects);
+        if (filteredProjects.length === 1) {
+            this.activeProject =  filteredProjects[0];
+            this.notifyReportingComponent();
+        }
+    }
+
+    private setDefaultProject(): void {
+        const defaultProject = new Project();
+        defaultProject.key = 'MAIN';
+        defaultProject.title = 'MAIN';
+
+        this.activeProject = defaultProject;
+        this.projects.push(defaultProject);
     }
 }

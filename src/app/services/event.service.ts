@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
+import { Event } from '../models/event';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
 
-  event: Subject<any> = new Subject<any>();
+  subject: Subject<Event> = new Subject<Event>();
 
-  notifyObservable: Observable<any> = this.event.asObservable();
+  notifyObservable: Observable<Event> = this.subject.asObservable();
 
   constructor() { }
 
-  notify(data: any): void {
-    if (data) {
-      this.event.next(data);
+  notify(event: Event): void {
+    if (event) {
+      this.subject.next(event);
     }
   }
 }

@@ -23,7 +23,7 @@ export class QueryParametersComponent implements OnChanges {
     @ViewChild('textareaTypeahead', { static: false }) inputElement: ElementRef;
 
     templates: Template[];
-    
+
     // typeahead
     searchTerm: string;
     search = (text$: Observable<string>) =>

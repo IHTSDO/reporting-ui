@@ -12,6 +12,8 @@ import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operato
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Concept } from '../../models/concept';
 import { EventService } from 'src/app/services/event.service';
+import { Event } from 'src/app/models/event';
+import { Project } from 'src/app/models/project';
 
 @Component({
     selector: 'app-reporting',
@@ -51,14 +53,14 @@ export class ReportingComponent implements OnInit, OnDestroy {
     activeQuery: Query;
     activeReport: Report;
     activeReportSet: Report[];
-    activeProject: string = null;
+    activeProject: Project = null;
 
     // animations
     saved = 'start';
     saveResponse: string;
 
     // subcription
-    subscribe : Subscription;
+    subscribe: Subscription;
 
     // typeahead
     searchTerm: string;
@@ -81,10 +83,10 @@ export class ReportingComponent implements OnInit, OnDestroy {
         this.reportingService.getCategories().subscribe(data => {
             this.categories = data;
         });
-        
-        this.subscribe = this.eventService.notifyObservable.subscribe((res) => {
-            if (res.hasOwnProperty('eventName') && res.eventName === 'call_reporting_component') {                
-                this.activeProject = res.value;
+
+        this.subscribe = this.eventService.notifyObservable.subscribe((event: Event) => {
+            if (event.eventName === 'call_reporting_component') {
+                this.activeProject = <Project> event.value;
             }
         });
         setInterval(() => this.refresh(), 5000);
@@ -141,14 +143,14 @@ export class ReportingComponent implements OnInit, OnDestroy {
 
     submitReport(): void {
         if (this.activeQuery) {
-            for (const param in this.activeQuery.parameters) {            
+            for (const param in this.activeQuery.parameters) {
                 if (param === 'Project') {
-                    let field = this.activeQuery.parameters[param];
-                    field.value = this.activeProject;
+                    const field = this.activeQuery.parameters[param];
+                    field.value = this.activeProject !== null ? this.activeProject.key : '';
                 }
             }
         }
-        
+
         this.reportingService.postReport(this.activeQuery).subscribe(() => {
             this.refresh();
         });
@@ -167,7 +169,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
     parametersExistCheck(): boolean {
         for (const param in this.activeQuery.parameters) {
             if (this.activeQuery.parameters.hasOwnProperty(param)) {
-                if (this.activeQuery.parameters[param].type !== 'HIDDEN') {
+                if (this.activeQuery.parameters[param].type !== 'HIDDEN' && this.activeQuery.parameters[param].type !== 'PROJECT') {
                     return true;
                 } else {
                     this.activeQuery.parameters[param].value = this.authoringService.environmentEndpoint + 'template-service';
