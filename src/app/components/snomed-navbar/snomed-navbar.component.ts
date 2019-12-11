@@ -22,6 +22,7 @@ export class SnomedNavbarComponent implements OnInit {
     ngOnInit() {
         this.setDefaultProject();
         this.getAndFilterMyProjects();
+        setTimeout(() => this.notifyReportingComponent(), 1000);
     }
 
     notifyReportingComponent(): void {
