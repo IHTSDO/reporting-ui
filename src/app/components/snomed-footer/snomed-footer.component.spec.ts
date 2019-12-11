@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 import { SnomedFooterComponent } from './snomed-footer.component';
 
@@ -10,7 +11,11 @@ describe('SnomedFooterComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 SnomedFooterComponent
-            ]
+            ],
+            imports: [
+                FormsModule
+            ],
+            schemas: []
         }).compileComponents();
     }));
 

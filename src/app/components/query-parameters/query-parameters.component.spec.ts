@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 import { QueryParametersComponent } from './query-parameters.component';
 
@@ -8,7 +9,12 @@ describe('QueryParametersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QueryParametersComponent ]
+        declarations: [ 
+            QueryParametersComponent 
+        ],
+        imports: [
+            FormsModule
+        ],
     })
     .compileComponents();
   }));

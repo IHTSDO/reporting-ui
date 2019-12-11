@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { LeftSidebarComponent } from './snomed-left-sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+
+import { LeftSidebarComponent } from './left-sidebar.component';
 
 describe('LeftSidebarComponent', () => {
     let component: LeftSidebarComponent;
@@ -10,7 +10,9 @@ describe('LeftSidebarComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [LeftSidebarComponent],
+            declarations: [
+                LeftSidebarComponent
+            ],
             imports: [
                 HttpClientModule,
                 FormsModule

@@ -1,4 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 import { SnomedNavbarComponent } from './snomed-navbar.component';
 
 describe('SnomedNavbarComponent', () => {
@@ -9,7 +12,12 @@ describe('SnomedNavbarComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 SnomedNavbarComponent
-            ]
+            ],
+            imports: [
+                FormsModule,
+                HttpClientModule
+            ],
+            schemas: []
         }).compileComponents();
     }));
 

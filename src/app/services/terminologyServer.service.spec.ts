@@ -1,9 +1,19 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 import { TerminologyServerService } from './terminologyServer.service';
 
-describe('SnowowlService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+describe('TerminologyServerService', () => {
+  beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+            ],
+            imports: [
+                HttpClientModule
+            ],
+            schemas: []
+        }).compileComponents();
+    }));
 
   it('should be created', () => {
     const service: TerminologyServerService = TestBed.get(TerminologyServerService);
