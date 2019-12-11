@@ -6,7 +6,7 @@ import { CategoryPipe } from '../../pipes/category.pipe';
 import { ReportingComponent } from './reporting.component';
 
 describe('ReportingComponent', () => {
-    let component: ReportingComponent;
+    const component: ReportingComponent;
     // let fixture: ComponentFixture<ReportingComponent>;
 
     beforeEach(async(() => {

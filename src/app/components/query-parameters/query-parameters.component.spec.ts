@@ -9,8 +9,8 @@ describe('QueryParametersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        declarations: [ 
-            QueryParametersComponent 
+        declarations: [
+            QueryParametersComponent
         ],
         imports: [
             FormsModule
