@@ -17,7 +17,7 @@ describe('SnomedFooterComponent', () => {
             ],
             schemas: []
         }).compileComponents();
-        
+
         fixture = TestBed.createComponent(SnomedFooterComponent);
         component = fixture.componentInstance;
     });

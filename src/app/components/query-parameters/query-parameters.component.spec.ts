@@ -26,7 +26,7 @@ describe('QueryParametersComponent', () => {
             NgbTypeaheadModule
         ],
     }).compileComponents();
-      
+
     fixture = TestBed.createComponent(QueryParametersComponent);
     component = fixture.componentInstance;
   });

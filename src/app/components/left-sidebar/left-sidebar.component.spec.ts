@@ -20,7 +20,7 @@ describe('LeftSidebarComponent', () => {
                 FormsModule
             ]
         }).compileComponents();
-        
+
         fixture = TestBed.createComponent(LeftSidebarComponent);
         component = fixture.componentInstance;
     });

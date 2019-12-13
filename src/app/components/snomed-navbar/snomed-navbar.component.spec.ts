@@ -19,7 +19,7 @@ describe('SnomedNavbarComponent', () => {
             ],
             schemas: []
         }).compileComponents();
-        
+
         fixture = TestBed.createComponent(SnomedNavbarComponent);
         component = fixture.componentInstance;
     });

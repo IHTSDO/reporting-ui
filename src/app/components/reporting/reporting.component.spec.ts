@@ -43,7 +43,7 @@ describe('ReportingComponent', () => {
             ],
             schemas: []
         }).compileComponents();
-        
+
         fixture = TestBed.createComponent(ReportingComponent);
         component = fixture.componentInstance;
     });
