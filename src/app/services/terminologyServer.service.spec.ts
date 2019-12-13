@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TerminologyServerService } from './terminologyServer.service';
 
 describe('TerminologyServerService', () => {
-  beforeEach(async(() => {
+  beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [
             ],
@@ -13,7 +13,7 @@ describe('TerminologyServerService', () => {
             ],
             schemas: []
         }).compileComponents();
-    }));
+    });
 
   it('should be created', () => {
     const service: TerminologyServerService = TestBed.get(TerminologyServerService);

@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationService } from './authentication.service';
 
 describe('AuthenticationService', () => {
-  beforeEach(async(() => {
+  beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [
             ],
@@ -13,7 +13,7 @@ describe('AuthenticationService', () => {
             ],
             schemas: []
         }).compileComponents();
-    }));
+    });
 
   it('should be created', () => {
     const service: AuthenticationService = TestBed.get(AuthenticationService);

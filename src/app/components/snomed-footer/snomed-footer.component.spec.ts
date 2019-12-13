@@ -7,7 +7,7 @@ describe('SnomedFooterComponent', () => {
     let component: SnomedFooterComponent;
     let fixture: ComponentFixture<SnomedFooterComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [
                 SnomedFooterComponent
@@ -17,12 +17,9 @@ describe('SnomedFooterComponent', () => {
             ],
             schemas: []
         }).compileComponents();
-    }));
-
-    beforeEach(() => {
+        
         fixture = TestBed.createComponent(SnomedFooterComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
     });
 
     it('should create', () => {

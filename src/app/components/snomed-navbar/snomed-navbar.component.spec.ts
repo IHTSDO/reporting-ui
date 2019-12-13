@@ -8,7 +8,7 @@ describe('SnomedNavbarComponent', () => {
     let component: SnomedNavbarComponent;
     let fixture: ComponentFixture<SnomedNavbarComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [
                 SnomedNavbarComponent
@@ -19,12 +19,9 @@ describe('SnomedNavbarComponent', () => {
             ],
             schemas: []
         }).compileComponents();
-    }));
-
-    beforeEach(() => {
+        
         fixture = TestBed.createComponent(SnomedNavbarComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
     });
 
     it('should create', () => {

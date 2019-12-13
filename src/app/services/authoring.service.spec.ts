@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthoringService } from './authoring.service';
 
 describe('AuthoringService', () => {
-  beforeEach(async(() => {
+  beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [
             ],
@@ -13,7 +13,7 @@ describe('AuthoringService', () => {
             ],
             schemas: []
         }).compileComponents();
-    }));
+    });
 
   it('should be created', () => {
     const service: AuthoringService = TestBed.get(AuthoringService);
