@@ -4,6 +4,7 @@ import { EventService } from 'src/app/services/event.service';
 import { forkJoin } from 'rxjs';
 import { Event } from 'src/app/models/event';
 import { Project } from 'src/app/models/project';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -16,7 +17,9 @@ export class SnomedNavbarComponent implements OnInit {
     projects: Project[] = [];
     activeProject: Project;
 
-    constructor(private authoringService: AuthoringService, private eventService: EventService) {
+    constructor(private authoringService: AuthoringService,
+        private eventService: EventService,
+        private authenticationService: AuthenticationService) {
     }
 
     ngOnInit() {
@@ -67,10 +70,25 @@ export class SnomedNavbarComponent implements OnInit {
         }
 
         filteredProjects.sort(function(a, b) { return a['key'].localeCompare(b['key']); });
+
+        if (this.authenticationService.roles.includes('ROLE_sca-author')) {
+            this.addProjectMAIN();
+        }
+
         this.projects = this.projects.concat(filteredProjects);
-        if (filteredProjects.length !== 0) {
-            this.activeProject =  filteredProjects[0];
+
+        if (this.projects.length !== 0) {
+            this.activeProject =  this.projects[0];
             this.notifyReportingComponent();
         }
+    }
+
+    private addProjectMAIN(): void {
+        const defaultProject = new Project();
+        defaultProject.key = 'MAIN';
+        defaultProject.title = 'MAIN';
+
+        this.activeProject = defaultProject;
+        this.projects.push(defaultProject);
     }
 }
