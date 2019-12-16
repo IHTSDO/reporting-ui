@@ -20,9 +20,7 @@ export class SnomedNavbarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.setDefaultProject();
         this.getAndFilterMyProjects();
-        setTimeout(() => this.notifyReportingComponent(), 1000);
     }
 
     notifyReportingComponent(): void {
@@ -70,18 +68,9 @@ export class SnomedNavbarComponent implements OnInit {
 
         filteredProjects.sort(function(a, b) { return a['key'].localeCompare(b['key']); });
         this.projects = this.projects.concat(filteredProjects);
-        if (filteredProjects.length === 1) {
+        if (filteredProjects.length !== 0) {
             this.activeProject =  filteredProjects[0];
             this.notifyReportingComponent();
         }
-    }
-
-    private setDefaultProject(): void {
-        const defaultProject = new Project();
-        defaultProject.key = 'MAIN';
-        defaultProject.title = 'MAIN';
-
-        this.activeProject = defaultProject;
-        this.projects.push(defaultProject);
     }
 }

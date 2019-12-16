@@ -12,7 +12,7 @@
     </ng-container>
     <div class="mr-auto pl-5 ml-5 pt-2">
         <label for="projectList" class="mr-2">Project</label>
-        <select id="projectList" class="min-w-100" [(ngModel)]="activeProject" (ngModelChange)="notifyReportingComponent()">
+        <select id="projectList" class="min-w-150 form-control" [(ngModel)]="activeProject" (ngModelChange)="notifyReportingComponent()">
             <option *ngFor="let project of projects" [ngValue]="project">{{project.key}}</option>
         </select>
     </div>
