@@ -71,7 +71,7 @@ export class SnomedNavbarComponent implements OnInit {
 
         filteredProjects.sort(function(a, b) { return a['key'].localeCompare(b['key']); });
 
-        if (this.authenticationService.roles.includes('ROLE_sca-author')) {
+        if (this.authenticationService.roles.includes('ROLE_ihtsdo-sca-author')) {
             this.addProjectMAIN();
         }
 
