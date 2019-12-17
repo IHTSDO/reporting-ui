@@ -14,7 +14,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class SnomedNavbarComponent implements OnInit {
 
     @Input() environment: string;
-    @Input() managedService: boolean;
     projects: Project[] = [];
     activeProject: Project;
 
@@ -72,7 +71,7 @@ export class SnomedNavbarComponent implements OnInit {
 
         filteredProjects.sort(function(a, b) { return a['key'].localeCompare(b['key']); });
 
-        if (!this.managedService) {
+        if (!this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint.includes('snowowl')) {
             this.addProjectMAIN();
         }
 
