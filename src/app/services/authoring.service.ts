@@ -16,8 +16,16 @@ export class AuthoringService {
         this.environmentEndpoint = window.location.origin + '/';
     }
 
+    getTasks(): Observable<object[]> {
+        return this.http.get<object[]>('/authoring-services/projects/my-tasks?excludePromoted=false');
+    }
+
+    getReviewTasks(): Observable<object[]> {
+        return this.http.get<object[]>('/authoring-services/projects/review-tasks');
+    }
+
     getProjects(): Observable<object[]> {
-        return this.http.get<object[]>('/authoring-services/projects');
+        return this.http.get<object[]>('/authoring-services/projects?lightweight=true');
     }
 
     getUIConfiguration(): Observable<UIConfiguration> {

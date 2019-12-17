@@ -10,6 +10,12 @@
         <div *ngSwitchCase="'training'" class="banner training"></div>
         <div *ngSwitchDefault class="banner d-none"></div>
     </ng-container>
+    <div class="mr-auto pl-5 ml-5 pt-2">
+        <label for="projectList" class="mr-2">Project</label>
+        <select id="projectList" class="min-w-150 form-control" [(ngModel)]="activeProject" (ngModelChange)="notifyReportingComponent()">
+            <option *ngFor="let project of projects" [ngValue]="project">{{project.key}}</option>
+        </select>
+    </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>

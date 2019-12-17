@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class AuthenticationService {
 
+    public roles: string[];
+
     constructor(private http: HttpClient) {
     }
 

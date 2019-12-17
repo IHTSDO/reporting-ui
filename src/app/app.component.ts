@@ -56,6 +56,8 @@ export class AppComponent implements OnInit {
                 if (!user) {
                     window.location.replace(this.authoringService.uiConfiguration.endpoints.imsEndpoint
                         + 'login?serviceReferer=' + window.location.href);
+                } else {
+                    this.authenticationService.roles = user.roles;
                 }
             },
             error => {

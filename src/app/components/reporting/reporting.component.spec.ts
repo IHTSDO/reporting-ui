@@ -1,56 +1,51 @@
-import { async, TestBed } from '@angular/core/testing';
-import { ReportingComponent } from './reporting.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { SnomedLeftSidebarComponent } from '../../components/left-sidebar/snomed-left-sidebar.component';
-import { CategoryPipe } from '../../pipes/category.pipe';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { SnomedQueryModalComponent } from '../../components/snomed-query-modal/snomed-query-modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { ConceptsPipe } from '../../pipes/concepts.pipe';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CategoryPipe } from '../../pipes/category.pipe';
+import { OrderByPipe } from '../../pipes/order-by.pipe';
+import { TagsPipe } from '../../pipes/tags.pipe';
 import { HiddenPipe } from '../../pipes/hidden.pipe';
 import { DisplayOrderPipe } from '../../pipes/display-order.pipe';
-import { SnomedDeleteModalComponent } from '../../components/snomed-delete-modal/snomed-delete-modal.component';
-import { SnomedWhitelistModalComponent } from '../../components/snomed-whitelist-modal/snomed-whitelist-modal.component';
-import { TypeaheadComponent } from '../../components/typeahead/snomed-typeahead.component';
-import { TypeaheadListComponent } from '../../components/typeahead-list/snomed-typeahead-list.component';
-import { OrderByPipe } from '../../pipes/order-by.pipe';
-import { ReportingService } from '../../services/reporting.service';
+import { LeftSidebarComponent } from '../left-sidebar/left-sidebar.component';
+import { ModalComponent } from '../modal/modal.component';
+import { QueryParametersComponent } from '../query-parameters/query-parameters.component';
+
+import { ReportingComponent } from './reporting.component';
 
 describe('ReportingComponent', () => {
     let component: ReportingComponent;
-    let reportingService: ReportingService;
-    // let fixture: ComponentFixture<ReportingComponent>;
+    let fixture: ComponentFixture<ReportingComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [
                 ReportingComponent,
-                SnomedLeftSidebarComponent,
+                LeftSidebarComponent,
                 CategoryPipe,
-                SnomedQueryModalComponent,
-                ConceptsPipe,
+                OrderByPipe,
+                TagsPipe,
                 HiddenPipe,
                 DisplayOrderPipe,
-                SnomedDeleteModalComponent,
-                SnomedWhitelistModalComponent,
-                TypeaheadComponent,
-                TypeaheadListComponent,
-                OrderByPipe
+                ModalComponent,
+                QueryParametersComponent
             ],
             imports: [
                 HttpClientModule,
-                MatTooltipModule,
                 FormsModule,
-                MatCheckboxModule
+                MatTooltipModule,
+                NgbTypeaheadModule,
+                MatCheckboxModule,
+                BrowserAnimationsModule
             ],
             schemas: []
         }).compileComponents();
-    }));
 
-    beforeEach(() => {
-        reportingService = new ReportingService(null);
-        component = new ReportingComponent(reportingService);
+        fixture = TestBed.createComponent(ReportingComponent);
+        component = fixture.componentInstance;
     });
 
     it('should create', () => {
