@@ -14,6 +14,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class SnomedNavbarComponent implements OnInit {
 
     @Input() environment: string;
+    @Input() managedService: boolean;
     projects: Project[] = [];
     activeProject: Project;
 
@@ -71,7 +72,7 @@ export class SnomedNavbarComponent implements OnInit {
 
         filteredProjects.sort(function(a, b) { return a['key'].localeCompare(b['key']); });
 
-        if (this.authenticationService.roles.includes('ROLE_ihtsdo-sca-author')) {
+        if (!this.managedService) {
             this.addProjectMAIN();
         }
 

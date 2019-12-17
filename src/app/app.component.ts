@@ -24,6 +24,8 @@ export class AppComponent implements OnInit {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.managedService = window.location.host.split(/[.]/)[0].includes('ms-');
 
+        this.managedService = true;
+
         this.authoringService.getVersion().subscribe(
             data => {
                 this.versions = data;
@@ -44,6 +46,7 @@ export class AppComponent implements OnInit {
                             $('<script>').attr({ src: snowowlData.endpoints.collectorEndpoint }).appendTo('body');
                         });
                 } else {
+                    this.managedService = false;
                     $('<script>').attr({ src: this.authoringService.uiConfiguration.endpoints.collectorEndpoint }).appendTo('body');
                 }
             },
