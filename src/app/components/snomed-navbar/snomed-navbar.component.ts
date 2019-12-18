@@ -36,7 +36,7 @@ export class SnomedNavbarComponent implements OnInit {
                 this.addProjectMAIN();
             }
 
-            this.projects = data.sort(function(a, b) { return a['key'].localeCompare(b['key']); });
+            this.projects = this.projects.concat(data.sort(function(a, b) { return a['key'].localeCompare(b['key']); }));
 
             if (this.projects.length !== 0) {
                 this.activeProject =  this.projects[0];
@@ -49,11 +49,6 @@ export class SnomedNavbarComponent implements OnInit {
         const defaultProject = new Project();
         defaultProject.key = 'MAIN';
         defaultProject.title = 'MAIN';
-
-        const newProjectList = [];
-        this.activeProject = defaultProject;
-        newProjectList.push(defaultProject);
-        newProjectList.concat(this.projects);
-        this.projects = newProjectList;
+        this.projects.push(defaultProject);
     }
 }
