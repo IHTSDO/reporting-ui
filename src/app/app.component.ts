@@ -26,6 +26,13 @@ export class AppComponent implements OnInit {
 
         this.managedService = true;
 
+        this.getVersion();
+        this.getUIConfiguration();
+        this.getLoggedInUser();
+        this.assignFavicon();
+    }
+
+    getVersion() {
         this.authoringService.getVersion().subscribe(
             data => {
                 this.versions = data;
@@ -35,7 +42,9 @@ export class AppComponent implements OnInit {
                 console.log('Snowstorm Version:', data.versions['snowstorm']);
             }
         );
+    }
 
+    getUIConfiguration() {
         this.authoringService.getUIConfiguration().subscribe(
             data => {
                 this.authoringService.uiConfiguration = data;
@@ -53,7 +62,9 @@ export class AppComponent implements OnInit {
             error => {
                 console.error('ERROR: UI Config failed to load');
             });
+    }
 
+    getLoggedInUser() {
         this.authenticationService.getLoggedInUser().subscribe(
             user => {
                 if (!user) {
@@ -67,7 +78,27 @@ export class AppComponent implements OnInit {
                 window.location.replace(this.authoringService.uiConfiguration.endpoints.imsEndpoint
                     + 'login?serviceReferer=' + window.location.href);
             });
+    }
 
+    assignFavicon() {
+        const favicon = $('#favicon');
 
+        switch (this.environment) {
+            case 'local':
+                favicon.attr('href', 'favicon_grey.ico');
+                break;
+            case 'dev':
+                favicon.attr('href', 'favicon_red.ico');
+                break;
+            case 'uat':
+                favicon.attr('href', 'favicon_green.ico');
+                break;
+            case 'training':
+                favicon.attr('href', 'favicon_yellow.ico');
+                break;
+            default:
+                favicon.attr('href', 'favicon.ico');
+                break;
+        }
     }
 }
