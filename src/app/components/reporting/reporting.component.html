@@ -102,7 +102,7 @@
                 </tr>
                 <tr *ngFor="let concept of activeQuery?.whiteList" [class.new]="concept.new">
                     <td>{{concept.sctId}}</td>
-                    <td>{{concept.fsn}}
+                    <td class="font-size-12">{{concept.fsn}}
                         <button class="delete-button" (click)="removeFromWhitelist(concept)"><i class="fas fa-minus"></i></button>
                     </td>
                 </tr>
