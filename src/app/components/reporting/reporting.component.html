@@ -46,7 +46,12 @@
                                 <td *ngFor="let parameter of query.parameters | keyvalue | displayOrder:parameter | hidden">{{report?.parameters ? report.parameters[parameter.key]?.value : ''}}</td>
                                 <ng-container [ngSwitch]="report.status">
                                     <td *ngSwitchCase="'Complete'" class="completed" (click)="viewReport(report)">{{report.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
-                                    <td *ngSwitchCase="'Failed'" class="failed" matTooltip="{{report?.debugInfo}}">{{report.status}}<i class="fas fa-times-circle ml-1"></i></td>
+                                    <ng-container *ngSwitchCase="'Failed'">
+                                        <td *ngIf="report.resultUrl; else urlContainer" class="failed" (click)="viewReport(report)" matTooltip="{{report?.debugInfo}}">{{report.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
+                                        <ng-template #urlContainer>
+                                            <td class="failed" matTooltip="{{report?.debugInfo}}">{{report.status}}<i class="fas fa-times-circle ml-1"></i></td>
+                                        </ng-template>
+                                    </ng-container>
                                     <td *ngSwitchDefault>{{report.status}}</td>
                                 </ng-container>
                                 <td>{{report.user}}
