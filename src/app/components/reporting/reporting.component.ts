@@ -207,7 +207,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
             idList = input.match(/[0-9]{4,16}/g);
         }
 
-        if (idList.length > 0) {
+        if (idList && idList.length > 0) {
             this.terminologyService.getConceptsById(idList).subscribe(
                 data => {
                     data['items'].forEach(concept => {
