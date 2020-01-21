@@ -5,9 +5,12 @@ app-modal {
     display: none;
     max-height: 90vh;
 
-    div.modal-dialog {
-        z-index: 1000;
+    div.modal-large {
         max-width: 100rem;
+    }
+    
+    div.modal-dialog {
+        z-index: 1000;        
 
         div.modal-content {
             div.modal-header {

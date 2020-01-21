@@ -9,6 +9,7 @@ import { ModalService } from '../../services/modal.service';
 })
 export class ModalComponent implements OnInit, OnDestroy {
     @Input() id: string;
+    @Input() size = 'medium';
     private element: any;
 
     constructor(private modalService: ModalService, private el: ElementRef) {
@@ -24,6 +25,9 @@ export class ModalComponent implements OnInit, OnDestroy {
 
         // move element to bottom of page (just before </body>) so it can be displayed above everything else
         document.body.appendChild(this.element);
+
+        // add size to dialog
+        this.element.firstChild.classList.add('modal-' + this.size);
 
         // close modal on background click
         this.element.addEventListener('click', el => {
