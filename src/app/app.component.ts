@@ -14,7 +14,7 @@ import { UIConfiguration } from './models/uiConfiguration';
 export class AppComponent implements OnInit {
 
     environment: string;
-    managedService: boolean;
+    managedServiceUser: boolean;
     versions: Versions;
     uiConfiguration: UIConfiguration;
     constructor(private authenticationService: AuthenticationService, private authoringService: AuthoringService) {
@@ -22,10 +22,6 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
-        this.managedService = window.location.host.split(/[.]/)[0].includes('ms-');
-
-        this.managedService = true;
-
         this.getVersion();
         this.getUIConfiguration();
         this.getLoggedInUser();
@@ -54,8 +50,7 @@ export class AppComponent implements OnInit {
                         snowowlData => {
                             $('<script>').attr({ src: snowowlData.endpoints.collectorEndpoint }).appendTo('body');
                         });
-                } else {
-                    this.managedService = false;
+                } else {                    
                     $('<script>').attr({ src: this.authoringService.uiConfiguration.endpoints.collectorEndpoint }).appendTo('body');
                 }
             },
@@ -72,6 +67,7 @@ export class AppComponent implements OnInit {
                         + 'login?serviceReferer=' + window.location.href);
                 } else {
                     this.authenticationService.roles = user.roles;
+                    this.managedServiceUser = user.roles.includes('ROLE_ms-users');
                 }
             },
             error => {

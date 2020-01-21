@@ -12,7 +12,7 @@ import { Project } from 'src/app/models/project';
 export class SnomedNavbarComponent implements OnInit {
 
     @Input() environment: string;
-    @Input() managedService: boolean;
+    @Input() managedServiceUser: boolean;
     projects: any[] = [];
     activeProject: Project;
 
@@ -32,7 +32,7 @@ export class SnomedNavbarComponent implements OnInit {
 
     private getAndFilterMyProjects(): void {
         this.authoringService.getProjects().subscribe(data => {
-            if (!this.managedService) {
+            if (!this.managedServiceUser) {
                 this.addProjectMAIN();
             }
 

@@ -36,7 +36,7 @@ import { Project } from 'src/app/models/project';
 export class ReportingComponent implements OnInit, OnDestroy {
 
     // Config
-    @Input() managedService: boolean;
+    @Input() managedServiceUser: boolean;
 
     // pipe filters
     querySearch: string;
