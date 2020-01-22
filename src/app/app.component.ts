@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
                         snowowlData => {
                             $('<script>').attr({ src: snowowlData.endpoints.collectorEndpoint }).appendTo('body');
                         });
-                } else {                    
+                } else {
                     $('<script>').attr({ src: this.authoringService.uiConfiguration.endpoints.collectorEndpoint }).appendTo('body');
                 }
             },
