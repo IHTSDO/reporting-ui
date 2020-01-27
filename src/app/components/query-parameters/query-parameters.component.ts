@@ -71,7 +71,7 @@ export class QueryParametersComponent implements OnChanges {
         }
 
 
-        if (idList.length > 0) {
+        if (idList && idList.length > 0) {
             this.terminologyService.getConceptsById(idList).subscribe(
                 data => {
                     data['items'].forEach(concept => {
