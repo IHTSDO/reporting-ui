@@ -5,12 +5,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TagsPipe implements PipeTransform {
 
-    transform(items: any[], managedService: boolean): any {
+    transform(items: any[], managedServiceUser: boolean): any {
         if (!items) {
             return [];
         }
 
-        if (managedService) {
+        if (managedServiceUser) {
             items = items.filter( item => item.tags ? item.tags.includes('MS') : false);
         } else {
             items = items.filter(item => item.tags ? item.tags.includes('INT') : false);

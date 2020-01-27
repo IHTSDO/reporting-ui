@@ -2,10 +2,10 @@
 
 <div id="reporting" class="footer-margin">
     <div *ngFor="let category of categories | category:activeCategory?.name | orderBy:'name'">
-        <div class="p-4" *ngIf="(category.jobs | tags:managedService | category:querySearch).length !== 0; else noJobs">
+        <div class="p-4" *ngIf="(category.jobs | tags:managedServiceUser | category:querySearch).length !== 0; else noJobs">
             <h3 class="report-title">{{category.name}}</h3>
             <div class="accordion rounded">
-                <div class="query" *ngFor="let query of category.jobs | tags:managedService | category:querySearch | orderBy:'name'; let first = first; let last = last">
+                <div class="query" *ngFor="let query of category.jobs | tags:managedServiceUser | category:querySearch | orderBy:'name'; let first = first; let last = last">
                     <div class="title" (click)="switchActiveQuery(query)" [class.rounded-top]="first" [class.rounded-bottom]="last" [class.last-item]="last">
                         <h4 class="float-left py-3 px-3 m-0">{{query.name}}</h4>
                     </div>
@@ -46,7 +46,12 @@
                                 <td *ngFor="let parameter of query.parameters | keyvalue | displayOrder:parameter | hidden">{{report?.parameters ? report.parameters[parameter.key]?.value : ''}}</td>
                                 <ng-container [ngSwitch]="report.status">
                                     <td *ngSwitchCase="'Complete'" class="completed" (click)="viewReport(report)">{{report.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
-                                    <td *ngSwitchCase="'Failed'" class="failed" matTooltip="{{report?.debugInfo}}">{{report.status}}<i class="fas fa-times-circle ml-1"></i></td>
+                                    <ng-container *ngSwitchCase="'Failed'">
+                                        <td *ngIf="report.resultUrl; else urlContainer" class="failed" (click)="viewReport(report)" matTooltip="{{report?.debugInfo}}">{{report.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
+                                        <ng-template #urlContainer>
+                                            <td class="failed" matTooltip="{{report?.debugInfo}}">{{report.status}}<i class="fas fa-times-circle ml-1"></i></td>
+                                        </ng-template>
+                                    </ng-container>
                                     <td *ngSwitchDefault>{{report.status}}</td>
                                 </ng-container>
                                 <td>{{report.user}}
@@ -86,7 +91,7 @@
 </app-modal>
 
 <!-- WHITELIST MODAL -->
-<app-modal id="whitelist-modal" class="modal">
+<app-modal id="whitelist-modal" class="modal" size="large">
     <div header><h3 class="mb-0">Whitelist<span class="px-2">{{activeQuery?.name}}</span></h3></div>
     <div body>
         <div class="position-relative pb-3">
@@ -102,7 +107,7 @@
                 </tr>
                 <tr *ngFor="let concept of activeQuery?.whiteList" [class.new]="concept.new">
                     <td>{{concept.sctId}}</td>
-                    <td>{{concept.fsn}}
+                    <td class="font-size-12">{{concept.fsn}}
                         <button class="delete-button" (click)="removeFromWhitelist(concept)"><i class="fas fa-minus"></i></button>
                     </td>
                 </tr>
