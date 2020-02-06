@@ -13,6 +13,7 @@ import { Observable, Subscription } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/models/event';
 import { Project } from 'src/app/models/project';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
     selector: 'app-reporting',
@@ -75,7 +76,8 @@ export class ReportingComponent implements OnInit, OnDestroy {
                 private authoringService: AuthoringService,
                 private modalService: ModalService,
                 private terminologyService: TerminologyServerService,
-                private eventService: EventService) {
+                private eventService: EventService,
+                private authenticationService: AuthenticationService) {
     }
 
     ngOnInit() {
