@@ -14,7 +14,7 @@
                             <p class="float-left py-3 px-3 mb-0">{{query.description}}</p>
                             <div class="float-right m-2">
                                 <div>{{activeQuery.whitelist | json}}</div>
-                                <button class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
+                                <button *ngIf="authenticationService.roles.includes('ROLE_int-sca-author')" class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
                                 (click)="openModal('whitelist-modal'); searchTerm = ''">
                                     Whitelist
                                 </button>
