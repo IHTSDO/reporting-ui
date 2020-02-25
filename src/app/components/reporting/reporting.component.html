@@ -119,6 +119,6 @@
     </div>
     <div footer>
         <div [@slide]="saved" class="px-3 saved">{{saveResponse}}</div>
-        <button type="button" class="btn btn-primary" (click)="saveWhitelist()">Save Whitelist</button>
+        <button type="button" class="btn btn-primary" [disabled]="!whitelistChanged" (click)="saveWhitelist()">Save Whitelist</button>
     </div>
 </app-modal>

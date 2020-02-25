@@ -44,7 +44,8 @@ export class ReportingComponent implements OnInit, OnDestroy {
 
     // whitelist
     @ViewChild('textareaTypeahead', { static: true }) inputElement: ElementRef;
-
+    whitelistChanged = false;
+    
     // item arrays
     categories: Category[];
 
@@ -228,6 +229,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
 
         if (exists === undefined) {
             this.activeQuery.whiteList.push(UtilityService.convertFullConceptToShortConcept(concept));
+            this.whitelistChanged = true;
         }
     }
 
@@ -240,6 +242,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
             () => {
                 this.saveResponse = 'Saved';
                 this.saved = (this.saved === 'start' ? 'end' : 'start');
+                this.whitelistChanged = false;
             },
             () => {
                 this.saveResponse = 'Error';
@@ -251,5 +254,6 @@ export class ReportingComponent implements OnInit, OnDestroy {
         this.activeQuery.whiteList = this.activeQuery.whiteList.filter(item => {
             return item.sctId !== concept.sctId;
         });
+        this.whitelistChanged = true;
     }
 }
