@@ -45,7 +45,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
     // whitelist
     @ViewChild('textareaTypeahead', { static: true }) inputElement: ElementRef;
     whitelistChanged = false;
-    
+
     // item arrays
     categories: Category[];
 
@@ -228,7 +228,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
         });
 
         if (exists === undefined) {
-            this.activeQuery.whiteList.push(UtilityService.convertFullConceptToShortConcept(concept));
+            this.activeQuery.whiteList.unshift(UtilityService.convertFullConceptToShortConcept(concept));
             this.whitelistChanged = true;
         }
     }
