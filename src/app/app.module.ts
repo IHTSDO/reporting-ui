@@ -26,6 +26,7 @@ import { AuthoringService } from './services/authoring.service';
 import { AuthenticationService } from './services/authentication.service';
 import { TerminologyServerService } from './services/terminologyServer.service';
 import { ModalService } from './services/modal.service';
+import { ProjectService } from './services/project.service';
 
 // PIPES
 import { CategoryPipe } from './pipes/category.pipe';
@@ -37,6 +38,8 @@ import { TagsPipe } from './pipes/tags.pipe';
 // INTERCEPTORS
 import { HeaderInterceptor } from './interceptors/header.interceptor';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
+import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
+import { MainToTopPipe } from './pipes/main-to-top.pipe';
 
 @NgModule({
     declarations: [
@@ -51,7 +54,9 @@ import { AuthenticationInterceptor } from './interceptors/authentication.interce
         OrderByPipe,
         ModalComponent,
         QueryParametersComponent,
-        TagsPipe
+        TagsPipe,
+        AlphabeticalPipe,
+        MainToTopPipe
     ],
     imports: [
         BrowserModule,
@@ -69,6 +74,7 @@ import { AuthenticationInterceptor } from './interceptors/authentication.interce
         AuthoringService,
         AuthenticationService,
         TerminologyServerService,
+        ProjectService,
         ModalService,
         {
             provide: HTTP_INTERCEPTORS,

@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthoringService } from 'src/app/services/authoring.service';
-import { EventService } from 'src/app/services/event.service';
-import { Event } from 'src/app/models/event';
 import { Project } from 'src/app/models/project';
+import { AuthenticationService } from '../../services/authentication.service';
+import { User } from '../../models/user';
+import { Subscription } from 'rxjs';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -13,42 +15,40 @@ export class SnomedNavbarComponent implements OnInit {
 
     @Input() environment: string;
     @Input() managedServiceUser: boolean;
-    projects: any[] = [];
-    activeProject: Project;
 
-    constructor(private authoringService: AuthoringService, private eventService: EventService) {
+    private activeProject: Project;
+    private activeProjectSubscription;
+    private projects: Project[];
+    private projectSubscription: Subscription;
+    private user: User;
+    private userSubscription: Subscription;
+
+    constructor(private authoringService: AuthoringService,
+                private authenticationService: AuthenticationService,
+                private projectService: ProjectService) {
+        this.userSubscription = this.authenticationService.getLoggedInUser().subscribe(data => this.user = data);
+        this.projectSubscription = this.projectService.getProjects().subscribe(data => this.projects = data);
+        this.activeProjectSubscription = this.projectService.getActiveProject().subscribe(data => this.activeProject = data);
     }
 
     ngOnInit() {
-        this.getAndFilterMyProjects();
-    }
-
-    notifyReportingComponent(): void {
-        const event = new Event();
-        event.eventName = 'call_reporting_component';
-        event.value = <object> this.activeProject;
-        this.eventService.notify(event);
-    }
-
-    private getAndFilterMyProjects(): void {
         this.authoringService.getProjects().subscribe(data => {
+            const projects = data;
+
             if (!this.managedServiceUser) {
-                this.addProjectMAIN();
+                projects.unshift(new Project('MAIN', 'MAIN'));
             }
 
-            this.projects = this.projects.concat(data.sort(function(a, b) { return a['key'].localeCompare(b['key']); }));
-
-            if (this.projects.length !== 0) {
-                this.activeProject =  this.projects[0];
-                this.notifyReportingComponent();
-            }
+            this.projectService.setProjects(projects);
+            this.projectService.setActiveProject(projects[0]);
         });
     }
 
-    private addProjectMAIN(): void {
-        const defaultProject = new Project();
-        defaultProject.key = 'MAIN';
-        defaultProject.title = 'MAIN';
-        this.projects.push(defaultProject);
+    setProject(project) {
+        this.projectService.setActiveProject(project);
+    }
+
+    logout() {
+        this.authenticationService.logout();
     }
 }
