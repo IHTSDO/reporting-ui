@@ -42,7 +42,8 @@ export class ReportingService {
         return this.http.get<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist');
     }
 
-    postWhitelist(name, params): Observable<Concept[]> {
-        return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist', JSON.stringify(params));
+    postWhitelist(name, codesystemsShortName, params): Observable<Concept[]> {
+        return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/' + codesystemsShortName +
+            '/whitelist', JSON.stringify(params));
     }
 }

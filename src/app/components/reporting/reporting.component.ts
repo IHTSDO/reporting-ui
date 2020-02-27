@@ -233,7 +233,15 @@ export class ReportingComponent implements OnInit, OnDestroy {
             delete item.new;
         });
 
-        this.reportingService.postWhitelist(this.activeQuery.name, this.activeQuery.whiteList).subscribe(
+        let codesystems = '';
+
+        if (!this.activeProject.metadata || !this.activeProject.metadata.codesystemsShortName) {
+            codesystems = 'MAIN';
+        } else {
+            codesystems = this.activeProject.metadata.codesystemsShortName;
+        }
+
+        this.reportingService.postWhitelist(this.activeQuery.name, codesystems, this.activeQuery.whiteList).subscribe(
             () => {
                 this.saveResponse = 'Saved';
                 this.saved = (this.saved === 'start' ? 'end' : 'start');

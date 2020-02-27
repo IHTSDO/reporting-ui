@@ -14,8 +14,8 @@ export class ProjectService {
     private projects = new Subject<Project[]>();
 
     // Setters & Getters: BranchPath
-    setProjects(path) {
-        this.projects.next(path);
+    setProjects(projects) {
+        this.projects.next(projects);
     }
 
     getProjects(): Observable<Project[]> {
