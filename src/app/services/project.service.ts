@@ -23,8 +23,8 @@ export class ProjectService {
     }
 
     // Setters & Getters: BranchPath
-    setActiveProject(path) {
-        this.activeProject.next(path);
+    setActiveProject(project) {
+        this.activeProject.next(project);
     }
 
     getActiveProject(): Observable<Project> {

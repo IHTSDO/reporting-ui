@@ -38,12 +38,12 @@ export class ReportingService {
     }
 
     // WHITELIST ENDPOINTS
-    getWhitelist(name): Observable<Concept[]> {
-        return this.http.get<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist');
+    getWhitelist(name, codeSystemShortName): Observable<Concept[]> {
+        return this.http.get<Concept[]>('/schedule-manager/jobs/Report/' + name + '/' + codeSystemShortName + '/whitelist');
     }
 
-    postWhitelist(name, codesystemsShortName, params): Observable<Concept[]> {
-        return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/' + codesystemsShortName +
-            '/whitelist', JSON.stringify(params));
+    postWhitelist(name, codeSystemShortName, params): Observable<Concept[]> {
+        return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/' + codeSystemShortName + '/whitelist',
+            JSON.stringify(params));
     }
 }

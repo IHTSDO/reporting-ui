@@ -19,6 +19,8 @@ import { QueryParametersComponent } from './components/query-parameters/query-pa
 import 'jquery';
 
 import { AppComponent } from './app.component';
+import { MainToTopPipe } from './pipes/main-to-top.pipe';
+import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
 
 describe('AppComponent', () => {
     beforeEach(() => {
@@ -35,7 +37,9 @@ describe('AppComponent', () => {
                 CategoryPipe,
                 TagsPipe,
                 HiddenPipe,
-                DisplayOrderPipe
+                DisplayOrderPipe,
+                MainToTopPipe,
+                AlphabeticalPipe
             ],
             imports: [
                 FormsModule,

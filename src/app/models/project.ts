@@ -3,7 +3,7 @@ export class Project {
     branchPath: string;
     title: string;
     metadata: {
-        codesystemsShortName: string;
+        codeSystemShortName: string;
     };
 
     constructor(key, title) {

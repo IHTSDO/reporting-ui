@@ -13,6 +13,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ProjectService } from '../../services/project.service';
+import { Concept } from '../../models/concept';
 
 @Component({
     selector: 'app-reporting',
@@ -49,6 +50,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
     categories: Category[];
 
     // active Items
+    activeWhitelist: Concept[];
     activeCategory: Category;
     activeQuery: Query;
     activeReport: Report;
@@ -59,9 +61,6 @@ export class ReportingComponent implements OnInit, OnDestroy {
     // animations
     saved = 'start';
     saveResponse: string;
-
-    // subcription
-    subscribe: Subscription;
 
     // typeahead
     searchTerm: string;
@@ -91,7 +90,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscribe.unsubscribe();
+        this.activeProjectSubscription.unsubscribe();
     }
 
     refresh(): void {
@@ -110,8 +109,8 @@ export class ReportingComponent implements OnInit, OnDestroy {
         if (this.activeQuery !== query) {
             this.activeQuery = query;
 
-            if (this.activeQuery.whiteList === undefined) {
-                this.activeQuery.whiteList = [];
+            if (this.activeWhitelist === undefined) {
+                this.activeWhitelist = [];
             }
         } else {
             this.activeQuery = null;
@@ -215,33 +214,47 @@ export class ReportingComponent implements OnInit, OnDestroy {
         }
     }
 
+    getWhitelist() {
+        let codeSystem = '';
+
+        if (this.activeProject.metadata && this.activeProject.metadata.codeSystemShortName) {
+            codeSystem = this.activeProject.metadata.codeSystemShortName;
+        } else {
+            codeSystem = 'SNOMEDCT';
+        }
+
+        this.reportingService.getWhitelist(this.activeQuery.name, codeSystem).subscribe(data => {
+            this.activeWhitelist = data;
+        });
+    }
+
     addToWhitelist(concept) {
         this.searchTerm = '';
 
-        const exists = this.activeQuery.whiteList.find(item => {
+        const exists = this.activeWhitelist.find(item => {
             return item.sctId === concept.id;
         });
 
         if (exists === undefined) {
-            this.activeQuery.whiteList.unshift(UtilityService.convertFullConceptToShortConcept(concept));
+            this.activeWhitelist.unshift(UtilityService.convertFullConceptToShortConcept(concept));
             this.whitelistChanged = true;
         }
     }
 
     saveWhitelist(): void {
-        this.activeQuery.whiteList.forEach(item => {
+        this.activeWhitelist.forEach(item => {
             delete item.new;
         });
 
-        let codesystems = '';
+        let codeSystem = '';
 
-        if (!this.activeProject.metadata || !this.activeProject.metadata.codesystemsShortName) {
-            codesystems = 'MAIN';
+        if (this.activeProject.metadata && this.activeProject.metadata.codeSystemShortName) {
+            codeSystem = this.activeProject.metadata.codeSystemShortName;
         } else {
-            codesystems = this.activeProject.metadata.codesystemsShortName;
+            codeSystem = 'SNOMEDCT';
         }
 
-        this.reportingService.postWhitelist(this.activeQuery.name, codesystems, this.activeQuery.whiteList).subscribe(
+        this.reportingService.postWhitelist(this.activeQuery.name, codeSystem, this.activeWhitelist).subscribe(
             () => {
                 this.saveResponse = 'Saved';
                 this.saved = (this.saved === 'start' ? 'end' : 'start');
@@ -254,7 +267,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
     }
 
     removeFromWhitelist(concept): void {
-        this.activeQuery.whiteList = this.activeQuery.whiteList.filter(item => {
+        this.activeWhitelist = this.activeWhitelist.filter(item => {
             return item.sctId !== concept.sctId;
         });
         this.whitelistChanged = true;

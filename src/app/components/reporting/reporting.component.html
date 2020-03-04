@@ -13,9 +13,9 @@
                         <div class="w-100 description mx-0">
                             <p class="float-left py-3 px-3 mb-0">{{query.description}}</p>
                             <div class="float-right m-2">
-                                <div>{{activeQuery.whitelist | json}}</div>
+                                <!--<div>{{activeQuery.whitelist | json}}</div>-->
                                 <button *ngIf="authenticationService.roles.includes('ROLE_int-sca-author')" class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
-                                (click)="openModal('whitelist-modal'); searchTerm = ''">
+                                (click)="openModal('whitelist-modal'); searchTerm = ''; getWhitelist()">
                                     Whitelist
                                 </button>
                                 <ng-container *ngIf="parametersExistCheck()">
@@ -98,13 +98,13 @@
             <input type="text" class="form-control" [(ngModel)]="searchTerm" [ngbTypeahead]="search" (ngModelChange)="retrieveConceptsById(searchTerm)"/>
             <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
         </div>
-        <div *ngIf="activeQuery?.whiteList.length > 0; else noItems" class="table-container border">
+        <div *ngIf="activeWhitelist?.length > 0; else noItems" class="table-container border">
             <table class="table table-borderless rounded m-0">
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
                 </tr>
-                <tr *ngFor="let concept of activeQuery?.whiteList" [class.new]="concept.new">
+                <tr *ngFor="let concept of activeWhitelist" [class.new]="concept.new">
                     <td>{{concept.sctId}}</td>
                     <td class="font-size-12">{{concept.fsn}}
                         <button class="delete-button" (click)="removeFromWhitelist(concept)"><i class="fas fa-minus"></i></button>

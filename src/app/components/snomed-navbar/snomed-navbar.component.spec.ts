@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { SnomedNavbarComponent } from './snomed-navbar.component';
+import { MainToTopPipe } from '../../pipes/main-to-top.pipe';
+import { AlphabeticalPipe } from '../../pipes/alphabetical.pipe';
 
 describe('SnomedNavbarComponent', () => {
     let component: SnomedNavbarComponent;
@@ -11,7 +13,9 @@ describe('SnomedNavbarComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [
-                SnomedNavbarComponent
+                SnomedNavbarComponent,
+                MainToTopPipe,
+                AlphabeticalPipe
             ],
             imports: [
                 FormsModule,
