@@ -40,6 +40,7 @@ import { HeaderInterceptor } from './interceptors/header.interceptor';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
 import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
 import { MainToTopPipe } from './pipes/main-to-top.pipe';
+import { ProjectMatcherPipe } from './pipes/project-matcher.pipe';
 
 @NgModule({
     declarations: [
@@ -56,7 +57,8 @@ import { MainToTopPipe } from './pipes/main-to-top.pipe';
         QueryParametersComponent,
         TagsPipe,
         AlphabeticalPipe,
-        MainToTopPipe
+        MainToTopPipe,
+        ProjectMatcherPipe
     ],
     imports: [
         BrowserModule,

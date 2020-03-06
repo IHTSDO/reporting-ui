@@ -14,7 +14,7 @@
                             <p class="float-left py-3 px-3 mb-0">{{query.description}}</p>
                             <div class="float-right m-2">
                                 <!--<div>{{activeQuery.whitelist | json}}</div>-->
-                                <button *ngIf="authenticationService.roles.includes('ROLE_int-sca-author')" class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
+                                <button class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
                                 (click)="openModal('whitelist-modal'); searchTerm = ''; getWhitelist()">
                                     Whitelist
                                 </button>
@@ -39,7 +39,7 @@
                                 <th>Status</th>
                                 <th>User</th>
                             </tr>
-                            <tr *ngFor="let report of activeReportSet">
+                            <tr *ngFor="let report of activeReportSet | projectMatcher:projects:activeProject">
                                 <td class="pl-3">{{convertDate(report.requestTime)}}UTC</td>
                                 <td>{{report.issuesReported ? report.issuesReported : '0'}}</td>
                                 <td *ngFor="let parameter of query.parameters | keyvalue | displayOrder:parameter | hidden">{{report?.parameters ? report.parameters[parameter.key]?.value : ''}}</td>

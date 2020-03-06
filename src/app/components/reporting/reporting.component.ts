@@ -57,6 +57,8 @@ export class ReportingComponent implements OnInit, OnDestroy {
     activeReportSet: Report[];
     private activeProject: Project;
     private activeProjectSubscription: Subscription;
+    private projects: Project[];
+    private projectSubscription: Subscription;
 
     // animations
     saved = 'start';
@@ -76,8 +78,8 @@ export class ReportingComponent implements OnInit, OnDestroy {
                 private authoringService: AuthoringService,
                 private modalService: ModalService,
                 private terminologyService: TerminologyServerService,
-                private authenticationService: AuthenticationService,
                 private projectService: ProjectService) {
+        this.projectSubscription = this.projectService.getProjects().subscribe(data => this.projects = data);
         this.activeProjectSubscription = this.projectService.getActiveProject().subscribe(data => this.activeProject = data);
     }
 

@@ -12,9 +12,11 @@ export class MainToTopPipe implements PipeTransform {
 
         const main = items.find(item => item[key] === 'MAIN');
 
-        items = items.filter(item => item[key] !== 'MAIN');
+        if (main) {
+            items = items.filter(item => item[key] !== 'MAIN');
 
-        items.unshift(main);
+            items.unshift(main);
+        }
 
         return items;
     }
