@@ -24,8 +24,9 @@ export class ReportingService {
         return this.http.get<Report[]>('/schedule-manager/jobs/Report/' + name + '/runs');
     }
 
-    postReport(query): Observable<Query> {
+    postReport(query, codeSystemShortname): Observable<Query> {
         const params = {
+            codeSystemShortname: codeSystemShortname,
             jobName: query.name,
             parameters: query.parameters
         };

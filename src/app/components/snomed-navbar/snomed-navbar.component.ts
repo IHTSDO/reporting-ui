@@ -16,11 +16,11 @@ export class SnomedNavbarComponent implements OnInit {
     @Input() environment: string;
     @Input() managedServiceUser: boolean;
 
-    private activeProject: Project;
+    activeProject: Project;
     private activeProjectSubscription;
-    private projects: Project[];
+    projects: Project[];
     private projectSubscription: Subscription;
-    private user: User;
+    user: User;
     private userSubscription: Subscription;
 
     constructor(private authoringService: AuthoringService,

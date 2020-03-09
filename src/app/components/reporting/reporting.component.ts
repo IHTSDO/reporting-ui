@@ -149,7 +149,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
             }
         }
 
-        this.reportingService.postReport(this.activeQuery).subscribe(() => {
+        this.reportingService.postReport(this.activeQuery, this.getCodeSystemShortname()).subscribe(() => {
             this.refresh();
         });
     }
@@ -216,16 +216,16 @@ export class ReportingComponent implements OnInit, OnDestroy {
         }
     }
 
-    getWhitelist() {
-        let codeSystem = '';
-
+    getCodeSystemShortname() {
         if (this.activeProject.metadata && this.activeProject.metadata.codeSystemShortName) {
-            codeSystem = this.activeProject.metadata.codeSystemShortName;
+            return this.activeProject.metadata.codeSystemShortName;
         } else {
-            codeSystem = 'SNOMEDCT';
+            return 'SNOMEDCT';
         }
+    }
 
-        this.reportingService.getWhitelist(this.activeQuery.name, codeSystem).subscribe(data => {
+    getWhitelist() {
+        this.reportingService.getWhitelist(this.activeQuery.name, this.getCodeSystemShortname()).subscribe(data => {
             this.activeWhitelist = data;
         });
     }
@@ -248,15 +248,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
             delete item.new;
         });
 
-        let codeSystem = '';
-
-        if (this.activeProject.metadata && this.activeProject.metadata.codeSystemShortName) {
-            codeSystem = this.activeProject.metadata.codeSystemShortName;
-        } else {
-            codeSystem = 'SNOMEDCT';
-        }
-
-        this.reportingService.postWhitelist(this.activeQuery.name, codeSystem, this.activeWhitelist).subscribe(
+        this.reportingService.postWhitelist(this.activeQuery.name, this.getCodeSystemShortname(), this.activeWhitelist).subscribe(
             () => {
                 this.saveResponse = 'Saved';
                 this.saved = (this.saved === 'start' ? 'end' : 'start');
