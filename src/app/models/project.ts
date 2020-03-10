@@ -6,8 +6,9 @@ export class Project {
         codeSystemShortName: string;
     };
 
-    constructor(key, title) {
+    constructor(key, title, branchPath) {
         this.key = key;
         this.title = title;
+        this.branchPath = branchPath;
     }
 }

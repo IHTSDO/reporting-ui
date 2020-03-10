@@ -36,7 +36,7 @@ export class SnomedNavbarComponent implements OnInit {
             const projects = data;
 
             if (!this.managedServiceUser) {
-                projects.unshift(new Project('MAIN', 'MAIN'));
+                projects.unshift(new Project('MAIN', 'MAIN', 'MAIN'));
             }
 
             this.projectService.setProjects(projects);
