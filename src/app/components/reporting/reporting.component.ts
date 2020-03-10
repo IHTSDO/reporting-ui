@@ -10,10 +10,10 @@ import { animate, keyframes, state, style, transition, trigger } from '@angular/
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
-import { EventService } from 'src/app/services/event.service';
-import { Event } from 'src/app/models/event';
 import { Project } from 'src/app/models/project';
 import { AuthenticationService } from '../../services/authentication.service';
+import { ProjectService } from '../../services/project.service';
+import { Concept } from '../../models/concept';
 
 @Component({
     selector: 'app-reporting',
@@ -44,23 +44,25 @@ export class ReportingComponent implements OnInit, OnDestroy {
 
     // whitelist
     @ViewChild('textareaTypeahead', { static: true }) inputElement: ElementRef;
+    whitelistChanged = false;
 
     // item arrays
     categories: Category[];
 
     // active Items
+    activeWhitelist: Concept[];
     activeCategory: Category;
     activeQuery: Query;
     activeReport: Report;
     activeReportSet: Report[];
-    activeProject: Project = null;
+    private activeProject: Project;
+    private activeProjectSubscription: Subscription;
+    private projects: Project[];
+    private projectSubscription: Subscription;
 
     // animations
     saved = 'start';
     saveResponse: string;
-
-    // subcription
-    subscribe: Subscription;
 
     // typeahead
     searchTerm: string;
@@ -76,8 +78,9 @@ export class ReportingComponent implements OnInit, OnDestroy {
                 private authoringService: AuthoringService,
                 private modalService: ModalService,
                 private terminologyService: TerminologyServerService,
-                private eventService: EventService,
-                private authenticationService: AuthenticationService) {
+                private projectService: ProjectService) {
+        this.projectSubscription = this.projectService.getProjects().subscribe(data => this.projects = data);
+        this.activeProjectSubscription = this.projectService.getActiveProject().subscribe(data => this.activeProject = data);
     }
 
     ngOnInit() {
@@ -85,16 +88,11 @@ export class ReportingComponent implements OnInit, OnDestroy {
             this.categories = data;
         });
 
-        this.subscribe = this.eventService.notifyObservable.subscribe((event: Event) => {
-            if (event.eventName === 'call_reporting_component') {
-                this.activeProject = <Project> event.value;
-            }
-        });
         setInterval(() => this.refresh(), 5000);
     }
 
     ngOnDestroy() {
-        this.subscribe.unsubscribe();
+        this.activeProjectSubscription.unsubscribe();
     }
 
     refresh(): void {
@@ -113,8 +111,8 @@ export class ReportingComponent implements OnInit, OnDestroy {
         if (this.activeQuery !== query) {
             this.activeQuery = query;
 
-            if (this.activeQuery.whiteList === undefined) {
-                this.activeQuery.whiteList = [];
+            if (this.activeWhitelist === undefined) {
+                this.activeWhitelist = [];
             }
         } else {
             this.activeQuery = null;
@@ -146,13 +144,12 @@ export class ReportingComponent implements OnInit, OnDestroy {
         if (this.activeQuery) {
             for (const param in this.activeQuery.parameters) {
                 if (param === 'Project') {
-                    const field = this.activeQuery.parameters[param];
-                    field.value = this.activeProject !== null ? this.activeProject.key : '';
+                    this.activeQuery.parameters[param].value = this.activeProject.key;
                 }
             }
         }
 
-        this.reportingService.postReport(this.activeQuery).subscribe(() => {
+        this.reportingService.postReport(this.activeQuery, this.getCodeSystemShortname()).subscribe(() => {
             this.refresh();
         });
     }
@@ -219,27 +216,43 @@ export class ReportingComponent implements OnInit, OnDestroy {
         }
     }
 
+    getCodeSystemShortname() {
+        if (this.activeProject.metadata && this.activeProject.metadata.codeSystemShortName) {
+            return this.activeProject.metadata.codeSystemShortName;
+        } else {
+            return 'SNOMEDCT';
+        }
+    }
+
+    getWhitelist() {
+        this.reportingService.getWhitelist(this.activeQuery.name, this.getCodeSystemShortname()).subscribe(data => {
+            this.activeWhitelist = data;
+        });
+    }
+
     addToWhitelist(concept) {
         this.searchTerm = '';
 
-        const exists = this.activeQuery.whiteList.find(item => {
+        const exists = this.activeWhitelist.find(item => {
             return item.sctId === concept.id;
         });
 
         if (exists === undefined) {
-            this.activeQuery.whiteList.push(UtilityService.convertFullConceptToShortConcept(concept));
+            this.activeWhitelist.unshift(UtilityService.convertFullConceptToShortConcept(concept));
+            this.whitelistChanged = true;
         }
     }
 
     saveWhitelist(): void {
-        this.activeQuery.whiteList.forEach(item => {
+        this.activeWhitelist.forEach(item => {
             delete item.new;
         });
 
-        this.reportingService.postWhitelist(this.activeQuery.name, this.activeQuery.whiteList).subscribe(
+        this.reportingService.postWhitelist(this.activeQuery.name, this.getCodeSystemShortname(), this.activeWhitelist).subscribe(
             () => {
                 this.saveResponse = 'Saved';
                 this.saved = (this.saved === 'start' ? 'end' : 'start');
+                this.whitelistChanged = false;
             },
             () => {
                 this.saveResponse = 'Error';
@@ -248,8 +261,9 @@ export class ReportingComponent implements OnInit, OnDestroy {
     }
 
     removeFromWhitelist(concept): void {
-        this.activeQuery.whiteList = this.activeQuery.whiteList.filter(item => {
+        this.activeWhitelist = this.activeWhitelist.filter(item => {
             return item.sctId !== concept.sctId;
         });
+        this.whitelistChanged = true;
     }
 }

@@ -13,9 +13,9 @@
                         <div class="w-100 description mx-0">
                             <p class="float-left py-3 px-3 mb-0">{{query.description}}</p>
                             <div class="float-right m-2">
-                                <div>{{activeQuery.whitelist | json}}</div>
-                                <button *ngIf="authenticationService.roles.includes('ROLE_int-sca-author')" class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
-                                (click)="openModal('whitelist-modal'); searchTerm = ''">
+                                <!--<div>{{activeQuery.whitelist | json}}</div>-->
+                                <button class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
+                                (click)="openModal('whitelist-modal'); searchTerm = ''; getWhitelist()">
                                     Whitelist
                                 </button>
                                 <ng-container *ngIf="parametersExistCheck()">
@@ -39,10 +39,9 @@
                                 <th>Status</th>
                                 <th>User</th>
                             </tr>
-                            <tr *ngFor="let report of activeReportSet">
+                            <tr *ngFor="let report of activeReportSet | projectMatcher:projects:activeProject">
                                 <td class="pl-3">{{convertDate(report.requestTime)}}UTC</td>
                                 <td>{{report.issuesReported ? report.issuesReported : '0'}}</td>
-                                <!--<td *ngFor="let parameter of query.parameters | keyvalue | displayOrder:parameter | hidden">{{parameterValue(report, parameter)}}</td>-->
                                 <td *ngFor="let parameter of query.parameters | keyvalue | displayOrder:parameter | hidden">{{report?.parameters ? report.parameters[parameter.key]?.value : ''}}</td>
                                 <ng-container [ngSwitch]="report.status">
                                     <td *ngSwitchCase="'Complete'" class="completed" (click)="viewReport(report)">{{report.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
@@ -99,13 +98,13 @@
             <input type="text" class="form-control" [(ngModel)]="searchTerm" [ngbTypeahead]="search" (ngModelChange)="retrieveConceptsById(searchTerm)"/>
             <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
         </div>
-        <div *ngIf="activeQuery?.whiteList.length > 0; else noItems" class="table-container border">
+        <div *ngIf="activeWhitelist?.length > 0; else noItems" class="table-container border">
             <table class="table table-borderless rounded m-0">
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
                 </tr>
-                <tr *ngFor="let concept of activeQuery?.whiteList" [class.new]="concept.new">
+                <tr *ngFor="let concept of activeWhitelist" [class.new]="concept.new">
                     <td>{{concept.sctId}}</td>
                     <td class="font-size-12">{{concept.fsn}}
                         <button class="delete-button" (click)="removeFromWhitelist(concept)"><i class="fas fa-minus"></i></button>
@@ -119,6 +118,6 @@
     </div>
     <div footer>
         <div [@slide]="saved" class="px-3 saved">{{saveResponse}}</div>
-        <button type="button" class="btn btn-primary" (click)="saveWhitelist()">Save Whitelist</button>
+        <button type="button" class="btn btn-primary" [disabled]="!whitelistChanged" (click)="saveWhitelist()">Save Whitelist</button>
     </div>
 </app-modal>

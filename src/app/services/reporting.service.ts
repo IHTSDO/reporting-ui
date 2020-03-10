@@ -24,8 +24,9 @@ export class ReportingService {
         return this.http.get<Report[]>('/schedule-manager/jobs/Report/' + name + '/runs');
     }
 
-    postReport(query): Observable<Query> {
+    postReport(query, codeSystemShortname): Observable<Query> {
         const params = {
+            codeSystemShortname: codeSystemShortname,
             jobName: query.name,
             parameters: query.parameters
         };
@@ -38,11 +39,12 @@ export class ReportingService {
     }
 
     // WHITELIST ENDPOINTS
-    getWhitelist(name): Observable<Concept[]> {
-        return this.http.get<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist');
+    getWhitelist(name, codeSystemShortName): Observable<Concept[]> {
+        return this.http.get<Concept[]>('/schedule-manager/jobs/Report/' + name + '/' + codeSystemShortName + '/whitelist');
     }
 
-    postWhitelist(name, params): Observable<Concept[]> {
-        return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/whitelist', JSON.stringify(params));
+    postWhitelist(name, codeSystemShortName, params): Observable<Concept[]> {
+        return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/' + codeSystemShortName + '/whitelist',
+            JSON.stringify(params));
     }
 }

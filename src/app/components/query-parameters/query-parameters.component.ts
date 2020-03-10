@@ -9,7 +9,8 @@ import { TerminologyServerService } from '../../services/terminologyServer.servi
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { typeaheadMinimumLength } from '../../../globals';
-import { EventService } from 'src/app/services/event.service';
+import { ProjectService } from '../../services/project.service';
+import { Project } from '../../models/project';
 
 @Component({
     selector: 'app-query-parameters',
@@ -24,6 +25,9 @@ export class QueryParametersComponent implements OnChanges {
 
     templates: Template[];
 
+    private activeProject: Project;
+    private activeProjectSubscription;
+
     // typeahead
     searchTerm: string;
     search = (text$: Observable<string>) =>
@@ -34,8 +38,11 @@ export class QueryParametersComponent implements OnChanges {
                 : this.terminologyService.getTypeahead(term))
         )
 
-    constructor(private templateService: TemplateService, private authoringService: AuthoringService,
-                private terminologyService: TerminologyServerService) {
+    constructor(private templateService: TemplateService,
+                private authoringService: AuthoringService,
+                private terminologyService: TerminologyServerService,
+                private projectService: ProjectService) {
+        this.activeProjectSubscription = this.projectService.getActiveProject().subscribe(data => this.activeProject = data);
     }
 
     ngOnChanges(): void {
@@ -49,9 +56,6 @@ export class QueryParametersComponent implements OnChanges {
                     const parameter = this.query.parameters[key];
                     if (parameter.type === 'BOOLEAN') {
                         parameter.value = JSON.parse(parameter.defaultValue);
-                    }
-                    if (parameter.type === 'PROJECT') {
-                        parameter.value = 'MAIN';
                     }
                     if (parameter.type === 'HIDDEN') {
                         parameter.value = this.authoringService.environmentEndpoint + 'template-service';

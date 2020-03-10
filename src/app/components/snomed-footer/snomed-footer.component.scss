@@ -4,14 +4,15 @@ footer.footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 40px; /* Set the fixed height of the footer here */
-    line-height: 40px; /* Vertically center the text there */
+    height: 4rem; /* Set the fixed height of the footer here */
+    line-height: 4rem; /* Vertically center the text there */
     overflow-y: hidden;
     white-space: nowrap;
 
     a {
         color: $alto-white;
         font-weight: 300;
+        font-size: 1.2rem;
 
         &:hover {
             color: $pacific-blue;
@@ -22,6 +23,6 @@ footer.footer {
     button {
         font-weight: 300;
         letter-spacing: inherit;
-        height: 30px;
+        height: 3rem;
     }
 }

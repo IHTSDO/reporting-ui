@@ -8,9 +8,9 @@ app-modal {
     div.modal-large {
         max-width: 100rem;
     }
-    
+
     div.modal-dialog {
-        z-index: 1000;        
+        z-index: 1000;
 
         div.modal-content {
             div.modal-header {
@@ -68,10 +68,6 @@ app-modal {
                     cursor: text;
                     height: 8rem;
                     resize: none;
-                }
-
-                div.typeahead-textarea {
-                    top: 8rem;
                 }
 
                 div.note {

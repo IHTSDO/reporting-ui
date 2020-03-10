@@ -3,16 +3,25 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthoringService } from './authoring.service';
 import { map } from 'rxjs/operators';
+import { ProjectService } from './project.service';
+import { Project } from '../models/project';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TerminologyServerService {
 
-    constructor(private http: HttpClient, private authoringService: AuthoringService) {
+    activeProject: Project;
+    private activeProjectSubscription;
+
+    constructor(private http: HttpClient,
+                private authoringService: AuthoringService,
+                private projectService: ProjectService) {
+        this.activeProjectSubscription = this.projectService.getActiveProject().subscribe(data => this.activeProject = data);
     }
 
     getTypeahead(term) {
+
         const params = {
             termFilter: term,
             limit: 20,
@@ -21,8 +30,8 @@ export class TerminologyServerService {
             termActive: true
         };
         return this.http
-            .post(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
-            'MAIN/concepts/search', params)
+            .post(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint
+                + this.activeProject.branchPath + '/concepts/search', params)
             .pipe(map(responseData => {
                 const typeaheads = [];
 
@@ -48,7 +57,7 @@ export class TerminologyServerService {
             delete params.termActive;
         }
 
-        return this.http.post<object>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
-            'MAIN/concepts/search', params);
+        return this.http.post<object>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint
+            + this.activeProject.branchPath + '/concepts/search', params);
     }
 }

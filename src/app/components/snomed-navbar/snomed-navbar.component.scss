@@ -1,8 +1,8 @@
 @import '~src/variables.scss';
 
 nav {
-    a {
-        height: 40px;
+    a.logo {
+        height: 4rem;
         font-size: 1.6rem;
 
         &:link {
@@ -13,80 +13,139 @@ nav {
             color: $alto-white;
             font-weight: 300;
             letter-spacing: 1.5px;
-            line-height: 40px;
+            line-height: 4rem;
             vertical-align: top;
         }
 
         img.logo {
             vertical-align: initial;
-            height: 40px;
+            height: 4rem;
         }
     }
 
     div.banner {
         position: absolute;
-        top: 10px;
-        left: -30px;
+        top: 1rem;
+        left: -3rem;
         transform: rotate(-45deg);
         line-height: 1rem;
         opacity: 0.8;
         color: $white;
+        font-size: 1.4rem;
     }
 
     div.local::before {
         content: 'LOC';
-        padding: 0 30px;
+        padding: 0 3rem;
         background-color: $emperor-grey;
         border: 1px solid $yellow;
     }
 
     div.dev::before {
         content: 'DEV';
-        padding: 0 30px;
+        padding: 0 3rem;
         background-color: $crimson-red;
         border: 1px solid $yellow;
     }
 
     div.uat::before {
         content: 'UAT';
-        padding: 0 30px;
+        padding: 0 3rem;
         background-color: $curious-blue;
         border: 1px solid $yellow;
     }
 
     div.training::before {
         content: 'TRN';
-        padding: 0 30px;
+        padding: 0 3rem;
         background-color: $forest-green;
         border: 1px solid $yellow;
     }
 
-    button {
-        border: none;
+    ul.dropdown-nav {
+        list-style-type: none;
+        max-height: 3rem;
+
+
+        li {
+            display: inline-block;
+
+            a {
+                font-size: 1.4rem;
+                height: 3rem;
+                color: $white;
+                background-color: $dark;
+                line-height: 2rem;
+                font-weight: 300;
+                letter-spacing: 0.2rem;
+
+                &.editable {
+                    color: $regent-grey;
+                    cursor: not-allowed;
+                }
+
+                &.editing-mode {
+                    max-height: 3rem;
+                    font-size: 1.6rem;
+                    color: $apple-green;
+                    background-color: transparent;
+                    font-weight: 300;
+                    letter-spacing: 0.2rem;
+                }
+            }
+
+            div.dropdown-menu {
+                background-color: $dark;
+                z-index: auto;
+
+                &.show {
+                    display: block;
+                }
+
+                a.dropdown-item {
+                    font-weight: 300;
+                    z-index: auto;
+
+                    &:hover {
+                        background-color: $darkish;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
     }
 
-    label {
-        color: $alto-white;
-    }
-    select {
-        font-size: 1.4rem;
-        font-weight: 300;        
-        display: inline-block;
-        width: auto;
-    }
-    select.min-w-150 {
-        min-width: 150px;
-    }
-}
+    div.user {
+        height: 3rem;
+        font-size: 1.2rem;
 
-div#navbarToggleExternalContent {
-    a {
-        color: $alto-white;
-        font-weight: 300;
+        span {
+            line-height: 3rem;
+            color: $alto-white;
+            font-weight: 300;
+            letter-spacing: 0.1rem;
+        }
 
-        &:hover {
-            color: $pacific-blue;
-            text-decoration: none;
+        img {
+            height: 3rem;
+            width: 3rem;
+        }
+    }
+
+    div.logout {
+        cursor: pointer;
+        height: 3rem;
+
+        span {
+            font-size: 1.2rem;
+            line-height: 3rem;
+            color: $white;
+            font-weight: 300;
+            letter-spacing: 0.1rem;
+
+            &:hover {
+                color: $snomed-blue;
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ import { UIConfiguration } from '../models/uiConfiguration';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Versions } from '../models/versions';
+import { Project } from '../models/project';
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +17,8 @@ export class AuthoringService {
         this.environmentEndpoint = window.location.origin + '/';
     }
 
-    getProjects(): Observable<object[]> {
-        return this.http.get<object[]>('/authoring-services/projects?lightweight=true');
+    getProjects(): Observable<Project[]> {
+        return this.http.get<Project[]>('/authoring-services/projects?lightweight=true');
     }
 
     getUIConfiguration(): Observable<UIConfiguration> {
