@@ -141,14 +141,6 @@ export class ReportingComponent implements OnInit, OnDestroy {
     }
 
     submitReport(): void {
-        if (this.activeQuery) {
-            for (const param in this.activeQuery.parameters) {
-                if (param === 'Project') {
-                    this.activeQuery.parameters[param].value = this.activeProject.key;
-                }
-            }
-        }
-
         this.reportingService.postReport(this.activeQuery, this.getCodeSystemShortname()).subscribe(() => {
             this.refresh();
         });
@@ -167,7 +159,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
     parametersExistCheck(): boolean {
         for (const param in this.activeQuery.parameters) {
             if (this.activeQuery.parameters.hasOwnProperty(param)) {
-                if (this.activeQuery.parameters[param].type !== 'HIDDEN' && this.activeQuery.parameters[param].type !== 'PROJECT') {
+                if (this.activeQuery.parameters[param].type !== 'HIDDEN') {
                     return true;
                 } else {
                     this.activeQuery.parameters[param].value = this.authoringService.environmentEndpoint + 'template-service';
