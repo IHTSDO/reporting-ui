@@ -3,11 +3,6 @@
 div#reporting {
     margin-left: 192px;
 
-    h3.report-title {
-        font-weight: 300;
-        line-height: 1.6rem;
-    }
-
     div.accordion {
         border: 1px $alto-white solid;
         border-bottom: none;
@@ -18,10 +13,6 @@ div#reporting {
                 border-bottom: 1px $alto-white solid;
                 background-color: $gallery-white;
                 overflow: hidden;
-
-                h4 {
-                    font-weight: 300;
-                }
             }
 
             div.content {
@@ -30,10 +21,6 @@ div#reporting {
 
                     p {
                         max-width: 80%;
-                    }
-
-                    button {
-                        font-weight: 300;
                     }
                 }
 

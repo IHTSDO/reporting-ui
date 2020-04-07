@@ -11,8 +11,6 @@ footer.footer {
 
     a {
         color: $alto-white;
-        font-weight: 300;
-        font-size: 1.2rem;
 
         &:hover {
             color: $pacific-blue;
@@ -21,7 +19,6 @@ footer.footer {
     }
 
     button {
-        font-weight: 300;
         letter-spacing: inherit;
         height: 3rem;
     }
