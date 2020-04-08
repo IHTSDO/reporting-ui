@@ -3,7 +3,7 @@
         <ng-container [ngSwitch]="parameter.value.type">
             <div *ngSwitchCase="'CONCEPT'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <input class="w-100 rounded input-border px-1" type="text" class="form-control" [(ngModel)]="parameter?.value.value" [ngbTypeahead]="search" [required]="parameter.value.mandatory"/>
+                <input class="form-control" type="text" [(ngModel)]="parameter?.value.value" [ngbTypeahead]="search" [required]="parameter.value.mandatory"/>
             </div>
             <div *ngSwitchCase="'BOOLEAN'">
                 <label class="m-0" for="{{parameter.key}}">{{parameter.key}}</label>
@@ -13,7 +13,7 @@
             </div>
             <div *ngSwitchCase="'STRING'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <input id="{{parameter.key}}" name="{{parameter.key}}" class="w-100 rounded input-border px-1" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory">
+                <input id="{{parameter.key}}" name="{{parameter.key}}" class="form-control" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory">
             </div>
             <div *ngSwitchCase="'CONCEPT_LIST'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
@@ -32,11 +32,11 @@
             </div>
             <div *ngSwitchCase="'TEMPLATE'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <textarea class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory"></textarea>
+                <textarea class="form-control" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory"></textarea>
             </div>
             <div *ngSwitchCase="'ECL'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <textarea class="w-100 rounded input-border px-1" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory"></textarea>
+                <textarea class="form-control" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory"></textarea>
             </div>
             <div *ngSwitchCase="'HIDDEN'"></div>
         </ng-container>
