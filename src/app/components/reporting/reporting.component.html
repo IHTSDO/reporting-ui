@@ -11,7 +11,7 @@
                     </div>
                     <div class="content" *ngIf="activeQuery === query">
                         <div class="w-100 description mx-0">
-                            <p class="float-left py-3 px-3 mb-0">{{query.description}}</p>
+                            <h4 class="float-left py-3 px-3 mb-0">{{query.description}}</h4>
                             <div class="float-right m-2">
                                 <button class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
                                 (click)="openModal('whitelist-modal'); searchTerm = ''; getWhitelist()">
