@@ -34,13 +34,13 @@ import { OrderByPipe } from './pipes/order-by.pipe';
 import { DisplayOrderPipe } from './pipes/display-order.pipe';
 import { HiddenPipe } from './pipes/hidden.pipe';
 import { TagsPipe } from './pipes/tags.pipe';
-import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
-import { MainToTopPipe } from './pipes/main-to-top.pipe';
 
 // INTERCEPTORS
 import { HeaderInterceptor } from './interceptors/header.interceptor';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
-
+import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
+import { MainToTopPipe } from './pipes/main-to-top.pipe';
+import { ProjectMatcherPipe } from './pipes/project-matcher.pipe';
 
 @NgModule({
     declarations: [
@@ -57,7 +57,8 @@ import { AuthenticationInterceptor } from './interceptors/authentication.interce
         QueryParametersComponent,
         TagsPipe,
         AlphabeticalPipe,
-        MainToTopPipe
+        MainToTopPipe,
+        ProjectMatcherPipe
     ],
     imports: [
         BrowserModule,

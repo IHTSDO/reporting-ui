@@ -38,7 +38,7 @@
                                 <th>Status</th>
                                 <th>User</th>
                             </tr>
-                            <tr *ngFor="let report of activeReportSet">
+                            <tr *ngFor="let report of activeReportSet | projectMatcher:projects:activeProject">
                                 <td class="pl-3">{{convertDate(report.requestTime)}}UTC</td>
                                 <td>{{report.issuesReported ? report.issuesReported : '0'}}</td>
                                 <td *ngFor="let parameter of query.parameters | keyvalue | displayOrder:parameter | hidden">{{report?.parameters ? report.parameters[parameter.key]?.value : ''}}</td>
