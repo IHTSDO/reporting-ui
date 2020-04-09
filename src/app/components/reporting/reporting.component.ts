@@ -141,15 +141,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
     }
 
     submitReport(): void {
-        if (this.activeQuery) {
-            for (const param in this.activeQuery.parameters) {
-                if (param === 'Project') {
-                    this.activeQuery.parameters[param].value = this.activeProject.key;
-                }
-            }
-        }
-
-        this.reportingService.postReport(this.activeQuery, this.getCodeSystemShortname()).subscribe(() => {
+        this.reportingService.postReport(this.activeQuery, this.getCodeSystemShortname(), this.activeProject.key).subscribe(() => {
             this.refresh();
         });
     }

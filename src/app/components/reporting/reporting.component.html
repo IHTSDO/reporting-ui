@@ -34,6 +34,7 @@
                             <tr>
                                 <th class="pl-3">Date</th>
                                 <th>Issues</th>
+                                <th>Project</th>
                                 <th *ngFor="let parameter of query.parameters | keyvalue | displayOrder:parameter | hidden">{{parameter.key}}</th>
                                 <th>Status</th>
                                 <th>User</th>
@@ -41,6 +42,7 @@
                             <tr *ngFor="let report of activeReportSet | projectMatcher:projects:activeProject">
                                 <td class="pl-3">{{convertDate(report.requestTime)}}UTC</td>
                                 <td>{{report.issuesReported ? report.issuesReported : '0'}}</td>
+                                <td>{{report.project}}</td>
                                 <td *ngFor="let parameter of query.parameters | keyvalue | displayOrder:parameter | hidden">{{report?.parameters ? report.parameters[parameter.key]?.value : ''}}</td>
                                 <ng-container [ngSwitch]="report.status">
                                     <td *ngSwitchCase="'Complete'" class="completed" (click)="viewReport(report)">{{report.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
