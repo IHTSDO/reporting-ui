@@ -159,7 +159,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
     parametersExistCheck(): boolean {
         for (const param in this.activeQuery.parameters) {
             if (this.activeQuery.parameters.hasOwnProperty(param)) {
-                if (this.activeQuery.parameters[param].type !== 'HIDDEN' && this.activeQuery.parameters[param].type !== 'PROJECT') {
+                if (this.activeQuery.parameters[param].type !== 'HIDDEN') {
                     return true;
                 } else {
                     this.activeQuery.parameters[param].value = this.authoringService.environmentEndpoint + 'template-service';
