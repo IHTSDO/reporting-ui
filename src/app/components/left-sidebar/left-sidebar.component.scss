@@ -7,11 +7,11 @@ nav#sidebar {
     background: $alto-white;
 
     h3 {
-        font-weight: 300;
         border-bottom: 1px $ghost-grey solid;
     }
 
     input.searchbar {
+        font-size: 1.4rem;
         background-color: $gallery-white;
         width: 100%;
         border-bottom: 1px $ghost-grey solid;
@@ -26,6 +26,7 @@ nav#sidebar {
     }
 
     div.category {
+        font-size: 1.4rem;
         width: 100%;
         color: $scorpion-grey;
         cursor: pointer;

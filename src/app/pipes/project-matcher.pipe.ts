@@ -12,8 +12,8 @@ export class ProjectMatcherPipe implements PipeTransform {
 
         items = items.filter( item => {
             return projects.find(project => {
-                if (item.parameters.Project) {
-                    return item.parameters.Project.value === project.key;
+                if (item.project) {
+                    return item.project === project.key;
                 }
             });
         });
