@@ -14,6 +14,7 @@ import { Project } from 'src/app/models/project';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ProjectService } from '../../services/project.service';
 import { Concept } from '../../models/concept';
+import { User } from '../../models/user';
 
 @Component({
     selector: 'app-reporting',
@@ -59,6 +60,8 @@ export class ReportingComponent implements OnInit, OnDestroy {
     private activeProjectSubscription: Subscription;
     private projects: Project[];
     private projectSubscription: Subscription;
+    private user: User;
+    private userSubscription: Subscription;
 
     // animations
     saved = 'start';
@@ -78,7 +81,9 @@ export class ReportingComponent implements OnInit, OnDestroy {
                 private authoringService: AuthoringService,
                 private modalService: ModalService,
                 private terminologyService: TerminologyServerService,
-                private projectService: ProjectService) {
+                private projectService: ProjectService,
+                private authenticationService: AuthenticationService) {
+        this.userSubscription = this.authenticationService.getLoggedInUser().subscribe(data => this.user = data);
         this.projectSubscription = this.projectService.getProjects().subscribe(data => this.projects = data);
         this.activeProjectSubscription = this.projectService.getActiveProject().subscribe(data => this.activeProject = data);
     }

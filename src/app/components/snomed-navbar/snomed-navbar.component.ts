@@ -35,9 +35,7 @@ export class SnomedNavbarComponent implements OnInit {
         this.authoringService.getProjects().subscribe(data => {
             const projects = data;
 
-            if (!this.managedServiceUser) {
-                projects.unshift(new Project('MAIN', 'MAIN', 'MAIN'));
-            }
+            projects.unshift(new Project('MAIN', 'MAIN', 'MAIN'));
 
             this.projectService.setProjects(projects);
             this.projectService.setActiveProject(projects[0]);
