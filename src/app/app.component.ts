@@ -62,12 +62,17 @@ export class AppComponent implements OnInit {
     getLoggedInUser() {
         this.authenticationService.getLoggedInUser().subscribe(
             user => {
+                console.log('USER: ', user);
+                debugger;
                 if (!user) {
                     window.location.replace(this.authoringService.uiConfiguration.endpoints.imsEndpoint
                         + 'login?serviceReferer=' + window.location.href);
                 } else {
                     this.authenticationService.roles = user.roles;
                     this.managedServiceUser = user.roles.includes('ROLE_ms-users');
+                    const potato = ['potato1', 'potato2'];
+                    potato.includes('potato1');
+
                 }
             },
             error => {

@@ -55,7 +55,7 @@
                                     <td *ngSwitchDefault>{{report.status}}</td>
                                 </ng-container>
                                 <td>{{report.user}}
-                                    <button *ngIf="report.user === user.login" class="delete-button" (click)="openModal('delete-modal'); activeReport = report" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-minus"></i></button>
+                                    <button class="delete-button" (click)="openModal('delete-modal'); activeReport = report" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-minus"></i></button>
                                 </td>
                             </tr>
                         </table>
