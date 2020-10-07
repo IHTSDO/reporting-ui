@@ -62,8 +62,6 @@ export class AppComponent implements OnInit {
     getLoggedInUser() {
         this.authenticationService.getLoggedInUser().subscribe(
             user => {
-                console.log('USER: ', user);
-                debugger;
                 if (!user) {
                     window.location.replace(this.authoringService.uiConfiguration.endpoints.imsEndpoint
                         + 'login?serviceReferer=' + window.location.href);
