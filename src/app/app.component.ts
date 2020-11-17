@@ -68,6 +68,9 @@ export class AppComponent implements OnInit {
                 } else {
                     this.authenticationService.roles = user.roles;
                     this.managedServiceUser = user.roles.includes('ROLE_ms-users');
+                    const potato = ['potato1', 'potato2'];
+                    potato.includes('potato1');
+
                 }
             },
             error => {
