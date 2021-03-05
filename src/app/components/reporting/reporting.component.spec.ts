@@ -15,6 +15,7 @@ import { ModalComponent } from '../modal/modal.component';
 import { QueryParametersComponent } from '../query-parameters/query-parameters.component';
 
 import { ReportingComponent } from './reporting.component';
+import {ProjectMatcherPipe} from '../../pipes/project-matcher.pipe';
 
 describe('ReportingComponent', () => {
     let component: ReportingComponent;
@@ -31,7 +32,8 @@ describe('ReportingComponent', () => {
                 HiddenPipe,
                 DisplayOrderPipe,
                 ModalComponent,
-                QueryParametersComponent
+                QueryParametersComponent,
+                ProjectMatcherPipe
             ],
             imports: [
                 HttpClientModule,

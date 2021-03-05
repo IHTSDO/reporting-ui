@@ -21,6 +21,8 @@ import 'jquery';
 import { AppComponent } from './app.component';
 import { MainToTopPipe } from './pipes/main-to-top.pipe';
 import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
+import {ProjectMatcherPipe} from './pipes/project-matcher.pipe';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
     beforeEach(() => {
@@ -39,11 +41,12 @@ describe('AppComponent', () => {
                 HiddenPipe,
                 DisplayOrderPipe,
                 MainToTopPipe,
-                AlphabeticalPipe
+                AlphabeticalPipe,
+                ProjectMatcherPipe
             ],
             imports: [
                 FormsModule,
-                HttpClientModule,
+                HttpClientTestingModule,
                 MatTooltipModule,
                 NgbTypeaheadModule,
                 MatCheckboxModule,

@@ -74,6 +74,10 @@ div#reporting {
                             }
                         }
 
+                        td.parameter {
+                            overflow-wrap: anywhere;
+                        }
+
                         td:first-child {
                             border-left: none;
                         }
