@@ -7,7 +7,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CategoryPipe } from '../../pipes/category.pipe';
 import { OrderByPipe } from '../../pipes/order-by.pipe';
-import { TagsPipe } from '../../pipes/tags.pipe';
+import { TagsPipe } from '../../pipes/tags/tags.pipe';
 import { HiddenPipe } from '../../pipes/hidden.pipe';
 import { DisplayOrderPipe } from '../../pipes/display-order.pipe';
 import { LeftSidebarComponent } from '../left-sidebar/left-sidebar.component';

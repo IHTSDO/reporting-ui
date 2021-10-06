@@ -1,18 +1,17 @@
 import { Component, ElementRef, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { ReportingService } from '../../services/reporting.service';
+import { ReportingService } from '../../services/reporting/reporting.service';
 import { Category } from '../../models/category';
 import { Query } from '../../models/query';
 import { Report } from '../../models/report';
-import { AuthoringService } from '../../services/authoring.service';
-import { ModalService } from '../../services/modal.service';
-import { UtilityService } from '../../services/utility.service';
+import { AuthoringService } from '../../services/authoring/authoring.service';
+import { ModalService } from '../../services/modal/modal.service';
+import { UtilityService } from '../../services/utility/utility.service';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
-import { TerminologyServerService } from '../../services/terminologyServer.service';
+import { TerminologyServerService } from '../../services/terminologyServer/terminologyServer.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project';
-import { AuthenticationService } from '../../services/authentication.service';
-import { ProjectService } from '../../services/project.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { Concept } from '../../models/concept';
 import { User } from '../../models/user';
 
@@ -56,9 +55,9 @@ export class ReportingComponent implements OnInit, OnDestroy {
     activeQuery: Query;
     activeReport: Report;
     activeReportSet: Report[];
-    private activeProject: Project;
+    private activeProject: any;
     private activeProjectSubscription: Subscription;
-    private projects: Project[];
+    private projects: any;
     private projectSubscription: Subscription;
     private user: User;
     private userSubscription: Subscription;
@@ -81,186 +80,191 @@ export class ReportingComponent implements OnInit, OnDestroy {
                 private authoringService: AuthoringService,
                 private modalService: ModalService,
                 private terminologyService: TerminologyServerService,
-                private projectService: ProjectService,
                 private authenticationService: AuthenticationService) {
-        this.userSubscription = this.authenticationService.getLoggedInUser().subscribe(data => this.user = data);
-        this.projectSubscription = this.projectService.getProjects().subscribe(data => this.projects = data);
-        this.activeProjectSubscription = this.projectService.getActiveProject().subscribe(data => this.activeProject = data);
+        this.projectSubscription = this.authoringService.getProjects().subscribe(data => this.projects = data);
+        this.activeProjectSubscription = this.authoringService.getActiveProject().subscribe(data => this.activeProject = data);
     }
 
     ngOnInit() {
-        this.reportingService.getCategories().subscribe(data => {
-            this.categories = data;
-        });
 
-        setInterval(() => this.refresh(), 5000);
     }
 
     ngOnDestroy() {
-        this.activeProjectSubscription.unsubscribe();
     }
 
-    refresh(): void {
-        if (this.activeQuery) {
-            this.reportingService.getReportRuns(this.activeQuery.name).subscribe(data => {
-                if (JSON.stringify(data) !== JSON.stringify(this.activeReportSet)) {
-                    this.activeReportSet = data;
-                }
-            });
-        } else {
-            this.activeReportSet = null;
-        }
-    }
-
-    switchActiveQuery(query): void {
-        if (this.activeQuery !== query) {
-            this.activeQuery = query;
-
-            if (this.activeWhitelist === undefined) {
-                this.activeWhitelist = [];
-            }
-        } else {
-            this.activeQuery = null;
-        }
-
-        this.switchActiveReportSet();
-    }
-
-    switchActiveReportSet(): void {
-        this.activeReportSet = null;
-        this.refresh();
-    }
-
-    convertDate(date) {
-        return date.replace(/T|Z/g, ' ');
-    }
-
-    viewReport(report): void {
-        window.open(report.resultUrl);
-    }
-
-    deleteReport(): void {
-        this.reportingService.deleteReport(this.activeReport).subscribe(() => {
-            this.refresh();
-        });
-    }
-
-    submitReport(): void {
-        this.reportingService.postReport(this.activeQuery, this.getCodeSystemShortname(), this.activeProject.key).subscribe(() => {
-            this.refresh();
-        });
-    }
-
-    // Modal Functions
-    openModal(id: string): void {
-        this.modalService.open(id);
-    }
-
-    closeModal(id: string): void {
-        this.modalService.close(id);
-    }
-
-    // Query Modal Functions
-    parametersExistCheck(): boolean {
-        for (const param in this.activeQuery.parameters) {
-            if (this.activeQuery.parameters.hasOwnProperty(param)) {
-                if (this.activeQuery.parameters[param].type !== 'HIDDEN') {
-                    return true;
-                } else {
-                    this.activeQuery.parameters[param].value = this.authoringService.environmentEndpoint + 'template-service';
-                }
-            }
-        }
-        return false;
-    }
-
-    missingFieldsCheck(): void {
-        let missingFields = false;
-        for (const param in this.activeQuery.parameters) {
-            if (this.activeQuery.parameters.hasOwnProperty(param)) {
-                const field = this.activeQuery.parameters[param];
-                if (field.mandatory && (field.type !== 'BOOLEAN')) {
-                    if (field.value === '' || field.value === null || field.value === undefined) {
-                        missingFields = true;
-                    }
-                }
-            }
-        }
-
-        if (missingFields) {
-            this.saveResponse = 'Missing Fields';
-            this.saved = (this.saved === 'start' ? 'end' : 'start');
-        } else {
-            this.submitReport();
-            this.closeModal('query-modal');
-        }
-    }
-
-    // Whitelist Modal Functions
-    retrieveConceptsById(input): void {
-        let idList = [];
-        if (input) {
-            idList = input.match(/[0-9]{4,16}/g);
-        }
-
-        if (idList && idList.length > 0) {
-            this.terminologyService.getConceptsById(idList).subscribe(
-                data => {
-                    data['items'].forEach(concept => {
-                        this.addToWhitelist(concept);
-                    });
-                });
-        }
-    }
-
-    getCodeSystemShortname() {
-        if (this.activeProject.metadata && this.activeProject.metadata.codeSystemShortName) {
-            return this.activeProject.metadata.codeSystemShortName;
-        } else {
-            return 'SNOMEDCT';
-        }
-    }
-
-    getWhitelist() {
-        this.reportingService.getWhitelist(this.activeQuery.name, this.getCodeSystemShortname()).subscribe(data => {
-            this.activeWhitelist = data;
-        });
-    }
-
-    addToWhitelist(concept) {
-        this.searchTerm = '';
-
-        const exists = this.activeWhitelist.find(item => {
-            return item.sctId === concept.id;
-        });
-
-        if (exists === undefined) {
-            this.activeWhitelist.unshift(UtilityService.convertFullConceptToShortConcept(concept));
-            this.whitelistChanged = true;
-        }
-    }
-
-    saveWhitelist(): void {
-        this.activeWhitelist.forEach(item => {
-            delete item.new;
-        });
-
-        this.reportingService.postWhitelist(this.activeQuery.name, this.getCodeSystemShortname(), this.activeWhitelist).subscribe(
-            () => {
-                this.saveResponse = 'Saved';
-                this.saved = (this.saved === 'start' ? 'end' : 'start');
-                this.whitelistChanged = false;
-            },
-            () => {
-                this.saveResponse = 'Error';
-                this.saved = (this.saved === 'start' ? 'end' : 'start');
-            });
-    }
-
-    removeFromWhitelist(concept): void {
-        this.activeWhitelist = this.activeWhitelist.filter(item => {
-            return item.sctId !== concept.sctId;
-        });
-        this.whitelistChanged = true;
-    }
+    // ngOnInit() {
+    //     this.reportingService.getCategories().subscribe(data => {
+    //         this.categories = data;
+    //     });
+    //
+    //     setInterval(() => this.refresh(), 5000);
+    // }
+    //
+    // ngOnDestroy() {
+    //     this.activeProjectSubscription.unsubscribe();
+    // }
+    //
+    // refresh(): void {
+    //     if (this.activeQuery) {
+    //         this.reportingService.getReportRuns(this.activeQuery.name).subscribe(data => {
+    //             if (JSON.stringify(data) !== JSON.stringify(this.activeReportSet)) {
+    //                 this.activeReportSet = data;
+    //             }
+    //         });
+    //     } else {
+    //         this.activeReportSet = null;
+    //     }
+    // }
+    //
+    // switchActiveQuery(query): void {
+    //     if (this.activeQuery !== query) {
+    //         this.activeQuery = query;
+    //
+    //         if (this.activeWhitelist === undefined) {
+    //             this.activeWhitelist = [];
+    //         }
+    //     } else {
+    //         this.activeQuery = null;
+    //     }
+    //
+    //     this.switchActiveReportSet();
+    // }
+    //
+    // switchActiveReportSet(): void {
+    //     this.activeReportSet = null;
+    //     this.refresh();
+    // }
+    //
+    // convertDate(date) {
+    //     return date.replace(/T|Z/g, ' ');
+    // }
+    //
+    // viewReport(report): void {
+    //     window.open(report.resultUrl);
+    // }
+    //
+    // deleteReport(): void {
+    //     this.reportingService.deleteReport(this.activeReport).subscribe(() => {
+    //         this.refresh();
+    //     });
+    // }
+    //
+    // submitReport(): void {
+    //     this.reportingService.postReport(this.activeQuery, this.getCodeSystemShortname(), this.activeProject.key).subscribe(() => {
+    //         this.refresh();
+    //     });
+    // }
+    //
+    // // Modal Functions
+    // openModal(id: string): void {
+    //     this.modalService.open(id);
+    // }
+    //
+    // closeModal(id: string): void {
+    //     this.modalService.close(id);
+    // }
+    //
+    // // Query Modal Functions
+    // parametersExistCheck(): boolean {
+    //     for (const param in this.activeQuery.parameters) {
+    //         if (this.activeQuery.parameters.hasOwnProperty(param)) {
+    //             if (this.activeQuery.parameters[param].type !== 'HIDDEN') {
+    //                 return true;
+    //             } else {
+    //                 this.activeQuery.parameters[param].value = this.authoringService.environmentEndpoint + 'template-service';
+    //             }
+    //         }
+    //     }
+    //     return false;
+    // }
+    //
+    // missingFieldsCheck(): void {
+    //     let missingFields = false;
+    //     for (const param in this.activeQuery.parameters) {
+    //         if (this.activeQuery.parameters.hasOwnProperty(param)) {
+    //             const field = this.activeQuery.parameters[param];
+    //             if (field.mandatory && (field.type !== 'BOOLEAN')) {
+    //                 if (field.value === '' || field.value === null || field.value === undefined) {
+    //                     missingFields = true;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //
+    //     if (missingFields) {
+    //         this.saveResponse = 'Missing Fields';
+    //         this.saved = (this.saved === 'start' ? 'end' : 'start');
+    //     } else {
+    //         this.submitReport();
+    //         this.closeModal('query-modal');
+    //     }
+    // }
+    //
+    // // Whitelist Modal Functions
+    // retrieveConceptsById(input): void {
+    //     let idList = [];
+    //     if (input) {
+    //         idList = input.match(/[0-9]{4,16}/g);
+    //     }
+    //
+    //     if (idList && idList.length > 0) {
+    //         this.terminologyService.getConceptsById(idList).subscribe(
+    //             data => {
+    //                 data['items'].forEach(concept => {
+    //                     this.addToWhitelist(concept);
+    //                 });
+    //             });
+    //     }
+    // }
+    //
+    // getCodeSystemShortname() {
+    //     if (this.activeProject.metadata && this.activeProject.metadata.codeSystemShortName) {
+    //         return this.activeProject.metadata.codeSystemShortName;
+    //     } else {
+    //         return 'SNOMEDCT';
+    //     }
+    // }
+    //
+    // getWhitelist() {
+    //     this.reportingService.getWhitelist(this.activeQuery.name, this.getCodeSystemShortname()).subscribe(data => {
+    //         this.activeWhitelist = data;
+    //     });
+    // }
+    //
+    // addToWhitelist(concept) {
+    //     this.searchTerm = '';
+    //
+    //     const exists = this.activeWhitelist.find(item => {
+    //         return item.sctId === concept.id;
+    //     });
+    //
+    //     if (exists === undefined) {
+    //         this.activeWhitelist.unshift(UtilityService.convertFullConceptToShortConcept(concept));
+    //         this.whitelistChanged = true;
+    //     }
+    // }
+    //
+    // saveWhitelist(): void {
+    //     this.activeWhitelist.forEach(item => {
+    //         delete item.new;
+    //     });
+    //
+    //     this.reportingService.postWhitelist(this.activeQuery.name, this.getCodeSystemShortname(), this.activeWhitelist).subscribe(
+    //         () => {
+    //             this.saveResponse = 'Saved';
+    //             this.saved = (this.saved === 'start' ? 'end' : 'start');
+    //             this.whitelistChanged = false;
+    //         },
+    //         () => {
+    //             this.saveResponse = 'Error';
+    //             this.saved = (this.saved === 'start' ? 'end' : 'start');
+    //         });
+    // }
+    //
+    // removeFromWhitelist(concept): void {
+    //     this.activeWhitelist = this.activeWhitelist.filter(item => {
+    //         return item.sctId !== concept.sctId;
+    //     });
+    //     this.whitelistChanged = true;
+    // }
 }

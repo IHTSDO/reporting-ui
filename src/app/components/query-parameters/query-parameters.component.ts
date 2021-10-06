@@ -1,16 +1,14 @@
 import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { Query } from '../../models/query';
 import { Template } from '../../models/template';
-import { TemplateService } from '../../services/template.service';
-import { AuthoringService } from '../../services/authoring.service';
-import { UtilityService } from '../../services/utility.service';
+import { TemplateService } from '../../services/template/template.service';
+import { AuthoringService } from '../../services/authoring/authoring.service';
+import { UtilityService } from '../../services/utility/utility.service';
 import { Concept } from '../../models/concept';
-import { TerminologyServerService } from '../../services/terminologyServer.service';
+import { TerminologyServerService } from '../../services/terminologyServer/terminologyServer.service';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { typeaheadMinimumLength } from '../../../globals';
-import { ProjectService } from '../../services/project.service';
-import { Project } from '../../models/project';
 
 @Component({
     selector: 'app-query-parameters',
@@ -25,7 +23,7 @@ export class QueryParametersComponent implements OnChanges {
 
     templates: Template[];
 
-    private activeProject: Project;
+    private activeProject: any;
     private activeProjectSubscription;
 
     // typeahead
@@ -40,9 +38,8 @@ export class QueryParametersComponent implements OnChanges {
 
     constructor(private templateService: TemplateService,
                 private authoringService: AuthoringService,
-                private terminologyService: TerminologyServerService,
-                private projectService: ProjectService) {
-        this.activeProjectSubscription = this.projectService.getActiveProject().subscribe(data => this.activeProject = data);
+                private terminologyService: TerminologyServerService) {
+        this.activeProjectSubscription = this.authoringService.getActiveProject().subscribe(data => this.activeProject = data);
     }
 
     ngOnChanges(): void {

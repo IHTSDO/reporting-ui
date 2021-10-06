@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { AuthoringService } from './authoring.service';
+import {Observable, Subscription} from 'rxjs';
+import { AuthoringService } from '../authoring/authoring.service';
 import { map } from 'rxjs/operators';
-import { ProjectService } from './project.service';
-import { Project } from '../models/project';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TerminologyServerService {
 
-    activeProject: Project;
+    activeProject: any;
     private activeProjectSubscription;
+    uiConfiguration: any;
+    uiConfigurationSubscription: Subscription;
 
     constructor(private http: HttpClient,
-                private authoringService: AuthoringService,
-                private projectService: ProjectService) {
-        this.activeProjectSubscription = this.projectService.getActiveProject().subscribe(data => this.activeProject = data);
+                private authoringService: AuthoringService) {
+        this.activeProjectSubscription = this.authoringService.getActiveProject().subscribe(data => this.activeProject = data);
+        this.uiConfigurationSubscription = this.authoringService.getUIConfiguration().subscribe( data => this.uiConfiguration = data);
     }
 
     getTypeahead(term) {
@@ -30,7 +30,7 @@ export class TerminologyServerService {
             termActive: true
         };
         return this.http
-            .post(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint
+            .post(this.uiConfiguration.endpoints.terminologyServerEndpoint
                 + this.activeProject.branchPath + '/concepts/search', params)
             .pipe(map(responseData => {
                 const typeaheads = [];
@@ -53,11 +53,11 @@ export class TerminologyServerService {
             termActive: true
         };
 
-        if (this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint.includes('snowowl')) {
+        if (this.uiConfiguration.endpoints.terminologyServerEndpoint.includes('snowowl')) {
             delete params.termActive;
         }
 
-        return this.http.post<object>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint
+        return this.http.post<object>(this.uiConfiguration.endpoints.terminologyServerEndpoint
             + this.activeProject.branchPath + '/concepts/search', params);
     }
 }

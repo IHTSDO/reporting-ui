@@ -19,21 +19,20 @@ import { QueryParametersComponent } from './components/query-parameters/query-pa
 import { ModalComponent } from './components/modal/modal.component';
 
 // SERVICES
-import { ReportingService } from './services/reporting.service';
-import { UtilityService } from './services/utility.service';
-import { TemplateService } from './services/template.service';
-import { AuthoringService } from './services/authoring.service';
-import { AuthenticationService } from './services/authentication.service';
-import { TerminologyServerService } from './services/terminologyServer.service';
-import { ModalService } from './services/modal.service';
-import { ProjectService } from './services/project.service';
+import { ReportingService } from './services/reporting/reporting.service';
+import { UtilityService } from './services/utility/utility.service';
+import { TemplateService } from './services/template/template.service';
+import { AuthoringService } from './services/authoring/authoring.service';
+import { AuthenticationService } from './services/authentication/authentication.service';
+import { TerminologyServerService } from './services/terminologyServer/terminologyServer.service';
+import { ModalService } from './services/modal/modal.service';
 
 // PIPES
 import { CategoryPipe } from './pipes/category.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { DisplayOrderPipe } from './pipes/display-order.pipe';
 import { HiddenPipe } from './pipes/hidden.pipe';
-import { TagsPipe } from './pipes/tags.pipe';
+import { TagsPipe } from './pipes/tags/tags.pipe';
 
 // INTERCEPTORS
 import { HeaderInterceptor } from './interceptors/header.interceptor';
@@ -41,11 +40,12 @@ import { AuthenticationInterceptor } from './interceptors/authentication.interce
 import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
 import { MainToTopPipe } from './pipes/main-to-top.pipe';
 import { ProjectMatcherPipe } from './pipes/project-matcher.pipe';
+import {TextFilterPipe} from './pipes/text-filter/text-filter.pipe';
+import { CategoryFilterPipe } from './pipes/category-filter/category-filter.pipe';
 
 @NgModule({
     declarations: [
         AppComponent,
-        ReportingComponent,
         SnomedNavbarComponent,
         SnomedFooterComponent,
         LeftSidebarComponent,
@@ -58,7 +58,9 @@ import { ProjectMatcherPipe } from './pipes/project-matcher.pipe';
         TagsPipe,
         AlphabeticalPipe,
         MainToTopPipe,
-        ProjectMatcherPipe
+        ProjectMatcherPipe,
+        TextFilterPipe,
+        CategoryFilterPipe
     ],
     imports: [
         BrowserModule,
@@ -76,7 +78,6 @@ import { ProjectMatcherPipe } from './pipes/project-matcher.pipe';
         AuthoringService,
         AuthenticationService,
         TerminologyServerService,
-        ProjectService,
         ModalService,
         {
             provide: HTTP_INTERCEPTORS,

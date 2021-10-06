@@ -1,6 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { Category } from '../../models/category';
+import {Subscription} from 'rxjs';
+import {ReportingService} from '../../services/reporting/reporting.service';
+import {AuthenticationService} from '../../services/authentication/authentication.service';
 
 @Component({
     selector: 'app-left-sidebar',
@@ -9,31 +11,54 @@ import { Category } from '../../models/category';
 })
 export class LeftSidebarComponent implements OnInit {
 
-    querySearch: string;
-    activeCategory: Category;
+    textFilter: string;
+    categoryFilter: string;
 
-    @Input() categories: Category[];
-    @Output() categoryEmitter = new EventEmitter();
-    @Output() searchTextEmitter = new EventEmitter();
+    reports: any[];
+    reportsSubscription: Subscription;
+    user: any;
+    msUser = false;
+    userSubscription: Subscription;
+    activeReport: any;
+    activeReportSubscription: Subscription;
 
-    constructor() {
+    colors = [
+        'spring-rain',
+        'london-hue',
+        'vanilla',
+        'dull-lavender',
+        'tonys-pink',
+        'green-mist'
+    ];
+
+    constructor(private reportingService: ReportingService, private authenticationService: AuthenticationService) {
+        this.reportsSubscription = this.reportingService.getReports().subscribe( data => this.reports = data);
+        this.userSubscription = this.authenticationService.getUser().subscribe( data => {
+            this.user = data;
+            this.msUser = this.user.roles.includes('ROLE_ms-users');
+        });
+        this.activeReportSubscription = this.reportingService.getActiveReport().subscribe( data => this.activeReport = data);
     }
 
     ngOnInit() {
-        this.activeCategory = new Category();
+        this.reportingService.httpGetReports().subscribe(data => {
+            this.reportingService.setReports(data);
+        });
     }
 
-    updateText(): void {
-        this.searchTextEmitter.emit(this.querySearch);
-    }
-
-    switchActiveCategory(category): void {
-        if (this.activeCategory !== category) {
-            this.activeCategory = category;
-            this.categoryEmitter.emit(this.activeCategory);
+    selectCategory(category) {
+        if (this.categoryFilter === category) {
+            this.categoryFilter = null;
         } else {
-            this.activeCategory = null;
-            this.categoryEmitter.emit(null);
+            this.categoryFilter = category;
+        }
+    }
+
+    selectReport(report) {
+        if (this.activeReport === report) {
+            this.reportingService.setActiveReport(null);
+        } else {
+            this.reportingService.setActiveReport(report);
         }
     }
 }

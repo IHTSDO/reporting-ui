@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthoringService } from './services/authoring.service';
-import { AuthenticationService } from './services/authentication.service';
+import { AuthoringService } from './services/authoring/authoring.service';
+import { AuthenticationService } from './services/authentication/authentication.service';
 import 'jquery';
 import { Versions } from './models/versions';
 import { UIConfiguration } from './models/uiConfiguration';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -15,68 +16,27 @@ export class AppComponent implements OnInit {
 
     environment: string;
     managedServiceUser: boolean;
-    versions: Versions;
-    uiConfiguration: UIConfiguration;
+
     constructor(private authenticationService: AuthenticationService, private authoringService: AuthoringService) {
     }
 
     ngOnInit() {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
-        this.getVersion();
-        this.getUIConfiguration();
-        this.getLoggedInUser();
+
+        this.authoringService.httpGetVersions().subscribe(versions => {
+            this.authoringService.setVersions(versions);
+        });
+
+        this.authoringService.httpGetUIConfiguration().subscribe(config => {
+            this.authoringService.setUIConfiguration(config);
+            $('<script>').attr({ src: config.endpoints.collectorEndpoint }).appendTo('body');
+        });
+
+        this.authenticationService.httpGetUser().subscribe(user => {
+            this.authenticationService.setUser(user);
+        });
+
         this.assignFavicon();
-    }
-
-    getVersion() {
-        this.authoringService.getVersion().subscribe(
-            data => {
-                this.versions = data;
-
-                console.log('Reporting UI Version:', data.versions['reporting-ui']);
-                console.log('Schedule Manager Version:', data.versions['schedule-manager']);
-                console.log('Snowstorm Version:', data.versions['snowstorm']);
-            }
-        );
-    }
-
-    getUIConfiguration() {
-        this.authoringService.getUIConfiguration().subscribe(
-            data => {
-                this.authoringService.uiConfiguration = data;
-                this.uiConfiguration = data;
-                if (this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint.includes('snowowl')) {
-                    this.authoringService.getSnowowlConfiguration().subscribe(
-                        snowowlData => {
-                            $('<script>').attr({ src: snowowlData.endpoints.collectorEndpoint }).appendTo('body');
-                        });
-                } else {
-                    $('<script>').attr({ src: this.authoringService.uiConfiguration.endpoints.collectorEndpoint }).appendTo('body');
-                }
-            },
-            error => {
-                console.error('ERROR: UI Config failed to load');
-            });
-    }
-
-    getLoggedInUser() {
-        this.authenticationService.getLoggedInUser().subscribe(
-            user => {
-                if (!user) {
-                    window.location.replace(this.authoringService.uiConfiguration.endpoints.imsEndpoint
-                        + 'login?serviceReferer=' + window.location.href);
-                } else {
-                    this.authenticationService.roles = user.roles;
-                    this.managedServiceUser = user.roles.includes('ROLE_ms-users');
-                    const potato = ['potato1', 'potato2'];
-                    potato.includes('potato1');
-
-                }
-            },
-            error => {
-                window.location.replace(this.authoringService.uiConfiguration.endpoints.imsEndpoint
-                    + 'login?serviceReferer=' + window.location.href);
-            });
     }
 
     assignFavicon() {

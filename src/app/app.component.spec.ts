@@ -11,7 +11,7 @@ import { ReportingComponent } from './components/reporting/reporting.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
-import { TagsPipe } from './pipes/tags.pipe';
+import { TagsPipe } from './pipes/tags/tags.pipe';
 import { HiddenPipe } from './pipes/hidden.pipe';
 import { DisplayOrderPipe } from './pipes/display-order.pipe';
 import { ModalComponent } from './components/modal/modal.component';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Concept } from '../models/concept';
+import { Concept } from '../../models/concept';
 
 @Injectable({
     providedIn: 'root'
