@@ -18,7 +18,7 @@ app-modal {
                     line-height: inherit;
 
                     span {
-                        color: $dove-grey;
+                        color: $slate-grey;
                         font-weight: 300;
                         font-size: 1.2rem;
                     }
@@ -34,7 +34,7 @@ app-modal {
                 //overflow: scroll;
 
                 label {
-                    color: $scorpion-grey;
+                    color: $slate-grey;
                     line-height: 1rem;
 
                     span {
@@ -64,12 +64,12 @@ app-modal {
 
                 div.note {
                     font-size: 1rem;
-                    color: $scorpion-grey;
+                    color: $slate-grey;
                 }
 
                 span.ready-concept {
                     font-size: 1.2rem;
-                    background: $jordy-blue;
+                    background: $cerulean;
                     border-radius: 1rem;
                     position: relative;
                     cursor: default;
@@ -78,7 +78,7 @@ app-modal {
                         display: none;
                         position: absolute;
                         right: 0;
-                        background-color: $horizon-blue;
+                        background-color: lighten($cerulean, 10%);
                         width: 1.8rem;
                     }
 
@@ -117,10 +117,10 @@ app-modal {
                                     position: absolute;
                                     right: 0;
                                     background-color: transparent;
-                                    color: $crimson-red;
+                                    color: $mandy;
 
                                     &:hover {
-                                        color: $pomegranate-red;
+                                        color: darken($mandy, 10%);
                                     }
                                 }
 
@@ -134,7 +134,7 @@ app-modal {
                             }
 
                             &.new {
-                                color: $curious-blue;
+                                color: $cerulean;
                             }
 
                             &:hover {
@@ -164,11 +164,11 @@ app-modal {
                 }
 
                 div.saved {
-                    color: $forest-green;
+                    color: $fruit-salad;
                 }
 
                 div.error {
-                    color: $crimson-red;
+                    color: $mandy;
                 }
 
                 button {

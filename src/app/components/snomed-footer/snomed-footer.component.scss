@@ -10,10 +10,11 @@ footer.footer {
     white-space: nowrap;
 
     a {
-        color: $alto-white;
+        font-weight: 300;
+        font-size: 1.2rem;
 
         &:hover {
-            color: $pacific-blue;
+            color: $cerulean;
             text-decoration: none;
         }
     }

@@ -1,5 +1,6 @@
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~src/variables.scss';
+@import 'toastr';
 
 html {
     font-size: 62.5%;
@@ -8,7 +9,7 @@ html {
 }
 
 body {
-    font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+    font-family: 'Poppins', 'Helvetica Neue', 'Arial', sans-serif;
     font-size: 1.2rem;
     font-weight: 300;
     color: $black;
@@ -16,15 +17,63 @@ body {
 }
 
 @font-face {
-    font-family: 'Roboto';
-    src: url('assets/Roboto-Light.ttf');
+    font-family: 'Poppins';
+    src: url('assets/Poppins-Thin.ttf');
+    font-weight: 100;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('assets/Poppins-ExtraLight.ttf');
+    font-weight: 200;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('assets/Poppins-Light.ttf');
     font-weight: 300;
 }
 
 @font-face {
-    font-family: 'Roboto';
-    src: url('assets/Roboto-Regular.ttf');
+    font-family: 'Poppins';
+    src: url('assets/Poppins-Regular.ttf');
+    font-weight: 400;
 }
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('assets/Poppins-Medium.ttf');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('assets/Poppins-SemiBold.ttf');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('assets/Poppins-Bold.ttf');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('assets/Poppins-ExtraBold.ttf');
+    font-weight: 800;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('assets/Poppins-Black.ttf');
+    font-weight: 900;
+}
+
+a {
+    text-decoration: none;
+}
+
 
 h2 {
     font-size: 1.8rem;
@@ -46,6 +95,10 @@ div, p, a, select, label {
     font-weight: 300;
 }
 
+label {
+    margin-bottom: 0;
+}
+
 button, input, textarea {
     font-size: 1.2rem;
     font-weight: 300;
@@ -62,24 +115,17 @@ button, input, textarea {
     }
 
     &.btn {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         font-weight: 300;
         letter-spacing: 1.5px;
     }
 }
 
 .footer-margin {
-    margin-bottom: 4rem; /* Margin bottom by footer height */
+    margin-bottom: 4rem;
 }
 
-.mat-tooltip {
-    font-size: 1.2rem;
-    font-weight: 300;
-    color: $gallery-white !important;
-    max-width: 30rem !important;
-}
-
-ngb-typeahead-window.dropdown-menu {
+ngb-typeahead-window.dropdown-menu button {
     max-width: 30vw;
     font-size: 1.2rem;
     overflow-y: hidden;
@@ -87,4 +133,11 @@ ngb-typeahead-window.dropdown-menu {
     button.dropdown-item {
         font-weight: 300;
     }
+}
+
+.mat-tooltip {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: $white !important;
+    max-width: 30rem !important;
 }

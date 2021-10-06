@@ -15,7 +15,7 @@ nav#sidebar {
         background-color: $gallery-white;
         width: 100%;
         border-bottom: 1px $ghost-grey solid;
-        color: $scorpion-grey;
+        color: $slate-grey;
         cursor: text;
     }
 
@@ -28,7 +28,7 @@ nav#sidebar {
     div.category {
         font-size: 1.4rem;
         width: 100%;
-        color: $scorpion-grey;
+        color: $slate-grey;
         cursor: pointer;
         border-bottom: 1px $ghost-grey solid;
 
@@ -37,10 +37,10 @@ nav#sidebar {
         }
 
         &.active {
-            background-color: $tropical-blue;
+            background-color: $cerulean;
 
             &:hover {
-                background-color: $jordy-blue;
+                background-color: darken($cerulean, 10%);
             }
         }
     }

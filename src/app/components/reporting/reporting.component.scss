@@ -44,19 +44,19 @@ div#reporting {
                         td {
                             &.completed {
                                 cursor: pointer;
-                                color: $forest-green;
+                                color: $fruit-salad;
 
                                 &:hover {
-                                    color: $apple-green;
+                                    color: darken($fruit-salad, 10%);
                                 }
                             }
 
                             &.failed {
                                 cursor: pointer;
-                                color: $crimson-red;
+                                color: $mandy;
 
                                 &:hover {
-                                    color: $pomegranate-red;
+                                    color: darken($mandy, 10%);
                                 }
                             }
 
@@ -66,10 +66,10 @@ div#reporting {
                                 top: 0.6rem;
                                 right: 0;
                                 background-color: transparent;
-                                color: $crimson-red;
+                                color: $mandy;
 
                                 &:hover {
-                                    color: $pomegranate-red;
+                                    color: darken($mandy, 10%);
                                 }
                             }
                         }

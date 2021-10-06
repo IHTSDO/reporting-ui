@@ -17,7 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "aot": true,
+                        "baseHref": "/",
                         "outputPath": "dist/reporting-UI",
                         "index": "src/index.html",
                         "main": "src/main.ts",
@@ -38,7 +38,7 @@
                         ],
                         "scripts": [
                             "./node_modules/jquery/dist/jquery.min.js",
-                            "./node_modules/popper.js/dist/umd/popper.min.js",
+                            "./node_modules/@popperjs/core/dist/umd/popper.min.js",
                             "./node_modules/bootstrap/dist/js/bootstrap.min.js"
                         ]
                     },
@@ -50,10 +50,10 @@
                                     "with": "src/environments/environment.prod.ts"
                                 }
                             ],
+                            "baseHref": "/reporting/",
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
-                            "extractCss": true,
                             "namedChunks": false,
                             "aot": true,
                             "extractLicenses": true,
@@ -67,7 +67,7 @@
                     "options": {
                         "browserTarget": "reporting-UI:build",
                         "liveReload": false,
-                        "baseHref": "/"
+
                     },
                     "configurations": {
                         "production": {
