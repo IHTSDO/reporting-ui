@@ -20,7 +20,7 @@ import 'jquery';
 
 import { AppComponent } from './app.component';
 import { MainToTopPipe } from './pipes/main-to-top.pipe';
-import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
+import { AlphabeticalPipe } from './pipes/alphabetical/alphabetical.pipe';
 import {ProjectMatcherPipe} from './pipes/project-matcher.pipe';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 

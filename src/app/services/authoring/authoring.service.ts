@@ -12,33 +12,11 @@ import {User} from '../../models/user';
 export class AuthoringService {
 
     public environmentEndpoint: string;
-    private projects = new Subject();
-    private activeProject = new Subject();
     private uiConfiguration = new Subject();
     private versions = new Subject();
 
     constructor(private http: HttpClient) {
         this.environmentEndpoint = window.location.origin + '/';
-    }
-
-    setActiveProject(project) {
-        this.activeProject.next(project);
-    }
-
-    getActiveProject() {
-        return this.activeProject.asObservable();
-    }
-
-    setProjects(projects) {
-        this.projects.next(projects);
-    }
-
-    getProjects() {
-        return this.projects.asObservable();
-    }
-
-    httpGetProjects(): Observable<Project[]> {
-        return this.http.get<Project[]>('/authoring-services/projects?lightweight=true');
     }
 
     setUIConfiguration(uiConfiguration) {

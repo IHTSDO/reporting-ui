@@ -9,6 +9,7 @@ import { TerminologyServerService } from '../../services/terminologyServer/termi
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { typeaheadMinimumLength } from '../../../globals';
+import {PathingService} from '../../services/pathing/pathing.service';
 
 @Component({
     selector: 'app-query-parameters',
@@ -38,8 +39,9 @@ export class QueryParametersComponent implements OnChanges {
 
     constructor(private templateService: TemplateService,
                 private authoringService: AuthoringService,
-                private terminologyService: TerminologyServerService) {
-        this.activeProjectSubscription = this.authoringService.getActiveProject().subscribe(data => this.activeProject = data);
+                private terminologyService: TerminologyServerService,
+                private pathingService: PathingService) {
+        this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
     }
 
     ngOnChanges(): void {

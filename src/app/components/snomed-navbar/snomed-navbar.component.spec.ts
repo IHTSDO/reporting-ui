@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { SnomedNavbarComponent } from './snomed-navbar.component';
 import { MainToTopPipe } from '../../pipes/main-to-top.pipe';
-import { AlphabeticalPipe } from '../../pipes/alphabetical.pipe';
+import { AlphabeticalPipe } from '../../pipes/alphabetical/alphabetical.pipe';
 
 describe('SnomedNavbarComponent', () => {
     let component: SnomedNavbarComponent;

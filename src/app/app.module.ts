@@ -28,20 +28,17 @@ import { TerminologyServerService } from './services/terminologyServer/terminolo
 import { ModalService } from './services/modal/modal.service';
 
 // PIPES
-import { CategoryPipe } from './pipes/category.pipe';
-import { OrderByPipe } from './pipes/order-by.pipe';
-import { DisplayOrderPipe } from './pipes/display-order.pipe';
-import { HiddenPipe } from './pipes/hidden.pipe';
 import { TagsPipe } from './pipes/tags/tags.pipe';
 
 // INTERCEPTORS
 import { HeaderInterceptor } from './interceptors/header.interceptor';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
-import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
-import { MainToTopPipe } from './pipes/main-to-top.pipe';
-import { ProjectMatcherPipe } from './pipes/project-matcher.pipe';
+import { AlphabeticalPipe } from './pipes/alphabetical/alphabetical.pipe';
 import {TextFilterPipe} from './pipes/text-filter/text-filter.pipe';
 import { CategoryFilterPipe } from './pipes/category-filter/category-filter.pipe';
+import {PathingService} from './services/pathing/pathing.service';
+import { BranchPipe } from './pipes/branch/branch.pipe';
+import { ProjectPipe } from './pipes/project/project.pipe';
 
 @NgModule({
     declarations: [
@@ -49,18 +46,14 @@ import { CategoryFilterPipe } from './pipes/category-filter/category-filter.pipe
         SnomedNavbarComponent,
         SnomedFooterComponent,
         LeftSidebarComponent,
-        CategoryPipe,
-        DisplayOrderPipe,
-        HiddenPipe,
-        OrderByPipe,
         ModalComponent,
         QueryParametersComponent,
         TagsPipe,
         AlphabeticalPipe,
-        MainToTopPipe,
-        ProjectMatcherPipe,
         TextFilterPipe,
-        CategoryFilterPipe
+        CategoryFilterPipe,
+        BranchPipe,
+        ProjectPipe
     ],
     imports: [
         BrowserModule,
@@ -79,6 +72,7 @@ import { CategoryFilterPipe } from './pipes/category-filter/category-filter.pipe
         AuthenticationService,
         TerminologyServerService,
         ModalService,
+        PathingService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: HeaderInterceptor,

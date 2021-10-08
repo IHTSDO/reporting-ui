@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {Observable, Subscription} from 'rxjs';
 import { AuthoringService } from '../authoring/authoring.service';
 import { map } from 'rxjs/operators';
+import {PathingService} from '../pathing/pathing.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,8 +16,9 @@ export class TerminologyServerService {
     uiConfigurationSubscription: Subscription;
 
     constructor(private http: HttpClient,
-                private authoringService: AuthoringService) {
-        this.activeProjectSubscription = this.authoringService.getActiveProject().subscribe(data => this.activeProject = data);
+                private authoringService: AuthoringService,
+                private pathingService: PathingService) {
+        this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
         this.uiConfigurationSubscription = this.authoringService.getUIConfiguration().subscribe( data => this.uiConfiguration = data);
     }
 

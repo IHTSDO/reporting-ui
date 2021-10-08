@@ -6,13 +6,41 @@
 
     <ul class="dropdown-nav me-auto my-2">
         <li class="nav-item dropdown">
-            <a class="nav-link px-3 rounded dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{activeProject?.key}}
+            <a class="nav-link px-3 rounded dropdown-toggle text-end" id="branchDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{activeBranch?.branchPath}}
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <ng-container *ngFor="let project of projects | alphabetical:'key' | mainToTop:'key'">
+            <div class="dropdown-menu py-0" aria-labelledby="branchDropdown">
+                <ng-container *ngFor="let branch of branches | alphabetical:'branchPath'">
+                    <a class="dropdown-item ps-3" (click)="setBranch(branch)">{{branch?.branchPath}}</a>
+                </ng-container>
+            </div>
+        </li>
+        <li *ngIf="activeBranch && activeProject" class="ms-3 text-ghost-grey">/</li>
+        <li *ngIf="activeBranch" class="ms-3 nav-item dropdown">
+            <a class="nav-link px-3 rounded dropdown-toggle text-end" id="projectDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [class.add]="!activeProject?.key">
+                {{activeProject?.key ? activeProject.key : 'ADD PROJECT'}}
+            </a>
+            <div class="dropdown-menu py-0" aria-labelledby="projectDropdown">
+                <ng-container *ngFor="let project of projects | alphabetical:'key'">
                     <a class="dropdown-item ps-3" (click)="setProject(project)">{{project?.key}}</a>
                 </ng-container>
+                <a *ngIf="activeProject" class="dropdown-item ps-3" (click)="noProject()">
+                    <button class="btn py-0 m-0 w-100 text-white bg-mandy">REMOVE</button>
+                </a>
+            </div>
+        </li>
+        <li *ngIf="activeProject && activeTask" class="ms-3 text-ghost-grey">/</li>
+        <li *ngIf="activeProject" class="ms-3 nav-item dropdown">
+            <a class="nav-link px-3 rounded dropdown-toggle text-end" id="taskDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [class.add]="!activeTask?.key">
+                {{activeTask?.key ? activeTask.key : 'ADD TASK'}}
+            </a>
+            <div class="dropdown-menu py-0" aria-labelledby="taskDropdown">
+                <ng-container *ngFor="let task of tasks | alphabetical:'key'">
+                    <a class="dropdown-item ps-3" (click)="setTask(task)">{{task?.key}}</a>
+                </ng-container>
+                <a *ngIf="activeTask" class="dropdown-item ps-3" (click)="noTask()">
+                    <button class="btn py-0 m-0 w-100 text-white bg-mandy">REMOVE</button>
+                </a>
             </div>
         </li>
     </ul>

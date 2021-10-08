@@ -14,6 +14,7 @@ import { Project } from 'src/app/models/project';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { Concept } from '../../models/concept';
 import { User } from '../../models/user';
+import {PathingService} from '../../services/pathing/pathing.service';
 
 @Component({
     selector: 'app-reporting',
@@ -80,9 +81,10 @@ export class ReportingComponent implements OnInit, OnDestroy {
                 private authoringService: AuthoringService,
                 private modalService: ModalService,
                 private terminologyService: TerminologyServerService,
-                private authenticationService: AuthenticationService) {
-        this.projectSubscription = this.authoringService.getProjects().subscribe(data => this.projects = data);
-        this.activeProjectSubscription = this.authoringService.getActiveProject().subscribe(data => this.activeProject = data);
+                private authenticationService: AuthenticationService,
+                private pathingService: PathingService) {
+        this.projectSubscription = this.pathingService.getProjects().subscribe(data => this.projects = data);
+        this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
     }
 
     ngOnInit() {

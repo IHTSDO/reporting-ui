@@ -69,6 +69,7 @@ nav {
             display: inline-block;
 
             a {
+                min-width: 8rem;
                 font-size: 1.4rem;
                 height: 3rem;
                 color: $white;
@@ -76,10 +77,10 @@ nav {
                 line-height: 2rem;
                 font-weight: 300;
                 letter-spacing: 0.2rem;
+                cursor: pointer;
 
-                &.editable {
-                    color: $regent-grey;
-                    cursor: not-allowed;
+                &.add {
+                    background-color: $fruit-salad;
                 }
             }
 
