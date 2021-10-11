@@ -33,7 +33,7 @@ export class TerminologyServerService {
         };
         return this.http
             .post(this.uiConfiguration.endpoints.terminologyServerEndpoint
-                + this.activeProject.branchPath + '/concepts/search', params)
+                + this.activeProject.key + '/concepts/search', params)
             .pipe(map(responseData => {
                 const typeaheads = [];
 
@@ -60,6 +60,6 @@ export class TerminologyServerService {
         }
 
         return this.http.post<object>(this.uiConfiguration.endpoints.terminologyServerEndpoint
-            + this.activeProject.branchPath + '/concepts/search', params);
+            + this.activeProject.key + '/concepts/search', params);
     }
 }

@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthoringService } from './services/authoring/authoring.service';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import 'jquery';
-import { Versions } from './models/versions';
-import { UIConfiguration } from './models/uiConfiguration';
-import {Subscription} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -17,7 +15,8 @@ export class AppComponent implements OnInit {
     environment: string;
     managedServiceUser: boolean;
 
-    constructor(private authenticationService: AuthenticationService, private authoringService: AuthoringService) {
+    constructor(private authenticationService: AuthenticationService,
+                private authoringService: AuthoringService) {
     }
 
     ngOnInit() {
@@ -35,6 +34,8 @@ export class AppComponent implements OnInit {
         this.authenticationService.httpGetUser().subscribe(user => {
             this.authenticationService.setUser(user);
         });
+
+
 
         this.assignFavicon();
     }

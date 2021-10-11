@@ -39,6 +39,7 @@ import { CategoryFilterPipe } from './pipes/category-filter/category-filter.pipe
 import {PathingService} from './services/pathing/pathing.service';
 import { BranchPipe } from './pipes/branch/branch.pipe';
 import { ProjectPipe } from './pipes/project/project.pipe';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
     declarations: [
@@ -62,7 +63,8 @@ import { ProjectPipe } from './pipes/project/project.pipe';
         BrowserAnimationsModule,
         MatTooltipModule,
         MatCheckboxModule,
-        NgbTypeaheadModule
+        NgbTypeaheadModule,
+        AppRoutingModule
     ],
     providers: [
         ReportingService,
