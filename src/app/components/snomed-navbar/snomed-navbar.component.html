@@ -35,12 +35,17 @@
                 {{activeTask?.key ? activeTask.key : 'ADD TASK'}}
             </a>
             <div class="dropdown-menu py-0" aria-labelledby="taskDropdown">
-                <ng-container *ngFor="let task of tasks | alphabetical:'key'">
-                    <a class="dropdown-item ps-3" (click)="setTask(task)">{{task?.key}}</a>
+                <ng-container *ngIf="tasks.length">
+                    <ng-container *ngFor="let task of tasks | alphabetical:'key'">
+                        <a class="dropdown-item ps-3" (click)="setTask(task)">{{task?.key}}</a>
+                    </ng-container>
+                    <a *ngIf="activeTask" class="dropdown-item ps-3" (click)="noTask()">
+                        <button class="btn py-0 m-0 w-100 text-white bg-mandy">REMOVE</button>
+                    </a>
                 </ng-container>
-                <a *ngIf="activeTask" class="dropdown-item ps-3" (click)="noTask()">
-                    <button class="btn py-0 m-0 w-100 text-white bg-mandy">REMOVE</button>
-                </a>
+                <ng-container *ngIf="!tasks.length">
+                    <a class="dropdown-item ps-3">No Tasks Found</a>
+                </ng-container>
             </div>
         </li>
     </ul>
