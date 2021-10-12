@@ -4,13 +4,13 @@
         <span class="title text-ghost-grey">SNOMED CT Reporting Platform</span>
     </a>
 
-    <ul class="dropdown-nav me-auto my-2">
+    <ul *ngIf="projects; else loading" class="dropdown-nav me-auto my-2">
         <li class="nav-item dropdown">
             <a class="nav-link px-3 rounded dropdown-toggle text-end" id="branchDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{activeBranch?.branchPath}}
             </a>
             <div class="dropdown-menu py-0" aria-labelledby="branchDropdown">
-                <ng-container *ngFor="let branch of branches | alphabetical:'branchPath'">
+                <ng-container *ngFor="let branch of branches | alphabetical:'branchPath' | branch:projects">
                     <a class="dropdown-item ps-3" [routerLink]="[branch.branchPath]" [queryParams]="{report: activeReport}" (click)="setBranch(branch)">{{branch?.branchPath}}</a>
                 </ng-container>
             </div>
@@ -21,7 +21,7 @@
                 {{activeProject?.key ? activeProject.key : 'ADD PROJECT'}}
             </a>
             <div class="dropdown-menu py-0" aria-labelledby="projectDropdown">
-                <ng-container *ngFor="let project of projects | alphabetical:'key'">
+                <ng-container *ngFor="let project of projects | alphabetical:'key' | project:activeBranch">
                     <a class="dropdown-item ps-3" [routerLink]="[activeBranch.branchPath, project.key]" [queryParams]="{report: activeReport}" (click)="setProject(project)">{{project?.key}}</a>
                 </ng-container>
                 <a *ngIf="activeProject" class="dropdown-item ps-3" (click)="noProject()">
@@ -49,6 +49,15 @@
             </div>
         </li>
     </ul>
+
+    <ng-template #loading>
+        <ul class="dropdown-nav me-auto my-2">
+            <li class="nav-item">
+                <a class="nav-link px-3 rounded">Loading...</a>
+            </li>
+        </ul>
+    </ng-template>
+
 
     <ng-container [ngSwitch]="environment">
         <div *ngSwitchCase="'local'" class="banner text-white local"></div>
