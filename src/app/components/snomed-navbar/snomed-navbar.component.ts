@@ -5,6 +5,8 @@ import { AuthenticationService } from '../../services/authentication/authenticat
 import { User } from '../../models/user';
 import { Subscription } from 'rxjs';
 import {PathingService} from '../../services/pathing/pathing.service';
+import {ActivatedRoute} from '@angular/router';
+import {ReportingService} from '../../services/reporting/reporting.service';
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -34,11 +36,15 @@ export class SnomedNavbarComponent implements OnInit {
     activeTask: any;
     activeTaskSubscription: Subscription;
 
+    activeReport: any;
+    activeReportSubscription: Subscription;
 
     constructor(private authoringService: AuthoringService,
                 private authenticationService: AuthenticationService,
                 private pathingService: PathingService,
-                private location: Location) {
+                private reportingService: ReportingService,
+                private location: Location,
+                private route: ActivatedRoute) {
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
         this.branchesSubscription = this.pathingService.getBranches().subscribe(data => this.branches = data);
         this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
@@ -46,11 +52,18 @@ export class SnomedNavbarComponent implements OnInit {
         this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
         this.tasksSubscription = this.pathingService.getTasks().subscribe(data => this.tasks = data);
         this.activeTaskSubscription = this.pathingService.getActiveTask().subscribe(data => this.activeTask = data);
+        this.activeReportSubscription = this.reportingService.getActiveReport().subscribe(data => this.activeReport = data);
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
     }
 
     ngOnInit() {
         this.path = this.location.path();
+
+        this.route.queryParams.subscribe(params => {
+            if (params.report) {
+                this.reportingService.setActiveReport(params.report);
+            }
+        });
 
         this.pathingService.httpGetBranches().subscribe(branches => {
             this.pathingService.setBranches(branches);
@@ -67,7 +80,7 @@ export class SnomedNavbarComponent implements OnInit {
     }
 
     setPath(path) {
-        const splitPath = path.split('/');
+        const splitPath = path.split('?')[0].split('/');
         if (path.includes('SNOMEDCT')) {
             if (splitPath.length > 2) {
                 this.setBranch({ branchPath: splitPath[1] + '/' + splitPath[2]});

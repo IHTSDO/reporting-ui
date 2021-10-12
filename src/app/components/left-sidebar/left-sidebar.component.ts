@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {Subscription} from 'rxjs';
 import {ReportingService} from '../../services/reporting/reporting.service';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-left-sidebar',
@@ -31,7 +32,10 @@ export class LeftSidebarComponent implements OnInit {
         'green-mist'
     ];
 
-    constructor(private reportingService: ReportingService, private authenticationService: AuthenticationService) {
+    constructor(private reportingService: ReportingService,
+                private authenticationService: AuthenticationService,
+                private router: Router,
+                private route: ActivatedRoute) {
         this.reportsSubscription = this.reportingService.getReports().subscribe( data => this.reports = data);
         this.userSubscription = this.authenticationService.getUser().subscribe( data => {
             this.user = data;
@@ -55,10 +59,20 @@ export class LeftSidebarComponent implements OnInit {
     }
 
     selectReport(report) {
-        if (this.activeReport === report) {
+        if (this.activeReport && this.activeReport.name === report.name) {
             this.reportingService.setActiveReport(null);
+            this.setQueryParam(null);
         } else {
-            this.reportingService.setActiveReport(report);
+            this.reportingService.setActiveReport(report.name);
+            this.setQueryParam({report: report.name});
         }
+    }
+
+    setQueryParam(params) {
+        this.router.navigate([],
+            {
+                relativeTo: this.route,
+                queryParams: params
+            });
     }
 }

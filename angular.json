@@ -8,16 +8,13 @@
             "sourceRoot": "src",
             "projectType": "application",
             "prefix": "app",
-            "schematics": {
-                "@schematics/angular:component": {
-                    "styleext": "scss"
-                }
-            },
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
                         "baseHref": "/",
+                        "sourceMap": true,
+                        "optimization": false,
                         "outputPath": "dist/reporting-UI",
                         "index": "src/index.html",
                         "main": "src/main.ts",
@@ -66,8 +63,7 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
                         "browserTarget": "reporting-UI:build",
-                        "liveReload": false,
-
+                        "liveReload": false
                     },
                     "configurations": {
                         "production": {

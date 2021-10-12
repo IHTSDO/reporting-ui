@@ -40,6 +40,7 @@ import {PathingService} from './services/pathing/pathing.service';
 import { BranchPipe } from './pipes/branch/branch.pipe';
 import { ProjectPipe } from './pipes/project/project.pipe';
 import { AppRoutingModule } from './app-routing.module';
+import {ReportComponent} from './components/report/report.component';
 
 @NgModule({
     declarations: [
@@ -49,6 +50,7 @@ import { AppRoutingModule } from './app-routing.module';
         LeftSidebarComponent,
         ModalComponent,
         QueryParametersComponent,
+        ReportComponent,
         TagsPipe,
         AlphabeticalPipe,
         TextFilterPipe,
