@@ -82,6 +82,10 @@ nav {
                 &.add {
                     background-color: $fruit-salad;
                 }
+
+                &.loading {
+                    min-width: unset;
+                }
             }
 
             div.dropdown-menu {

@@ -53,7 +53,11 @@
     <ng-template #loading>
         <ul class="dropdown-nav me-auto my-2">
             <li class="nav-item">
-                <a class="nav-link px-3 rounded">Loading...</a>
+                <a class="nav-link px-3 rounded loading">
+                    <div class="spinner-border" style="font-size: 1rem" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </a>
             </li>
         </ul>
     </ng-template>

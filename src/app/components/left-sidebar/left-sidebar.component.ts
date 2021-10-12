@@ -59,7 +59,7 @@ export class LeftSidebarComponent implements OnInit {
     }
 
     selectReport(report) {
-        if (this.activeReport && this.activeReport.name === report.name) {
+        if (this.activeReport === report.name) {
             this.reportingService.setActiveReport(null);
             this.setQueryParam(null);
         } else {
