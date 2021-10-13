@@ -41,39 +41,6 @@ div#reporting {
                     }
 
                     tr {
-                        td {
-                            &.completed {
-                                cursor: pointer;
-                                color: $fruit-salad;
-
-                                &:hover {
-                                    color: darken($fruit-salad, 10%);
-                                }
-                            }
-
-                            &.failed {
-                                cursor: pointer;
-                                color: $mandy;
-
-                                &:hover {
-                                    color: darken($mandy, 10%);
-                                }
-                            }
-
-                            button.delete-button {
-                                display: none;
-                                position: absolute;
-                                top: 0.6rem;
-                                right: 0;
-                                background-color: transparent;
-                                color: $mandy;
-
-                                &:hover {
-                                    color: darken($mandy, 10%);
-                                }
-                            }
-                        }
-
                         td.parameter {
                             overflow-wrap: anywhere;
                         }

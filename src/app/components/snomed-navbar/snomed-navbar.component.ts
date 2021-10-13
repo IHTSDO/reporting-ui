@@ -61,7 +61,15 @@ export class SnomedNavbarComponent implements OnInit {
 
         this.route.queryParams.subscribe(params => {
             if (params.report) {
-                this.reportingService.setActiveReport(params.report);
+                this.reportingService.getReports().subscribe(data => {
+                    data.forEach(category => {
+                        category.jobs.forEach(report => {
+                            if (report.name === params.report) {
+                                this.reportingService.setActiveReport(report);
+                            }
+                        });
+                    });
+                });
             }
         });
 
@@ -74,13 +82,13 @@ export class SnomedNavbarComponent implements OnInit {
 
         this.pathingService.httpGetProjects().subscribe(projects => {
             this.pathingService.setProjects(projects);
+            this.setPath(this.path);
         });
-
-        this.setPath(this.path);
     }
 
     setPath(path) {
         const splitPath = path.split('?')[0].split('/');
+        this.setBranch({ branchPath: 'MAIN'});
         if (path.includes('SNOMEDCT')) {
             if (splitPath.length > 2) {
                 this.setBranch({ branchPath: splitPath[1] + '/' + splitPath[2]});
@@ -118,13 +126,14 @@ export class SnomedNavbarComponent implements OnInit {
     }
 
     setProject(project) {
-        this.pathingService.setActiveProject(project);
+        const proj = this.projects.find(item => item.key === project.key);
+        this.pathingService.setActiveProject(proj);
 
         this.pathingService.setTasks([]);
         this.pathingService.setActiveTask(null);
 
-        if (project.key) {
-            this.pathingService.httpGetTasks(project).subscribe(tasks => {
+        if (proj.key) {
+            this.pathingService.httpGetTasks(proj).subscribe(tasks => {
                 this.pathingService.setTasks(tasks);
             });
         }

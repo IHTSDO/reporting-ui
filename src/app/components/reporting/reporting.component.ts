@@ -35,7 +35,7 @@ import {PathingService} from '../../services/pathing/pathing.service';
         ])
     ]
 })
-export class ReportingComponent implements OnInit, OnDestroy {
+export class ReportingComponent implements OnInit {
 
     // Config
     @Input() managedServiceUser: boolean;
@@ -87,11 +87,8 @@ export class ReportingComponent implements OnInit, OnDestroy {
         this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
     }
 
-    ngOnInit() {
+    ngOnInit(){
 
-    }
-
-    ngOnDestroy() {
     }
 
     // ngOnInit() {
@@ -102,21 +99,7 @@ export class ReportingComponent implements OnInit, OnDestroy {
     //     setInterval(() => this.refresh(), 5000);
     // }
     //
-    // ngOnDestroy() {
-    //     this.activeProjectSubscription.unsubscribe();
-    // }
     //
-    // refresh(): void {
-    //     if (this.activeQuery) {
-    //         this.reportingService.getReportRuns(this.activeQuery.name).subscribe(data => {
-    //             if (JSON.stringify(data) !== JSON.stringify(this.activeReportSet)) {
-    //                 this.activeReportSet = data;
-    //             }
-    //         });
-    //     } else {
-    //         this.activeReportSet = null;
-    //     }
-    // }
     //
     // switchActiveQuery(query): void {
     //     if (this.activeQuery !== query) {
@@ -137,136 +120,6 @@ export class ReportingComponent implements OnInit, OnDestroy {
     //     this.refresh();
     // }
     //
-    // convertDate(date) {
-    //     return date.replace(/T|Z/g, ' ');
-    // }
-    //
-    // viewReport(report): void {
-    //     window.open(report.resultUrl);
-    // }
-    //
-    // deleteReport(): void {
-    //     this.reportingService.deleteReport(this.activeReport).subscribe(() => {
-    //         this.refresh();
-    //     });
-    // }
-    //
-    // submitReport(): void {
-    //     this.reportingService.postReport(this.activeQuery, this.getCodeSystemShortname(), this.activeProject.key).subscribe(() => {
-    //         this.refresh();
-    //     });
-    // }
-    //
-    // // Modal Functions
-    // openModal(id: string): void {
-    //     this.modalService.open(id);
-    // }
-    //
-    // closeModal(id: string): void {
-    //     this.modalService.close(id);
-    // }
-    //
     // // Query Modal Functions
-    // parametersExistCheck(): boolean {
-    //     for (const param in this.activeQuery.parameters) {
-    //         if (this.activeQuery.parameters.hasOwnProperty(param)) {
-    //             if (this.activeQuery.parameters[param].type !== 'HIDDEN') {
-    //                 return true;
-    //             } else {
-    //                 this.activeQuery.parameters[param].value = this.authoringService.environmentEndpoint + 'template-service';
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // }
-    //
-    // missingFieldsCheck(): void {
-    //     let missingFields = false;
-    //     for (const param in this.activeQuery.parameters) {
-    //         if (this.activeQuery.parameters.hasOwnProperty(param)) {
-    //             const field = this.activeQuery.parameters[param];
-    //             if (field.mandatory && (field.type !== 'BOOLEAN')) {
-    //                 if (field.value === '' || field.value === null || field.value === undefined) {
-    //                     missingFields = true;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //
-    //     if (missingFields) {
-    //         this.saveResponse = 'Missing Fields';
-    //         this.saved = (this.saved === 'start' ? 'end' : 'start');
-    //     } else {
-    //         this.submitReport();
-    //         this.closeModal('query-modal');
-    //     }
-    // }
-    //
-    // // Whitelist Modal Functions
-    // retrieveConceptsById(input): void {
-    //     let idList = [];
-    //     if (input) {
-    //         idList = input.match(/[0-9]{4,16}/g);
-    //     }
-    //
-    //     if (idList && idList.length > 0) {
-    //         this.terminologyService.getConceptsById(idList).subscribe(
-    //             data => {
-    //                 data['items'].forEach(concept => {
-    //                     this.addToWhitelist(concept);
-    //                 });
-    //             });
-    //     }
-    // }
-    //
-    // getCodeSystemShortname() {
-    //     if (this.activeProject.metadata && this.activeProject.metadata.codeSystemShortName) {
-    //         return this.activeProject.metadata.codeSystemShortName;
-    //     } else {
-    //         return 'SNOMEDCT';
-    //     }
-    // }
-    //
-    // getWhitelist() {
-    //     this.reportingService.getWhitelist(this.activeQuery.name, this.getCodeSystemShortname()).subscribe(data => {
-    //         this.activeWhitelist = data;
-    //     });
-    // }
-    //
-    // addToWhitelist(concept) {
-    //     this.searchTerm = '';
-    //
-    //     const exists = this.activeWhitelist.find(item => {
-    //         return item.sctId === concept.id;
-    //     });
-    //
-    //     if (exists === undefined) {
-    //         this.activeWhitelist.unshift(UtilityService.convertFullConceptToShortConcept(concept));
-    //         this.whitelistChanged = true;
-    //     }
-    // }
-    //
-    // saveWhitelist(): void {
-    //     this.activeWhitelist.forEach(item => {
-    //         delete item.new;
-    //     });
-    //
-    //     this.reportingService.postWhitelist(this.activeQuery.name, this.getCodeSystemShortname(), this.activeWhitelist).subscribe(
-    //         () => {
-    //             this.saveResponse = 'Saved';
-    //             this.saved = (this.saved === 'start' ? 'end' : 'start');
-    //             this.whitelistChanged = false;
-    //         },
-    //         () => {
-    //             this.saveResponse = 'Error';
-    //             this.saved = (this.saved === 'start' ? 'end' : 'start');
-    //         });
-    // }
-    //
-    // removeFromWhitelist(concept): void {
-    //     this.activeWhitelist = this.activeWhitelist.filter(item => {
-    //         return item.sctId !== concept.sctId;
-    //     });
-    //     this.whitelistChanged = true;
-    // }
+
 }

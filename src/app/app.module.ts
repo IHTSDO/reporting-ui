@@ -41,6 +41,8 @@ import { BranchPipe } from './pipes/branch/branch.pipe';
 import { ProjectPipe } from './pipes/project/project.pipe';
 import { AppRoutingModule } from './app-routing.module';
 import {ReportComponent} from './components/report/report.component';
+import { HiddenPipe } from './pipes/hidden/hidden.pipe';
+import { DisplayOrderPipe } from './pipes/displayOrder/display-order.pipe';
 
 @NgModule({
     declarations: [
@@ -56,7 +58,9 @@ import {ReportComponent} from './components/report/report.component';
         TextFilterPipe,
         CategoryFilterPipe,
         BranchPipe,
-        ProjectPipe
+        ProjectPipe,
+        HiddenPipe,
+        DisplayOrderPipe
     ],
     imports: [
         BrowserModule,

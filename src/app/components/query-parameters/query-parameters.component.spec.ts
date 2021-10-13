@@ -3,8 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { DisplayOrderPipe } from '../../pipes/display-order.pipe';
-import { OrderByPipe } from '../../pipes/order-by.pipe';
 
 import { QueryParametersComponent } from './query-parameters.component';
 
@@ -15,9 +13,7 @@ describe('QueryParametersComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
         declarations: [
-            QueryParametersComponent,
-            DisplayOrderPipe,
-            OrderByPipe
+            QueryParametersComponent
         ],
         imports: [
             FormsModule,

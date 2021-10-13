@@ -1,3 +1,105 @@
-<div id="report">
-    <p>{{activeReport}}</p>
+<div id="report" class="footer-margin">
+    <div *ngIf="activeReport" class="p-5">
+        <div class="float-end m-2">
+            <button class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
+                    (click)="openModal('whitelist-modal'); searchTerm = ''; getWhitelist()">
+                Whitelist
+            </button>
+            <button class="btn btn-primary p-2 px-3" data-toggle="modal" data-target="#queryModal" (click)="openModal('query-modal')">
+                Run New Query
+            </button>
+        </div>
+        <h2 class="mb-3">{{activeReport.name}}</h2>
+        <p class="description mb-3 text-bootstrap-black">{{activeReport.description}}</p>
+
+    </div>
+    <div *ngIf="runs" class="p-3">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="pl-3">Date</th>
+                <th>Issues</th>
+                <th>Project</th>
+                <th *ngFor="let parameter of runs[0].parameters | keyvalue | displayOrder | hidden">{{parameter.key}}</th>
+                <th>Status</th>
+                <th>User</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let run of runs | slice:0:20">
+                <td class="p-3">{{convertDate(run.requestTime)}}UTC</td>
+                <td class="p-3">{{run.issuesReported ? run.issuesReported : '0'}}</td>
+                <td class="p-3">{{run.project}}</td>
+                <td class="p-3 parameter" *ngFor="let parameter of run.parameters | keyvalue | displayOrder | hidden">{{run?.parameters ? run.parameters[parameter.key]?.value : ''}}</td>
+                <ng-container [ngSwitch]="run.status">
+                    <td *ngSwitchCase="'Complete'" class="p-3 completed" (click)="viewReport(run)">{{run.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
+                    <ng-container *ngSwitchCase="'Failed'">
+                        <td *ngIf="run.resultUrl; else urlContainer" class="p-3 failed" (click)="viewReport(run)" matTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
+                        <ng-template #urlContainer>
+                            <td class="p-3 failed" matTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-times-circle ml-1"></i></td>
+                        </ng-template>
+                    </ng-container>
+                    <td *ngSwitchDefault class="p-3">{{run.status}}</td>
+                </ng-container>
+                <td class="p-3">{{run.user}}
+                    <button class="delete-button" (click)="openModal('delete-modal'); activeReport = run" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-minus"></i></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<!-- DELETE MODAL -->
+<app-modal id="delete-modal" class="modal">
+    <div header><h3 class="mb-0">Delete<span class="px-2">{{activeReport?.name}}</span></h3></div>
+    <div body>Are you sure you want to delete this report?</div>
+    <div footer>
+        <button type="button" class="btn btn-primary" (click)="deleteReport(); closeModal('delete-modal')">Delete Report</button>
+    </div>
+</app-modal>
+
+<!-- QUERY MODAL -->
+<app-modal id="query-modal" class="modal">
+    <div header><h3 class="mb-0">Details<span class="px-2">{{activeReport?.name}}</span></h3></div>
+    <div body>
+<!--        <app-query-parameters [query]="activeReport"></app-query-parameters>-->
+    </div>
+    <div footer>
+        <div [@slide]="saved" class="px-3 error">{{saveResponse}}</div>
+        <button type="button" class="btn btn-primary" (click)="missingFieldsCheck()">Run Query</button>
+    </div>
+</app-modal>
+
+<!-- WHITELIST MODAL -->
+<app-modal id="whitelist-modal" class="modal" size="xl">
+    <div header><h3 class="mb-0">Whitelist<span class="px-2">{{activeReport?.name}}</span></h3></div>
+    <div body>
+        <div class="position-relative pb-3">
+            <label class="w-100 m-0">Add concept to whitelist</label>
+            <input type="text" class="form-control" [(ngModel)]="searchTerm" [ngbTypeahead]="search" (ngModelChange)="retrieveConceptsById(searchTerm)"/>
+            <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
+        </div>
+        <div *ngIf="whitelist?.length > 0; else noItems" class="table-container border">
+            <table class="table table-borderless rounded m-0">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+                <tr *ngFor="let concept of whitelist" [class.new]="concept.new">
+                    <td>{{concept.sctId}}</td>
+                    <td class="font-size-12">{{concept.fsn}}
+                        <button class="delete-button" (click)="removeFromWhitelist(concept)"><i class="fas fa-minus"></i></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <ng-template #noItems>
+            <div class="note text-center">- No items whitelisted -</div>
+        </ng-template>
+    </div>
+    <div footer>
+        <div [@slide]="saved" class="px-3 saved">{{saveResponse}}</div>
+        <button type="button" class="btn btn-primary" [disabled]="!whitelistChanged" (click)="saveWhitelist()">Save Whitelist</button>
+    </div>
+</app-modal>

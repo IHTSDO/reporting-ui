@@ -2,4 +2,71 @@
 
 div#report {
     margin-left: 32rem;
+
+    p.description {
+        font-size: 14px;
+    }
+
+    table {
+        tr {
+            min-height: 4rem;
+
+            &:hover {
+                background-color: darken($white, 2.5%);
+            }
+
+            th {
+                font-weight: 500;
+                background-color: darken($white, 2.5%);
+            }
+
+            td {
+                &.completed {
+                    cursor: pointer;
+                    color: $fruit-salad;
+
+                    &:hover {
+                        color: darken($fruit-salad, 10%);
+                    }
+                }
+
+                &.failed {
+                    cursor: pointer;
+                    color: $mandy;
+
+                    &:hover {
+                        color: darken($mandy, 10%);
+                    }
+                }
+
+                button.delete-button {
+                    display: none;
+                    position: absolute;
+                    top: 0.6rem;
+                    right: 0;
+                    background-color: transparent;
+                    color: $mandy;
+
+                    &:hover {
+                        color: darken($mandy, 10%);
+                    }
+                }
+
+                &.parameter {
+                    overflow-wrap: anywhere;
+                }
+
+                &:hover {
+                    td {
+                        background-color: $gallery-white;
+                        position: relative;
+
+                        > button.delete-button {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
