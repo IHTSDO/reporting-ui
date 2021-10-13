@@ -114,10 +114,11 @@ export class ReportComponent implements OnInit {
     }
 
     setRuns() {
-        this.reportingService.httpGetReportRuns(this.activeReport.name).subscribe(runs => {
-            console.log('runs: ', runs);
-            this.reportingService.setRuns(runs);
-        });
+        if (this.activeReport) {
+            this.reportingService.httpGetReportRuns(this.activeReport.name).subscribe(runs => {
+                this.reportingService.setRuns(runs);
+            });
+        }
     }
 
     convertDate(date) {

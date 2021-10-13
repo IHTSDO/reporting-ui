@@ -1,11 +1,11 @@
 <div id="report" class="footer-margin">
     <div *ngIf="activeReport" class="p-5">
         <div class="float-end m-2">
-            <button class="btn btn-outline-primary whitelist-button p-2 px-3 mx-3" data-toggle="modal" data-target="#whitelistModal"
+            <button class="btn p-2 px-3 mx-3 whitelist" data-toggle="modal" data-target="#whitelistModal"
                     (click)="openModal('whitelist-modal'); searchTerm = ''; getWhitelist()">
                 Whitelist
             </button>
-            <button class="btn btn-primary p-2 px-3" data-toggle="modal" data-target="#queryModal" (click)="openModal('query-modal')">
+            <button class="btn p-2 px-3 new-run" data-toggle="modal" data-target="#queryModal" (click)="openModal('query-modal')">
                 Run New Query
             </button>
         </div>
@@ -13,37 +13,34 @@
         <p class="description mb-3 text-bootstrap-black">{{activeReport.description}}</p>
 
     </div>
-    <div *ngIf="runs" class="p-3">
+    <div *ngIf="runs" class="">
         <table class="table table-bordered">
             <thead>
-            <tr>
-                <th class="pl-3">Date</th>
-                <th>Issues</th>
-                <th>Project</th>
-                <th *ngFor="let parameter of runs[0].parameters | keyvalue | displayOrder | hidden">{{parameter.key}}</th>
-                <th>Status</th>
-                <th>User</th>
+            <tr class="table-title">
+                <th class="p-3">Issues</th>
+                <th class="p-3">Project</th>
+                <th class="p-3" *ngFor="let parameter of runs[0].parameters | keyvalue | displayOrder | hidden">{{parameter.key}}</th>
+                <th class="p-3">Info</th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let run of runs | slice:0:20">
-                <td class="p-3">{{convertDate(run.requestTime)}}UTC</td>
+            <tr *ngFor="let run of runs | slice:0:20" class="table-body position-relative">
                 <td class="p-3">{{run.issuesReported ? run.issuesReported : '0'}}</td>
                 <td class="p-3">{{run.project}}</td>
                 <td class="p-3 parameter" *ngFor="let parameter of run.parameters | keyvalue | displayOrder | hidden">{{run?.parameters ? run.parameters[parameter.key]?.value : ''}}</td>
-                <ng-container [ngSwitch]="run.status">
-                    <td *ngSwitchCase="'Complete'" class="p-3 completed" (click)="viewReport(run)">{{run.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
-                    <ng-container *ngSwitchCase="'Failed'">
-                        <td *ngIf="run.resultUrl; else urlContainer" class="p-3 failed" (click)="viewReport(run)" matTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-external-link-alt ml-1"></i></td>
-                        <ng-template #urlContainer>
-                            <td class="p-3 failed" matTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-times-circle ml-1"></i></td>
-                        </ng-template>
+                <td class="p-3 info">
+                    <div class="user mb-2">{{run.user}}</div>
+                    <div class="time mb-2">{{convertDate(run.requestTime)}} UTC</div>
+                    <ng-container [ngSwitch]="run.status">
+                        <div *ngSwitchCase="'Complete'" class="status completed" (click)="viewReport(run)">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></div>
+                        <ng-container *ngSwitchCase="'Failed'">
+                            <div *ngIf="run.resultUrl" class="status failed" (click)="viewReport(run)" ngbTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></div>
+                            <div *ngIf="!run.resultUrl" class="status failed" ngbTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-times-circle ms-1"></i></div>
+                        </ng-container>
+                        <div *ngSwitchDefault class="status running">{{run.status}}</div>
                     </ng-container>
-                    <td *ngSwitchDefault class="p-3">{{run.status}}</td>
-                </ng-container>
-                <td class="p-3">{{run.user}}
-                    <button class="delete-button" (click)="openModal('delete-modal'); activeReport = run" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-minus"></i></button>
                 </td>
+                <button class="delete-button btn rounded text-center p-0" (click)="openModal('delete-modal'); activeReport = run" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-times"></i></button>
             </tr>
             </tbody>
         </table>

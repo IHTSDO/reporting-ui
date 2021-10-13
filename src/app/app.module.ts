@@ -5,16 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbTooltipModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
-import { ReportingComponent } from './components/reporting/reporting.component';
 import { QueryParametersComponent } from './components/query-parameters/query-parameters.component';
 import { ModalComponent } from './components/modal/modal.component';
 
@@ -67,9 +65,9 @@ import { DisplayOrderPipe } from './pipes/displayOrder/display-order.pipe';
         HttpClientModule,
         FormsModule,
         BrowserAnimationsModule,
-        MatTooltipModule,
         MatCheckboxModule,
         NgbTypeaheadModule,
+        NgbTooltipModule,
         AppRoutingModule
     ],
     providers: [

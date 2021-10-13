@@ -15,11 +15,11 @@ export class LeftSidebarComponent implements OnInit {
     textFilter: string;
     categoryFilter: string;
 
-    reports: any[];
-    reportsSubscription: Subscription;
     user: any;
     msUser = false;
     userSubscription: Subscription;
+    reports: any[];
+    reportsSubscription: Subscription;
     activeReport: any;
     activeReportSubscription: Subscription;
 
@@ -59,6 +59,8 @@ export class LeftSidebarComponent implements OnInit {
     }
 
     selectReport(report) {
+        this.reportingService.setRuns(null);
+
         if (this.activeReport && this.activeReport.name === report.name) {
             this.reportingService.setActiveReport(null);
             this.setQueryParam(null);

@@ -7,62 +7,106 @@ div#report {
         font-size: 14px;
     }
 
+    button {
+        &.whitelist {
+            background-color: $regent-grey;
+            color: $white;
+
+            &:hover {
+                background-color: darken($regent-grey, 5%);
+            }
+        }
+
+        &.new-run {
+            background-color: $fruit-salad;
+            color: $white;
+
+            &:hover {
+                background-color: darken($fruit-salad, 5%);
+            }
+        }
+    }
+
     table {
         tr {
             min-height: 4rem;
 
             &:hover {
-                background-color: darken($white, 2.5%);
+                & > button.delete-button {
+                    display: block;
+                }
+
+                &.table-body {
+                    position: relative;
+                    background-color: darken($white, 2.5%);
+                }
+            }
+
+            button.delete-button {
+                display: none;
+                position: absolute;
+                top: 0.5rem;
+                right: 0.5rem;
+                height: 2rem;
+                width: 2rem;
+                font-size: 14px;
+                background-color: inherit;
+                color: $mandy;
+
+                &:hover {
+                    color: darken($mandy, 10%);
+                }
             }
 
             th {
-                font-weight: 500;
+                font-size: 14px;
+                font-weight: 400;
                 background-color: darken($white, 2.5%);
             }
 
             td {
-                &.completed {
-                    cursor: pointer;
-                    color: $fruit-salad;
-
-                    &:hover {
-                        color: darken($fruit-salad, 10%);
-                    }
-                }
-
-                &.failed {
-                    cursor: pointer;
-                    color: $mandy;
-
-                    &:hover {
-                        color: darken($mandy, 10%);
-                    }
-                }
-
-                button.delete-button {
-                    display: none;
-                    position: absolute;
-                    top: 0.6rem;
-                    right: 0;
-                    background-color: transparent;
-                    color: $mandy;
-
-                    &:hover {
-                        color: darken($mandy, 10%);
-                    }
-                }
-
                 &.parameter {
                     overflow-wrap: anywhere;
                 }
 
-                &:hover {
-                    td {
-                        background-color: $gallery-white;
-                        position: relative;
+                &.info {
+                    width: 10rem;
 
-                        > button.delete-button {
-                            display: block;
+                    div.user {
+                        font-weight: 400;
+                        color: black;
+                    }
+
+                    div.time {
+
+                    }
+
+                    div.status {
+                        &.completed {
+                            cursor: pointer;
+                            color: $fruit-salad;
+
+                            &:hover {
+                                color: darken($fruit-salad, 10%);
+                            }
+                        }
+
+                        &.failed {
+                            cursor: pointer;
+                            color: $mandy;
+
+                            &:hover {
+                                color: darken($mandy, 10%);
+                            }
+                        }
+
+                        &.running {
+                            cursor: pointer;
+                            color: $cerulean;
+
+                            &:hover {
+                                color: darken($cerulean, 10%);
+                            }
                         }
                     }
                 }
