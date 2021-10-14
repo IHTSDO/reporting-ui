@@ -18,7 +18,7 @@
         <li *ngIf="activeBranch && activeProject" class="ms-3 text-ghost-grey">/</li>
         <li *ngIf="activeBranch" class="ms-3 nav-item dropdown">
             <a class="nav-link px-3 rounded dropdown-toggle text-end" id="projectDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [class.add]="!activeProject?.key">
-                {{activeProject?.key ? activeProject.key : 'ADD PROJECT'}}
+                {{activeProject?.key ? activeProject.key : 'PROJECT'}}
             </a>
             <div class="dropdown-menu py-0" aria-labelledby="projectDropdown">
                 <ng-container *ngFor="let project of projects | alphabetical:'key' | project:activeBranch">
@@ -32,7 +32,7 @@
         <li *ngIf="activeProject && activeTask" class="ms-3 text-ghost-grey">/</li>
         <li *ngIf="activeProject" class="ms-3 nav-item dropdown">
             <a class="nav-link px-3 rounded dropdown-toggle text-end" id="taskDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [class.add]="!activeTask?.key">
-                {{activeTask?.key ? activeTask.key : 'ADD TASK'}}
+                {{activeTask?.key ? activeTask.key : 'TASK'}}
             </a>
             <div class="dropdown-menu py-0" aria-labelledby="taskDropdown">
                 <ng-container *ngIf="tasks.length">

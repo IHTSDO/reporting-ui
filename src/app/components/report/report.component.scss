@@ -70,18 +70,18 @@ div#report {
                 }
 
                 &.info {
-                    width: 10rem;
+                    min-width: 10rem;
 
-                    div.user {
+                    span.user {
                         font-weight: 400;
                         color: black;
                     }
 
-                    div.time {
+                    span.time {
 
                     }
 
-                    div.status {
+                    span.status {
                         &.completed {
                             cursor: pointer;
                             color: $fruit-salad;

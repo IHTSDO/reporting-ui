@@ -3,35 +3,44 @@
 app-modal {
     /* modals are hidden by default */
     display: none;
-    max-height: 90vh;
+    max-height: 80vh;
 
     div.modal-dialog {
         z-index: 1000;
 
         div.modal-content {
             div.modal-header {
-                div {
-                    display: inherit;
-                }
+                background-color: $bootstrap-black;
+                border-top-left-radius: initial;
+                border-top-right-radius: initial;
 
                 h3 {
+                    color: $white;
+                    font-weight: 300;
                     line-height: inherit;
 
                     span {
-                        color: $slate-grey;
-                        font-weight: 300;
-                        font-size: 1.2rem;
+                        font-size: 1.4rem;
+                        color: $regent-grey;
                     }
                 }
 
-                button > span {
-                    font-size: 2rem;
+                button {
+                    background-color: transparent;
+
+                    span {
+                        font-size: 2rem;
+                        color: $white;
+                        font-weight: 300;
+                        text-shadow: none;
+                        line-height: 0.8rem;
+                    }
                 }
             }
 
             div.modal-body {
-                max-height: calc(90vh - 12rem);
-                //overflow: scroll;
+                font-size: 1.5rem;
+                max-height: 80vh;
 
                 label {
                     color: $slate-grey;
@@ -98,6 +107,22 @@ app-modal {
                         tr {
                             border-bottom: 1px solid #DEE2E6;
 
+                            button.delete-button {
+                                display: none;
+                                position: absolute;
+                                top: 0.2rem;
+                                right: 0.5rem;
+                                height: 2rem;
+                                width: 2rem;
+                                font-size: 14px;
+                                background-color: inherit;
+                                color: $mandy;
+
+                                &:hover {
+                                    color: darken($mandy, 10%);
+                                }
+                            }
+
                             th {
                                 font-weight: 400;
                                 background-color: $gallery-white;
@@ -112,24 +137,8 @@ app-modal {
                             }
 
                             td {
-                                button.delete-button {
-                                    display: none;
-                                    position: absolute;
-                                    right: 0;
-                                    background-color: transparent;
-                                    color: $mandy;
-
-                                    &:hover {
-                                        color: darken($mandy, 10%);
-                                    }
-                                }
-
                                 &:first-child {
                                     border-right: 1px solid #DEE2E6;
-                                }
-
-                                &.font-size-12 {
-                                    font-size: 1.2rem;
                                 }
                             }
 
@@ -141,10 +150,12 @@ app-modal {
                                 td {
                                     background-color: $gallery-white;
 
-                                    > button.delete-button {
-                                        display: inline-block;
-                                        z-index: 2;
-                                    }
+
+                                }
+
+                                > button.delete-button {
+                                    display: block;
+                                    z-index: 2;
                                 }
                             }
 

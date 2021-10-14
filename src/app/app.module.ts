@@ -22,7 +22,6 @@ import { UtilityService } from './services/utility/utility.service';
 import { TemplateService } from './services/template/template.service';
 import { AuthoringService } from './services/authoring/authoring.service';
 import { AuthenticationService } from './services/authentication/authentication.service';
-import { TerminologyServerService } from './services/terminologyServer/terminologyServer.service';
 import { ModalService } from './services/modal/modal.service';
 
 // PIPES
@@ -76,7 +75,6 @@ import { DisplayOrderPipe } from './pipes/displayOrder/display-order.pipe';
         TemplateService,
         AuthoringService,
         AuthenticationService,
-        TerminologyServerService,
         ModalService,
         PathingService,
         {

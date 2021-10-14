@@ -5,7 +5,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
-import { ReportingComponent } from './components/reporting/reporting.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { TagsPipe } from './pipes/tags/tags.pipe';
@@ -24,7 +23,6 @@ describe('AppComponent', () => {
                 SnomedNavbarComponent,
                 SnomedFooterComponent,
                 LeftSidebarComponent,
-                ReportingComponent,
                 ModalComponent,
                 QueryParametersComponent,
                 TagsPipe,

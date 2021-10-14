@@ -13,7 +13,7 @@
         <p class="description mb-3 text-bootstrap-black">{{activeReport.description}}</p>
 
     </div>
-    <div *ngIf="runs" class="">
+    <div *ngIf="runs && runs[0]">
         <table class="table table-bordered">
             <thead>
             <tr class="table-title">
@@ -27,17 +27,17 @@
             <tr *ngFor="let run of runs | slice:0:20" class="table-body position-relative">
                 <td class="p-3">{{run.issuesReported ? run.issuesReported : '0'}}</td>
                 <td class="p-3">{{run.project}}</td>
-                <td class="p-3 parameter" *ngFor="let parameter of run.parameters | keyvalue | displayOrder | hidden">{{run?.parameters ? run.parameters[parameter.key]?.value : ''}}</td>
+                <td class="p-3 parameter" *ngFor="let parameter of runs[0].parameters | keyvalue | displayOrder | hidden">{{run?.parameters ? run.parameters[parameter.key]?.value : ''}}</td>
                 <td class="p-3 info">
-                    <div class="user mb-2">{{run.user}}</div>
-                    <div class="time mb-2">{{convertDate(run.requestTime)}} UTC</div>
+                    <span class="user mb-2">{{run.user}} </span>
+                    <span class="time mb-2">{{convertDate(run.requestTime)}} UTC </span>
                     <ng-container [ngSwitch]="run.status">
-                        <div *ngSwitchCase="'Complete'" class="status completed" (click)="viewReport(run)">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></div>
+                        <span *ngSwitchCase="'Complete'" class="status completed" (click)="viewReport(run)">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></span>
                         <ng-container *ngSwitchCase="'Failed'">
-                            <div *ngIf="run.resultUrl" class="status failed" (click)="viewReport(run)" ngbTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></div>
-                            <div *ngIf="!run.resultUrl" class="status failed" ngbTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-times-circle ms-1"></i></div>
+                            <span *ngIf="run.resultUrl" class="status failed" (click)="viewReport(run)" ngbTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></span>
+                            <span *ngIf="!run.resultUrl" class="status failed" ngbTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-times-circle ms-1"></i></span>
                         </ng-container>
-                        <div *ngSwitchDefault class="status running">{{run.status}}</div>
+                        <span *ngSwitchDefault class="status running">{{run.status}}</span>
                     </ng-container>
                 </td>
                 <button class="delete-button btn rounded text-center p-0" (click)="openModal('delete-modal'); activeReport = run" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-times"></i></button>
@@ -60,7 +60,7 @@
 <app-modal id="query-modal" class="modal">
     <div header><h3 class="mb-0">Details<span class="px-2">{{activeReport?.name}}</span></h3></div>
     <div body>
-<!--        <app-query-parameters [query]="activeReport"></app-query-parameters>-->
+        <app-query-parameters [query]="activeReport"></app-query-parameters>
     </div>
     <div footer>
         <div [@slide]="saved" class="px-3 error">{{saveResponse}}</div>
@@ -70,7 +70,7 @@
 
 <!-- WHITELIST MODAL -->
 <app-modal id="whitelist-modal" class="modal" size="xl">
-    <div header><h3 class="mb-0">Whitelist<span class="px-2">{{activeReport?.name}}</span></h3></div>
+    <h3 header class="mb-0">Whitelist<span class="px-2">{{activeReport?.name}}</span></h3>
     <div body>
         <div class="position-relative pb-3">
             <label class="w-100 m-0">Add concept to whitelist</label>
@@ -80,14 +80,14 @@
         <div *ngIf="whitelist?.length > 0; else noItems" class="table-container border">
             <table class="table table-borderless rounded m-0">
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
+                    <th class="p-2">ID</th>
+                    <th class="p-2">Name</th>
                 </tr>
-                <tr *ngFor="let concept of whitelist" [class.new]="concept.new">
-                    <td>{{concept.sctId}}</td>
-                    <td class="font-size-12">{{concept.fsn}}
-                        <button class="delete-button" (click)="removeFromWhitelist(concept)"><i class="fas fa-minus"></i></button>
-                    </td>
+                <tr *ngFor="let concept of whitelist" [class.new]="concept.new" class="position-relative">
+                    <td class="p-2">{{concept.sctId}}</td>
+                    <td class="p-2">{{concept.fsn}}</td>
+<!--                    <button class="delete-button" (click)="removeFromWhitelist(concept)"><i class="fas fa-minus"></i></button>-->
+                    <button class="delete-button btn rounded text-center p-0" (click)="removeFromWhitelist(concept)"><i class="fas fa-times"></i></button>
                 </tr>
             </table>
         </div>

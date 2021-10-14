@@ -23,7 +23,7 @@ export class HttpService {
     }
 
     getTypeahead(term): Observable<any> {
-        return this.http.get(this.uiConfiguration.endpoints.terminologyServerEndpoint + this.activeProject.key + '/concepts?activeFilter=true&termActive=true&limit=20&term=' + term)
+        return this.http.get(this.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeProject ? this.activeProject.key : 'MAIN') + '/concepts?activeFilter=true&termActive=true&limit=20&term=' + term)
             .pipe(map(response => {
                 const typeaheads = [];
 
@@ -44,6 +44,6 @@ export class HttpService {
             termActive: true
         };
 
-        return this.http.post<object>(this.uiConfiguration.endpoints.terminologyServerEndpoint + this.activeProject.key + '/concepts/search', params);
+        return this.http.post<object>(this.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeProject ? this.activeProject.key : 'MAIN') + '/concepts/search', params);
     }
 }

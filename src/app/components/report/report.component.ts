@@ -6,7 +6,6 @@ import {animate, keyframes, state, style, transition, trigger} from '@angular/an
 import {PathingService} from '../../services/pathing/pathing.service';
 import {catchError, debounceTime, distinctUntilChanged, filter, switchMap, tap} from 'rxjs/operators';
 import {HttpService} from '../../services/http/http.service';
-import {AuthoringService} from '../../services/authoring/authoring.service';
 import {UtilityService} from '../../services/utility/utility.service';
 
 @Component({
@@ -44,19 +43,24 @@ export class ReportComponent implements OnInit {
     runsSubscription: Subscription;
     whitelist: any;
     whitelistSubscription: Subscription;
+    activeBranch: any;
+    activeBranchSubscription: Subscription;
+
 
     // typeahead
     searchTerm: string;
     spinner = document.createElement('div');
+
     search = (text$: Observable<string>) => text$.pipe(
         debounceTime(300),
         filter((text) => text.length > 2),
         distinctUntilChanged(),
         tap(() => document.activeElement.parentElement.appendChild(this.spinner)),
-        switchMap(term => this.httpService.getTypeahead(term)
-            .pipe(tap(() => document.getElementById('spinner').remove()))
+        switchMap(term => this.httpService.getTypeahead(term).pipe(
+            tap(() => document.getElementById('spinner').remove(),
+                catchError(tap(() => document.getElementById('spinner').remove()))
+            ))
         ),
-        catchError(tap(() => document.getElementById('spinner').remove()))
     )
 
     constructor(private reportingService: ReportingService,
@@ -68,6 +72,7 @@ export class ReportComponent implements OnInit {
             this.activeReport = data;
             this.setRuns();
         });
+        this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
         this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe( data => this.activeProject = data);
         this.runsSubscription = this.reportingService.getRuns().subscribe( data => this.runs = data);
         this.whitelistSubscription = this.reportingService.getWhitelist().subscribe( data => this.whitelist = data);
@@ -77,8 +82,8 @@ export class ReportComponent implements OnInit {
         this.spinner.style.right = '7px';
     }
 
-    ngOnInit(): void {
-
+    ngOnInit() {
+        // setInterval(() => this.refresh(), 5000);
     }
 
     openModal(id: string): void {
@@ -96,16 +101,16 @@ export class ReportComponent implements OnInit {
     }
 
     submitReport(): void {
-        this.reportingService.httpPostReport(this.activeReport, this.getCodeSystemShortname(), this.activeProject.key).subscribe(() => {
+        this.reportingService.httpPostReport(this.activeReport, this.getCodeSystemShortname(), this.activeProject ? this.activeProject.key : this.activeBranch.branchPath).subscribe(() => {
             this.refresh();
         });
     }
 
     refresh(): void {
         if (this.activeReport) {
-            this.reportingService.httpGetReportRuns(this.activeReport.name).subscribe(data => {
-                if (JSON.stringify(data) !== JSON.stringify(this.runs)) {
-                    this.runs = data;
+            this.reportingService.httpGetReportRuns(this.activeReport.name).subscribe(runs => {
+                if (JSON.stringify(runs) !== JSON.stringify(this.runs)) {
+                    this.reportingService.setRuns(runs);
                 }
             });
         } else {
@@ -135,17 +140,17 @@ export class ReportComponent implements OnInit {
         });
     }
 
-    // APPROVED ^
-    ////////////////////////
-    // UNAPPROVED v
-
     getCodeSystemShortname() {
-        if (this.activeProject.metadata && this.activeProject.metadata.codeSystemShortName) {
+        if (this.activeProject && this.activeProject.metadata && this.activeProject.metadata.codeSystemShortName) {
             return this.activeProject.metadata.codeSystemShortName;
         } else {
             return 'SNOMEDCT';
         }
     }
+
+    // APPROVED ^
+    ////////////////////////
+    // UNAPPROVED v
 
     missingFieldsCheck(): void {
         let missingFields = false;

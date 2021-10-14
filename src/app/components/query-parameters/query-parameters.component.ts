@@ -5,11 +5,10 @@ import { TemplateService } from '../../services/template/template.service';
 import { AuthoringService } from '../../services/authoring/authoring.service';
 import { UtilityService } from '../../services/utility/utility.service';
 import { Concept } from '../../models/concept';
-import { TerminologyServerService } from '../../services/terminologyServer/terminologyServer.service';
 import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { typeaheadMinimumLength } from '../../../globals';
+import {catchError, debounceTime, distinctUntilChanged, filter, switchMap, tap} from 'rxjs/operators';
 import {PathingService} from '../../services/pathing/pathing.service';
+import {HttpService} from '../../services/http/http.service';
 
 @Component({
     selector: 'app-query-parameters',
@@ -29,19 +28,29 @@ export class QueryParametersComponent implements OnChanges {
 
     // typeahead
     searchTerm: string;
-    search = (text$: Observable<string>) =>
-        text$.pipe(
-            debounceTime(300),
-            distinctUntilChanged(),
-            switchMap(term => term.length < typeaheadMinimumLength ? []
-                : this.terminologyService.getTypeahead(term))
-        )
+    spinner = document.createElement('div');
+
+    search = (text$: Observable<string>) => text$.pipe(
+        debounceTime(300),
+        filter((text) => text.length > 2),
+        distinctUntilChanged(),
+        tap(() => document.activeElement.parentElement.appendChild(this.spinner)),
+        switchMap(term => this.httpService.getTypeahead(term).pipe(
+            tap(() => document.getElementById('spinner').remove(),
+                catchError(tap(() => document.getElementById('spinner').remove()))
+            ))
+        ),
+    )
 
     constructor(private templateService: TemplateService,
                 private authoringService: AuthoringService,
-                private terminologyService: TerminologyServerService,
+                private httpService: HttpService,
                 private pathingService: PathingService) {
         this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
+        this.spinner.id = 'spinner';
+        this.spinner.classList.add('spinner-border', 'spinner-border-sm', 'position-absolute');
+        this.spinner.style.top = '7px';
+        this.spinner.style.right = '7px';
     }
 
     ngOnChanges(): void {
@@ -75,7 +84,7 @@ export class QueryParametersComponent implements OnChanges {
 
 
         if (idList && idList.length > 0) {
-            this.terminologyService.getConceptsById(idList).subscribe(
+            this.httpService.getConceptsById(idList).subscribe(
                 data => {
                     data['items'].forEach(concept => {
                         this.addToWhitelistReadyConcepts(concept, key);
