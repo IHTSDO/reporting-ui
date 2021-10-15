@@ -1,5 +1,5 @@
 <div id="report" class="footer-margin">
-    <div *ngIf="activeReport" class="p-5">
+    <div *ngIf="activeReport else noReport" class="p-5">
         <div class="float-end m-2">
             <button class="btn p-2 px-3 mx-3 whitelist" data-toggle="modal" data-target="#whitelistModal"
                     (click)="openModal('whitelist-modal'); searchTerm = ''; getWhitelist()">
@@ -48,6 +48,11 @@
             </tbody>
         </table>
     </div>
+    <ng-template #noReport>
+        <div class="p-5">
+            <h2 class="text-center p-5">- Please select a report from the list on the left -</h2>
+        </div>
+    </ng-template>
 </div>
 
 <!-- DELETE MODAL -->
