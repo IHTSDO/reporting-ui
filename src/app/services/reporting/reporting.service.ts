@@ -63,8 +63,8 @@ export class ReportingService {
         return this.http.get<Report[]>('/schedule-manager/jobs/Report/' + name + '/runs');
     }
 
-    httpDeleteReport(params) {
-        return this.http.delete('/schedule-manager/jobs/Report/' + params.jobName + '/runs/' + params.id);
+    httpDeleteReport(name, id) {
+        return this.http.delete('/schedule-manager/jobs/Report/' + name + '/runs/' + id);
     }
 
     httpPostReport(query, codeSystemShortname, project): Observable<Query> {

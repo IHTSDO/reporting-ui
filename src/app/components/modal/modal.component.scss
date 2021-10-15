@@ -42,26 +42,18 @@ app-modal {
                 font-size: 1.5rem;
                 max-height: 80vh;
 
-                label {
-                    color: $slate-grey;
-                    line-height: 1rem;
-
-                    span {
-                        font-size: 1rem;
-                    }
-                }
-
-                input, textarea {
+                input, textarea, label {
                     cursor: text;
-                    color: $black;
+                    color: $bootstrap-black;
+                    font-weight: 300;
+                    font-size: 1.4rem;
 
                     &.input-border {
                         border: 1px solid $alto-white;
                     }
 
-                    &.form-control {
-                        font-weight: 300;
-                        font-size: 1.2rem;
+                    span {
+                        font-size: 1rem;
                     }
                 }
 
@@ -72,13 +64,12 @@ app-modal {
                 }
 
                 div.note {
-                    font-size: 1rem;
                     color: $slate-grey;
                 }
 
                 span.ready-concept {
                     font-size: 1.2rem;
-                    background: $cerulean;
+                    background: $alto-white;
                     border-radius: 1rem;
                     position: relative;
                     cursor: default;
@@ -87,7 +78,8 @@ app-modal {
                         display: none;
                         position: absolute;
                         right: 0;
-                        background-color: lighten($cerulean, 10%);
+                        background-color: $alto-white;
+                        color: $mandy;
                         width: 1.8rem;
                     }
 
@@ -184,6 +176,14 @@ app-modal {
 
                 button {
                     font-weight: 300;
+
+                    &.accept:hover {
+                        background-color: darken($fruit-salad, 10%);
+                    }
+
+                    &.decline:hover {
+                        background-color: darken($mandy, 10%);
+                    }
                 }
             }
         }

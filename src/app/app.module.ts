@@ -40,6 +40,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {ReportComponent} from './components/report/report.component';
 import { HiddenPipe } from './pipes/hidden/hidden.pipe';
 import { DisplayOrderPipe } from './pipes/displayOrder/display-order.pipe';
+import { OrderByPipe } from './pipes/orderBy/order-by.pipe';
 
 @NgModule({
     declarations: [
@@ -57,7 +58,8 @@ import { DisplayOrderPipe } from './pipes/displayOrder/display-order.pipe';
         BranchPipe,
         ProjectPipe,
         HiddenPipe,
-        DisplayOrderPipe
+        DisplayOrderPipe,
+        OrderByPipe
     ],
     imports: [
         BrowserModule,

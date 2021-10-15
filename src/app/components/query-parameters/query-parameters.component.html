@@ -1,14 +1,14 @@
-<div *ngIf="query" id="query-parameters">
-    <div *ngFor="let parameter of query?.parameters | keyvalue | displayOrder" class="pb-2 position-relative">
+<div *ngIf="activeReport" id="query-parameters">
+    <div *ngFor="let parameter of activeReport?.parameters | keyvalue | displayOrder" class="pb-2 position-relative">
         <ng-container [ngSwitch]="parameter.value.type">
             <div *ngSwitchCase="'CONCEPT'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <input class="form-control" type="text" [(ngModel)]="parameter?.value.value" [ngbTypeahead]="search" [required]="parameter.value.mandatory"/>
             </div>
             <div *ngSwitchCase="'BOOLEAN'">
-                <label class="m-0" for="{{parameter.key}}">{{parameter.key}}</label>
-                <div class="w-100">
-                    <mat-checkbox id="{{parameter.key}}" name="{{parameter.key}}" [(ngModel)]="parameter.value.value" class="pl-2"></mat-checkbox>
+                <div class="form-check ms-3">
+                    <input class="form-check-input" type="checkbox" [(ngModel)]="parameter.value.value" id="{{parameter.key}}">
+                    <label class="form-check-label" for="{{parameter.key}}">{{parameter.key}}</label>
                 </div>
             </div>
             <div *ngSwitchCase="'STRING'">
@@ -25,7 +25,7 @@
             </div>
             <div *ngSwitchCase="'TEMPLATE_NAME'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <select id="{{parameter.key}}" class="form-control" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory">
+                <select id="{{parameter.key}}" class="form-select" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory">
                     <option selected></option>
                     <option *ngFor="let template of templates | orderBy:'name'">{{template.name}}</option>
                 </select>

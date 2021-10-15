@@ -7,6 +7,7 @@ import {PathingService} from '../../services/pathing/pathing.service';
 import {catchError, debounceTime, distinctUntilChanged, filter, switchMap, tap} from 'rxjs/operators';
 import {HttpService} from '../../services/http/http.service';
 import {UtilityService} from '../../services/utility/utility.service';
+import {AuthoringService} from '../../services/authoring/authoring.service';
 
 @Component({
     selector: 'app-report',
@@ -32,6 +33,7 @@ export class ReportComponent implements OnInit {
     saved = 'start';
     saveResponse: string;
     whitelistChanged = false;
+    runId: string;
 
     reports: any[];
     reportsSubscription: Subscription;
@@ -66,7 +68,8 @@ export class ReportComponent implements OnInit {
     constructor(private reportingService: ReportingService,
                 private modalService: ModalService,
                 private pathingService: PathingService,
-                private httpService: HttpService) {
+                private httpService: HttpService,
+                private authoringService: AuthoringService) {
         this.reportsSubscription = this.reportingService.getReports().subscribe( data => this.reports = data);
         this.activeReportSubscription = this.reportingService.getActiveReport().subscribe( data => {
             this.activeReport = data;
@@ -95,7 +98,7 @@ export class ReportComponent implements OnInit {
     }
 
     deleteReport(): void {
-        this.reportingService.httpDeleteReport(this.activeReport).subscribe(() => {
+        this.reportingService.httpDeleteReport(this.activeReport.name, this.runId).subscribe(() => {
             this.refresh();
         });
     }
@@ -148,10 +151,6 @@ export class ReportComponent implements OnInit {
         }
     }
 
-    // APPROVED ^
-    ////////////////////////
-    // UNAPPROVED v
-
     missingFieldsCheck(): void {
         let missingFields = false;
         for (const param in this.activeReport.parameters) {
@@ -174,7 +173,6 @@ export class ReportComponent implements OnInit {
         }
     }
 
-    // Whitelist Modal Functions
     retrieveConceptsById(input): void {
         let idList = [];
         if (input) {
@@ -191,15 +189,28 @@ export class ReportComponent implements OnInit {
         }
     }
 
+    parametersExistCheck(): boolean {
+        for (const param in this.activeReport.parameters) {
+            if (this.activeReport.parameters.hasOwnProperty(param)) {
+                if (this.activeReport.parameters[param].type !== 'HIDDEN') {
+                    return true;
+                } else {
+                    this.activeReport.parameters[param].value = this.authoringService.environmentEndpoint + 'template-service';
+                }
+            }
+        }
+        return false;
+    }
+
     addToWhitelist(concept) {
         this.searchTerm = '';
 
-        const exists = this.whitelist.find(item => {
-            return item.sctId === concept.id;
-        });
+        // const exists = this.whitelist.find(item => {
+        //     return item.sctId === concept.id;
+        // });
 
-        if (exists === undefined) {
-            this.whitelist.unshift(UtilityService.convertFullConceptToShortConcept(concept));
+        if (this.whitelist.find(item => item.sctId === concept.id)) {
+            this.reportingService.setWhitelist(this.whitelist.unshift(UtilityService.convertFullConceptToShortConcept(concept)));
             this.whitelistChanged = true;
         }
     }
@@ -222,9 +233,9 @@ export class ReportComponent implements OnInit {
     }
 
     removeFromWhitelist(concept): void {
-        this.whitelist = this.whitelist.filter(item => {
+        this.reportingService.setWhitelist(this.whitelist.filter(item => {
             return item.sctId !== concept.sctId;
-        });
+        }));
         this.whitelistChanged = true;
     }
 }

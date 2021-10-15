@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import { Query } from '../../models/query';
 import { Template } from '../../models/template';
 import { TemplateService } from '../../services/template/template.service';
@@ -9,27 +9,27 @@ import { Observable } from 'rxjs';
 import {catchError, debounceTime, distinctUntilChanged, filter, switchMap, tap} from 'rxjs/operators';
 import {PathingService} from '../../services/pathing/pathing.service';
 import {HttpService} from '../../services/http/http.service';
+import {ReportingService} from '../../services/reporting/reporting.service';
 
 @Component({
     selector: 'app-query-parameters',
     templateUrl: './query-parameters.component.html',
     styleUrls: ['./query-parameters.component.scss']
 })
-export class QueryParametersComponent implements OnChanges {
-
-    @Input() query: Query;
+export class QueryParametersComponent implements OnInit {
 
     @ViewChild('textareaTypeahead', { static: false }) inputElement: ElementRef;
 
     templates: Template[];
 
-    private activeProject: any;
-    private activeProjectSubscription;
+    activeProject: any;
+    activeProjectSubscription;
+    activeReport: any;
+    activeReportSubscription;
 
     // typeahead
     searchTerm: string;
     spinner = document.createElement('div');
-
     search = (text$: Observable<string>) => text$.pipe(
         debounceTime(300),
         filter((text) => text.length > 2),
@@ -45,23 +45,27 @@ export class QueryParametersComponent implements OnChanges {
     constructor(private templateService: TemplateService,
                 private authoringService: AuthoringService,
                 private httpService: HttpService,
-                private pathingService: PathingService) {
+                private pathingService: PathingService,
+                private reportingService: ReportingService) {
         this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
+        this.activeReportSubscription = this.reportingService.getActiveReport().subscribe(data => {
+            this.activeReport = data;
+            this.setupQueryParameters();
+        });
         this.spinner.id = 'spinner';
         this.spinner.classList.add('spinner-border', 'spinner-border-sm', 'position-absolute');
         this.spinner.style.top = '7px';
         this.spinner.style.right = '7px';
     }
 
-    ngOnChanges(): void {
-        if (this.query) {
-            this.templateService.getTemplateConcepts().subscribe(data => {
-                this.templates = data;
-            });
+    ngOnInit() {
+    }
 
-            for (const key in this.query.parameters) {
-                if (this.query.parameters.hasOwnProperty(key)) {
-                    const parameter = this.query.parameters[key];
+    setupQueryParameters() {
+        if (this.activeReport) {
+            for (const key in this.activeReport.parameters) {
+                if (this.activeReport.parameters.hasOwnProperty(key)) {
+                    const parameter = this.activeReport.parameters[key];
                     if (parameter.type === 'BOOLEAN') {
                         parameter.value = JSON.parse(parameter.defaultValue);
                     }
@@ -70,6 +74,11 @@ export class QueryParametersComponent implements OnChanges {
                     }
                     if (parameter.type === 'CONCEPT_LIST') {
                         parameter.value = '';
+                    }
+                    if (!this.templates && parameter.type === 'TEMPLATE') {
+                        this.templateService.getTemplateConcepts().subscribe(data => {
+                            this.templates = data;
+                        });
                     }
                 }
             }
@@ -81,7 +90,6 @@ export class QueryParametersComponent implements OnChanges {
         if (input) {
             idList = input.match(/[0-9]{4,16}/g);
         }
-
 
         if (idList && idList.length > 0) {
             this.httpService.getConceptsById(idList).subscribe(
@@ -96,16 +104,16 @@ export class QueryParametersComponent implements OnChanges {
     addToWhitelistReadyConcepts(concept, key): void {
         this.searchTerm = '';
 
-        if (this.query.parameters[key].value.length > 1) {
-            this.query.parameters[key].value += ', ' + UtilityService.convertShortConceptToString(concept);
+        if (this.activeReport.parameters[key].value.length > 1) {
+            this.activeReport.parameters[key].value += ', ' + UtilityService.convertShortConceptToString(concept);
         } else {
-            this.query.parameters[key].value += UtilityService.convertShortConceptToString(concept);
+            this.activeReport.parameters[key].value += UtilityService.convertShortConceptToString(concept);
         }
     }
 
     removeFromWhitelistReadyConcepts(concept, key): void {
         const re = new RegExp(concept.sctId + '[^,]+(, )?');
-        this.query.parameters[key].value = this.query.parameters[key].value.replace(re, '');
+        this.activeReport.parameters[key].value = this.activeReport.parameters[key].value.replace(re, '');
     }
 
     convertShortConceptToString(input: Concept): string {
