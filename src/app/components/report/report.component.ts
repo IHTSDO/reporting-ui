@@ -86,7 +86,7 @@ export class ReportComponent implements OnInit {
     }
 
     ngOnInit() {
-        // setInterval(() => this.refresh(), 5000);
+        setInterval(() => this.refresh(), 5000);
     }
 
     openModal(id: string): void {
