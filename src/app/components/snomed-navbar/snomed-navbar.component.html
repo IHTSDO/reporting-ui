@@ -1,6 +1,6 @@
 <nav class="navbar sticky-top navbar-dark bg-dark p-2 pe-2">
     <a class="logo" routerLink="/">
-        <img class="logo me-2 p-0" src="/assets/small_logo.png">
+        <img class="logo me-2 p-0" src="/reporting/assets/small_logo.png">
         <span class="title text-ghost-grey">SNOMED CT Reporting Platform</span>
     </a>
 
@@ -11,7 +11,7 @@
             </a>
             <div class="dropdown-menu py-0" aria-labelledby="branchDropdown">
                 <ng-container *ngFor="let branch of branches | alphabetical:'branchPath' | branch:projects">
-                    <a class="dropdown-item ps-3" [routerLink]="[branch.branchPath]" [queryParams]="{report: activeReport.name}" (click)="setBranch(branch)">{{branch?.branchPath}}</a>
+                    <a class="dropdown-item ps-3" [routerLink]="[branch.branchPath]" [queryParams]="{report: activeReport?.name}" (click)="setBranch(branch)">{{branch?.branchPath}}</a>
                 </ng-container>
             </div>
         </li>
@@ -22,10 +22,10 @@
             </a>
             <div class="dropdown-menu py-0" aria-labelledby="projectDropdown">
                 <ng-container *ngFor="let project of projects | alphabetical:'key' | project:activeBranch">
-                    <a class="dropdown-item ps-3" [routerLink]="[activeBranch.branchPath, project.key]" [queryParams]="{report: activeReport.name}" (click)="setProject(project)">{{project?.key}}</a>
+                    <a class="dropdown-item ps-3" [routerLink]="[activeBranch.branchPath, project.key]" [queryParams]="{report: activeReport?.name}" (click)="setProject(project)">{{project?.key}}</a>
                 </ng-container>
                 <a *ngIf="activeProject" class="dropdown-item ps-3" (click)="noProject()">
-                    <button class="btn py-0 m-0 w-100 text-white bg-mandy" [routerLink]="[activeBranch.branchPath]" [queryParams]="{report: activeReport.name}">REMOVE</button>
+                    <button class="btn py-0 m-0 w-100 text-white bg-mandy" [routerLink]="[activeBranch.branchPath]" [queryParams]="{report: activeReport?.name}">REMOVE</button>
                 </a>
             </div>
         </li>
@@ -37,10 +37,10 @@
             <div class="dropdown-menu py-0" aria-labelledby="taskDropdown">
                 <ng-container *ngIf="tasks.length">
                     <ng-container *ngFor="let task of tasks | alphabetical:'key'">
-                        <a class="dropdown-item ps-3" [routerLink]="[activeBranch.branchPath, activeProject.key, task.key]" [queryParams]="{report: activeReport.name}" (click)="setTask(task)">{{task?.key}}</a>
+                        <a class="dropdown-item ps-3" [routerLink]="[activeBranch.branchPath, activeProject.key, task.key]" [queryParams]="{report: activeReport?.name}" (click)="setTask(task)">{{task?.key}}</a>
                     </ng-container>
                     <a *ngIf="activeTask" class="dropdown-item ps-3" (click)="noTask()">
-                        <button class="btn py-0 m-0 w-100 text-white bg-mandy" [routerLink]="[activeBranch.branchPath, activeProject.key]" [queryParams]="{report: activeReport.name}">REMOVE</button>
+                        <button class="btn py-0 m-0 w-100 text-white bg-mandy" [routerLink]="[activeBranch.branchPath, activeProject.key]" [queryParams]="{report: activeReport?.name}">REMOVE</button>
                     </a>
                 </ng-container>
                 <ng-container *ngIf="!tasks.length">
