@@ -8,6 +8,7 @@ import {catchError, debounceTime, distinctUntilChanged, filter, switchMap, tap} 
 import {HttpService} from '../../services/http/http.service';
 import {UtilityService} from '../../services/utility/utility.service';
 import {AuthoringService} from '../../services/authoring/authoring.service';
+import {AuthenticationService} from '../../services/authentication/authentication.service';
 
 @Component({
     selector: 'app-report',
@@ -34,6 +35,7 @@ export class ReportComponent implements OnInit {
     saveResponse: string;
     whitelistChanged = false;
     runId: string;
+    myReportsOnly = false;
 
     reports: any[];
     reportsSubscription: Subscription;
@@ -47,6 +49,8 @@ export class ReportComponent implements OnInit {
     whitelistSubscription: Subscription;
     activeBranch: any;
     activeBranchSubscription: Subscription;
+    user: any;
+    userSubscription: Subscription;
 
 
     // typeahead
@@ -69,7 +73,8 @@ export class ReportComponent implements OnInit {
                 private modalService: ModalService,
                 private pathingService: PathingService,
                 private httpService: HttpService,
-                private authoringService: AuthoringService) {
+                private authoringService: AuthoringService,
+                private authenticationService: AuthenticationService) {
         this.reportsSubscription = this.reportingService.getReports().subscribe( data => this.reports = data);
         this.activeReportSubscription = this.reportingService.getActiveReport().subscribe( data => {
             this.activeReport = data;
@@ -79,6 +84,7 @@ export class ReportComponent implements OnInit {
         this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe( data => this.activeProject = data);
         this.runsSubscription = this.reportingService.getRuns().subscribe( data => this.runs = data);
         this.whitelistSubscription = this.reportingService.getWhitelist().subscribe( data => this.whitelist = data);
+        this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
         this.spinner.id = 'spinner';
         this.spinner.classList.add('spinner-border', 'spinner-border-sm', 'position-absolute');
         this.spinner.style.top = '7px';

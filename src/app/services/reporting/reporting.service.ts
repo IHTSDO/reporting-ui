@@ -86,19 +86,4 @@ export class ReportingService {
         return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/' + codeSystemShortName + '/whitelist',
             JSON.stringify(params));
     }
-
-    // // CATEGORIES ENDPOINTS
-    // getCategories(): Observable<Category[]> {
-    //     return this.http.get<Category[]>('/schedule-manager/jobs/Report/');
-    // }
-
-    // // WHITELIST ENDPOINTS
-    // getWhitelist(name, codeSystemShortName): Observable<Concept[]> {
-    //     return this.http.get<Concept[]>('/schedule-manager/jobs/Report/' + name + '/' + codeSystemShortName + '/whitelist');
-    // }
-    //
-    // postWhitelist(name, codeSystemShortName, params): Observable<Concept[]> {
-    //     return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/' + codeSystemShortName + '/whitelist',
-    //         JSON.stringify(params));
-    // }
 }

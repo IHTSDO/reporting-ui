@@ -1,20 +1,23 @@
 <div id="report" class="footer-margin">
-    <div *ngIf="activeReport else noReport" class="p-5">
-        <div class="float-end m-2">
-            <button class="btn p-2 px-3 mx-3 whitelist" data-toggle="modal" data-target="#whitelistModal"
-                    (click)="openModal('whitelist-modal'); searchTerm = ''; getWhitelist()">
-                Whitelist
-            </button>
-            <button *ngIf="parametersExistCheck()" class="btn p-2 px-3 new-run" data-toggle="modal" data-target="#queryModal" (click)="openModal('query-modal')">
-                Configure Query
-            </button>
-            <button *ngIf="!parametersExistCheck()" class="btn p-2 px-3 new-run" (click)="submitReport()">
-                Run Query
-            </button>
-        </div>
-        <h2 class="mb-3">{{activeReport.name}}</h2>
-        <p class="description mb-3 text-bootstrap-black">{{activeReport.description}}</p>
+    <div *ngIf="activeReport else noReport" class="position-relative">
+        <div class="row">
+            <div class="col-9 p-5">
+                <h2 class="mb-3">{{activeReport.name}}</h2>
+                <p class="description mb-3 text-bootstrap-black">{{activeReport.description}}</p>
+            </div>
+            <div class="col-3 p-5">
+                <div class="text-center">
+                    <button class="btn p-2 px-3 mx-3 whitelist" data-toggle="modal" data-target="#whitelistModal" (click)="openModal('whitelist-modal'); searchTerm = ''; getWhitelist()">Whitelist</button>
+                    <button *ngIf="parametersExistCheck()" class="btn p-2 px-3 new-run" data-toggle="modal" data-target="#queryModal" (click)="openModal('query-modal')">Configure Query</button>
+                    <button *ngIf="!parametersExistCheck()" class="btn p-2 px-3 new-run" (click)="submitReport()">Run Query</button>
+                </div>
+            </div>
 
+        </div>
+        <div class="form-check form-switch">
+            <label class="form-check-label" for="flexSwitchCheckDefault">My Reports Only</label>
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" [(ngModel)]="myReportsOnly">
+        </div>
     </div>
     <div *ngIf="runs && runs[0]">
         <table class="table table-bordered">
@@ -27,7 +30,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let run of runs | slice:0:20" class="table-body position-relative">
+            <tr *ngFor="let run of runs | myReportsOnly:myReportsOnly:user | slice:0:20" class="table-body position-relative">
                 <td class="p-3">{{run.issuesReported ? run.issuesReported : '0'}}</td>
                 <td class="p-3">{{run.project}}</td>
                 <td class="p-3 parameter" *ngFor="let parameter of runs[0].parameters | keyvalue | displayOrder | hidden">{{run?.parameters ? run.parameters[parameter.key]?.value : ''}}</td>
