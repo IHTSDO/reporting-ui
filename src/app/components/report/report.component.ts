@@ -244,4 +244,8 @@ export class ReportComponent implements OnInit {
         }));
         this.whitelistChanged = true;
     }
+
+    spamProtection() {
+        return this.runs && this.runs.find(run => run.user === this.user.login).status === 'Scheduled';
+    }
 }

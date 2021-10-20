@@ -8,8 +8,8 @@
             <div class="col-3 p-5">
                 <div class="text-center">
                     <button class="btn p-2 px-3 mx-3 whitelist" data-toggle="modal" data-target="#whitelistModal" (click)="openModal('whitelist-modal'); searchTerm = ''; getWhitelist()">Whitelist</button>
-                    <button *ngIf="parametersExistCheck()" class="btn p-2 px-3 new-run" data-toggle="modal" data-target="#queryModal" (click)="openModal('query-modal')">Configure Query</button>
-                    <button *ngIf="!parametersExistCheck()" class="btn p-2 px-3 new-run" (click)="submitReport()">Run Query</button>
+                    <button *ngIf="parametersExistCheck()" class="btn p-2 px-3 new-run" data-toggle="modal" data-target="#queryModal" (click)="openModal('query-modal')" [disabled]="spamProtection()">Configure Query</button>
+                    <button *ngIf="!parametersExistCheck()" class="btn p-2 px-3 new-run" (click)="submitReport()" [disabled]="spamProtection()">Run Query</button>
                 </div>
             </div>
 
