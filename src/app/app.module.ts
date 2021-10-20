@@ -41,7 +41,7 @@ import {ReportComponent} from './components/report/report.component';
 import { HiddenPipe } from './pipes/hidden/hidden.pipe';
 import { DisplayOrderPipe } from './pipes/displayOrder/display-order.pipe';
 import { OrderByPipe } from './pipes/orderBy/order-by.pipe';
-import { MyReportsOnlyPipe } from './pipes/myReportsOnly/my-reports-only.pipe';
+import { AllReportsPipe } from './pipes/allReports/all-reports.pipe';
 
 @NgModule({
     declarations: [
@@ -61,7 +61,7 @@ import { MyReportsOnlyPipe } from './pipes/myReportsOnly/my-reports-only.pipe';
         HiddenPipe,
         DisplayOrderPipe,
         OrderByPipe,
-        MyReportsOnlyPipe
+        AllReportsPipe
     ],
     imports: [
         BrowserModule,

@@ -35,7 +35,7 @@ export class ReportComponent implements OnInit {
     saveResponse: string;
     whitelistChanged = false;
     runId: string;
-    myReportsOnly = false;
+    allReports = false;
 
     reports: any[];
     reportsSubscription: Subscription;
