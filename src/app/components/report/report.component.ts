@@ -246,6 +246,16 @@ export class ReportComponent implements OnInit {
     }
 
     spamProtection() {
-        return this.runs && this.runs.find(run => run.user === this.user.login).status === 'Scheduled';
+        if (this.runs) {
+            if (this.runs.find(run => run.user === this.user.login)) {
+                if (this.runs.find(run => run.user === this.user.login).status === 'Scheduled') {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }
