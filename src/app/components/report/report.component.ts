@@ -157,25 +157,29 @@ export class ReportComponent implements OnInit {
         }
     }
 
-    missingFieldsCheck(): void {
-        let missingFields = false;
+    validationCheck(): void {
+        let validationCheck = true;
         for (const param in this.activeReport.parameters) {
             if (this.activeReport.parameters.hasOwnProperty(param)) {
                 const field = this.activeReport.parameters[param];
                 if (field.mandatory && (field.type !== 'BOOLEAN')) {
                     if (field.value === '' || field.value === null || field.value === undefined) {
-                        missingFields = true;
+                        validationCheck = false;
                     }
+                }
+
+                if (field.value === ' ') {
+                    validationCheck = false;
                 }
             }
         }
 
-        if (missingFields) {
-            this.saveResponse = 'Missing Fields';
-            this.saved = (this.saved === 'start' ? 'end' : 'start');
-        } else {
+        if (validationCheck) {
             this.submitReport();
             this.closeModal('query-modal');
+        } else {
+            this.saveResponse = 'Invalid Input Fields';
+            this.saved = (this.saved === 'start' ? 'end' : 'start');
         }
     }
 
