@@ -1,23 +1,23 @@
 <div *ngIf="activeReport" id="query-parameters">
     <div *ngFor="let parameter of activeReport?.parameters | keyvalue | displayOrder" class="pb-2 position-relative">
         <ng-container [ngSwitch]="parameter.value.type">
-            <div *ngSwitchCase="'CONCEPT'">
+            <div *ngSwitchCase="'CONCEPT'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <div class="position-relative">
                     <input class="form-control" type="text" [(ngModel)]="parameter?.value.value" [ngbTypeahead]="search" [required]="parameter.value.mandatory"/>
                 </div>
             </div>
-            <div *ngSwitchCase="'BOOLEAN'">
-                <div class="form-check ms-3">
+            <div *ngSwitchCase="'BOOLEAN'" class="mb-3">
+                <div class="form-check ms-1">
                     <input class="form-check-input" type="checkbox" [(ngModel)]="parameter.value.value" id="{{parameter.key}}">
                     <label class="form-check-label" for="{{parameter.key}}">{{parameter.key}}</label>
                 </div>
             </div>
-            <div *ngSwitchCase="'STRING'">
+            <div *ngSwitchCase="'STRING'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <input id="{{parameter.key}}" name="{{parameter.key}}" class="form-control" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory">
             </div>
-            <div *ngSwitchCase="'CONCEPT_LIST'">
+            <div *ngSwitchCase="'CONCEPT_LIST'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <input type="text" class="form-control" [(ngModel)]="searchTerm" [ngbTypeahead]="search" (ngModelChange)="retrieveConceptsById(searchTerm, parameter.key)"/>
                 <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
@@ -25,18 +25,18 @@
                     <span class="remove-ready-concept text-center rounded-circle px-1" (click)="removeFromWhitelistReadyConcepts(readyConcept, parameter.key)"><i class="fas fa-times"></i></span>
                 </span>
             </div>
-            <div *ngSwitchCase="'TEMPLATE_NAME'">
+            <div *ngSwitchCase="'TEMPLATE_NAME'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <select id="{{parameter.key}}" class="form-select" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory">
                     <option selected></option>
                     <option *ngFor="let template of templates | orderBy:'name'">{{template.name}}</option>
                 </select>
             </div>
-            <div *ngSwitchCase="'TEMPLATE'">
+            <div *ngSwitchCase="'TEMPLATE'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <textarea class="form-control" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory"></textarea>
             </div>
-            <div *ngSwitchCase="'ECL'">
+            <div *ngSwitchCase="'ECL'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <textarea class="form-control" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory"></textarea>
             </div>
