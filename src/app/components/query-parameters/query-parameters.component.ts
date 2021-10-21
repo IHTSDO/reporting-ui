@@ -54,8 +54,8 @@ export class QueryParametersComponent implements OnInit {
         });
         this.spinner.id = 'spinner';
         this.spinner.classList.add('spinner-border', 'spinner-border-sm', 'position-absolute');
-        this.spinner.style.top = '7px';
-        this.spinner.style.right = '7px';
+        this.spinner.style.top = '10px';
+        this.spinner.style.right = '10px';
     }
 
     ngOnInit() {

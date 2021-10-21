@@ -4,10 +4,11 @@ div#report {
     margin-left: 32rem;
 
     p.description {
-        font-size: 14px;
+        font-size: 1.2rem;
     }
 
     button {
+        font-size: 1.2rem;
         &.whitelist {
             background-color: $regent-grey;
             color: $white;

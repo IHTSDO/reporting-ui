@@ -1,13 +1,13 @@
 <div id="report" class="footer-margin">
     <div *ngIf="activeReport else noReport" class="position-relative">
-        <div class="row">
-            <div class="col-9 p-5">
+        <div class="row g-0">
+            <div class="col-9 p-4">
                 <h2 class="mb-3">{{activeReport.name}}</h2>
                 <p class="description mb-3 text-bootstrap-black">{{activeReport.description}}</p>
             </div>
-            <div class="col-3 p-5">
-                <div class="text-center">
-                    <button class="btn p-2 px-3 mx-3 whitelist" data-toggle="modal" data-target="#whitelistModal" (click)="openModal('whitelist-modal'); searchTerm = ''; getWhitelist()">Whitelist</button>
+            <div class="col-3 p-4">
+                <div class="text-end">
+                    <button class="btn mx-3 whitelist" data-toggle="modal" data-target="#whitelistModal" (click)="openModal('whitelist-modal'); searchTerm = ''; getWhitelist()">Exceptions</button>
                     <button *ngIf="parametersExistCheck()" class="btn p-2 px-3 new-run" data-toggle="modal" data-target="#queryModal" (click)="openModal('query-modal')" [disabled]="spamProtection()">Configure Query</button>
                     <button *ngIf="!parametersExistCheck()" class="btn p-2 px-3 new-run" (click)="submitReport()" [disabled]="spamProtection()">Run Query</button>
                 </div>
@@ -69,7 +69,7 @@
 
 <!-- QUERY MODAL -->
 <app-modal id="query-modal" class="modal">
-    <div header><h3 class="mb-0">Details<span class="px-2">{{activeReport?.name}}</span></h3></div>
+    <div header><h3 class="mb-0">{{activeReport?.name}}</h3></div>
     <div body>
         <app-query-parameters></app-query-parameters>
     </div>
@@ -81,10 +81,10 @@
 
 <!-- WHITELIST MODAL -->
 <app-modal id="whitelist-modal" class="modal" size="xl">
-    <h3 header class="mb-0">Whitelist<span class="px-2">{{activeReport?.name}}</span></h3>
+    <h3 header class="mb-0">Exceptions<span class="px-2">{{activeReport?.name}}</span></h3>
     <div body>
         <div class="position-relative pb-3">
-            <label class="w-100 m-0">Add concept to whitelist</label>
+            <label class="w-100 m-0">Add concept to exceptions</label>
             <input type="text" class="form-control" [(ngModel)]="searchTerm" [ngbTypeahead]="search" (ngModelChange)="retrieveConceptsById(searchTerm)"/>
             <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
         </div>
@@ -102,11 +102,11 @@
             </table>
         </div>
         <ng-template #noItems>
-            <div class="note text-center">- No items whitelisted -</div>
+            <div class="note text-center">- No exceptions added -</div>
         </ng-template>
     </div>
     <div footer>
         <div [@slide]="saved" class="px-3 saved">{{saveResponse}}</div>
-        <button type="button" class="btn bg-fruit-salad accept text-white" [disabled]="!whitelistChanged" (click)="saveWhitelist()">Save Whitelist</button>
+        <button type="button" class="btn bg-fruit-salad accept text-white" [disabled]="!whitelistChanged" (click)="saveWhitelist()">Save Exceptions</button>
     </div>
 </app-modal>

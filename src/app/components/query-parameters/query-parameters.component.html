@@ -3,7 +3,9 @@
         <ng-container [ngSwitch]="parameter.value.type">
             <div *ngSwitchCase="'CONCEPT'">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <input class="form-control" type="text" [(ngModel)]="parameter?.value.value" [ngbTypeahead]="search" [required]="parameter.value.mandatory"/>
+                <div class="position-relative">
+                    <input class="form-control" type="text" [(ngModel)]="parameter?.value.value" [ngbTypeahead]="search" [required]="parameter.value.mandatory"/>
+                </div>
             </div>
             <div *ngSwitchCase="'BOOLEAN'">
                 <div class="form-check ms-3">
