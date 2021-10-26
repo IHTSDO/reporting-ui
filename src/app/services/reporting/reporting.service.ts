@@ -67,6 +67,10 @@ export class ReportingService {
         return this.http.delete('/schedule-manager/jobs/Report/' + name + '/runs/' + id);
     }
 
+    httpDeleteReports(name, ids) {
+        return this.http.post('/schedule-manager/jobs/Report/' + name + '/runs/delete', ids);
+    }
+
     httpPostReport(query, codeSystemShortname, project): Observable<Query> {
         const params = {
             codeSystemShortname: codeSystemShortname,

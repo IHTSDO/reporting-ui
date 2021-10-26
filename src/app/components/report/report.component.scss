@@ -7,8 +7,16 @@ div#report {
         font-size: 1.2rem;
     }
 
+    div.button-box {
+        position: fixed;
+        bottom: 4rem;
+        right: 0;
+        z-index: 10;
+    }
+
     button {
         font-size: 1.2rem;
+
         &.whitelist {
             background-color: $regent-grey;
             color: $white;
@@ -39,29 +47,16 @@ div#report {
             min-height: 4rem;
 
             &:hover {
-                & > button.delete-button {
-                    display: block;
-                }
-
                 &.table-body {
-                    position: relative;
                     background-color: darken($white, 2.5%);
                 }
             }
 
-            button.delete-button {
-                display: none;
-                position: absolute;
-                top: 0.5rem;
-                right: 0.5rem;
-                height: 2rem;
-                width: 2rem;
-                font-size: 14px;
-                background-color: inherit;
-                color: $mandy;
+            &.selected {
+                background-color: lighten($anakiwa, 5%);
 
                 &:hover {
-                    color: darken($mandy, 10%);
+                    background-color: lighten($anakiwa, 2.5%);
                 }
             }
 
@@ -84,11 +79,9 @@ div#report {
                         color: black;
                     }
 
-                    span.time {
-
-                    }
-
                     span.status {
+                        pointer-events: auto;
+
                         &.completed {
                             cursor: pointer;
                             color: $fruit-salad;

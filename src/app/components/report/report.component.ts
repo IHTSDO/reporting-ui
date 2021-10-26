@@ -36,6 +36,7 @@ export class ReportComponent implements OnInit {
     whitelistChanged = false;
     runId: string;
     allReports = false;
+    deleteReports: any[] = [];
 
     reports: any[];
     reportsSubscription: Subscription;
@@ -247,6 +248,34 @@ export class ReportComponent implements OnInit {
             return item.sctId !== concept.sctId;
         }));
         this.whitelistChanged = true;
+    }
+
+    addToDeleteReports(run) {
+        if (!this.deleteReports.includes(run.id)) {
+            this.deleteReports.push(run.id);
+        } else {
+            this.deleteReports = this.deleteReports.filter(item => item !== run.id);
+        }
+    }
+
+    bulkDeleteReports() {
+        this.reportingService.httpDeleteReports(this.activeReport.name, this.deleteReports).subscribe(success => {
+            this.reportingService.setRuns(success);
+        }, error => {
+            console.log('error: ', error);
+        });
+    }
+
+    clearDeleteReports() {
+        this.deleteReports = [];
+    }
+
+    toBeDeleted(run) {
+        if (this.deleteReports.includes(run.id)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     spamProtection() {
