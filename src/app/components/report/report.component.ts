@@ -140,7 +140,8 @@ export class ReportComponent implements OnInit {
         return date.replace(/T|Z/g, ' ');
     }
 
-    viewReport(report): void {
+    viewReport(e, report): void {
+        e.stopPropagation();
         window.open(report.resultUrl);
     }
 

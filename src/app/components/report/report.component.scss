@@ -44,6 +44,7 @@ div#report {
 
     table {
         tr {
+            cursor: pointer;
             min-height: 4rem;
 
             &:hover {

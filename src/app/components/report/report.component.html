@@ -41,9 +41,9 @@
                     <span class="user mb-2">{{run.user}} </span>
                     <span class="time mb-2">{{convertDate(run.requestTime)}} UTC </span>
                     <ng-container [ngSwitch]="run.status">
-                        <span *ngSwitchCase="'Complete'" class="status completed" (click)="viewReport(run)">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></span>
+                        <span *ngSwitchCase="'Complete'" class="status completed" (click)="viewReport($event, run)">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></span>
                         <ng-container *ngSwitchCase="'Failed'">
-                            <span *ngIf="run.resultUrl" class="status failed" (click)="viewReport(run)" ngbTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></span>
+                            <span *ngIf="run.resultUrl" class="status failed" (click)="viewReport($event, run)" ngbTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></span>
                             <span *ngIf="!run.resultUrl" class="status failed" ngbTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-times-circle ms-1"></i></span>
                         </ng-container>
                         <span *ngSwitchDefault class="status running">{{run.status}}</span>
