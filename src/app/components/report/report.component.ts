@@ -79,6 +79,7 @@ export class ReportComponent implements OnInit {
         this.reportsSubscription = this.reportingService.getReports().subscribe( data => this.reports = data);
         this.activeReportSubscription = this.reportingService.getActiveReport().subscribe( data => {
             this.activeReport = data;
+            this.deleteReports = [];
             this.setRuns();
         });
         this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
