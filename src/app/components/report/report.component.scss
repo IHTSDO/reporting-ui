@@ -40,6 +40,11 @@ div#report {
         position: absolute;
         bottom: 0.5rem;
         right: 1rem;
+
+        label.label-override {
+            float: left;
+            margin-right: 3.6rem;
+        }
     }
 
     table {

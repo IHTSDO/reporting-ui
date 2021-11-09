@@ -35,7 +35,7 @@ export class ReportComponent implements OnInit {
     saveResponse: string;
     whitelistChanged = false;
     runId: string;
-    allReports = false;
+    allReports = true;
     deleteReports: any[] = [];
 
     reports: any[];
