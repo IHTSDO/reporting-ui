@@ -36,7 +36,7 @@
             <tbody>
             <tr *ngFor="let run of runs | allReports:allReports:user | slice:0:20" class="table-body position-relative" [class.selected]="toBeDeleted(run)" (click)="addToDeleteReports(run)">
                 <td class="p-3">{{run.issuesReported ? run.issuesReported : '0'}}</td>
-                <td class="p-3">{{run.project}}</td>
+                <td class="p-3">{{run.project}}<br><span *ngIf="run?.task" class="text-grey">{{'/' + run.task}}</span></td>
                 <td class="p-3 parameter" *ngFor="let parameter of runs[0].parameters | keyvalue | displayOrder | hidden">{{run?.parameters ? run.parameters[parameter.key]?.value : ''}}</td>
                 <td class="p-3 info">
                     <span class="user mb-2">{{run.user}} </span>
@@ -44,8 +44,8 @@
                     <ng-container [ngSwitch]="run.status">
                         <span *ngSwitchCase="'Complete'" class="status completed" (click)="viewReport($event, run)">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></span>
                         <ng-container *ngSwitchCase="'Failed'">
-                            <span *ngIf="run.resultUrl" class="status failed" (click)="viewReport($event, run)" ngbTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></span>
-                            <span *ngIf="!run.resultUrl" class="status failed" ngbTooltip="{{run?.debugInfo}}">{{run.status}}<i class="fas fa-times-circle ms-1"></i></span>
+                            <span *ngIf="run.resultUrl" class="status failed" (click)="viewReport($event, run)" ngbTooltip="{{run?.debugInfo | slice:0:1500}}{{run?.debugInfo.length > 1500 ? '...' : ''}}" placement="left">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></span>
+                            <span *ngIf="!run.resultUrl" class="status failed" ngbTooltip="{{run?.debugInfo | slice:0:1500}}{{run?.debugInfo.length > 1500 ? '...' : ''}}" placement="left">{{run.status}}<i class="fas fa-times-circle ms-1"></i></span>
                         </ng-container>
                         <span *ngSwitchDefault class="status running">{{run.status}}</span>
                     </ng-container>

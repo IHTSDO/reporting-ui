@@ -128,9 +128,15 @@ button, input, textarea {
 ngb-typeahead-window.dropdown-menu button {
     max-width: 30vw;
     font-size: 1.2rem;
-    //overflow-y: hidden;
 
     button.dropdown-item {
         font-weight: 300;
+    }
+}
+
+ngb-tooltip-window.tooltip {
+    div.tooltip-inner {
+        min-width: 30rem;
+        max-width: 60rem;
     }
 }

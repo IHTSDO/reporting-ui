@@ -44,6 +44,8 @@ export class ReportComponent implements OnInit {
     activeReportSubscription: Subscription;
     activeProject: any;
     activeProjectSubscription: Subscription;
+    activeTask: any;
+    activeTaskSubscription: Subscription;
     runs: any;
     runsSubscription: Subscription;
     whitelist: any;
@@ -84,6 +86,7 @@ export class ReportComponent implements OnInit {
         });
         this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
         this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe( data => this.activeProject = data);
+        this.activeTaskSubscription = this.pathingService.getActiveTask().subscribe(data => this.activeTask = data);
         this.runsSubscription = this.reportingService.getRuns().subscribe( data => this.runs = data);
         this.whitelistSubscription = this.reportingService.getWhitelist().subscribe( data => this.whitelist = data);
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
@@ -112,7 +115,7 @@ export class ReportComponent implements OnInit {
     }
 
     submitReport(): void {
-        this.reportingService.httpPostReport(this.activeReport, this.getCodeSystemShortname(), this.activeProject ? this.activeProject.key : this.activeBranch.branchPath).subscribe(() => {
+        this.reportingService.httpPostReport(this.activeReport, this.getCodeSystemShortname(), this.activeProject ? this.activeProject.key : this.activeBranch.branchPath, this.activeTask ? this.activeTask.key : null).subscribe(() => {
             this.refresh();
         });
     }

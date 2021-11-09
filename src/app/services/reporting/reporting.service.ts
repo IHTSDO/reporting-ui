@@ -71,11 +71,12 @@ export class ReportingService {
         return this.http.post('/schedule-manager/jobs/Report/' + name + '/runs/delete', ids);
     }
 
-    httpPostReport(query, codeSystemShortname, project): Observable<Query> {
+    httpPostReport(query, codeSystemShortname, project, task?): Observable<Query> {
         const params = {
             codeSystemShortname: codeSystemShortname,
             jobName: query.name,
             project: project,
+            task: task ? task : null,
             parameters: query.parameters
         };
 
