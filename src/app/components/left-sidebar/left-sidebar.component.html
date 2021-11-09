@@ -1,7 +1,29 @@
-<nav id="sidebar" class="footer-margin">
-    <h3 class="p-3 mb-0">Categories</h3>
-    <input type="search" class="searchbar py-2 px-3" [(ngModel)]="querySearch" (input)="updateText()" placeholder="Filter Queries...">
-    <div *ngFor="let category of categories" class="category py-2 px-3"
-         (click)="switchActiveCategory(category)"
-         [class.active]="activeCategory === category">{{category.name}}</div>
+<nav *ngIf="reports; else loading" id="sidebar" class="footer-margin">
+    <div class="position-fixed head">
+        <h3 class="p-3 mb-0">Reports</h3>
+        <input type="search" class="searchbar py-2 px-3" [(ngModel)]="textFilter" placeholder="Search for Reports...">
+        <div class="mx-0 p-1 row category">
+            <div *ngFor="let category of reports; let i = index" class="col-6 p-1">
+                <div class="p-1 px-2 rounded text-center {{colors[i]}}" (click)="selectCategory(category.name)" [class.active]="categoryFilter === category.name">{{category.name}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="position-fixed reports">
+        <ng-container *ngFor="let category of reports; let i = index">
+            <ng-container *ngIf="!categoryFilter || category.name === categoryFilter">
+                <div *ngFor="let report of category.jobs | alphabetical:'name':category.name | textFilter:textFilter | tags:msUser" class="report py-2 px-3 {{colors[i]}}-border"
+                     (click)="selectReport(report)"
+                     [class.active]="activeReport?.name === report?.name">{{report.name}}</div>
+            </ng-container>
+        </ng-container>
+    </div>
 </nav>
+<ng-template #loading>
+    <nav id="sidebar" class="footer-margin bg-alto-white">
+        <div class="loading p-3">
+            <div class="spinner-border" style="font-size: 1rem" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </nav>
+</ng-template>

@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { UIConfiguration } from '../models/uiConfiguration';
-import { AuthoringService } from '../services/authoring.service';
+import { AuthoringService } from '../services/authoring/authoring.service';
 
 
 @Injectable()

@@ -3,56 +3,57 @@
 app-modal {
     /* modals are hidden by default */
     display: none;
-    max-height: 90vh;
+    max-height: 80vh;
 
     div.modal-dialog {
         z-index: 1000;
 
         div.modal-content {
             div.modal-header {
-                div {
-                    display: inherit;
-                }
+                background-color: $bootstrap-black;
+                border-top-left-radius: initial;
+                border-top-right-radius: initial;
 
                 h3 {
+                    color: $white;
+                    font-weight: 300;
                     line-height: inherit;
 
                     span {
-                        color: $dove-grey;
-                        font-weight: 300;
-                        font-size: 1.2rem;
+                        font-size: 1.4rem;
+                        color: $regent-grey;
                     }
                 }
 
-                button > span {
-                    font-size: 2rem;
+                button {
+                    background-color: transparent;
+
+                    span {
+                        font-size: 2rem;
+                        color: $white;
+                        font-weight: 300;
+                        text-shadow: none;
+                        line-height: 0.8rem;
+                    }
                 }
             }
 
             div.modal-body {
-                max-height: calc(90vh - 12rem);
-                //overflow: scroll;
+                font-size: 1.5rem;
+                max-height: 80vh;
 
-                label {
-                    color: $scorpion-grey;
-                    line-height: 1rem;
-
-                    span {
-                        font-size: 1rem;
-                    }
-                }
-
-                input, textarea {
+                input, textarea, label {
                     cursor: text;
-                    color: $black;
+                    color: $bootstrap-black;
+                    font-weight: 300;
+                    font-size: 1.4rem;
 
                     &.input-border {
                         border: 1px solid $alto-white;
                     }
 
-                    &.form-control {
-                        font-weight: 300;
-                        font-size: 1.2rem;
+                    span {
+                        font-size: 1rem;
                     }
                 }
 
@@ -63,13 +64,12 @@ app-modal {
                 }
 
                 div.note {
-                    font-size: 1rem;
-                    color: $scorpion-grey;
+                    color: $slate-grey;
                 }
 
                 span.ready-concept {
                     font-size: 1.2rem;
-                    background: $jordy-blue;
+                    background: $alto-white;
                     border-radius: 1rem;
                     position: relative;
                     cursor: default;
@@ -78,7 +78,8 @@ app-modal {
                         display: none;
                         position: absolute;
                         right: 0;
-                        background-color: $horizon-blue;
+                        background-color: $alto-white;
+                        color: $mandy;
                         width: 1.8rem;
                     }
 
@@ -98,6 +99,22 @@ app-modal {
                         tr {
                             border-bottom: 1px solid #DEE2E6;
 
+                            button.delete-button {
+                                display: none;
+                                position: absolute;
+                                top: 0.2rem;
+                                right: 0.5rem;
+                                height: 2rem;
+                                width: 2rem;
+                                font-size: 14px;
+                                background-color: inherit;
+                                color: $mandy;
+
+                                &:hover {
+                                    color: darken($mandy, 10%);
+                                }
+                            }
+
                             th {
                                 font-weight: 400;
                                 background-color: $gallery-white;
@@ -112,39 +129,25 @@ app-modal {
                             }
 
                             td {
-                                button.delete-button {
-                                    display: none;
-                                    position: absolute;
-                                    right: 0;
-                                    background-color: transparent;
-                                    color: $crimson-red;
-
-                                    &:hover {
-                                        color: $pomegranate-red;
-                                    }
-                                }
-
                                 &:first-child {
                                     border-right: 1px solid #DEE2E6;
-                                }
-
-                                &.font-size-12 {
-                                    font-size: 1.2rem;
                                 }
                             }
 
                             &.new {
-                                color: $curious-blue;
+                                color: $cerulean;
                             }
 
                             &:hover {
                                 td {
                                     background-color: $gallery-white;
 
-                                    > button.delete-button {
-                                        display: inline-block;
-                                        z-index: 2;
-                                    }
+
+                                }
+
+                                > button.delete-button {
+                                    display: block;
+                                    z-index: 2;
                                 }
                             }
 
@@ -164,15 +167,24 @@ app-modal {
                 }
 
                 div.saved {
-                    color: $forest-green;
+                    color: $fruit-salad;
                 }
 
                 div.error {
-                    color: $crimson-red;
+                    color: $mandy;
                 }
 
                 button {
+                    font-size: 1.2rem;
                     font-weight: 300;
+
+                    &.accept:hover {
+                        background-color: darken($fruit-salad, 10%);
+                    }
+
+                    &.decline:hover {
+                        background-color: darken($mandy, 10%);
+                    }
                 }
             }
         }

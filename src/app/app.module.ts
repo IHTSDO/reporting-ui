@@ -5,69 +5,73 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbTooltipModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
-import { ReportingComponent } from './components/reporting/reporting.component';
 import { QueryParametersComponent } from './components/query-parameters/query-parameters.component';
 import { ModalComponent } from './components/modal/modal.component';
 
 // SERVICES
-import { ReportingService } from './services/reporting.service';
-import { UtilityService } from './services/utility.service';
-import { TemplateService } from './services/template.service';
-import { AuthoringService } from './services/authoring.service';
-import { AuthenticationService } from './services/authentication.service';
-import { TerminologyServerService } from './services/terminologyServer.service';
-import { ModalService } from './services/modal.service';
-import { ProjectService } from './services/project.service';
+import { ReportingService } from './services/reporting/reporting.service';
+import { UtilityService } from './services/utility/utility.service';
+import { TemplateService } from './services/template/template.service';
+import { AuthoringService } from './services/authoring/authoring.service';
+import { AuthenticationService } from './services/authentication/authentication.service';
+import { ModalService } from './services/modal/modal.service';
 
 // PIPES
-import { CategoryPipe } from './pipes/category.pipe';
-import { OrderByPipe } from './pipes/order-by.pipe';
-import { DisplayOrderPipe } from './pipes/display-order.pipe';
-import { HiddenPipe } from './pipes/hidden.pipe';
-import { TagsPipe } from './pipes/tags.pipe';
+import { TagsPipe } from './pipes/tags/tags.pipe';
 
 // INTERCEPTORS
 import { HeaderInterceptor } from './interceptors/header.interceptor';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
-import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
-import { MainToTopPipe } from './pipes/main-to-top.pipe';
-import { ProjectMatcherPipe } from './pipes/project-matcher.pipe';
+import { AlphabeticalPipe } from './pipes/alphabetical/alphabetical.pipe';
+import {TextFilterPipe} from './pipes/text-filter/text-filter.pipe';
+import { CategoryFilterPipe } from './pipes/category-filter/category-filter.pipe';
+import {PathingService} from './services/pathing/pathing.service';
+import { BranchPipe } from './pipes/branch/branch.pipe';
+import { ProjectPipe } from './pipes/project/project.pipe';
+import { AppRoutingModule } from './app-routing.module';
+import {ReportComponent} from './components/report/report.component';
+import { HiddenPipe } from './pipes/hidden/hidden.pipe';
+import { DisplayOrderPipe } from './pipes/displayOrder/display-order.pipe';
+import { OrderByPipe } from './pipes/orderBy/order-by.pipe';
+import { AllReportsPipe } from './pipes/allReports/all-reports.pipe';
 
 @NgModule({
     declarations: [
         AppComponent,
-        ReportingComponent,
         SnomedNavbarComponent,
         SnomedFooterComponent,
         LeftSidebarComponent,
-        CategoryPipe,
-        DisplayOrderPipe,
-        HiddenPipe,
-        OrderByPipe,
         ModalComponent,
         QueryParametersComponent,
+        ReportComponent,
         TagsPipe,
         AlphabeticalPipe,
-        MainToTopPipe,
-        ProjectMatcherPipe
+        TextFilterPipe,
+        CategoryFilterPipe,
+        BranchPipe,
+        ProjectPipe,
+        HiddenPipe,
+        DisplayOrderPipe,
+        OrderByPipe,
+        AllReportsPipe
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
         FormsModule,
         BrowserAnimationsModule,
-        MatTooltipModule,
         MatCheckboxModule,
-        NgbTypeaheadModule
+        NgbTypeaheadModule,
+        NgbTooltipModule,
+        AppRoutingModule
     ],
     providers: [
         ReportingService,
@@ -75,9 +79,8 @@ import { ProjectMatcherPipe } from './pipes/project-matcher.pipe';
         TemplateService,
         AuthoringService,
         AuthenticationService,
-        TerminologyServerService,
-        ProjectService,
         ModalService,
+        PathingService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: HeaderInterceptor,

@@ -2,46 +2,203 @@
 
 nav#sidebar {
     position: fixed;
-    width: 192px;
-    height: calc(100vh - 56px);
-    background: $alto-white;
 
-    h3 {
-        border-bottom: 1px $ghost-grey solid;
+    div.loading {
+        background: $alto-white;
+        width: 32rem;
+        height: calc(100vh - 90px);
     }
 
-    input.searchbar {
-        font-size: 1.4rem;
-        background-color: $gallery-white;
-        width: 100%;
-        border-bottom: 1px $ghost-grey solid;
-        color: $scorpion-grey;
-        cursor: text;
-    }
+    div.head {
+        background: $alto-white;
+        width: 32rem;
 
-    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-        color: $regent-grey;
-        font-weight: 300;
-        opacity: 1; /* Firefox */
-    }
+        h3 {
+            border-bottom: 1px $ghost-grey solid;
+            height: 4rem;
 
-    div.category {
-        font-size: 1.4rem;
-        width: 100%;
-        color: $scorpion-grey;
-        cursor: pointer;
-        border-bottom: 1px $ghost-grey solid;
-
-        &:hover {
-            background-color: $ghost-grey;
+            span {
+                font-size: 1.2rem;
+                color: $grey;
+            }
         }
 
-        &.active {
-            background-color: $tropical-blue;
+        input.searchbar {
+            font-size: 1.4rem;
+            background-color: lighten($alto-white, 10%);
+            width: 100%;
+            border-bottom: 1px $ghost-grey solid;
+            color: $bootstrap-black;
+            cursor: text;
+        }
+
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: $grey;
+            font-weight: 300;
+            opacity: 1; /* Firefox */
+        }
+
+        div.category {
+            cursor: pointer;
+            border-bottom: 1px solid $ghost-grey;
+
+            div {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
+    div.reports {
+        background: $alto-white;
+        width: 32rem;
+        margin-top: 174px;
+        height: calc(100vh - 264px);
+        overflow: auto;
+
+        div.report {
+            font-size: 1.2rem;
+            width: 100%;
+            color: $bootstrap-black;
+            cursor: pointer;
+            border-bottom: 1px $ghost-grey solid;
 
             &:hover {
-                background-color: $jordy-blue;
+                background-color: darken($alto-white, 5%);
+            }
+
+            &.active {
+                background-color: $anakiwa;
+
+                &:hover {
+                    background-color: darken($anakiwa, 5%);
+                }
             }
         }
     }
 }
+
+$spring-rain: #95BB95;
+$london-hue: #B695BB;
+$vanilla: #BBAE95;
+$dull-lavender: #A0A5E3;
+$tonys-pink: #E98689;
+$green-mist: #7DC1B3;
+
+.spring-rain {
+    background-color: lighten($spring-rain, 10%) !important;
+    border: 2px solid lighten($spring-rain, 10%);
+
+    &:hover {
+        background-color: $spring-rain !important;
+        border: 2px solid $spring-rain;
+    }
+
+    &.active {
+        background-color: $spring-rain !important;
+        border: 2px solid darken($spring-rain, 10%);
+    }
+}
+
+.london-hue {
+    background-color: lighten($london-hue, 10%) !important;
+    border: 2px solid lighten($london-hue, 10%);
+
+
+    &:hover {
+        background-color: $london-hue !important;
+        border: 2px solid $london-hue;
+    }
+
+    &.active {
+        background-color: $london-hue !important;
+        border: 2px solid darken($london-hue, 10%);
+    }
+}
+
+.vanilla {
+    background-color: lighten($vanilla, 10%) !important;
+    border: 2px solid lighten($vanilla, 10%);
+
+    &:hover {
+        background-color: $vanilla !important;
+        border: 2px solid $vanilla;
+    }
+
+    &.active {
+        background-color: $vanilla !important;
+        border: 2px solid darken($vanilla, 10%);
+    }
+}
+
+.dull-lavender {
+    background-color: lighten($dull-lavender, 10%) !important;
+    border: 2px solid lighten($dull-lavender, 10%);
+
+    &:hover {
+        background-color: $dull-lavender !important;
+        border: 2px solid $dull-lavender;
+    }
+
+    &.active {
+        background-color: $dull-lavender !important;
+        border: 2px solid darken($dull-lavender, 10%);
+    }
+}
+
+.tonys-pink {
+    background-color: lighten($tonys-pink, 10%) !important;
+    border: 2px solid lighten($tonys-pink, 10%);
+
+    &:hover {
+        background-color: $tonys-pink !important;
+        border: 2px solid $tonys-pink;
+    }
+
+    &.active {
+        background-color: $tonys-pink !important;
+        border: 2px solid darken($tonys-pink, 10%);
+    }
+}
+
+.green-mist {
+    background-color: lighten($green-mist, 10%) !important;
+    border: 2px solid lighten($green-mist, 10%);
+
+    &:hover {
+        background-color: $green-mist !important;
+        border: 2px solid $green-mist;
+    }
+
+    &.active {
+        background-color: $green-mist !important;
+        border: 2px solid darken($green-mist, 10%);
+    }
+}
+
+.spring-rain-border {
+    border-left: solid 5px lighten($spring-rain, 10%) !important;
+}
+
+.london-hue-border {
+    border-left: solid 5px lighten($london-hue, 10%) !important;
+}
+
+.vanilla-border {
+    border-left: solid 5px lighten($vanilla, 10%) !important;
+}
+
+.dull-lavender-border {
+    border-left: solid 5px lighten($dull-lavender, 10%) !important;
+}
+
+.tonys-pink-border {
+    border-left: solid 5px lighten($tonys-pink, 10%) !important;
+}
+
+.green-mist-border {
+    border-left: solid 5px lighten($green-mist, 10%) !important;
+}
+
+

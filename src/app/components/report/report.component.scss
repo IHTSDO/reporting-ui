@@ -1,0 +1,122 @@
+@import '~src/variables.scss';
+
+div#report {
+    margin-left: 32rem;
+
+    p.description {
+        font-size: 1.2rem;
+    }
+
+    div.button-box {
+        position: fixed;
+        bottom: 4rem;
+        right: 0;
+        z-index: 10;
+    }
+
+    button {
+        font-size: 1.2rem;
+
+        &.whitelist {
+            background-color: $regent-grey;
+            color: $white;
+
+            &:hover {
+                background-color: darken($regent-grey, 5%);
+            }
+        }
+
+        &.new-run {
+            background-color: $fruit-salad;
+            color: $white;
+
+            &:hover {
+                background-color: darken($fruit-salad, 5%);
+            }
+        }
+    }
+
+    div.form-switch {
+        position: absolute;
+        bottom: 0.5rem;
+        right: 1rem;
+
+        label.label-override {
+            float: left;
+            margin-right: 3.6rem;
+        }
+    }
+
+    table {
+        tr {
+            cursor: pointer;
+            min-height: 4rem;
+
+            &:hover {
+                &.table-body {
+                    background-color: darken($white, 2.5%);
+                }
+            }
+
+            &.selected {
+                background-color: lighten($anakiwa, 5%);
+
+                &:hover {
+                    background-color: lighten($anakiwa, 2.5%);
+                }
+            }
+
+            th {
+                font-size: 14px;
+                font-weight: 400;
+                background-color: darken($white, 2.5%);
+            }
+
+            td {
+                &.parameter {
+                    overflow-wrap: anywhere;
+                }
+
+                &.info {
+                    min-width: 10rem;
+
+                    span.user {
+                        font-weight: 400;
+                        color: black;
+                    }
+
+                    span.status {
+                        pointer-events: auto;
+
+                        &.completed {
+                            cursor: pointer;
+                            color: $fruit-salad;
+
+                            &:hover {
+                                color: darken($fruit-salad, 10%);
+                            }
+                        }
+
+                        &.failed {
+                            cursor: pointer;
+                            color: $mandy;
+
+                            &:hover {
+                                color: darken($mandy, 10%);
+                            }
+                        }
+
+                        &.running {
+                            cursor: pointer;
+                            color: $cerulean;
+
+                            &:hover {
+                                color: darken($cerulean, 10%);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

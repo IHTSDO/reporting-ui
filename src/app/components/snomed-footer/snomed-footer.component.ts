@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UIConfiguration } from 'src/app/models/uiConfiguration';
+import { Component, OnInit } from '@angular/core';
+import {Subscription} from 'rxjs';
+import {AuthoringService} from '../../services/authoring/authoring.service';
 
 @Component({
     selector: 'app-snomed-footer',
@@ -8,12 +9,16 @@ import { UIConfiguration } from 'src/app/models/uiConfiguration';
 })
 export class SnomedFooterComponent implements OnInit {
 
-    @Input() uiConfiguration: UIConfiguration;
     year: number = new Date().getFullYear();
 
-    constructor() {
+    uiConfiguration: any;
+    uiConfigurationSubscription: Subscription;
+
+    constructor(private authoringService: AuthoringService) {
+        this.uiConfigurationSubscription = this.authoringService.getUIConfiguration().subscribe( data => this.uiConfiguration = data);
     }
 
     ngOnInit() {
+
     }
 }

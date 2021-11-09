@@ -1,27 +1,18 @@
 import { TestBed, async } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryPipe } from './pipes/category.pipe';
 import { FormsModule } from '@angular/forms';
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
-import { ReportingComponent } from './components/reporting/reporting.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
-import { OrderByPipe } from './pipes/order-by.pipe';
-import { TagsPipe } from './pipes/tags.pipe';
-import { HiddenPipe } from './pipes/hidden.pipe';
-import { DisplayOrderPipe } from './pipes/display-order.pipe';
+import { TagsPipe } from './pipes/tags/tags.pipe';
 import { ModalComponent } from './components/modal/modal.component';
 import { QueryParametersComponent } from './components/query-parameters/query-parameters.component';
 import 'jquery';
-
 import { AppComponent } from './app.component';
-import { MainToTopPipe } from './pipes/main-to-top.pipe';
-import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
-import {ProjectMatcherPipe} from './pipes/project-matcher.pipe';
+import { AlphabeticalPipe } from './pipes/alphabetical/alphabetical.pipe';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
@@ -32,17 +23,10 @@ describe('AppComponent', () => {
                 SnomedNavbarComponent,
                 SnomedFooterComponent,
                 LeftSidebarComponent,
-                ReportingComponent,
                 ModalComponent,
                 QueryParametersComponent,
-                OrderByPipe,
-                CategoryPipe,
                 TagsPipe,
-                HiddenPipe,
-                DisplayOrderPipe,
-                MainToTopPipe,
-                AlphabeticalPipe,
-                ProjectMatcherPipe
+                AlphabeticalPipe
             ],
             imports: [
                 FormsModule,
