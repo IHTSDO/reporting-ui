@@ -66,10 +66,8 @@ export class ReportComponent implements OnInit {
         distinctUntilChanged(),
         tap(() => document.activeElement.parentElement.appendChild(this.spinner)),
         switchMap(term => this.httpService.getTypeahead(term).pipe(
-            tap(() => document.getElementById('spinner').remove(),
-                catchError(tap(() => document.getElementById('spinner').remove()))
-            ))
-        ),
+            tap(() => document.getElementById('spinner').remove()))
+        )
     )
 
     constructor(private reportingService: ReportingService,
