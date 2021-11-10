@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {AuthoringService} from '../authoring/authoring.service';
 import {PathingService} from '../pathing/pathing.service';
 
@@ -12,27 +12,41 @@ export class HttpService {
 
     uiConfiguration: any;
     uiConfigurationSubscription: Subscription;
+    activeBranch: any;
+    activeBranchSubscription: Subscription;
     activeProject: any;
     activeProjectSubscription: Subscription;
+    activeTask: any;
+    activeTaskSubscription: Subscription;
 
     constructor(private http: HttpClient,
                 private authoringService: AuthoringService,
                 private pathingService: PathingService) {
+        this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
         this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
-        this.uiConfigurationSubscription = this.authoringService.getUIConfiguration().subscribe( data => this.uiConfiguration = data);
+        this.activeTaskSubscription = this.pathingService.getActiveTask().subscribe(data => this.activeTask = data);
+        this.uiConfigurationSubscription = this.authoringService.getUIConfiguration().subscribe(data => this.uiConfiguration = data);
     }
 
     getTypeahead(term): Observable<any> {
-        return this.http.get(this.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeProject ? this.activeProject.key : 'MAIN') + '/concepts?activeFilter=true&termActive=true&limit=20&term=' + term)
+        return this.http.get(this.uiConfiguration.endpoints.terminologyServerEndpoint
+            + (this.activeBranch ? this.activeBranch.branchPath : '')
+            + (this.activeProject ? '/' + this.activeProject.key : '')
+            + (this.activeTask ? '/' + this.activeTask.key : '')
+            + '/concepts?activeFilter=true&termActive=true&limit=20&term=' + term)
             .pipe(map(response => {
-                const typeaheads = [];
+                    const typeaheads = [];
 
-                response['items'].forEach((item) => {
-                    typeaheads.push(item.id + ' |' + item.fsn.term + '|');
-                });
+                    response['items'].forEach((item) => {
+                        typeaheads.push(item.id + ' |' + item.fsn.term + '|');
+                    });
 
-                return typeaheads;
-            }));
+                    return typeaheads;
+                }),
+                catchError((e) => {
+                    document.getElementById('spinner').remove();
+                    return e;
+                }));
     }
 
     getConceptsById(idList): Observable<object> {
@@ -44,6 +58,10 @@ export class HttpService {
             termActive: true
         };
 
-        return this.http.post<object>(this.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeProject ? this.activeProject.key : 'MAIN') + '/concepts/search', params);
+        return this.http.post<object>(this.uiConfiguration.endpoints.terminologyServerEndpoint
+            + (this.activeBranch ? this.activeBranch.branchPath : '')
+            + (this.activeProject ? '/' + this.activeProject.key : '')
+            + (this.activeTask ? '/' + this.activeTask.key : '')
+            + '/concepts/search', params);
     }
 }
