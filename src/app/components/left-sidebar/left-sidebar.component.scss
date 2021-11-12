@@ -53,8 +53,8 @@ nav#sidebar {
     div.reports {
         background: $alto-white;
         width: 32rem;
-        margin-top: 174px;
-        height: calc(100vh - 264px);
+        margin-top: 162px;
+        height: calc(100vh - 252px);
         overflow: auto;
 
         div.report {
@@ -88,92 +88,85 @@ $green-mist: #7DC1B3;
 
 .spring-rain {
     background-color: lighten($spring-rain, 10%) !important;
-    border: 2px solid lighten($spring-rain, 10%);
 
     &:hover {
-        background-color: $spring-rain !important;
-        border: 2px solid $spring-rain;
+        background-color: darken($spring-rain, 20%) !important;
+        color: $white;
     }
 
     &.active {
-        background-color: $spring-rain !important;
-        border: 2px solid darken($spring-rain, 10%);
+        background-color: darken($spring-rain, 30%) !important;
+        color: $white;
     }
 }
 
 .london-hue {
     background-color: lighten($london-hue, 10%) !important;
-    border: 2px solid lighten($london-hue, 10%);
-
 
     &:hover {
-        background-color: $london-hue !important;
-        border: 2px solid $london-hue;
+        background-color: darken($london-hue, 20%) !important;
+        color: $white;
     }
 
     &.active {
-        background-color: $london-hue !important;
-        border: 2px solid darken($london-hue, 10%);
+        background-color: darken($london-hue, 30%) !important;
+        color: $white;
     }
 }
 
 .vanilla {
     background-color: lighten($vanilla, 10%) !important;
-    border: 2px solid lighten($vanilla, 10%);
 
     &:hover {
-        background-color: $vanilla !important;
-        border: 2px solid $vanilla;
+        background-color: darken($vanilla, 20%) !important;
+        color: $white;
     }
 
     &.active {
-        background-color: $vanilla !important;
-        border: 2px solid darken($vanilla, 10%);
+        background-color: darken($vanilla, 30%) !important;
+        color: $white;
     }
 }
 
 .dull-lavender {
     background-color: lighten($dull-lavender, 10%) !important;
-    border: 2px solid lighten($dull-lavender, 10%);
 
     &:hover {
-        background-color: $dull-lavender !important;
-        border: 2px solid $dull-lavender;
+        background-color: darken($dull-lavender, 20%) !important;
+        color: $white;
     }
 
     &.active {
-        background-color: $dull-lavender !important;
-        border: 2px solid darken($dull-lavender, 10%);
+        background-color: darken($dull-lavender, 30%) !important;
+        color: $white;
     }
 }
 
 .tonys-pink {
     background-color: lighten($tonys-pink, 10%) !important;
-    border: 2px solid lighten($tonys-pink, 10%);
 
     &:hover {
-        background-color: $tonys-pink !important;
-        border: 2px solid $tonys-pink;
+        background-color: darken($tonys-pink, 20%) !important;
+        color: $white;
     }
 
     &.active {
-        background-color: $tonys-pink !important;
-        border: 2px solid darken($tonys-pink, 10%);
+        background-color: darken($tonys-pink, 30%) !important;
+        color: $white;
     }
 }
 
 .green-mist {
     background-color: lighten($green-mist, 10%) !important;
-    border: 2px solid lighten($green-mist, 10%);
 
-    &:hover {
-        background-color: $green-mist !important;
-        border: 2px solid $green-mist;
+    &:hover, &.active {
+        background-color: darken($green-mist, 20%) !important;
+        color: $white;
     }
 
     &.active {
-        background-color: $green-mist !important;
-        border: 2px solid darken($green-mist, 10%);
+        background-color: darken($green-mist, 30%) !important;
+        color: $white;
     }
 }
 
