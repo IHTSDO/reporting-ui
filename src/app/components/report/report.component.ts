@@ -44,6 +44,8 @@ export class ReportComponent implements OnInit {
     activeReportSubscription: Subscription;
     activeProject: any;
     activeProjectSubscription: Subscription;
+    projects: any;
+    projectsSubscription: Subscription;
     activeTask: any;
     activeTaskSubscription: Subscription;
     runs: any;
@@ -84,6 +86,7 @@ export class ReportComponent implements OnInit {
         });
         this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
         this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe( data => this.activeProject = data);
+        this.projectsSubscription = this.pathingService.getProjects().subscribe( data => this.projects = data);
         this.activeTaskSubscription = this.pathingService.getActiveTask().subscribe(data => this.activeTask = data);
         this.runsSubscription = this.reportingService.getRuns().subscribe( data => this.runs = data);
         this.whitelistSubscription = this.reportingService.getWhitelist().subscribe( data => this.whitelist = data);
@@ -190,7 +193,7 @@ export class ReportComponent implements OnInit {
     retrieveConceptsById(input): void {
         let idList = [];
         if (input) {
-            idList = input.match(/[0-9]{4,16}/g);
+            idList = input.match(/[0-9]{4,18}/g);
         }
 
         if (idList && idList.length > 0) {
@@ -223,8 +226,9 @@ export class ReportComponent implements OnInit {
         //     return item.sctId === concept.id;
         // });
 
-        if (this.whitelist.find(item => item.sctId === concept.id)) {
-            this.reportingService.setWhitelist(this.whitelist.unshift(UtilityService.convertFullConceptToShortConcept(concept)));
+        if (!this.whitelist.find(item => item.sctId === concept.id)) {
+            this.whitelist.unshift(UtilityService.convertFullConceptToShortConcept(concept));
+            this.reportingService.setWhitelist(this.whitelist);
             this.whitelistChanged = true;
         }
     }
