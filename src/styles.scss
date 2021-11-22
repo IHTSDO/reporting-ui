@@ -136,6 +136,9 @@ ngb-typeahead-window.dropdown-menu button {
 
 ngb-tooltip-window.tooltip {
     div.tooltip-inner {
+        background-color: $river-bed;
+        letter-spacing: 0.5px;
+        line-height: 2rem;
         min-width: 30rem;
         max-width: 60rem;
     }
