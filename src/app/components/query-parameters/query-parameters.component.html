@@ -19,8 +19,6 @@
                         <input class="form-check-input" [(ngModel)]="parameter.value.values[i]" type="checkbox">
                         <label class="form-check-label">{{option}}</label>
                     </div>
-
-                    <p>{{parameter | json}}</p>
                 </div>
             </div>
             <div *ngSwitchCase="'STRING'" class="mb-3">
@@ -50,8 +48,6 @@
                     <option selected></option>
                     <option *ngFor="let option of parameter.value.options | orderBy:'name'">{{option}}</option>
                 </select>
-
-                <p>{{parameter | json}}</p>
             </div>
             <div *ngSwitchCase="'TEMPLATE'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
