@@ -80,6 +80,16 @@ export class QueryParametersComponent implements OnInit {
                             this.templates = data;
                         });
                     }
+                    if (parameter.type === 'CHECKBOXES') {
+                        parameter.values = [];
+                        parameter.options.forEach(item => {
+                            if (parameter.defaultValues.includes(item)) {
+                                parameter.values.push(true);
+                            } else {
+                                parameter.values.push(false);
+                            }
+                        });
+                    }
                 }
             }
         }

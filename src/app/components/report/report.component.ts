@@ -178,6 +178,18 @@ export class ReportComponent implements OnInit {
                 if (field.value === ' ') {
                     validationCheck = false;
                 }
+
+                if (field.type === 'CHECKBOXES') {
+                    const results = [];
+
+                    field.values.forEach( (item, i) => {
+                        if (item) {
+                            results.push(field.options[i]);
+                        }
+                    });
+
+                    field.values = results;
+                }
             }
         }
 
