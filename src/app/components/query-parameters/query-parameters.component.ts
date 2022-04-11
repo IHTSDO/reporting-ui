@@ -81,14 +81,17 @@ export class QueryParametersComponent implements OnInit {
                         });
                     }
                     if (parameter.type === 'CHECKBOXES') {
-                        parameter.values = [];
+                        const vals = [];
+
                         parameter.options.forEach(item => {
-                            if (parameter.defaultValues.includes(item)) {
-                                parameter.values.push(true);
+                            if (parameter.values.includes(item)) {
+                                vals.push(true);
                             } else {
-                                parameter.values.push(false);
+                                vals.push(false);
                             }
                         });
+
+                        parameter.values = vals;
                     }
                 }
             }
