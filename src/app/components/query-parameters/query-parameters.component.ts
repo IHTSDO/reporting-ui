@@ -67,7 +67,7 @@ export class QueryParametersComponent implements OnInit {
                 if (this.activeReport.parameters.hasOwnProperty(key)) {
                     const parameter = this.activeReport.parameters[key];
                     if (parameter.type === 'BOOLEAN') {
-                        parameter.value = JSON.parse(parameter.defaultValue);
+                        parameter.value = JSON.parse(parameter.value);
                     }
                     if (parameter.type === 'HIDDEN') {
                         parameter.value = this.authoringService.environmentEndpoint + 'template-service';
