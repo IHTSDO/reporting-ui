@@ -16,7 +16,7 @@ import {ReportingService} from '../../services/reporting/reporting.service';
     templateUrl: './query-parameters.component.html',
     styleUrls: ['./query-parameters.component.scss']
 })
-export class QueryParametersComponent implements OnInit {
+export class QueryParametersComponent {
 
     @ViewChild('textareaTypeahead', { static: false }) inputElement: ElementRef;
 
@@ -56,9 +56,6 @@ export class QueryParametersComponent implements OnInit {
         this.spinner.classList.add('spinner-border', 'spinner-border-sm', 'position-absolute');
         this.spinner.style.top = '10px';
         this.spinner.style.right = '10px';
-    }
-
-    ngOnInit() {
     }
 
     setupQueryParameters() {
@@ -136,6 +133,8 @@ export class QueryParametersComponent implements OnInit {
     convertStringListToShortConceptList(input: string): Concept[] {
         if (input) {
             return UtilityService.convertStringListToShortConceptList(input);
+        } else {
+            return null;
         }
     }
 }

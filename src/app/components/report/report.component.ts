@@ -4,7 +4,7 @@ import {ReportingService} from '../../services/reporting/reporting.service';
 import {ModalService} from '../../services/modal/modal.service';
 import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
 import {PathingService} from '../../services/pathing/pathing.service';
-import {catchError, debounceTime, distinctUntilChanged, filter, switchMap, tap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, filter, switchMap, tap} from 'rxjs/operators';
 import {HttpService} from '../../services/http/http.service';
 import {UtilityService} from '../../services/utility/utility.service';
 import {AuthoringService} from '../../services/authoring/authoring.service';
@@ -300,9 +300,7 @@ export class ReportComponent implements OnInit {
     spamProtection() {
         if (this.runs) {
             if (this.runs.find(run => run.user === this.user.login)) {
-                if (this.runs.find(run => run.user === this.user.login).status === 'Scheduled') {
-                    return true;
-                }
+                return this.runs.find(run => run.user === this.user.login).status === 'Scheduled';
             } else {
                 return false;
             }
