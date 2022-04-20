@@ -33,7 +33,7 @@ export class HttpService {
             + (this.activeBranch ? this.activeBranch.branchPath : '')
             + (this.activeProject ? '/' + this.activeProject.key : '')
             + (this.activeTask ? '/' + this.activeTask.key : '')
-            + '/concepts?activeFilter=true&termActive=true&limit=20&term=' + term)
+            + '/concepts?termActive=true&limit=20&term=' + term)
             .pipe(map(response => {
                     const typeaheads = [];
 
@@ -54,7 +54,6 @@ export class HttpService {
             conceptIds: idList,
             limit: 100,
             expand: 'fsn()',
-            activeFilter: true,
             termActive: true
         };
 

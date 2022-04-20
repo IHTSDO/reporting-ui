@@ -92,7 +92,6 @@ import { AllReportsPipe } from './pipes/allReports/all-reports.pipe';
             multi: true
         }
     ],
-    entryComponents: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {

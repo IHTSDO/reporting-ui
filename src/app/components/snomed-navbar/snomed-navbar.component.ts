@@ -60,11 +60,11 @@ export class SnomedNavbarComponent implements OnInit {
         this.path = this.location.path();
 
         this.route.queryParams.subscribe(params => {
-            if (params.report) {
+            if (params['report']) {
                 this.reportingService.getReports().subscribe(data => {
                     data.forEach(category => {
                         category.jobs.forEach(report => {
-                            if (report.name === params.report) {
+                            if (report.name === params['report']) {
                                 this.reportingService.setActiveReport(report);
                             }
                         });

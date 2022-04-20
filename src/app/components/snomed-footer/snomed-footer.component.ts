@@ -7,7 +7,7 @@ import {AuthoringService} from '../../services/authoring/authoring.service';
     templateUrl: './snomed-footer.component.html',
     styleUrls: ['./snomed-footer.component.scss']
 })
-export class SnomedFooterComponent implements OnInit {
+export class SnomedFooterComponent {
 
     year: number = new Date().getFullYear();
 
@@ -16,9 +16,5 @@ export class SnomedFooterComponent implements OnInit {
 
     constructor(private authoringService: AuthoringService) {
         this.uiConfigurationSubscription = this.authoringService.getUIConfiguration().subscribe( data => this.uiConfiguration = data);
-    }
-
-    ngOnInit() {
-
     }
 }

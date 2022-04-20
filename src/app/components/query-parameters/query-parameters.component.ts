@@ -16,7 +16,7 @@ import {ReportingService} from '../../services/reporting/reporting.service';
     templateUrl: './query-parameters.component.html',
     styleUrls: ['./query-parameters.component.scss']
 })
-export class QueryParametersComponent implements OnInit {
+export class QueryParametersComponent {
 
     @ViewChild('textareaTypeahead', { static: false }) inputElement: ElementRef;
 
@@ -58,16 +58,13 @@ export class QueryParametersComponent implements OnInit {
         this.spinner.style.right = '10px';
     }
 
-    ngOnInit() {
-    }
-
     setupQueryParameters() {
         if (this.activeReport) {
             for (const key in this.activeReport.parameters) {
                 if (this.activeReport.parameters.hasOwnProperty(key)) {
                     const parameter = this.activeReport.parameters[key];
                     if (parameter.type === 'BOOLEAN') {
-                        parameter.value = JSON.parse(parameter.defaultValue);
+                        parameter.value = JSON.parse(parameter.value);
                     }
                     if (parameter.type === 'HIDDEN') {
                         parameter.value = this.authoringService.environmentEndpoint + 'template-service';
@@ -79,6 +76,19 @@ export class QueryParametersComponent implements OnInit {
                         this.templateService.getTemplateConcepts().subscribe(data => {
                             this.templates = data;
                         });
+                    }
+                    if (parameter.type === 'CHECKBOXES') {
+                        const vals = [];
+
+                        parameter.options.forEach(item => {
+                            if (parameter.values.includes(item)) {
+                                vals.push(true);
+                            } else {
+                                vals.push(false);
+                            }
+                        });
+
+                        parameter.values = vals;
                     }
                 }
             }
@@ -123,6 +133,8 @@ export class QueryParametersComponent implements OnInit {
     convertStringListToShortConceptList(input: string): Concept[] {
         if (input) {
             return UtilityService.convertStringListToShortConceptList(input);
+        } else {
+            return null;
         }
     }
 }

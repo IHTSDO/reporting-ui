@@ -7,7 +7,7 @@ export class OrderByPipe implements PipeTransform {
 
     transform(array: any, field: string): any[] {
         if (!Array.isArray(array)) {
-            return;
+            return array;
         }
 
         array.sort((a: any, b: any) => {
