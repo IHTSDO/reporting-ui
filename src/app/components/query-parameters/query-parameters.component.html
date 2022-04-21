@@ -39,7 +39,7 @@
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <select id="{{parameter.key}}" class="form-select" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory">
                     <option selected></option>
-                    <option *ngFor="let option of templates | orderBy:'name'">{{template.name}}</option>
+                    <option *ngFor="let option of templates | orderBy:'name'">{{option.name}}</option>
                 </select>
             </div>
             <div *ngSwitchCase="'DROPDOWN'" class="mb-3">
