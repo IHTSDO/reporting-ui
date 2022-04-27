@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {NgbTooltipModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
+import { ClipboardModule } from 'ngx-clipboard';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
@@ -71,7 +72,8 @@ import { AllReportsPipe } from './pipes/allReports/all-reports.pipe';
         MatCheckboxModule,
         NgbTypeaheadModule,
         NgbTooltipModule,
-        AppRoutingModule
+        AppRoutingModule,
+        ClipboardModule
     ],
     providers: [
         ReportingService,

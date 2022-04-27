@@ -38,6 +38,7 @@
         "core-js": "^3.6.5",
         "guid-typescript": "^1.0.9",
         "jquery": "^3.5.1",
+        "ngx-clipboard": "^15.1.0",
         "ngx-toastr": "^13.2.0",
         "@popperjs/core": "^2.10.1",
         "rxjs": "^6.6.3",

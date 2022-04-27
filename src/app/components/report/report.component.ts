@@ -9,6 +9,7 @@ import {HttpService} from '../../services/http/http.service';
 import {UtilityService} from '../../services/utility/utility.service';
 import {AuthoringService} from '../../services/authoring/authoring.service';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
     selector: 'app-report',
@@ -77,7 +78,8 @@ export class ReportComponent implements OnInit {
                 private pathingService: PathingService,
                 private httpService: HttpService,
                 private authoringService: AuthoringService,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService,
+                private clipboardApi: ClipboardService) {
         this.reportsSubscription = this.reportingService.getReports().subscribe( data => this.reports = data);
         this.activeReportSubscription = this.reportingService.getActiveReport().subscribe( data => {
             this.activeReport = data;
@@ -307,5 +309,9 @@ export class ReportComponent implements OnInit {
         } else {
             return false;
         }
+    }
+
+    copyText(content) {
+        this.clipboardApi.copyFromContent(content);
     }
 }
