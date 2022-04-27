@@ -53,6 +53,7 @@
                         <ng-container *ngSwitchCase="'Failed'">
                             <span *ngIf="run.resultUrl" class="status failed" (click)="viewReport($event, run)" ngbTooltip="{{run?.debugInfo | slice:0:1500}}{{run?.debugInfo.length > 1500 ? '...' : ''}}" placement="left">{{run.status}}<i class="fas fa-external-link-alt ms-1"></i></span>
                             <span *ngIf="!run.resultUrl" class="status failed" ngbTooltip="{{run?.debugInfo | slice:0:1500}}{{run?.debugInfo.length > 1500 ? '...' : ''}}" placement="left">{{run.status}}<i class="fas fa-times-circle ms-1"></i></span>
+                            <span class="text-grey copy-to-clipboard" ngbTooltip="Copy Failure Message To Clipboard" tooltipClass="small-tooltip" placement="bottom" (click)="copyText(run?.debugInfo);$event.stopPropagation()"><i class="fas fa-copy ms-1"></i></span>
                         </ng-container>
                         <span *ngSwitchDefault class="status running">{{run.status}}</span>
                     </ng-container>

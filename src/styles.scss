@@ -143,4 +143,10 @@ ngb-tooltip-window.tooltip {
         min-width: 30rem;
         max-width: 60rem;
     }
+
+    &.small-tooltip {
+        div.tooltip-inner {
+            min-width: 0rem;
+        }        
+    }    
 }
