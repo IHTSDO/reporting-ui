@@ -141,6 +141,7 @@ export class SnomedNavbarComponent implements OnInit {
 
     noProject() {
         this.pathingService.setActiveProject(null);
+        this.noTask();
     }
 
     setTask(task) {
