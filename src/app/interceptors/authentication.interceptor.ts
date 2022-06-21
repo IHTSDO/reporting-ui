@@ -28,7 +28,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
             catchError(err => {
                 if (err.status === 403 ) {
                     let config: any = {};
-                    this.authoringService.getUIConfiguration().subscribe(data => {
+                    this.authoringService.httpGetUIConfiguration().subscribe(data => {
                         config = data;
                         window.location.href =
                         config.endpoints.imsEndpoint
