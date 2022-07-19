@@ -4,7 +4,9 @@ import { Category } from '../../models/category';
 import { Report } from '../../models/report';
 import { Query } from '../../models/query';
 import { Concept } from '../../models/concept';
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
+import {AuthenticationService} from '../authentication/authentication.service';
+import {User} from '../../models/user';
 
 @Injectable({
     providedIn: 'root'
@@ -15,8 +17,16 @@ export class ReportingService {
     private activeReport = new Subject<any>();
     private runs = new Subject<any>();
     private whitelist = new Subject<any>();
+    private allReports = new BehaviorSubject<any>(true);
 
-    constructor(private http: HttpClient) {
+    user: User;
+    userSubscription: Subscription;
+    localAllReports: any;
+    localAllReportsSubscription: Subscription;
+
+    constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
+        this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
+        this.localAllReportsSubscription = this.getAllReports().subscribe(data => this.localAllReports = data);
     }
 
     // Setters & Getters: Reports
@@ -46,7 +56,7 @@ export class ReportingService {
         return this.runs.asObservable();
     }
 
-    // Setters & Getters: Runs
+    // Setters & Getters: Whitelist
     setWhitelist(whitelist) {
         this.whitelist.next(whitelist);
     }
@@ -55,12 +65,21 @@ export class ReportingService {
         return this.whitelist.asObservable();
     }
 
+    // Setters & Getters: AllReports
+    setAllReports(allReports) {
+        this.allReports.next(allReports);
+    }
+
+    getAllReports() {
+        return this.allReports.asObservable();
+    }
+
     httpGetReports() {
         return this.http.get<Category[]>('/schedule-manager/jobs/Report/');
     }
 
     httpGetReportRuns(name) {
-        return this.http.get<Report[]>('/schedule-manager/jobs/Report/' + name + '/runs');
+        return this.http.get<Report[]>('/schedule-manager/jobs/Report/' + name + '/runs' + (this.localAllReports ? '' : '?user=' + this.user.login));
     }
 
     httpDeleteReport(name, id) {

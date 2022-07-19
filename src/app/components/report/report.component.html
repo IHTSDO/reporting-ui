@@ -16,7 +16,7 @@
         <div class="form-check form-switch">
             <label class="form-check-label" for="flexSwitchCheckDefault">All Reports</label>
             <label class="form-check-label" for="flexSwitchCheckDefault" class="label-override">My Reports</label>
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" [(ngModel)]="allReports">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" [(ngModel)]="allReports" (ngModelChange)="setAllReports($event)">
         </div>
     </div>
     <div *ngIf="deleteReports.length" class="button-box bg-white p-2">
@@ -34,7 +34,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let run of runs | allReports:allReports:user | slice:0:20" class="table-body position-relative" [class.selected]="toBeDeleted(run)" (click)="addToDeleteReports(run)">
+            <tr *ngFor="let run of runs" class="table-body position-relative" [class.selected]="toBeDeleted(run)" (click)="addToDeleteReports(run)">
                 <td class="p-3">{{run.issuesReported ? run.issuesReported : '0'}}</td>
                 <td class="p-3">{{run.project}}<br><span *ngIf="run?.task" class="text-grey">{{'/' + run.task}}</span></td>
                 <td class="p-3 parameter" *ngFor="let parameter of runs[0].parameters | keyvalue | displayOrder | hidden">

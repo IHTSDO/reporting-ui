@@ -13,15 +13,12 @@ export class CategoryFilterPipe implements PipeTransform {
             return items;
         }
 
-        console.log('IN: ', items);
-
         searchText = searchText.toLowerCase();
 
         items = items.filter(item => {
             return item.name.toLowerCase().includes(searchText);
         });
 
-        console.log('OUT: ', items);
         return items;
     }
 }

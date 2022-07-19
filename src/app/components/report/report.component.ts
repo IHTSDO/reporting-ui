@@ -36,7 +36,6 @@ export class ReportComponent implements OnInit {
     saveResponse: string;
     whitelistChanged = false;
     runId: string;
-    allReports = true;
     deleteReports: any[] = [];
 
     reports: any[];
@@ -57,6 +56,8 @@ export class ReportComponent implements OnInit {
     activeBranchSubscription: Subscription;
     user: any;
     userSubscription: Subscription;
+    allReports: any;
+    allReportsSubscription: Subscription;
 
 
     // typeahead
@@ -93,6 +94,7 @@ export class ReportComponent implements OnInit {
         this.runsSubscription = this.reportingService.getRuns().subscribe( data => this.runs = data);
         this.whitelistSubscription = this.reportingService.getWhitelist().subscribe( data => this.whitelist = data);
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
+        this.allReportsSubscription = this.reportingService.getAllReports().subscribe(data => this.allReports = data);
         this.spinner.id = 'spinner';
         this.spinner.classList.add('spinner-border', 'spinner-border-sm', 'position-absolute');
         this.spinner.style.top = '7px';
@@ -309,6 +311,11 @@ export class ReportComponent implements OnInit {
         } else {
             return false;
         }
+    }
+
+    setAllReports(event) {
+        this.reportingService.setAllReports(event);
+        this.setRuns();
     }
 
     copyText(content) {
