@@ -125,6 +125,11 @@ button, input, textarea {
     margin-bottom: 4rem;
 }
 
+body.app-queue-open {
+    /* body overflow is hidden to hide main scrollbar when modal window is open */
+    overflow: hidden;
+}
+
 ngb-typeahead-window.dropdown-menu button {
     max-width: 30vw;
     font-size: 1.2rem;
@@ -147,6 +152,6 @@ ngb-tooltip-window.tooltip {
     &.small-tooltip {
         div.tooltip-inner {
             min-width: 0rem;
-        }        
-    }    
+        }
+    }
 }

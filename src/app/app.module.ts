@@ -43,6 +43,8 @@ import { HiddenPipe } from './pipes/hidden/hidden.pipe';
 import { DisplayOrderPipe } from './pipes/displayOrder/display-order.pipe';
 import { OrderByPipe } from './pipes/orderBy/order-by.pipe';
 import { AllReportsPipe } from './pipes/allReports/all-reports.pipe';
+import { QueueComponent } from './components/queue/queue.component';
+import {QueueService} from './services/queue/queue.service';
 
 @NgModule({
     declarations: [
@@ -62,7 +64,8 @@ import { AllReportsPipe } from './pipes/allReports/all-reports.pipe';
         HiddenPipe,
         DisplayOrderPipe,
         OrderByPipe,
-        AllReportsPipe
+        AllReportsPipe,
+        QueueComponent
     ],
     imports: [
         BrowserModule,
@@ -83,6 +86,7 @@ import { AllReportsPipe } from './pipes/allReports/all-reports.pipe';
         AuthenticationService,
         ModalService,
         PathingService,
+        QueueService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: HeaderInterceptor,

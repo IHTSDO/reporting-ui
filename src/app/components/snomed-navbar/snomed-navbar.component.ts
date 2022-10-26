@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import {PathingService} from '../../services/pathing/pathing.service';
 import {ActivatedRoute} from '@angular/router';
 import {ReportingService} from '../../services/reporting/reporting.service';
+import {QueueService} from '../../services/queue/queue.service';
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -39,10 +40,16 @@ export class SnomedNavbarComponent implements OnInit {
     activeReport: any;
     activeReportSubscription: Subscription;
 
+    queueOpen: any;
+    queueOpenSubscription: Subscription;
+    queueLength: any;
+    queueLengthSubscription: Subscription;
+
     constructor(private authoringService: AuthoringService,
                 private authenticationService: AuthenticationService,
                 private pathingService: PathingService,
                 private reportingService: ReportingService,
+                private queueService: QueueService,
                 private location: Location,
                 private route: ActivatedRoute) {
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
@@ -53,6 +60,8 @@ export class SnomedNavbarComponent implements OnInit {
         this.tasksSubscription = this.pathingService.getTasks().subscribe(data => this.tasks = data);
         this.activeTaskSubscription = this.pathingService.getActiveTask().subscribe(data => this.activeTask = data);
         this.activeReportSubscription = this.reportingService.getActiveReport().subscribe(data => this.activeReport = data);
+        this.queueOpenSubscription = this.queueService.getQueueOpen().subscribe(data => this.queueOpen = data);
+        this.queueLengthSubscription = this.queueService.getQueueLength().subscribe(data => this.queueLength = data);
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
     }
 
@@ -83,6 +92,15 @@ export class SnomedNavbarComponent implements OnInit {
         this.pathingService.httpGetProjects().subscribe(projects => {
             this.pathingService.setProjects(projects);
             this.setPath(this.path);
+        });
+
+        this.refresh();
+        setInterval(() => this.refresh(), 5000);
+    }
+
+    refresh(): void {
+        this.queueService.httpGetQueueLength().subscribe(data => {
+            this.queueService.setQueueLength(data);
         });
     }
 
@@ -150,6 +168,11 @@ export class SnomedNavbarComponent implements OnInit {
 
     noTask() {
         this.pathingService.setActiveTask(null);
+    }
+
+    openQueue() {
+        this.queueService.setQueueOpen(true);
+        document.body.classList.add('app-queue-open');
     }
 
     logout() {

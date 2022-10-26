@@ -57,6 +57,7 @@
                         </ng-container>
                         <span *ngSwitchDefault class="status running">{{run.status}}</span>
                     </ng-container>
+                    <span *ngIf="run?.executionTime" class="ps-2"><b>(~{{run.executionTime * 1000 | date:'m\'m\' ss\'s\''}})</b></span>
                 </td>
             </tr>
             </tbody>

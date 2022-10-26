@@ -3,6 +3,8 @@ import { AuthoringService } from './services/authoring/authoring.service';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import 'jquery';
 import {ActivatedRoute, Router} from '@angular/router';
+import {QueueService} from './services/queue/queue.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -15,8 +17,13 @@ export class AppComponent implements OnInit {
     environment: string;
     managedServiceUser: boolean;
 
+    queueOpen: any;
+    queueOpenSubscription: Subscription;
+
     constructor(private authenticationService: AuthenticationService,
-                private authoringService: AuthoringService) {
+                private authoringService: AuthoringService,
+                private queueService: QueueService) {
+        this.queueOpenSubscription = this.queueService.getQueueOpen().subscribe(data => this.queueOpen = data);
     }
 
     ngOnInit() {
