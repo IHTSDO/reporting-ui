@@ -56,7 +56,7 @@
                                 }
                             ],
                             "outputHashing": "all",
-                            "baseHref": "/",
+                            "baseHref": "/reporting/",
                             "optimization": {
                                 "scripts": true,
                                 "styles": {
