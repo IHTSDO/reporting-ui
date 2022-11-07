@@ -56,7 +56,7 @@
                                 }
                             ],
                             "outputHashing": "all",
-                            "baseHref": "/reporting/",
+                            "baseHref": "/",
                             "optimization": {
                                 "scripts": true,
                                 "styles": {
@@ -65,8 +65,7 @@
                                 }
                             }
                         }
-                    },
-                    "defaultConfiguration": "production"
+                    }
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
