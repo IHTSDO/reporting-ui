@@ -4,29 +4,21 @@
     "newProjectRoot": "projects",
     "projects": {
         "reporting-UI": {
-            "projectType": "application",
-            "schematics": {
-                "@schematics/angular:component": {
-                    "style": "scss"
-                },
-                "@schematics/angular:application": {
-                    "strict": true
-                }
-            },
             "root": "",
             "sourceRoot": "src",
+            "projectType": "application",
             "prefix": "app",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "baseHref": "/reporting/",
+                        "baseHref": "/",
+                        "sourceMap": true,
+                        "optimization": false,
                         "outputPath": "dist/reporting-UI",
                         "index": "src/index.html",
                         "main": "src/main.ts",
-                        "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
-                        "inlineStyleLanguage": "scss",
                         "assets": [
                             "src/favicon.ico",
                             "src/favicon_grey.ico",
@@ -38,7 +30,6 @@
                         "styles": [
                             "./node_modules/bootstrap/dist/css/bootstrap.min.css",
                             "./node_modules/@fortawesome/fontawesome-free/css/all.css",
-                            "src/flags.css",
                             "src/styles.scss"
                         ],
                         "scripts": [
@@ -55,32 +46,29 @@
                                     "with": "src/environments/environment.prod.ts"
                                 }
                             ],
+                            "baseHref": "/reporting/",
+                            "optimization": true,
                             "outputHashing": "all",
-                            "baseHref": "/",
-                            "optimization": {
-                                "scripts": true,
-                                "styles": {
-                                    "minify": true,
-                                    "inlineCritical": false
-                                }
-                            }
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true
                         }
                     }
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
+                        "browserTarget": "reporting-UI:build",
                         "liveReload": false
                     },
                     "configurations": {
                         "production": {
                             "browserTarget": "reporting-UI:build:production"
-                        },
-                        "development": {
-                            "browserTarget": "reporting-UI:build:development"
                         }
-                    },
-                    "defaultConfiguration": "production"
+                    }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -102,8 +90,6 @@
     },
     "defaultProject": "reporting-UI",
     "cli": {
-        "schematicCollections": [
-            "@angular-eslint/schematics"
-        ]
+        "defaultCollection": "@angular-eslint/schematics"
     }
 }
