@@ -20,7 +20,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "baseHref": "/",
+                        "baseHref": "/reporting/",
                         "outputPath": "dist/reporting-UI",
                         "index": "src/index.html",
                         "main": "src/main.ts",
