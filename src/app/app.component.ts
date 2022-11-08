@@ -5,6 +5,7 @@ import 'jquery';
 import {ActivatedRoute, Router} from '@angular/router';
 import {QueueService} from './services/queue/queue.service';
 import {Subscription} from 'rxjs';
+import {ReportingService} from './services/reporting/reporting.service';
 
 @Component({
     selector: 'app-root',
@@ -22,12 +23,15 @@ export class AppComponent implements OnInit {
 
     constructor(private authenticationService: AuthenticationService,
                 private authoringService: AuthoringService,
-                private queueService: QueueService) {
+                private queueService: QueueService,
+                private reportingService: ReportingService) {
         this.queueOpenSubscription = this.queueService.getQueueOpen().subscribe(data => this.queueOpen = data);
     }
 
     ngOnInit() {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
+
+        this.reportingService.httpInitialise().subscribe();
 
         this.authoringService.httpGetVersions().subscribe(versions => {
             this.authoringService.setVersions(versions);
