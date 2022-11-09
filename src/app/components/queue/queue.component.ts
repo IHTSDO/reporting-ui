@@ -49,4 +49,9 @@ export class QueueComponent implements OnInit {
         this.queueService.setQueueOpen(false);
         document.body.classList.remove('app-queue-open');
     }
+
+    viewReport(e, report): void {
+        e.stopPropagation();
+        window.open(report.resultUrl);
+    }
 }
