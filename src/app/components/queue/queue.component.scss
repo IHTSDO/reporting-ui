@@ -34,6 +34,10 @@ div.queue-screen {
 
         div.queue-report {
             &:hover {
+                cursor: default;
+            }
+
+            &.linkable:hover {
                 background-color: $river-bed;
                 cursor: pointer;
             }
