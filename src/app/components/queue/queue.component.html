@@ -9,7 +9,7 @@
         </div>
         <div *ngFor="let item of queueFailed" class="queue-report rounded-3 row g-0 p-3 text-alto-white">
             <div class="col-6 pt-2">{{item.jobName}}</div>
-            <div class="col-6 pt-2 text-end red">{{item.status}}<i class="ps-3 fas fa-times"></i></div>
+            <div class="col-6 pt-2 text-end red">{{item.status}}<i class="ms-3 fas fa-exclamation-triangle"></i></div>
             <div class="col-12 uuid slate">{{item.id}}</div>
             <div class="col-10 pt-2">{{item.user}}<span class="slate">@{{item.requestTime}}</span></div>
         </div>
