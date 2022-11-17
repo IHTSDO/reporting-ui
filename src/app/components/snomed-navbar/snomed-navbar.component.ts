@@ -102,10 +102,10 @@ export class SnomedNavbarComponent implements OnInit {
         this.queueService.httpGetQueueLength().subscribe(data => {
             this.queueService.setQueueLength(data);
         });
-        this.queueService.httpGetQueue('Complete', 5).subscribe(data => {
+        this.queueService.httpGetQueue('Complete', 10).subscribe(data => {
             this.queueService.setQueueComplete(data);
         });
-        this.queueService.httpGetQueue('Failed', 5).subscribe(data => {
+        this.queueService.httpGetQueue('Failed', 10).subscribe(data => {
             this.queueService.setQueueFailed(data);
         });
         this.queueService.httpGetQueue('Running').subscribe(data => {
