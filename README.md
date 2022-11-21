@@ -1,30 +1,28 @@
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/IHTSDO/reporting-ui.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/IHTSDO/reporting-ui/context:javascript)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/IHTSDO/reporting-ui.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/IHTSDO/reporting-ui/alerts/)
+# Reporting UI
 
-# ReportingUI
+The Reporting UI is an application that connects to the [Reporting Engine](https://github.com/IHTSDO/reporting-engine) in order to run a wide variety of reports on demand by the user.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.
+## Framework
+
+This project runs on the [Angular](https://github.com/angular) framework. Current version is v14.1.3.
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+---
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Documentation
 
-## Running TS lint
+Documentation for usage of the reporting platform can be found [here](https://confluence.ihtsdotools.org/display/AP6UG/Reporting+Platform).
 
-Run `ng lint` to execute the code quality tests via [TS Lint](https://palantir.github.io/tslint/).
+## License
 
-## Further help
+Apache 2.0
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+See the included LICENSE file for details.
+

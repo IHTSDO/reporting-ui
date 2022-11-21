@@ -313,6 +313,23 @@ export class ReportComponent implements OnInit {
         }
     }
 
+    getTime(input): string {
+        const hours = new Date(input * 1000).toISOString().substr(11, 2);
+        const minutes = new Date(input * 1000).toISOString().substr(14, 2);
+        const seconds = new Date(input * 1000).toISOString().substr(17, 2);
+        let output = '';
+
+        if (hours !== '00') {
+            output += hours + 'h ';
+        }
+
+        if (minutes !== '00') {
+            output += minutes + 'm ';
+        }
+
+        return output += seconds + 's';
+    }
+
     setAllReports(event) {
         this.reportingService.setAllReports(event);
         this.setRuns();

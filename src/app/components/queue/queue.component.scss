@@ -1,0 +1,77 @@
+@import '~src/variables.scss';
+
+div.queue-screen {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 9000;
+
+    div.queue {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 20vw;
+        height: 100vh;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.75);
+
+        h3 {
+            span {
+                font-weight: 300;
+                font-size: 3rem;
+                line-height: 2rem;
+
+                &:hover {
+                    color: $cerulean;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        div.queue-report {
+            &:hover {
+                cursor: default;
+            }
+
+            &.linkable:hover {
+                background-color: $river-bed;
+                cursor: pointer;
+            }
+
+            div.uuid {
+                font-size: 1rem;
+            }
+
+            div.slate, span.slate {
+                color: $slate-grey;
+            }
+
+            div.green {
+                color: $fruit-salad;
+            }
+
+            div.blue {
+                color: $cerulean;
+            }
+
+            div.red {
+                color: $mandy;
+            }
+
+            div.delete {
+                font-weight: 300;
+                font-size: 2.4rem;
+                line-height: 1.6rem;
+                cursor: pointer;
+
+                &:hover {
+                    color: darken($mandy, 15%);
+                }
+            }
+        }
+    }
+}

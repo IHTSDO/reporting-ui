@@ -110,4 +110,8 @@ export class ReportingService {
         return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/' + codeSystemShortName + '/whitelist',
             JSON.stringify(params));
     }
+
+    httpInitialise() {
+        return this.http.get('/schedule-manager/jobs/initialise');
+    }
 }

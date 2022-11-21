@@ -3,8 +3,6 @@ import { UIConfiguration } from '../../models/uiConfiguration';
 import { HttpClient } from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 import { Versions } from '../../models/versions';
-import { Project } from '../../models/project';
-import {User} from '../../models/user';
 
 @Injectable({
     providedIn: 'root'
