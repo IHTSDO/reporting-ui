@@ -1,11 +1,11 @@
 <div *ngIf="projects" id="report" class="footer-margin">
     <div *ngIf="activeReport else noReport" class="position-relative">
         <div class="row g-0">
-            <div class="col-9 p-4">
+            <div class="col-8 p-4">
                 <h2 class="mb-3">{{activeReport.name}}</h2>
                 <p class="description mb-3 text-bootstrap-black">{{activeReport.description}}</p>
             </div>
-            <div class="col-3 p-4">
+            <div class="col-4 p-4">
                 <div class="text-end">
                     <button class="btn mx-3 whitelist" data-toggle="modal" data-target="#whitelistModal" (click)="openModal('whitelist-modal'); searchTerm = ''; getWhitelist()">Exceptions</button>
                     <button *ngIf="parametersExistCheck()" class="btn p-2 px-3 new-run" data-toggle="modal" data-target="#queryModal" (click)="openModal('query-modal')" [disabled]="spamProtection()">Configure Query</button>
