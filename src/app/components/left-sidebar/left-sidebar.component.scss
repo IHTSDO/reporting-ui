@@ -39,6 +39,7 @@ nav#sidebar {
         }
 
         div.category {
+            height: 11.8rem;
             cursor: pointer;
             border-bottom: 1px solid $ghost-grey;
 
@@ -53,8 +54,8 @@ nav#sidebar {
     div.reports {
         background: $alto-white;
         width: 32rem;
-        margin-top: 162px;
-        height: calc(100vh - 252px);
+        margin-top: 19rem;
+        height: calc(100vh - 28rem);
         overflow: auto;
 
         div.report {
@@ -85,6 +86,7 @@ $vanilla: #BBAE95;
 $dull-lavender: #A0A5E3;
 $tonys-pink: #E98689;
 $green-mist: #7DC1B3;
+$ghostly-grey: #8C99A6;
 
 .spring-rain {
     background-color: lighten($spring-rain, 10%) !important;
@@ -170,6 +172,20 @@ $green-mist: #7DC1B3;
     }
 }
 
+.ghostly-grey {
+    background-color: lighten($ghostly-grey, 10%) !important;
+
+    &:hover, &.active {
+        background-color: darken($ghostly-grey, 20%) !important;
+        color: $white;
+    }
+
+    &.active {
+        background-color: darken($ghostly-grey, 30%) !important;
+        color: $white;
+    }
+}
+
 .spring-rain-border {
     border-left: solid 5px lighten($spring-rain, 10%) !important;
 }
@@ -192,6 +208,10 @@ $green-mist: #7DC1B3;
 
 .green-mist-border {
     border-left: solid 5px lighten($green-mist, 10%) !important;
+}
+
+.ghostly-grey-border {
+    border-left: solid 5px lighten($ghostly-grey, 10%) !important;
 }
 
 

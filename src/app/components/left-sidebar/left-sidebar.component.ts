@@ -29,7 +29,8 @@ export class LeftSidebarComponent implements OnInit {
         'vanilla',
         'dull-lavender',
         'tonys-pink',
-        'green-mist'
+        'green-mist',
+        'ghostly-grey'
     ];
 
     constructor(private reportingService: ReportingService,
