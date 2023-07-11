@@ -11,7 +11,7 @@
     <div class="position-fixed reports">
         <ng-container *ngFor="let category of reports; let i = index">
             <ng-container *ngIf="!categoryFilter || category.name === categoryFilter">
-                <div *ngFor="let report of category.jobs | alphabetical:'name':category.name | textFilter:textFilter | tags:msUser" class="report py-2 px-3 {{colors[i]}}-border"
+                <div *ngFor="let report of category.jobs | alphabetical:'name' | textFilter:textFilter | tags:msUser" class="report py-2 px-3 {{colors[i]}}-border"
                      (click)="selectReport(report)"
                      [class.active]="activeReport?.name === report?.name">{{report.name}}</div>
             </ng-container>
