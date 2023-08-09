@@ -6,11 +6,13 @@
                 <div class="position-relative">
                     <input class="form-control" type="text" [(ngModel)]="parameter?.value.value" [ngbTypeahead]="search" [required]="parameter.value.mandatory"/>
                 </div>
+                <div *ngIf="parameter.value?.description" class="form-text">{{parameter.value.description}}</div>
             </div>
             <div *ngSwitchCase="'BOOLEAN'" class="mb-3">
                 <div class="form-check ms-1">
                     <input class="form-check-input" type="checkbox" [(ngModel)]="parameter.value.value" id="{{parameter.key}}">
                     <label class="form-check-label" for="{{parameter.key}}">{{parameter.key}}</label>
+                    <div *ngIf="parameter.value?.description" class="form-text">{{parameter.value.description}}</div>
                 </div>
             </div>
             <div *ngSwitchCase="'CHECKBOXES'" class="mb-3">
@@ -19,11 +21,13 @@
                         <input class="form-check-input" [(ngModel)]="parameter.value.values[i]" type="checkbox">
                         <label class="form-check-label">{{option}}</label>
                     </div>
+                    <div *ngIf="parameter.value?.description" class="form-text">{{parameter.value.description}}</div>
                 </div>
             </div>
             <div *ngSwitchCase="'STRING'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <input id="{{parameter.key}}" name="{{parameter.key}}" class="form-control" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory">
+                <div *ngIf="parameter.value?.description" class="form-text">{{parameter.value.description}}</div>
             </div>
             <div *ngSwitchCase="'CONCEPT_LIST'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
@@ -34,6 +38,7 @@
                 <span *ngFor="let readyConcept of convertStringListToShortConceptList(parameter.value.value)" class="ready-concept d-inline-block px-2 m-1 ">{{readyConcept?.fsn}}
                     <span class="remove-ready-concept text-center rounded-circle px-1" (click)="removeFromWhitelistReadyConcepts(readyConcept, parameter.key)"><i class="fas fa-times"></i></span>
                 </span>
+                <div *ngIf="parameter.value?.description" class="form-text">{{parameter.value.description}}</div>
             </div>
             <div *ngSwitchCase="'TEMPLATE_NAME'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
@@ -41,6 +46,7 @@
                     <option selected></option>
                     <option *ngFor="let option of templates | orderBy:'name'">{{option.name}}</option>
                 </select>
+                <div *ngIf="parameter.value?.description" class="form-text">{{parameter.value.description}}</div>
             </div>
             <div *ngSwitchCase="'DROPDOWN'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
@@ -48,14 +54,17 @@
                     <option selected></option>
                     <option *ngFor="let option of parameter.value.options | orderBy:'name'">{{option}}</option>
                 </select>
+                <div *ngIf="parameter.value?.description" class="form-text">{{parameter.value.description}}</div>
             </div>
             <div *ngSwitchCase="'TEMPLATE'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <textarea class="form-control" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory"></textarea>
+                <div *ngIf="parameter.value?.description" class="form-text">{{parameter.value.description}}</div>
             </div>
             <div *ngSwitchCase="'ECL'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <textarea class="form-control" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory"></textarea>
+                <div *ngIf="parameter.value?.description" class="form-text">{{parameter.value.description}}</div>
             </div>
             <div *ngSwitchCase="'HIDDEN'"></div>
         </ng-container>
