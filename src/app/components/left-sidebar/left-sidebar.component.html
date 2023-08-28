@@ -1,6 +1,6 @@
 <nav *ngIf="reports; else loading" id="sidebar" class="footer-margin">
     <div class="position-fixed head">
-        <h3 class="p-3 mb-0">Reports</h3>
+        <h3 class="p-3 mb-0">Reports<span class="p-2 float-right">{{(getFilteredReportJobs() | textFilter:textFilter | tags:msUser).length}} found</span></h3>
         <input type="search" class="searchbar py-2 px-3" [(ngModel)]="textFilter" placeholder="Search for Reports...">
         <div class="mx-0 p-1 row category">
             <div *ngFor="let category of reports; let i = index" class="col-6 p-1">

@@ -71,6 +71,16 @@ export class LeftSidebarComponent implements OnInit {
         }
     }
 
+    getFilteredReportJobs() {
+        let jobs = [];
+        this.reports.forEach(report => {    
+            if (!this.categoryFilter || report.name === this.categoryFilter) {
+                jobs = jobs.concat(report.jobs);
+            }
+        });
+        return jobs;
+    }
+
     setQueryParam(params) {
         this.router.navigate([],
             {
