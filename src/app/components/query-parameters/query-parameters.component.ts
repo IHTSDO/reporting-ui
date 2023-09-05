@@ -5,8 +5,8 @@ import { TemplateService } from '../../services/template/template.service';
 import { AuthoringService } from '../../services/authoring/authoring.service';
 import { UtilityService } from '../../services/utility/utility.service';
 import { Concept } from '../../models/concept';
-import { Observable } from 'rxjs';
-import {catchError, debounceTime, distinctUntilChanged, filter, switchMap, tap} from 'rxjs/operators';
+import { EMPTY, Observable } from 'rxjs';
+import {catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap} from 'rxjs/operators';
 import {PathingService} from '../../services/pathing/pathing.service';
 import {HttpService} from '../../services/http/http.service';
 import {ReportingService} from '../../services/reporting/reporting.service';
@@ -36,10 +36,15 @@ export class QueryParametersComponent {
         distinctUntilChanged(),
         tap(() => document.activeElement.parentElement.appendChild(this.spinner)),
         switchMap(term => this.httpService.getTypeahead(term).pipe(
-            tap(() => document.getElementById('spinner').remove(),
-                catchError(tap(() => document.getElementById('spinner').remove()))
-            ))
-        ),
+            map(results => { 
+                document.getElementById('spinner').remove(); 
+                return results;
+            }),
+            catchError((error) => {
+                console.log(error);
+                return EMPTY;
+            })
+        )),
     )
 
     constructor(private templateService: TemplateService,

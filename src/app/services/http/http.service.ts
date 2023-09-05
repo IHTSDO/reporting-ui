@@ -45,7 +45,7 @@ export class HttpService {
                 }),
                 catchError((e) => {
                     document.getElementById('spinner').remove();
-                    return e;
+                    throw e;
                 }));
     }
 
