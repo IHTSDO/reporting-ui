@@ -4,21 +4,24 @@
     "newProjectRoot": "projects",
     "projects": {
         "reporting-UI": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
             "root": "",
             "sourceRoot": "src",
-            "projectType": "application",
             "prefix": "app",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "baseHref": "/",
-                        "sourceMap": true,
-                        "optimization": false,
                         "outputPath": "dist/reporting-UI",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "tsConfig": "tsconfig.app.json",
+                        "inlineStyleLanguage": "scss",
                         "assets": [
                             "src/favicon.ico",
                             "src/favicon_grey.ico",
@@ -40,56 +43,54 @@
                     },
                     "configurations": {
                         "production": {
-                            "fileReplacements": [
+                            "baseHref": "/reporting/",
+                            "budgets": [
                                 {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
+                                    "type": "initial",
+                                    "maximumWarning": "1mb",
+                                    "maximumError": "2mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "16kb",
+                                    "maximumError": "32kb"
                                 }
                             ],
-                            "baseHref": "/reporting/",
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true
+                            "outputHashing": "all"
+                        },
+                        "development": {
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
                         }
-                    }
+                    },
+                    "defaultConfiguration": "production"
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "reporting-UI:build",
                         "liveReload": false
                     },
                     "configurations": {
                         "production": {
                             "browserTarget": "reporting-UI:build:production"
+                        },
+                        "development": {
+                            "browserTarget": "reporting-UI:build:development"
                         }
-                    }
+                    },
+                    "defaultConfiguration": "development"
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
                         "browserTarget": "reporting-UI:build"
                     }
-                },
-                "lint": {
-                    "builder": "@angular-eslint/builder:lint",
-                    "options": {
-                        "lintFilePatterns": [
-                            "src/**/*.ts",
-                            "src/**/*.html"
-                        ]
-                    }
                 }
             }
         }
-    },
-    "defaultProject": "reporting-UI",
-    "cli": {
-        "defaultCollection": "@angular-eslint/schematics"
     }
 }
