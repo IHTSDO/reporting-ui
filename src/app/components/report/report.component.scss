@@ -73,6 +73,10 @@ div#report {
                 &:hover {
                     background-color: lighten($anakiwa, 2.5%);
                 }
+
+                td {
+                    background-color: transparent;
+                }
             }
 
             th {
