@@ -98,7 +98,7 @@
         <div class="position-relative pb-3">
             <label class="w-100 m-0">Add concept to exceptions</label>
             <input type="text" class="form-control" [(ngModel)]="searchTerm" [ngbTypeahead]="search" (ngModelChange)="retrieveConceptsById(searchTerm)"/>
-            <div class="note font-italic">Multiple hierarchies can be entered via comma separation</div>
+            <div class="note font-italic">Multiple concepts can be entered via comma separation</div>
         </div>
         <div *ngIf="whitelist?.length > 0; else noItems" class="table-container border">
             <table class="table table-borderless rounded m-0">
