@@ -3,7 +3,7 @@
 app-modal {
     /* modals are hidden by default */
     display: none;
-    max-height: 80vh;
+    //max-height: 80vh;
 
     div.modal-dialog {
         z-index: 1000;
@@ -41,6 +41,7 @@ app-modal {
             div.modal-body {
                 font-size: 1.5rem;
                 max-height: 80vh;
+                overflow: auto;
 
                 input, textarea, label {
                     cursor: text;
