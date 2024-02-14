@@ -42,3 +42,9 @@ Thumbs.db
 /target/
 /deb/
 /dist/
+
+# Cypress
+/cypress/videos/
+/cypress/reports/
+/cypress/screenshots/
+/cypress.env.json

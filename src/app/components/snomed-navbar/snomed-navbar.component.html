@@ -6,7 +6,7 @@
 
     <ul *ngIf="projects; else loading" class="dropdown-nav me-auto my-2">
         <li class="nav-item dropdown">
-            <a class="nav-link px-3 py-2 rounded dropdown-toggle text-end" id="branchDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link px-3 py-2 rounded dropdown-toggle text-end" data-test="dropdown-branch" id="branchDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{activeBranch?.branchPath}}
             </a>
             <div class="dropdown-menu py-0" aria-labelledby="branchDropdown">
@@ -17,7 +17,7 @@
         </li>
         <li *ngIf="activeBranch && activeProject" class="ms-3 text-ghost-grey">/</li>
         <li *ngIf="activeBranch" class="ms-3 nav-item dropdown">
-            <a class="nav-link px-3 py-2 rounded dropdown-toggle text-end" id="projectDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [class.add]="!activeProject?.key">
+            <a class="nav-link px-3 py-2 rounded dropdown-toggle text-end" data-test="dropdown-project" id="projectDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [class.add]="!activeProject?.key">
                 {{activeProject?.key ? activeProject.key : 'PROJECT'}}
             </a>
             <div class="dropdown-menu py-0" aria-labelledby="projectDropdown">
@@ -31,7 +31,7 @@
         </li>
         <li *ngIf="activeProject && activeTask" class="ms-3 text-ghost-grey">/</li>
         <li *ngIf="activeProject" class="ms-3 nav-item dropdown">
-            <a class="nav-link px-3 py-2 rounded dropdown-toggle text-end" id="taskDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [class.add]="!activeTask?.key">
+            <a class="nav-link px-3 py-2 rounded dropdown-toggle text-end" data-test="dropdown-task" id="taskDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [class.add]="!activeTask?.key">
                 {{activeTask?.key ? activeTask.key : 'TASK'}}
             </a>
             <div class="dropdown-menu py-0" aria-labelledby="taskDropdown">

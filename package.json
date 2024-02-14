@@ -31,6 +31,8 @@
         "@popperjs/core": "^2.11.7",
         "@types/jquery": "^3.5.1",
         "bootstrap": "^5.2.3",
+        "cypress": "^13.6.4",
+        "cypress-mochawesome-reporter": "^3.8.1",
         "guid-typescript": "^1.0.9",
         "jquery": "^3.5.1",
         "ngx-clipboard": "^16.0.0",
