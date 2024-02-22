@@ -20,9 +20,6 @@ export default class Utils {
         cy.get('#password').clear();
         cy.get('#password').type(password, {log: false});
         cy.get('form').contains('button', 'LOG IN', {timeout: this.loginTimeoutInSeconds}).click({force: true});
-
-        // cookie?
-        // cy.getCookie()
     }
 
     logout(): void {

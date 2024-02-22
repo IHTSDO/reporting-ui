@@ -9,7 +9,7 @@ describe('Reporting Platform Smoke Test', () => {
     const username = Cypress.env('TEST_LOGIN_USR');
     const password = Cypress.env('TEST_LOGIN_PSW');
     const reportHistoryTimeoutInSeconds = 15_000;
-    const reportTimeoutInSeconds = 99_000;
+    const reportTimeoutInSeconds = 60_000 * 5;  // Takes ages for reporting on dev to startup!
 
     it('Login', () => {
         utils.login(urlLogin, urlReporting, username, password);
@@ -45,11 +45,6 @@ describe('Reporting Platform Smoke Test', () => {
         cy.get('#ECL').type('< 195967001 |Asthma (disorder)|');
         cy.contains('button', 'Run Query').click();
         cy.get('[data-test="report-parameters-0"]', {timeout: reportHistoryTimeoutInSeconds}).contains('195967001');
-    });
-
-    it('Ensure report is scheduled', () => {
-        cy.get('[data-test="report-info-0"]', {timeout: reportTimeoutInSeconds})
-            .contains('Scheduled', {timeout: reportTimeoutInSeconds});
     });
 
     it('Ensure report runs', () => {

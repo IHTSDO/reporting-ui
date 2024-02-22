@@ -16,9 +16,7 @@ describe('Reporting Platform Login/Logout Test', () => {
 
     it('Login attempt with invalid username', () => {
         utils.login(urlLogin, urlReporting, 'Invalid username', password);
-
-        // TODO: Deliberate error for the demo!  Please replace Errr with Error after 19/2/2024
-        cy.contains("Errr").should('be.visible');
+        cy.contains("Error").should('be.visible');
         cy.contains("Invalid username or password").should('be.visible');
     });
 
