@@ -46,7 +46,9 @@ export class AppComponent implements OnInit {
             this.authenticationService.setUser(user);
         });
 
-
+        this.reportingService.httpGetReleases().subscribe(data => {
+            this.reportingService.setReleases(data);
+        });
 
         this.assignFavicon();
     }

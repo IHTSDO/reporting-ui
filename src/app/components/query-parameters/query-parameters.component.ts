@@ -5,7 +5,7 @@ import { TemplateService } from '../../services/template/template.service';
 import { AuthoringService } from '../../services/authoring/authoring.service';
 import { UtilityService } from '../../services/utility/utility.service';
 import { Concept } from '../../models/concept';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, Subscription } from 'rxjs';
 import {catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap} from 'rxjs/operators';
 import {PathingService} from '../../services/pathing/pathing.service';
 import {HttpService} from '../../services/http/http.service';
@@ -16,16 +16,19 @@ import {ReportingService} from '../../services/reporting/reporting.service';
     templateUrl: './query-parameters.component.html',
     styleUrls: ['./query-parameters.component.scss']
 })
-export class QueryParametersComponent {
+export class QueryParametersComponent implements OnInit {
 
     @ViewChild('textareaTypeahead', { static: false }) inputElement: ElementRef;
 
     templates: Template[];
+    releases: any;
 
+    activeCodeSystemShortName: string;
     activeProject: any;
     activeProjectSubscription;
     activeReport: any;
     activeReportSubscription;
+    activeBranchSubscription: Subscription;
 
     // typeahead
     searchTerm: string;
@@ -36,8 +39,8 @@ export class QueryParametersComponent {
         distinctUntilChanged(),
         tap(() => document.activeElement.parentElement.appendChild(this.spinner)),
         switchMap(term => this.httpService.getTypeahead(term).pipe(
-            map(results => { 
-                document.getElementById('spinner').remove(); 
+            map(results => {
+                document.getElementById('spinner').remove();
                 return results;
             }),
             catchError((error) => {
@@ -57,10 +60,28 @@ export class QueryParametersComponent {
             this.activeReport = data;
             this.setupQueryParameters();
         });
+        this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => {
+            if (data) {
+                if (data.hasOwnProperty('shortName')) {
+                    const shortName = data['shortName'];
+                    this.activeCodeSystemShortName = shortName.includes('-') ? shortName.split('-')[1] : 'INT';
+                } else if (data.hasOwnProperty('branchPath')) {
+                    const branchPath = data['branchPath'];
+                    this.activeCodeSystemShortName = branchPath.includes('-') ? branchPath.split('-')[1] : 'INT';
+                }
+            }
+            this.setupQueryParameters();
+        });
         this.spinner.id = 'spinner';
         this.spinner.classList.add('spinner-border', 'spinner-border-sm', 'position-absolute');
         this.spinner.style.top = '10px';
         this.spinner.style.right = '10px';
+    }
+    
+    ngOnInit(): void {
+        this.reportingService.getReleases().subscribe(releases => {
+            this.releases = releases;
+        });
     }
 
     setupQueryParameters() {
@@ -94,6 +115,17 @@ export class QueryParametersComponent {
                         });
 
                         parameter.values = vals;
+                    }
+                    if (parameter.type === 'RELEASE_ARCHIVE') {
+                        parameter.releases = [];
+                        if (parameter.options && parameter.options.length !== 0) {
+                            const codeSystemShortName = parameter.options[0];
+                            parameter.releases = this.releases.hasOwnProperty(codeSystemShortName) ? 
+                                                this.releases[codeSystemShortName].map(release => release.filename) : [];
+                        } else {                            
+                            parameter.releases = this.releases.hasOwnProperty(this.activeCodeSystemShortName) ? 
+                                                this.releases[this.activeCodeSystemShortName].map(release => release.filename) : [];
+                        }
                     }
                 }
             }
