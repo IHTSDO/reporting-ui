@@ -153,8 +153,8 @@ export class QueryParametersComponent implements OnInit {
         const releases = this.releases[this.activeCodeSystemShortName];
         if (releases) {
             for (const release of releases) {
-                if ((key === 'This Dependency' && this.selectedReleaseMap.has('This Release') && this.selectedReleaseMap.get('This Release') === release.filename)
-                    || (key === 'Previous Dependency' && this.selectedReleaseMap.has('Previous Release') && this.selectedReleaseMap.get('Previous Release') === release.filename)) {
+                if (release.dependencies && ((key === 'This Dependency' && this.selectedReleaseMap.has('This Release') && this.selectedReleaseMap.get('This Release') === release.filename)
+                    || (key === 'Previous Dependency' && this.selectedReleaseMap.has('Previous Release') && this.selectedReleaseMap.get('Previous Release') === release.filename))) {
                         dependencies = dependencies.concat(release.dependencies);
                 }
             }
@@ -163,6 +163,10 @@ export class QueryParametersComponent implements OnInit {
     }
     
     getReleaseArchiveOptions(parameter): string[] {
+        if (!this.releases) {
+            return [];
+        }
+        
         const key = parameter.key;
         if (key === 'This Dependency' || key === 'Previous Dependency') {
             return this.getDependencies(key);
