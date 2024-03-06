@@ -22,6 +22,7 @@ export class QueryParametersComponent implements OnInit {
 
     templates: Template[];
     releases: any;
+    selectedReleaseMap: Map<string, string> = new Map<string, string>();
 
     activeCodeSystemShortName: string;
     activeProject: any;
@@ -59,6 +60,7 @@ export class QueryParametersComponent implements OnInit {
         this.activeReportSubscription = this.reportingService.getActiveReport().subscribe(data => {
             this.activeReport = data;
             this.setupQueryParameters();
+            this.selectedReleaseMap.clear();
         });
         this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => {
             if (data) {
@@ -70,6 +72,7 @@ export class QueryParametersComponent implements OnInit {
                     this.activeCodeSystemShortName = branchPath.includes('-') ? branchPath.split('-')[1] : 'INT';
                 }
             }
+            this.selectedReleaseMap.clear();
             this.setupQueryParameters();
         });
         this.spinner.id = 'spinner';
@@ -77,7 +80,7 @@ export class QueryParametersComponent implements OnInit {
         this.spinner.style.top = '10px';
         this.spinner.style.right = '10px';
     }
-    
+
     ngOnInit(): void {
         this.reportingService.getReleases().subscribe(releases => {
             this.releases = releases;
@@ -116,17 +119,6 @@ export class QueryParametersComponent implements OnInit {
 
                         parameter.values = vals;
                     }
-                    if (parameter.type === 'RELEASE_ARCHIVE') {
-                        parameter.releases = [];
-                        if (parameter.options && parameter.options.length !== 0) {
-                            const codeSystemShortName = parameter.options[0];
-                            parameter.releases = this.releases.hasOwnProperty(codeSystemShortName) ? 
-                                                this.releases[codeSystemShortName].map(release => release.filename) : [];
-                        } else {                            
-                            parameter.releases = this.releases.hasOwnProperty(this.activeCodeSystemShortName) ? 
-                                                this.releases[this.activeCodeSystemShortName].map(release => release.filename) : [];
-                        }
-                    }
                 }
             }
         }
@@ -147,6 +139,51 @@ export class QueryParametersComponent implements OnInit {
                 });
         }
     }
+
+    onReleaseChange(parameterKey, value): void {
+        this.selectedReleaseMap.set(parameterKey, value);
+    }
+
+    getSortedFilenames(releases: any[]): string[] {
+        return releases.sort((a, b) => b.effectiveTime - a.effectiveTime).map(release => release.filename);
+    }
+    
+    getDependencies(key: string): string[] {
+        let dependencies = [];
+        const releases = this.releases[this.activeCodeSystemShortName];
+        if (releases) {
+            for (const release of releases) {
+                if ((key === 'This Dependency' && this.selectedReleaseMap.has('This Release') && this.selectedReleaseMap.get('This Release') === release.filename)
+                    || (key === 'Previous Dependency' && this.selectedReleaseMap.has('Previous Release') && this.selectedReleaseMap.get('Previous Release') === release.filename)) {
+                        dependencies = dependencies.concat(release.dependencies);
+                }
+            }
+        }
+        return dependencies.length > 0 ? this.getSortedFilenames(dependencies) : [];
+    }
+    
+    getReleaseArchiveOptions(parameter): string[] {
+        const key = parameter.key;
+        if (key === 'This Dependency' || key === 'Previous Dependency') {
+            return this.getDependencies(key);
+        } 
+    
+        if (parameter.value && parameter.value.options && parameter.value.options.length !== 0) {
+            const codeSystemShortName = parameter.value.options[0];
+            const releases = this.releases[codeSystemShortName];
+            return releases ? this.getSortedFilenames(releases) : [];
+        } 
+    
+        let releases = this.releases[this.activeCodeSystemShortName];
+        if (releases) {
+            if (key === 'Previous Release' && this.selectedReleaseMap.has('This Release')) {
+                releases = releases.filter(release => release.filename !== this.selectedReleaseMap.get('This Release'));
+            }
+            return this.getSortedFilenames(releases);
+        } 
+    
+        return [];
+    }yy
 
     addToWhitelistReadyConcepts(concept, key): void {
         this.searchTerm = '';

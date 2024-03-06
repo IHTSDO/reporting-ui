@@ -58,9 +58,9 @@
             </div>
             <div *ngSwitchCase="'RELEASE_ARCHIVE'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
-                <select id="{{parameter.key}}" class="form-select" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory">
+                <select id="{{parameter.key}}" class="form-select" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory" (change)="onReleaseChange(parameter.key, parameter.value.value)">
                     <option selected></option>
-                    <option *ngFor="let option of parameter.value.releases | orderBy:'name'">{{option}}</option>
+                    <option *ngFor="let option of getReleaseArchiveOptions(parameter)">{{option}}</option>
                 </select>
                 <div *ngIf="parameter.value?.description" class="form-text">{{parameter.value.description}}</div>
             </div>
