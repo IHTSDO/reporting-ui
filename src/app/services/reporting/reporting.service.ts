@@ -14,6 +14,7 @@ import {User} from '../../models/user';
 export class ReportingService {
 
     private reports = new Subject<any>();
+    private releases = new Subject<any>();
     private activeReport = new Subject<any>();
     private runs = new Subject<any>();
     private whitelist = new Subject<any>();
@@ -36,6 +37,14 @@ export class ReportingService {
 
     getReports() {
         return this.reports.asObservable();
+    }
+
+    setReleases(releases) {
+        this.releases.next(releases);
+    }
+
+    getReleases() {
+        return this.releases.asObservable();
     }
 
     // Setters & Getters: ActiveReport
@@ -76,6 +85,10 @@ export class ReportingService {
 
     httpGetReports() {
         return this.http.get<Category[]>('/schedule-manager/jobs/Report/');
+    }
+
+    httpGetReleases() {
+        return this.http.get<Object[]>('/schedule-manager/releases');
     }
 
     httpGetReportRuns(name) {

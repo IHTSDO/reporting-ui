@@ -2,8 +2,8 @@
     <div *ngIf="activeReport else noReport" class="position-relative">
         <div class="row g-0">
             <div class="col-8 p-4">
-                <h2 class="mb-3">{{activeReport.name}}</h2>
-                <p class="description mb-3 text-bootstrap-black">{{activeReport.description}}</p>
+                <h2 data-test="report-title" class="mb-3">{{activeReport.name}}</h2>
+                <p data-test="report-description" class="description mb-3 text-bootstrap-black">{{activeReport.description}}</p>
             </div>
             <div class="col-4 p-4">
                 <div class="text-end">
@@ -24,7 +24,7 @@
         <button class="btn delete-button bg-mandy text-white m-2" (click)="openModal('delete-modal')">DELETE</button>
     </div>
     <div *ngIf="runs && runs[0]">
-        <table class="table table-bordered">
+        <table data-test="report-history" class="table table-bordered">
             <thead>
             <tr class="table-title">
                 <th class="p-3">Issues</th>
@@ -34,10 +34,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let run of runs" class="table-body position-relative" [class.selected]="toBeDeleted(run)" (click)="addToDeleteReports(run)">
-                <td class="p-3">{{run.issuesReported ? run.issuesReported : '0'}}</td>
-                <td class="p-3">{{run.project}}<br><span *ngIf="run?.task" class="text-grey">{{'/' + run.task}}</span></td>
-                <td class="p-3 parameter" *ngFor="let parameter of runs[0].parameters | keyvalue | displayOrder | hidden">
+            <tr data-test="report-history-row" *ngFor="let run of runs; let i = index" class="table-body position-relative" [class.selected]="toBeDeleted(run)" (click)="addToDeleteReports(run)">
+                <td [attr.data-test]="'report-issues-'+ i" class="p-3">{{run.issuesReported ? run.issuesReported : '0'}}</td>
+                <td [attr.data-test]="'report-project-' + i" class="p-3">{{run.project}}<br><span *ngIf="run?.task" class="text-grey">{{'/' + run.task}}</span></td>
+                <td [attr.data-test]="'report-parameters-' + i" class="p-3 parameter" *ngFor="let parameter of runs[0].parameters | keyvalue | displayOrder | hidden">
                     <ng-container *ngIf="run.parameters[parameter.key]?.values">
                         <div *ngFor="let item of run.parameters[parameter.key]?.values">{{item}}</div>
                     </ng-container>
@@ -45,7 +45,7 @@
                         {{run?.parameters ? run.parameters[parameter.key]?.value : ''}}
                     </ng-container>
                 </td>
-                <td class="p-3 info">
+                <td [attr.data-test]="'report-info-' + i" class="p-3 info">
                     <span class="user mb-2">{{run.user}} </span>
                     <span class="time mb-2">{{convertDate(run.requestTime)}} UTC </span>
                     <ng-container [ngSwitch]="run.status">
@@ -80,7 +80,7 @@
 </app-modal>
 
 <!-- QUERY MODAL -->
-<app-modal id="query-modal" class="modal">
+<app-modal id="query-modal" class="modal modal-lg">
     <div header><h3 class="mb-0">{{activeReport?.name}}</h3></div>
     <div body>
         <app-query-parameters></app-query-parameters>
