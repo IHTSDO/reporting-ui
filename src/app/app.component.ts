@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AuthoringService } from './services/authoring/authoring.service';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import 'jquery';
-import {ActivatedRoute, Router} from '@angular/router';
 import {QueueService} from './services/queue/queue.service';
 import {Subscription} from 'rxjs';
 import {ReportingService} from './services/reporting/reporting.service';
+import {ReleaseService} from './services/release/release.service';
 
 @Component({
     selector: 'app-root',
@@ -24,7 +24,8 @@ export class AppComponent implements OnInit {
     constructor(private authenticationService: AuthenticationService,
                 private authoringService: AuthoringService,
                 private queueService: QueueService,
-                private reportingService: ReportingService) {
+                private reportingService: ReportingService,
+                private releaseService: ReleaseService) {
         this.queueOpenSubscription = this.queueService.getQueueOpen().subscribe(data => this.queueOpen = data);
     }
 
@@ -48,6 +49,10 @@ export class AppComponent implements OnInit {
 
         this.reportingService.httpGetReleases().subscribe(data => {
             this.reportingService.setReleases(data);
+        });
+
+        this.releaseService.httpGetReleaseCenters().subscribe(data => {
+            this.releaseService.setReleaseCenters(data);
         });
 
         this.assignFavicon();

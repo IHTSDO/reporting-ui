@@ -74,6 +74,23 @@
                 <textarea class="form-control" id="{{parameter.key}}" [(ngModel)]="parameter.value.value" [required]="parameter.value.mandatory"></textarea>
                 <div *ngIf="parameter.value?.description" class="form-text">{{parameter.value.description}}</div>
             </div>
+            <div *ngSwitchCase="'BUILD_ARCHIVE'" class="mb-3">
+                <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
+                <div class="w-75 pe-3 d-inline-block">
+                    <select class="form-select" [(ngModel)]="selectedProduct[parameter.key]" (change)="getBuildArchiveBuildOptions(parameter.key, selectedProduct[parameter.key])">
+                        <option value="" disabled>---Select product---</option>
+                        <option *ngFor="let option of productOptions[parameter.key] | orderBy:'name'"  [value]="option.id">{{option.name}}</option>
+                    </select>
+                </div>
+                <div class="w-25 d-inline-block">
+                    <select class="form-select" [(ngModel)]="selectedBuild[parameter.key]" (change)="populateBuildArchiveJobTypeValue(parameter)">
+                        <option value="" disabled>{{isBuildsLoading(parameter.key) ? 'Loading...' : '---Select build---'}}</option>
+                        <option *ngFor="let option of buildOptions[parameter.key] | orderBy:'id'">{{option.id}}</option>
+                    </select>
+                </div>
+                <p class="mt-2" *ngIf="parameter.value.value">({{parameter.value.value |  slice: (parameter.value.value.lastIndexOf('/') + 1)}})</p>
+                <div *ngIf="parameter.value?.description" class="form-text">{{parameter.value.description}}</div>
+            </div>
             <div *ngSwitchCase="'HIDDEN'"></div>
         </ng-container>
     </div>
