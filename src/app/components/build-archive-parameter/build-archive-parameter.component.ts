@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ReleaseService } from '../../services/release/release.service';
 import { Subscription } from 'rxjs';
+import { ReleaseService } from '../../services/release/release.service';
 import { PathingService } from '../../services/pathing/pathing.service';
 
 @Component({
@@ -26,7 +26,6 @@ export class BuildArchiveParameterComponent implements OnInit {
     buildsLoading: boolean = false;
 
     activeBranchSubscription: Subscription;
-    activeReportSubscription: Subscription;
 
     constructor(private pathingService: PathingService,
                 private releaseService: ReleaseService) {
@@ -46,15 +45,19 @@ export class BuildArchiveParameterComponent implements OnInit {
 
     ngOnInit(): void {
         this.resetView();
-        this.getProductOptions();
+        if (!this.releaseCenters) {
+            this.releaseService.getReleaseCenters().subscribe(releaseCenters => {
+                this.releaseCenters = releaseCenters;
+                this.getProductOptions();
+            });
+        } else {
+            this.getProductOptions();
+        }
     }
 
     ngOnDestroy() {
       if (this.activeBranchSubscription) {
         this.activeBranchSubscription.unsubscribe();
-      }
-      if (this.activeReportSubscription) {
-        this.activeReportSubscription.unsubscribe();
       }
     }
 
@@ -139,19 +142,19 @@ export class BuildArchiveParameterComponent implements OnInit {
         });
     }
 
-    findReleaseCenter() {
+    private findReleaseCenter() {
         if (!this.releaseCenters) {
             return null;
         }
         return this.releaseCenters.find(releaseCenter => releaseCenter['codeSystem'] === this.activeCodeSystem);
     }
 
-    resetView() {
+    private resetView() {
       this.resetUIParameters();
       this.resetBuildArchiveValues();
     }
 
-    resetUIParameters() {
+    private resetUIParameters() {
         this.selectedProduct = '';
         this.productOptions = [];
         this.selectedBuild = '';
@@ -161,7 +164,7 @@ export class BuildArchiveParameterComponent implements OnInit {
         this.buildsLoading = false;
     }
 
-    resetBuildArchiveValues() {
+    private resetBuildArchiveValues() {
         const parameterKey = this.parameter.key;
         for (const key in this.activeReport.parameters) {
           const parameter = this.activeReport.parameters[key];
