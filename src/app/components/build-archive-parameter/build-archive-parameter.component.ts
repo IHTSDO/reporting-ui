@@ -92,7 +92,7 @@ export class BuildArchiveParameterComponent implements OnInit {
         this.selectedBuild = '';
         this.resetBuildArchiveValues();
 
-        this.releaseService.httpGetBuilds(releaseCenter['id'], this.selectedProduct, this.selectedBuild, !this.includedHiddenBuilds).subscribe(response => {
+        this.releaseService.httpGetBuilds(releaseCenter['id'], this.selectedProduct, this.selectedBuildView, !this.includedHiddenBuilds).subscribe(response => {
             this.buildsLoading = false;
             let items = response['content'];
             if (Object.keys(this.activeReport.parameters).length !== 0) {
@@ -137,7 +137,7 @@ export class BuildArchiveParameterComponent implements OnInit {
                 }
             }
             if (!packageFileFound) {
-                this.parameter.value.value = 'Release package is not availabe.';
+                this.parameter.value.value = 'Release package is not available.';
             }
         });
     }
