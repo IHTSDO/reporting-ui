@@ -46,6 +46,7 @@ import { AllReportsPipe } from './pipes/allReports/all-reports.pipe';
 import { QueueComponent } from './components/queue/queue.component';
 import {QueueService} from './services/queue/queue.service';
 import { BuildArchiveParameterComponent } from './components/build-archive-parameter/build-archive-parameter.component';
+import { ReleaseArchiveParameterComponent } from './components/release-archive-parameter/release-archive-parameter.component';
 
 @NgModule({
     declarations: [
@@ -67,7 +68,8 @@ import { BuildArchiveParameterComponent } from './components/build-archive-param
         OrderByPipe,
         AllReportsPipe,
         QueueComponent,
-        BuildArchiveParameterComponent
+        BuildArchiveParameterComponent,
+        ReleaseArchiveParameterComponent
     ],
     imports: [
         BrowserModule,
