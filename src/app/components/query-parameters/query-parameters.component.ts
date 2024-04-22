@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Template } from '../../models/template';
 import { TemplateService } from '../../services/template/template.service';
 import { AuthoringService } from '../../services/authoring/authoring.service';
@@ -24,15 +24,8 @@ export class QueryParametersComponent implements OnInit {
 
     /** RELEASE_ARCHIVE */
     releases: any;
-    selectedReleaseMap: Map<string, string> = new Map<string, string>();    
-
-    /** BUILD_ARCHIVE */
     releaseCenters: any;
-    selectedProduct: object;
-    selectedBuild: object;
-    productOptions: object[];
-    buildOptions: object[];
-    buildsLoadingMap: object = {};
+    selectedReleaseMap: Map<string, string> = new Map<string, string>();
 
     activeCodeSystem: string;
     activeCodeSystemShortName: string;
@@ -75,9 +68,6 @@ export class QueryParametersComponent implements OnInit {
             // RELEASE_ARCHIVE
             this.selectedReleaseMap.clear();
 
-            // BUILD_ARCHIVE
-            this.resetBuildArchiveValues();
-            
             this.setupQueryParameters();
         });
         this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => {
@@ -94,9 +84,6 @@ export class QueryParametersComponent implements OnInit {
 
             // RELEASE_ARCHIVE
             this.selectedReleaseMap.clear();
-
-            // BUILD_ARCHIVE
-            this.resetBuildArchiveValues();
 
             this.setupQueryParameters();
         });
@@ -146,13 +133,6 @@ export class QueryParametersComponent implements OnInit {
                         });
 
                         parameter.values = vals;
-                    }
-                    if (parameter.type === 'BUILD_ARCHIVE') {
-                        parameter.value = '';
-                        this.getBuildArchiveProductOptions(key);
-                        this.clearBuildArchiveDependencyValues();
-                        this.selectedProduct[key] = '';
-                        this.selectedBuild[key] = '';
                     }
                 }
             }
@@ -227,109 +207,6 @@ export class QueryParametersComponent implements OnInit {
         }
 
         return [];
-    }
-
-    // For BUILD_ARCHIVE
-    getBuildArchiveProductOptions(parameterKey) {
-        const releaseCenter = this.findReleaseCenter();
-        if (!releaseCenter) {
-            return;
-        }
-        this.productOptions[parameterKey] = [];
-        this.releaseService.httpGetProducts(releaseCenter['id']).subscribe(response => {
-            let items = response['content'];
-            if (items.length !== 0) {
-                items = items.filter(item => item['releaseCenter'].codeSystem === this.activeCodeSystem);
-                if (items.length !== 0) {
-                    this.productOptions[parameterKey] = items;
-                }
-            }
-        });
-    }
-
-    // For BUILD_ARCHIVE
-    getBuildArchiveBuildOptions(parameterKey, selectedProduct) {
-        const releaseCenter = this.findReleaseCenter();
-        if (!releaseCenter) {
-            return;
-        }
-        this.buildsLoadingMap[parameterKey] = true;
-        this.releaseService.httpGetBuilds(releaseCenter['id'], selectedProduct).subscribe(response => {
-            this.buildsLoadingMap[parameterKey] = false;
-            let items = response['content'];
-            if (Object.keys(this.selectedBuild).length !== 0) {
-                for (const key in this.selectedBuild) {
-                    items = items.filter(item => item['id'] !== this.selectedBuild[key]);
-                }
-            }
-            this.buildOptions[parameterKey] = items;
-        });
-    }
-
-    // For BUILD_ARCHIVE
-    populateBuildArchiveJobTypeValue(parameter) {
-        const parameterKey = parameter.key;
-        const releaseCenter = this.findReleaseCenter();
-        if (!releaseCenter) {
-            return;
-        }
-        this.releaseService.httpGetBuildConfiguration(releaseCenter['id'], this.selectedProduct[parameterKey], this.selectedBuild[parameterKey]).subscribe(response => {
-            if (response.hasOwnProperty('extensionConfig') && response['extensionConfig'] && response['extensionConfig'].dependencyRelease) {
-                for (const key in this.activeReport.parameters) {
-                    const parameter = this.activeReport.parameters[key];
-                    if ((parameterKey === 'This Release' && key === 'This Dependency')
-                        || (parameterKey === 'Previous Release' && key === 'Previous Dependency')) {
-                        parameter.value = response['extensionConfig'].dependencyRelease;
-                        break;
-                    }
-                }
-            }
-        });
-        this.releaseService.httpGetBuildOutputFiles(releaseCenter['id'], this.selectedProduct[parameterKey], this.selectedBuild[parameterKey]).subscribe(results => {
-            let packageFileFound = false;
-            for (let i = 0; i < results.length; i++) {
-                const item = results[i];
-                if (item['id'].endsWith('.zip')) {
-                    parameter.value.value =  releaseCenter['id'] + '/' + this.selectedProduct[parameterKey] + '/' + this.selectedBuild[parameterKey] + '/output-files/' + item['id'];
-                    packageFileFound = true;
-                    break;
-                }
-            }
-            if (!packageFileFound) {
-                parameter.value.value = '';
-            }
-        });
-    }
-
-    // For BUILD_ARCHIVE
-    findReleaseCenter() {
-        if (!this.releaseCenters) {
-            return null;
-        }
-        return this.releaseCenters.find(releaseCenter => releaseCenter['codeSystem'] === this.activeCodeSystem);
-    }
-
-    // For BUILD_ARCHIVE
-    clearBuildArchiveDependencyValues() {
-        for (const key in this.activeReport.parameters) {
-            const parameter = this.activeReport.parameters[key];
-            if (key === 'This Dependency' || key === 'Previous Dependency') {
-                parameter.value = '';
-            }
-        }
-    }
-
-    resetBuildArchiveValues() {
-        this.selectedProduct = {};
-        this.productOptions = [];
-        this.selectedBuild = {};
-        this.buildOptions = [];
-        this.buildsLoadingMap = {};
-    }
-
-    // For BUILD_ARCHIVE
-    isBuildsLoading(parameterKey) {
-        return this.buildsLoadingMap[parameterKey] === true;
     }
 
     addToWhitelistReadyConcepts(concept, key): void {

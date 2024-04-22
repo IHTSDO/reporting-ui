@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { isBuffer } from 'cypress/types/lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +26,18 @@ export class ReleaseService {
     }
 
     httpGetProducts(releaseCenterKey: string) {
-      return this.http.get<Object[]>('/release-service/centers/' + releaseCenterKey + '/products?pageSize=100');
+      return this.http.get<Object[]>('/release-service/centers/' + releaseCenterKey + '/products?pageSize=100&sortField=name&sortDirection=asc');
     }
 
-    httpGetBuilds(releaseCenterKey: string, productKey: string) {
-      return this.http.get<Object[]>('/release-service/centers/' + releaseCenterKey + '/products/' + productKey + '/builds');
+    httpGetBuilds(releaseCenterKey: string, productKey: string, viewMode: string, visibility: boolean) {
+      let param = 'pageSize=100&sort=creationTime,desc';
+      if (viewMode) {
+        param += '&viewMode=' + viewMode;
+      }
+      if (visibility) {
+        param += '&visibility=true';
+      }
+      return this.http.get<Object[]>('/release-service/centers/' + releaseCenterKey + '/products/' + productKey + '/builds?' + param);
     }
 
     httpGetBuildConfiguration(releaseCenterKey: string, productKey: string, buildKey: string) {

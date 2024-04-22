@@ -45,6 +45,7 @@ import { OrderByPipe } from './pipes/orderBy/order-by.pipe';
 import { AllReportsPipe } from './pipes/allReports/all-reports.pipe';
 import { QueueComponent } from './components/queue/queue.component';
 import {QueueService} from './services/queue/queue.service';
+import { BuildArchiveParameterComponent } from './components/build-archive-parameter/build-archive-parameter.component';
 
 @NgModule({
     declarations: [
@@ -65,7 +66,8 @@ import {QueueService} from './services/queue/queue.service';
         DisplayOrderPipe,
         OrderByPipe,
         AllReportsPipe,
-        QueueComponent
+        QueueComponent,
+        BuildArchiveParameterComponent
     ],
     imports: [
         BrowserModule,
