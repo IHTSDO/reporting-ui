@@ -58,13 +58,13 @@ export class ReleaseArchiveParameterComponent {
                     for (const key in this.activeReport.parameters) {
                         const parameter = this.activeReport.parameters[key];
                         if (release.dependencies && release.dependencies.length !== 0 &&
-                            (parameterKey === 'This Release' && key === 'This Dependency')
-                            || (parameterKey === 'Previous Release' && key === 'Previous Dependency')) {
+                            ((parameterKey === 'This Release' && key === 'This Dependency')
+                            || (parameterKey === 'Previous Release' && key === 'Previous Dependency'))) {
                             parameter.value = release.dependencies[0].filename;
                         }
                         if (release.compositionModuleIds && release.compositionModuleIds.length !== 0 &&
                             parameterKey === 'This Release' && key === 'Modules') {
-                            parameter.value = release.compositionModuleIds.join(',');
+                            parameter.value = release.compositionModuleIds.join(', ');
                         }
                     }
                     break;
