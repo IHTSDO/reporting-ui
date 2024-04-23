@@ -113,15 +113,16 @@ export class BuildArchiveParameterComponent implements OnInit {
             return;
         }
         this.releaseService.httpGetBuildConfiguration(releaseCenter['id'], this.selectedProduct, this.selectedBuild).subscribe(response => {
-            if (response.hasOwnProperty('extensionConfig') && response['extensionConfig'] && response['extensionConfig'].dependencyRelease) {
+            if (response.hasOwnProperty('extensionConfig') && response['extensionConfig']) {
+                const extensionConfig = response['extensionConfig'];
                 for (const key in this.activeReport.parameters) {
                     const parameter = this.activeReport.parameters[key];
-                    if ((parameterKey === 'This Release' && key === 'This Dependency')
-                        || (parameterKey === 'Previous Release' && key === 'Previous Dependency')) {
-                        parameter.value = response['extensionConfig'].dependencyRelease;
+                    if (extensionConfig.dependencyRelease && ((parameterKey === 'This Release' && key === 'This Dependency')
+                        || (parameterKey === 'Previous Release' && key === 'Previous Dependency'))) {
+                        parameter.value = extensionConfig.dependencyRelease;
                     }
-                    if (parameterKey === 'This Release' && key === 'Modules') {
-                        parameter.value = response['extensionConfig'].moduleIds;
+                    if (extensionConfig.moduleIds && parameterKey === 'This Release' && key === 'Modules') {
+                        parameter.value = extensionConfig.moduleIds.split(',').join(', ');
                     }
                 }
             }
