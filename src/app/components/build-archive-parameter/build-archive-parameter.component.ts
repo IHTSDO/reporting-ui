@@ -17,20 +17,24 @@ export class BuildArchiveParameterComponent implements OnInit {
 
     selectedProduct: string = '';
     selectedBuild: string = '';
+    excludedBuilds: string[] = [];
 
     productOptions: any[] = [];
     buildOptions: any[] = [];
+    unmodifiedBuildOptions: any[] = [];
 
     selectedBuildView: string = 'ALL_RELEASES';
     includedHiddenBuilds: boolean = false;
     buildsLoading: boolean = false;
 
     activeBranchSubscription: Subscription;
+    activeProductSubscription: Subscription;
+    activeBuildSubscription: Subscription;
 
     constructor(private pathingService: PathingService,
                 private releaseService: ReleaseService) {
-          this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => {
-              if (data) {
+        this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => {
+            if (data) {
                 if (data.hasOwnProperty('shortName')) {
                     this.activeCodeSystem = data['shortName'];
                 } else if (data.hasOwnProperty('branchPath')) {
@@ -39,6 +43,21 @@ export class BuildArchiveParameterComponent implements OnInit {
                 }
                 this.resetView();
                 this.getProductOptions();
+            }
+        });
+        this.activeProductSubscription = this.releaseService.getActiveProduct().subscribe(data => {
+            if (data && data['parameterKey'] !== this.parameter.key && (!this.selectedProduct || this.selectedProduct !== data['product'])) {
+                this.selectedProduct = data['product'];
+                this.onProductChange();
+            }
+        });
+        this.activeBuildSubscription = this.releaseService.getActiveBuild().subscribe(data => {
+            if (data && data['parameterKey'] !== this.parameter.key) {
+                this.excludedBuilds = [];
+                this.excludedBuilds.push(data['buildId']);
+                if (this.unmodifiedBuildOptions.length !== 0) {
+                    this.buildOptions = this.unmodifiedBuildOptions.filter(item => !this.excludedBuilds.includes(item['id']));
+                }
             }
         });
     }
@@ -56,9 +75,15 @@ export class BuildArchiveParameterComponent implements OnInit {
     }
 
     ngOnDestroy() {
-      if (this.activeBranchSubscription) {
-        this.activeBranchSubscription.unsubscribe();
-      }
+        if (this.activeBranchSubscription) {
+            this.activeBranchSubscription.unsubscribe();
+        }
+        if (this.activeProductSubscription) {
+            this.activeProductSubscription.unsubscribe();
+        }
+        if (this.activeBuildSubscription) {
+            this.activeBuildSubscription.unsubscribe();
+        }
     }
 
     getProductOptions() {
@@ -95,14 +120,12 @@ export class BuildArchiveParameterComponent implements OnInit {
         this.releaseService.httpGetBuilds(releaseCenter['id'], this.selectedProduct, this.selectedBuildView, !this.includedHiddenBuilds).subscribe(response => {
             this.buildsLoading = false;
             let items = response['content'];
-            if (Object.keys(this.activeReport.parameters).length !== 0) {
-                for (const key in this.activeReport.parameters) {
-                    if (key !== this.parameter.key && this.activeReport.parameters[key].type === 'BUILD_ARCHIVE' && this.activeReport.parameters[key].value) {
-                      items = items.filter(item => !this.activeReport.parameters[key].value.includes(item['id']));
-                    }
-                }
-            }
-            this.buildOptions = items;
+            this.unmodifiedBuildOptions = items;
+            this.buildOptions = items.filter(item => !this.excludedBuilds.includes(item['id']));
+        });
+        this.releaseService.setActiveProduct({
+            parameterKey: this.parameter.key,
+            product: this.selectedProduct
         });
     }
 
@@ -112,6 +135,7 @@ export class BuildArchiveParameterComponent implements OnInit {
         if (!releaseCenter) {
             return;
         }
+        this.parameter.value.value = '';
         this.releaseService.httpGetBuildConfiguration(releaseCenter['id'], this.selectedProduct, this.selectedBuild).subscribe(response => {
             if (response.hasOwnProperty('extensionConfig') && response['extensionConfig']) {
                 const extensionConfig = response['extensionConfig'];
@@ -140,6 +164,10 @@ export class BuildArchiveParameterComponent implements OnInit {
             if (!packageFileFound) {
                 this.parameter.value.value = 'Release package is not available.';
             }
+        });
+        this.releaseService.setActiveBuild({
+            parameterKey: this.parameter.key,
+            buildId: this.selectedBuild
         });
     }
 

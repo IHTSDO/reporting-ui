@@ -9,6 +9,8 @@ import { isBuffer } from 'cypress/types/lodash';
 export class ReleaseService {
 
     private releaseCenters = new Subject<any>();
+    private activeProduct = new Subject();
+    private activeBuild = new Subject();
 
     // Setters & Getters: ReleaseCenters
     setReleaseCenters(releaseCenters) {
@@ -17,6 +19,24 @@ export class ReleaseService {
 
     getReleaseCenters() {
         return this.releaseCenters.asObservable();
+    }
+
+    // Setters & Getters: Product
+    setActiveProduct(product) {
+        this.activeProduct.next(product);
+    }
+
+    getActiveProduct() {
+        return this.activeProduct.asObservable();
+    }
+
+    // Setters & Getters: Build
+    setActiveBuild(build) {
+        this.activeBuild.next(build);
+    }
+
+    getActiveBuild() {
+        return this.activeBuild.asObservable();
     }
 
     constructor(private http: HttpClient) { }
