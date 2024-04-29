@@ -19,6 +19,7 @@ export class ReportingService {
     private runs = new Subject<any>();
     private whitelist = new Subject<any>();
     private allReports = new BehaviorSubject<any>(true);
+    private activeReleaseArchive = new Subject();
 
     user: User;
     userSubscription: Subscription;
@@ -81,6 +82,15 @@ export class ReportingService {
 
     getAllReports() {
         return this.allReports.asObservable();
+    }
+
+    // Setters & Getters: ActiveReleaseArchive
+    setActiveReleaseArchive(releaseArchive) {
+        this.activeReleaseArchive.next(releaseArchive);
+    }
+
+    getActiveReleaseArchive() {
+        return this.activeReleaseArchive.asObservable();
     }
 
     httpGetReports() {

@@ -15,8 +15,10 @@ export class ReleaseArchiveParameterComponent {
     @Input() parameter: any;
 
     releaseOptions: any[] = [];
+    excludedReleases: string[] = [];
 
     activeBranchSubscription: Subscription;
+    activeReleaseArchiveSubscription: Subscription;
 
     constructor(private reportingService: ReportingService,
                 private pathingService: PathingService) {
@@ -30,6 +32,12 @@ export class ReleaseArchiveParameterComponent {
                     this.activeCodeSystemShortName = branchPath.includes('-') ? branchPath.split('-')[1] : 'INT';
                 }
                 this.resetReleaseArchiveValues();
+            }
+        });
+        this.activeReleaseArchiveSubscription = this.reportingService.getActiveReleaseArchive().subscribe(data => {
+            if (data && data['parameterKey'] !== this.parameter.key) {
+                this.excludedReleases = [];
+                this.excludedReleases.push(data['release']);
             }
         });
     }
@@ -46,6 +54,9 @@ export class ReleaseArchiveParameterComponent {
     ngOnDestroy() {
         if (this.activeBranchSubscription) {
             this.activeBranchSubscription.unsubscribe();
+        }
+        if (this.activeReleaseArchiveSubscription) {
+            this.activeReleaseArchiveSubscription.unsubscribe();
         }
     }
 
@@ -70,6 +81,11 @@ export class ReleaseArchiveParameterComponent {
                     break;
                 }
             }
+            this.reportingService.setActiveReleaseArchive({
+                parameterKey: this.parameter.key,
+                release: this.parameter.value.value
+            
+            });
         }
     }
 
@@ -94,13 +110,7 @@ export class ReleaseArchiveParameterComponent {
 
         let releases = this.releases[this.activeCodeSystemShortName];
         if (releases) {
-            if (Object.keys(this.activeReport.parameters).length !== 0) {
-                for (const key in this.activeReport.parameters) {
-                    if (key !== this.parameter.key && this.activeReport.parameters[key].type === 'RELEASE_ARCHIVE' && this.activeReport.parameters[key].value) {
-                      releases = releases.filter(release => release.filename !== this.activeReport.parameters[key].value);
-                    }
-                }
-            }
+            releases = releases.filter(release => !this.excludedReleases.includes(release.filename));
             return releases;
         }
         return [];
