@@ -308,18 +308,6 @@ export class ReportComponent implements OnInit {
         }
     }
 
-    spamProtection() {
-        if (this.runs) {
-            if (this.runs.find(run => run.user === this.user.login)) {
-                return this.runs.find(run => run.user === this.user.login).status === 'Scheduled';
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
     getTime(input): string {
         const hours = new Date(input * 1000).toISOString().substr(11, 2);
         const minutes = new Date(input * 1000).toISOString().substr(14, 2);
