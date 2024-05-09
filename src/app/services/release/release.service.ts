@@ -49,13 +49,18 @@ export class ReleaseService {
       return this.http.get<Object[]>('/release-service/centers/' + releaseCenterKey + '/products?pageSize=100&sortField=name&sortDirection=asc');
     }
 
-    httpGetBuilds(releaseCenterKey: string, productKey: string, viewMode: string, visibility: boolean) {
-      let param = 'pageSize=100&sort=creationTime,desc';
+    httpGetBuilds(releaseCenterKey: string, productKey: string, viewMode: string, visibility: boolean, forYears: number[]) {
+      let param = 'pageSize=500&sort=creationTime,desc';
       if (viewMode) {
         param += '&viewMode=' + viewMode;
       }
       if (visibility) {
         param += '&visibility=true';
+      }
+      if (forYears) {
+        for (let i = 0; i < forYears.length; i++) {
+          param += '&forYears=' + forYears[i];
+        }
       }
       return this.http.get<Object[]>('/release-service/centers/' + releaseCenterKey + '/products/' + productKey + '/builds?' + param);
     }

@@ -1,13 +1,15 @@
 // FRAMEWORKS
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {NgbTooltipModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
 import { ClipboardModule } from 'ngx-clipboard';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
@@ -80,7 +82,11 @@ import { ReleaseArchiveParameterComponent } from './components/release-archive-p
         NgbTypeaheadModule,
         NgbTooltipModule,
         AppRoutingModule,
-        ClipboardModule
+        ClipboardModule,
+        MatFormFieldModule, 
+        MatSelectModule, 
+        FormsModule, 
+        ReactiveFormsModule
     ],
     providers: [
         ReportingService,

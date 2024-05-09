@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ReleaseService } from '../../services/release/release.service';
 import { PathingService } from '../../services/pathing/pathing.service';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'build-archive-parameter',
@@ -9,11 +10,15 @@ import { PathingService } from '../../services/pathing/pathing.service';
   styleUrls: ['./build-archive-parameter.component.scss']
 })
 export class BuildArchiveParameterComponent implements OnInit {
+    @ViewChild('matSelect') matSelect: MatSelect;
 
     @Input() activeReport: any;
     @Input() activeCodeSystem: any;
     @Input() parameter: any;
     @Input() releaseCenters: any;
+
+    selectedYears: number[] = [];
+    yearOptions: number[] = [];
 
     selectedProduct: string = '';
     selectedBuild: string = '';
@@ -62,8 +67,7 @@ export class BuildArchiveParameterComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {
-        this.resetView();
+    ngOnInit(): void {                
         if (!this.releaseCenters) {
             this.releaseService.getReleaseCenters().subscribe(releaseCenters => {
                 this.releaseCenters = releaseCenters;
@@ -72,6 +76,7 @@ export class BuildArchiveParameterComponent implements OnInit {
         } else {
             this.getProductOptions();
         }
+        this.resetView();
     }
 
     ngOnDestroy() {
@@ -84,6 +89,18 @@ export class BuildArchiveParameterComponent implements OnInit {
         if (this.activeBuildSubscription) {
             this.activeBuildSubscription.unsubscribe();
         }
+    }
+
+    matSelectOnblur() {
+        setTimeout(()=>{
+            this.matSelect.close();
+        }, 200);
+    }
+
+    matSelectOnValueChange() {
+        setTimeout(()=>{
+            this.getBuildOptions();
+        }, 0);
     }
 
     getProductOptions() {
@@ -111,21 +128,33 @@ export class BuildArchiveParameterComponent implements OnInit {
         if (!releaseCenter) {
             return;
         }
+        this.selectedBuild = '';
+        this.getBuildOptions();
+        this.releaseService.setActiveProduct({
+            parameterKey: this.parameter.key,
+            product: this.selectedProduct
+        });
+    }
+
+    getBuildOptions() {
+        if (!this.selectedProduct) {
+            return;
+        }
+        const releaseCenter = this.findReleaseCenter();
+        if (!releaseCenter) {
+            return;
+        }
 
         // Reset BUILD_ARCHIVE values
         this.buildsLoading = true;
         this.selectedBuild = '';
         this.resetBuildArchiveValues();
-
-        this.releaseService.httpGetBuilds(releaseCenter['id'], this.selectedProduct, this.selectedBuildView, !this.includedHiddenBuilds).subscribe(response => {
+        this.buildOptions = [];
+        this.releaseService.httpGetBuilds(releaseCenter['id'], this.selectedProduct, this.selectedBuildView, !this.includedHiddenBuilds, this.selectedYears).subscribe(response => {
             this.buildsLoading = false;
             let items = response['content'];
             this.unmodifiedBuildOptions = items;
             this.buildOptions = items.filter(item => !this.excludedBuilds.includes(item['id']));
-        });
-        this.releaseService.setActiveProduct({
-            parameterKey: this.parameter.key,
-            product: this.selectedProduct
         });
     }
 
@@ -191,6 +220,15 @@ export class BuildArchiveParameterComponent implements OnInit {
         this.includedHiddenBuilds = false;
         this.selectedBuildView = 'ALL_RELEASES';
         this.buildsLoading = false;
+        
+        const currentYear = new Date().getFullYear();
+        this.selectedYears = [];
+        this.selectedYears.push(currentYear);
+        this.selectedYears.push(currentYear - 1);
+        this.yearOptions = [];
+        for (let i = 0; i < 5; i++) {
+            this.yearOptions.push(currentYear - i);
+        }
     }
 
     private resetBuildArchiveValues() {

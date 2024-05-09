@@ -16,7 +16,7 @@ div.build-archive-parameter {
     }
 
     label.build-key {
-        width: 72%;
+        width: 55%;
     }
     label.build-view {
         width: 12%;
@@ -25,10 +25,18 @@ div.build-archive-parameter {
         width: 13%;
     }
     div.product-selection {
-        width: 47%;
+        width: 30%;
     }
+    
     div.build-view-selection {
         width: 28%;
     }
+    label.build-years-selection,
+    div.build-years-selection {
+        width: 17%;
+    }  
+    mat-select {
+        height: 30px;
+    }  
 }
 
