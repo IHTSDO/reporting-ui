@@ -49,6 +49,7 @@ import { QueueComponent } from './components/queue/queue.component';
 import {QueueService} from './services/queue/queue.service';
 import { BuildArchiveParameterComponent } from './components/build-archive-parameter/build-archive-parameter.component';
 import { ReleaseArchiveParameterComponent } from './components/release-archive-parameter/release-archive-parameter.component';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
     declarations: [
@@ -81,6 +82,7 @@ import { ReleaseArchiveParameterComponent } from './components/release-archive-p
         MatCheckboxModule,
         NgbTypeaheadModule,
         NgbTooltipModule,
+        ToastrModule.forRoot(),
         AppRoutingModule,
         ClipboardModule,
         MatFormFieldModule, 

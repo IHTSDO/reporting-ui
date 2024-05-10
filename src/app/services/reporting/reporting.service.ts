@@ -20,6 +20,7 @@ export class ReportingService {
     private whitelist = new Subject<any>();
     private allReports = new BehaviorSubject<any>(true);
     private activeReleaseArchive = new Subject();
+    private pagination = new BehaviorSubject(0);
 
     user: User;
     userSubscription: Subscription;
@@ -93,6 +94,15 @@ export class ReportingService {
         return this.activeReleaseArchive.asObservable();
     }
 
+    setPagination(page) {
+        this.pagination.next(page);
+    }
+
+    getPagination() {
+        return this.pagination.asObservable();
+    }
+
+
     httpGetReports() {
         return this.http.get<Category[]>('/schedule-manager/jobs/Report/');
     }
@@ -101,8 +111,8 @@ export class ReportingService {
         return this.http.get<Object[]>('/schedule-manager/releases');
     }
 
-    httpGetReportRuns(name) {
-        return this.http.get<Report[]>('/schedule-manager/jobs/Report/' + name + '/runs' + (this.localAllReports ? '' : '?user=' + this.user.login));
+    httpGetReportRuns(name, page?, size?) {
+        return this.http.get('/schedule-manager/jobs/Report/' + name + '/runs?page=' + (page ? page.toString() : '0') + '&size=' + (size ? size.toString() : '100') + (this.localAllReports ? '' : '&user=' + this.user.login));
     }
 
     httpDeleteReport(name, id) {

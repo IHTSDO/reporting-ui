@@ -58,6 +58,8 @@ export class ReportComponent implements OnInit {
     userSubscription: Subscription;
     allReports: any;
     allReportsSubscription: Subscription;
+    pagination: number;
+    paginationSubscription: Subscription;
 
 
     // typeahead
@@ -70,8 +72,8 @@ export class ReportComponent implements OnInit {
         distinctUntilChanged(),
         tap(() => document.activeElement.parentElement.appendChild(this.spinner)),
         switchMap(term => this.httpService.getTypeahead(term).pipe(
-            map(results => { 
-                document.getElementById('spinner').remove(); 
+            map(results => {
+                document.getElementById('spinner').remove();
                 return results;
             }),
             catchError((error) => {
@@ -99,6 +101,7 @@ export class ReportComponent implements OnInit {
         this.projectsSubscription = this.pathingService.getProjects().subscribe( data => this.projects = data);
         this.activeTaskSubscription = this.pathingService.getActiveTask().subscribe(data => this.activeTask = data);
         this.runsSubscription = this.reportingService.getRuns().subscribe( data => this.runs = data);
+        this.paginationSubscription = this.reportingService.getPagination().subscribe( data => this.pagination = data);
         this.whitelistSubscription = this.reportingService.getWhitelist().subscribe( data => this.whitelist = data);
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
         this.allReportsSubscription = this.reportingService.getAllReports().subscribe(data => this.allReports = data);
@@ -134,8 +137,8 @@ export class ReportComponent implements OnInit {
 
     refresh(): void {
         if (this.activeReport) {
-            this.reportingService.httpGetReportRuns(this.activeReport.name).subscribe(runs => {
-                if (JSON.stringify(runs) !== JSON.stringify(this.runs)) {
+            this.reportingService.httpGetReportRuns(this.activeReport.name, 0, (this.pagination + 1) * 100).subscribe(runs => {
+                if (JSON.stringify(runs) !== JSON.stringify(this.runs?.content)) {
                     this.reportingService.setRuns(runs);
                 }
             });
@@ -332,5 +335,15 @@ export class ReportComponent implements OnInit {
 
     copyText(content) {
         this.clipboardApi.copyFromContent(content);
+    }
+
+    loadMore() {
+        this.pagination++;
+        this.reportingService.setPagination(this.pagination);
+
+        this.reportingService.httpGetReportRuns(this.activeReport.name, this.pagination).subscribe((runs: any) => {
+            this.runs.content = [...this.runs.content, ...runs?.content];
+            this.reportingService.setRuns(this.runs);
+        });
     }
 }

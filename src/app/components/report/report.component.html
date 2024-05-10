@@ -23,21 +23,21 @@
         <button class="btn cancel-button bg-regent-grey text-white m-2" (click)="clearDeleteReports()">CANCEL</button>
         <button class="btn delete-button bg-mandy text-white m-2" (click)="openModal('delete-modal')">DELETE</button>
     </div>
-    <div *ngIf="runs && runs[0]">
+    <div *ngIf="runs?.content && runs?.content[0]">
         <table data-test="report-history" class="table table-bordered">
             <thead>
             <tr class="table-title">
                 <th class="p-3">Issues</th>
                 <th class="p-3">Project</th>
-                <th class="p-3" *ngFor="let parameter of runs[0].parameters | keyvalue | displayOrder | hidden">{{parameter.key}}</th>
+                <th class="p-3" *ngFor="let parameter of runs.content[0].parameters | keyvalue | displayOrder | hidden">{{parameter.key}}</th>
                 <th class="p-3">Info</th>
             </tr>
             </thead>
             <tbody>
-            <tr data-test="report-history-row" *ngFor="let run of runs; let i = index" class="table-body position-relative" [class.selected]="toBeDeleted(run)" (click)="addToDeleteReports(run)">
+            <tr data-test="report-history-row" *ngFor="let run of runs.content; let i = index" class="table-body position-relative" [class.selected]="toBeDeleted(run)" (click)="addToDeleteReports(run)">
                 <td [attr.data-test]="'report-issues-'+ i" class="p-3">{{run.issuesReported ? run.issuesReported : '0'}}</td>
                 <td [attr.data-test]="'report-project-' + i" class="p-3">{{run.project}}<br><span *ngIf="run?.task" class="text-grey">{{'/' + run.task}}</span></td>
-                <td [attr.data-test]="'report-parameters-' + i" class="p-3 parameter" *ngFor="let parameter of runs[0].parameters | keyvalue | displayOrder | hidden">
+                <td [attr.data-test]="'report-parameters-' + i" class="p-3 parameter" *ngFor="let parameter of runs.content[0].parameters | keyvalue | displayOrder | hidden">
                     <ng-container *ngIf="run.parameters[parameter.key]?.values">
                         <div *ngFor="let item of run.parameters[parameter.key]?.values">{{item}}</div>
                     </ng-container>
@@ -62,6 +62,16 @@
             </tr>
             </tbody>
         </table>
+        <ng-container *ngIf="runs?.content?.length < runs.totalElements">
+            <div class="load-more text-center">
+                <button class="btn bg-cerulean text-white m-2" (click)="loadMore()">Load more...</button>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="runs?.content?.length >= runs.totalElements">
+            <div class="load-more text-center">
+                <button class="btn bg-cerulean text-white m-2" disabled>No more results</button>
+            </div>
+        </ng-container>
     </div>
     <ng-template #noReport>
         <div class="p-5">

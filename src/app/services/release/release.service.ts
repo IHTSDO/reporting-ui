@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { isBuffer } from 'cypress/types/lodash';
 
 @Injectable({
   providedIn: 'root'

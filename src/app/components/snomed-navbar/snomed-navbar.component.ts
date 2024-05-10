@@ -3,11 +3,12 @@ import { Location} from '@angular/common';
 import { AuthoringService } from 'src/app/services/authoring/authoring.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { User } from '../../models/user';
-import { Subscription } from 'rxjs';
+import {forkJoin, Subscription} from 'rxjs';
 import {PathingService} from '../../services/pathing/pathing.service';
 import {ActivatedRoute} from '@angular/router';
 import {ReportingService} from '../../services/reporting/reporting.service';
 import {QueueService} from '../../services/queue/queue.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -51,7 +52,8 @@ export class SnomedNavbarComponent implements OnInit {
                 private reportingService: ReportingService,
                 private queueService: QueueService,
                 private location: Location,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private toastr: ToastrService) {
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
         this.branchesSubscription = this.pathingService.getBranches().subscribe(data => this.branches = data);
         this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
@@ -99,20 +101,20 @@ export class SnomedNavbarComponent implements OnInit {
     }
 
     refresh(): void {
-        this.queueService.httpGetQueueLength().subscribe(data => {
-            this.queueService.setQueueLength(data);
-        });
-        this.queueService.httpGetQueue('Complete', 10).subscribe(data => {
-            this.queueService.setQueueComplete(data);
-        });
-        this.queueService.httpGetQueue('Failed', 10).subscribe(data => {
-            this.queueService.setQueueFailed(data);
-        });
-        this.queueService.httpGetQueue('Running').subscribe(data => {
-            this.queueService.setQueueInProgress(data);
-        });
-        this.queueService.httpGetQueue('Scheduled').subscribe(data => {
-            this.queueService.setQueueScheduled(data);
+        forkJoin([
+            this.queueService.httpGetQueueLength(),
+            this.queueService.httpGetQueue('Complete', 10),
+            this.queueService.httpGetQueue('Failed', 10),
+            this.queueService.httpGetQueue('Running'),
+            this.queueService.httpGetQueue('Scheduled'),
+        ]).subscribe(([length, complete, failed, running, scheduled]) => {
+            this.queueService.setQueueLength(length);
+            this.queueService.setQueueComplete(complete);
+            this.queueService.setQueueFailed(failed);
+            this.queueService.setQueueInProgress(running);
+            this.queueService.setQueueScheduled(scheduled);
+        }, () => {
+            this.toastr.error('Reporting Server Offline', 'ERROR');
         });
     }
 

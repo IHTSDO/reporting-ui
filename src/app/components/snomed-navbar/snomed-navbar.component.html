@@ -62,7 +62,6 @@
         </ul>
     </ng-template>
 
-
     <ng-container [ngSwitch]="environment">
         <div *ngSwitchCase="'local'" class="banner text-white local"></div>
         <div *ngSwitchCase="'dev'" class="banner text-white dev"></div>
@@ -73,7 +72,7 @@
 
     <div *ngIf="user" class="float-right mx-3">
         <div class="queue d-inline-block m-2" (click)="openQueue()">
-            <span class="queue-count rounded px-2 text-center">{{queueLength?.length}}</span>
+            <span class="queue-count rounded px-2 text-center">{{queueLength?.content ? queueLength.content.length : '0'}}</span>
             <span class="px-2 ps-3 text-ghost-grey">Queue</span>
         </div>
         <div class="logout d-inline-block m-2" (click)="logout()">

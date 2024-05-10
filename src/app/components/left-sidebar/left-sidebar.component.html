@@ -27,3 +27,7 @@
         </div>
     </nav>
 </ng-template>
+
+<ng-container *ngIf="serviceError">
+    <p>There has been a service <span class="text-mandy">Error</span>. Please try refreshing the page, and if it still persists, contact your administrator.</p>
+</ng-container>
