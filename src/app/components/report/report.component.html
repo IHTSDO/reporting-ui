@@ -64,12 +64,12 @@
         </table>
         <ng-container *ngIf="runs?.content?.length < runs.totalElements">
             <div class="load-more text-center">
-                <button class="btn bg-cerulean text-white m-2" (click)="loadMore()">Load more...</button>
+                <button class="btn bg-cerulean text-white m-2" (click)="loadMore()">Load next 100</button>
             </div>
         </ng-container>
         <ng-container *ngIf="runs?.content?.length >= runs.totalElements">
             <div class="load-more text-center">
-                <button class="btn bg-cerulean text-white m-2" disabled>No more results</button>
+                <button class="btn bg-cerulean text-white m-2" disabled>All results are displayed</button>
             </div>
         </ng-container>
     </div>
