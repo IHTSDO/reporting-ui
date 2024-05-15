@@ -155,3 +155,29 @@ ngb-tooltip-window.tooltip {
         }
     }
 }
+mat-form-field {
+    div.mdc-text-field {
+        padding: 0;
+    }
+    div.mat-mdc-form-field-infix {
+        width: 122px;
+    }
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+    }
+    div.mdc-line-ripple {
+        display: none;
+    }
+} 
+div.cdk-overlay-container {
+    div.cdk-overlay-pane {
+        position: absolute;
+        z-index: 9999;
+    }
+    .mat-mdc-option {
+        min-height: 30px;
+    }
+    div.mat-mdc-select-panel {
+        background-color: $white;
+    }
+}

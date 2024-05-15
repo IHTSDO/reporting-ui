@@ -87,6 +87,8 @@ $dull-lavender: #A0A5E3;
 $tonys-pink: #E98689;
 $green-mist: #7DC1B3;
 $ghostly-grey: #8C99A6;
+$sunflower-yellow: #F6DC8B;
+$porsche-orange: #EDB273;
 
 .spring-rain {
     background-color: lighten($spring-rain, 10%) !important;
@@ -186,6 +188,34 @@ $ghostly-grey: #8C99A6;
     }
 }
 
+.porsche-orange {
+    background-color: lighten($porsche-orange, 10%) !important;
+
+    &:hover, &.active {
+        background-color: darken($porsche-orange, 20%) !important;
+        color: $white;
+    }
+
+    &.active {
+        background-color: darken($porsche-orange, 30%) !important;
+        color: $white;
+    }
+}
+
+.sunflower-yellow {
+    background-color: lighten($sunflower-yellow, 10%) !important;
+
+    &:hover, &.active {
+        background-color: darken($sunflower-yellow, 20%) !important;
+        color: $white;
+    }
+
+    &.active {
+        background-color: darken($sunflower-yellow, 30%) !important;
+        color: $white;
+    }
+}
+
 .spring-rain-border {
     border-left: solid 5px lighten($spring-rain, 10%) !important;
 }
@@ -214,4 +244,10 @@ $ghostly-grey: #8C99A6;
     border-left: solid 5px lighten($ghostly-grey, 10%) !important;
 }
 
+.porsche-orange-border {
+    border-left: solid 5px lighten($porsche-orange, 10%) !important;
+}
 
+.sunflower-yellow-border {
+    border-left: solid 5px lighten($sunflower-yellow, 10%) !important;
+}

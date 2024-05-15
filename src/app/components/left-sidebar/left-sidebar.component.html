@@ -4,16 +4,16 @@
         <input type="search" class="searchbar py-2 px-3" [(ngModel)]="textFilter" placeholder="Search for Reports...">
         <div class="mx-0 p-1 row category">
             <div *ngFor="let category of reports; let i = index" class="col-6 p-1">
-                <div class="p-1 px-2 rounded text-center {{colors[i]}}" (click)="selectCategory(category.name)" [class.active]="categoryFilter === category.name">{{category.name}}</div>
+                <div class="p-1 px-2 rounded text-center {{colors[i]}}" (click)="selectCategory(category.name)" [class.active]="categoryFilter === category?.name">{{category?.name}}</div>
             </div>
         </div>
     </div>
     <div class="position-fixed reports">
         <ng-container *ngFor="let category of reports; let i = index">
-            <ng-container *ngIf="!categoryFilter || category.name === categoryFilter">
+            <ng-container *ngIf="!categoryFilter || category?.name === categoryFilter">
                 <div *ngFor="let report of category.jobs | alphabetical:'name' | textFilter:textFilter | tags:msUser" class="report py-2 px-3 {{colors[i]}}-border"
                      (click)="selectReport(report)"
-                     [class.active]="activeReport?.name === report?.name">{{report.name}}</div>
+                     [class.active]="activeReport?.name === report?.name">{{report?.name}}</div>
             </ng-container>
         </ng-container>
     </div>
@@ -27,3 +27,7 @@
         </div>
     </nav>
 </ng-template>
+
+<ng-container *ngIf="serviceError">
+    <p>There has been a service <span class="text-mandy">Error</span>. Please try refreshing the page, and if it still persists, contact your administrator.</p>
+</ng-container>

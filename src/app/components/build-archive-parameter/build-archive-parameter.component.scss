@@ -1,0 +1,42 @@
+div.build-archive-parameter {
+    input[type=checkbox] {
+        font-size: 1.4rem;
+    }
+
+    select.form-select {
+        font-size: 1.4rem;
+    }
+
+    .ng-valid[required], .ng-valid.required  {
+        border-left: 5px solid #42A948; /* green */
+    }
+
+    .ng-invalid:not(form)  {
+        border-left: 5px solid #a94442; /* red */
+    }
+
+    label.build-key {
+        width: 55%;
+    }
+    label.build-view {
+        width: 12%;
+    }
+    label.hidden-build {
+        width: 13%;
+    }
+    div.product-selection {
+        width: 30%;
+    }
+    
+    div.build-view-selection {
+        width: 28%;
+    }
+    label.build-years-selection,
+    div.build-years-selection {
+        width: 17%;
+    }  
+    mat-select {
+        height: 30px;
+    }  
+}
+

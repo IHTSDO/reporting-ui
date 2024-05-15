@@ -15,6 +15,8 @@ export class LeftSidebarComponent implements OnInit {
     textFilter: string;
     categoryFilter: string;
 
+    serviceError: boolean = false;
+
     user: any;
     msUser = false;
     userSubscription: Subscription;
@@ -22,6 +24,8 @@ export class LeftSidebarComponent implements OnInit {
     reportsSubscription: Subscription;
     activeReport: any;
     activeReportSubscription: Subscription;
+    pagination: number;
+    paginationSubscription: Subscription;
 
     colors = [
         'spring-rain',
@@ -30,7 +34,9 @@ export class LeftSidebarComponent implements OnInit {
         'dull-lavender',
         'tonys-pink',
         'green-mist',
-        'ghostly-grey'
+        'ghostly-grey',
+        'porsche-orange',
+        'sunflower-yellow'
     ];
 
     constructor(private reportingService: ReportingService,
@@ -38,6 +44,7 @@ export class LeftSidebarComponent implements OnInit {
                 private router: Router,
                 private route: ActivatedRoute) {
         this.reportsSubscription = this.reportingService.getReports().subscribe( data => this.reports = data);
+        this.paginationSubscription = this.reportingService.getPagination().subscribe( data => this.pagination = data);
         this.userSubscription = this.authenticationService.getUser().subscribe( data => {
             this.user = data;
             this.msUser = this.user.roles.includes('ROLE_ms-users');
@@ -48,6 +55,8 @@ export class LeftSidebarComponent implements OnInit {
     ngOnInit() {
         this.reportingService.httpGetReports().subscribe(data => {
             this.reportingService.setReports(data);
+        }, error => {
+            this.serviceError = true;
         });
     }
 
@@ -60,6 +69,7 @@ export class LeftSidebarComponent implements OnInit {
     }
 
     selectReport(report) {
+        this.reportingService.setPagination(0);
         this.reportingService.setRuns(null);
 
         if (this.activeReport && this.activeReport.name === report.name) {
@@ -73,7 +83,7 @@ export class LeftSidebarComponent implements OnInit {
 
     getFilteredReportJobs() {
         let jobs = [];
-        this.reports.forEach(report => {    
+        this.reports.forEach(report => {
             if (!this.categoryFilter || report.name === this.categoryFilter) {
                 jobs = jobs.concat(report.jobs);
             }

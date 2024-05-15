@@ -1,5 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import { Query } from '../../models/query';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Template } from '../../models/template';
 import { TemplateService } from '../../services/template/template.service';
 import { AuthoringService } from '../../services/authoring/authoring.service';
@@ -10,6 +9,7 @@ import {catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, 
 import {PathingService} from '../../services/pathing/pathing.service';
 import {HttpService} from '../../services/http/http.service';
 import {ReportingService} from '../../services/reporting/reporting.service';
+import {ReleaseService} from '../../services/release/release.service';
 
 @Component({
     selector: 'app-query-parameters',
@@ -21,9 +21,11 @@ export class QueryParametersComponent implements OnInit {
     @ViewChild('textareaTypeahead', { static: false }) inputElement: ElementRef;
 
     templates: Template[];
-    releases: any;
-    selectedReleaseMap: Map<string, string> = new Map<string, string>();
 
+    releases: any;
+    releaseCenters: any;
+
+    activeCodeSystem: string;
     activeCodeSystemShortName: string;
     activeProject: any;
     activeProjectSubscription;
@@ -55,24 +57,25 @@ export class QueryParametersComponent implements OnInit {
                 private authoringService: AuthoringService,
                 private httpService: HttpService,
                 private pathingService: PathingService,
-                private reportingService: ReportingService) {
+                private reportingService: ReportingService,
+                private releaseService: ReleaseService) {
         this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
         this.activeReportSubscription = this.reportingService.getActiveReport().subscribe(data => {
             this.activeReport = data;
             this.setupQueryParameters();
-            this.selectedReleaseMap.clear();
         });
         this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => {
             if (data) {
                 if (data.hasOwnProperty('shortName')) {
-                    const shortName = data['shortName'];
-                    this.activeCodeSystemShortName = shortName.includes('-') ? shortName.split('-')[1] : 'INT';
+                    this.activeCodeSystem = data['shortName'];
+                    this.activeCodeSystemShortName = this.activeCodeSystem.includes('-') ? this.activeCodeSystem.split('-')[1] : 'INT';
                 } else if (data.hasOwnProperty('branchPath')) {
                     const branchPath = data['branchPath'];
+                    this.activeCodeSystem = branchPath.includes('-') ? branchPath.substr(branchPath.lastIndexOf('/') + 1) : 'SNOMEDCT';
                     this.activeCodeSystemShortName = branchPath.includes('-') ? branchPath.split('-')[1] : 'INT';
                 }
             }
-            this.selectedReleaseMap.clear();
+
             this.setupQueryParameters();
         });
         this.spinner.id = 'spinner';
@@ -84,6 +87,9 @@ export class QueryParametersComponent implements OnInit {
     ngOnInit(): void {
         this.reportingService.getReleases().subscribe(releases => {
             this.releases = releases;
+        });
+        this.releaseService.getReleaseCenters().subscribe(releaseCenters => {
+            this.releaseCenters = releaseCenters;
         });
     }
 
@@ -139,55 +145,6 @@ export class QueryParametersComponent implements OnInit {
                 });
         }
     }
-
-    onReleaseChange(parameterKey, value): void {
-        this.selectedReleaseMap.set(parameterKey, value);
-    }
-
-    getSortedFilenames(releases: any[]): string[] {
-        return releases.sort((a, b) => b.effectiveTime - a.effectiveTime).map(release => release.filename);
-    }
-    
-    getDependencies(key: string): string[] {
-        let dependencies = [];
-        const releases = this.releases[this.activeCodeSystemShortName];
-        if (releases) {
-            for (const release of releases) {
-                if (release.dependencies && ((key === 'This Dependency' && this.selectedReleaseMap.has('This Release') && this.selectedReleaseMap.get('This Release') === release.filename)
-                    || (key === 'Previous Dependency' && this.selectedReleaseMap.has('Previous Release') && this.selectedReleaseMap.get('Previous Release') === release.filename))) {
-                        dependencies = dependencies.concat(release.dependencies);
-                }
-            }
-        }
-        return dependencies.length > 0 ? this.getSortedFilenames(dependencies) : [];
-    }
-    
-    getReleaseArchiveOptions(parameter): string[] {
-        if (!this.releases) {
-            return [];
-        }
-        
-        const key = parameter.key;
-        if (key === 'This Dependency' || key === 'Previous Dependency') {
-            return this.getDependencies(key);
-        } 
-    
-        if (parameter.value && parameter.value.options && parameter.value.options.length !== 0) {
-            const codeSystemShortName = parameter.value.options[0];
-            const releases = this.releases[codeSystemShortName];
-            return releases ? this.getSortedFilenames(releases) : [];
-        } 
-    
-        let releases = this.releases[this.activeCodeSystemShortName];
-        if (releases) {
-            if (key === 'Previous Release' && this.selectedReleaseMap.has('This Release')) {
-                releases = releases.filter(release => release.filename !== this.selectedReleaseMap.get('This Release'));
-            }
-            return this.getSortedFilenames(releases);
-        } 
-    
-        return [];
-    }yy
 
     addToWhitelistReadyConcepts(concept, key): void {
         this.searchTerm = '';

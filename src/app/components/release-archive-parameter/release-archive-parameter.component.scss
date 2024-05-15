@@ -1,0 +1,18 @@
+div.release-archive-parameter {
+    input[type=checkbox] {
+        font-size: 1.4rem;
+    }
+
+    select.form-select {
+        font-size: 1.4rem;
+    }
+
+    .ng-valid[required], .ng-valid.required  {
+        border-left: 5px solid #42A948; /* green */
+    }
+
+    .ng-invalid:not(form)  {
+        border-left: 5px solid #a94442; /* red */
+    }
+}
+
