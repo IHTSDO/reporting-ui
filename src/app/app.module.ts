@@ -50,6 +50,7 @@ import {QueueService} from './services/queue/queue.service';
 import { BuildArchiveParameterComponent } from './components/build-archive-parameter/build-archive-parameter.component';
 import { ReleaseArchiveParameterComponent } from './components/release-archive-parameter/release-archive-parameter.component';
 import {ToastrModule} from 'ngx-toastr';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
     declarations: [
@@ -85,7 +86,8 @@ import {ToastrModule} from 'ngx-toastr';
         ToastrModule.forRoot(),
         AppRoutingModule,
         ClipboardModule,
-        MatFormFieldModule, 
+        MatFormFieldModule,
+        MatAutocompleteModule, 
         MatSelectModule, 
         FormsModule, 
         ReactiveFormsModule
