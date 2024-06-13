@@ -36,7 +36,7 @@
             </a>
             <div class="dropdown-menu py-0" aria-labelledby="taskDropdown">
                 <ng-container *ngIf="tasks.length">
-                    <ng-container *ngFor="let task of tasks | alphabetical:'key'">
+                    <ng-container *ngFor="let task of tasks">
                         <a class="dropdown-item ps-3" [routerLink]="[activeBranch.branchPath, activeProject.key, task.key]" [queryParams]="{report: activeReport?.name}" (click)="setTask(task)">{{task?.key}}</a>
                     </ng-container>
                     <a *ngIf="activeTask" class="dropdown-item ps-3" (click)="noTask()">
