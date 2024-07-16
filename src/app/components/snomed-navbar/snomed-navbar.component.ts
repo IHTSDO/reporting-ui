@@ -37,6 +37,7 @@ export class SnomedNavbarComponent implements OnInit {
     tasksSubscription: Subscription;
     activeTask: any;
     activeTaskSubscription: Subscription;
+    tasksLoading: boolean;
 
     activeReport: any;
     activeReportSubscription: Subscription;
@@ -165,8 +166,10 @@ export class SnomedNavbarComponent implements OnInit {
         this.pathingService.setActiveTask(null);
 
         if (proj.key) {
+            this.tasksLoading = true;
             this.pathingService.httpGetTasks(proj).subscribe(tasks => {
                 this.pathingService.setTasks(tasks);
+                this.tasksLoading = false;
             });
         }
     }
