@@ -35,16 +35,23 @@
                 {{activeTask?.key ? activeTask.key : 'TASK'}}
             </a>
             <div class="dropdown-menu py-0" aria-labelledby="taskDropdown">
-                <ng-container *ngIf="tasks.length">
-                    <ng-container *ngFor="let task of tasks | alphabetical:'key'">
+                <ng-container *ngIf="tasks.length && !tasksLoading">
+                    <ng-container *ngFor="let task of tasks">
                         <a class="dropdown-item ps-3" [routerLink]="[activeBranch.branchPath, activeProject.key, task.key]" [queryParams]="{report: activeReport?.name}" (click)="setTask(task)">{{task?.key}}</a>
                     </ng-container>
                     <a *ngIf="activeTask" class="dropdown-item ps-3" (click)="noTask()">
                         <button class="btn py-0 m-0 w-100 text-white bg-mandy" [routerLink]="[activeBranch.branchPath, activeProject.key]" [queryParams]="{report: activeReport?.name}">REMOVE</button>
                     </a>
                 </ng-container>
-                <ng-container *ngIf="!tasks.length">
+                <ng-container *ngIf="!tasks.length && !tasksLoading">
                     <a class="dropdown-item ps-3">No Tasks Found</a>
+                </ng-container>
+                <ng-container *ngIf="tasksLoading">
+                    <a class="nav-link px-3 py-2 rounded loading">
+                        <div class="spinner-border" style="font-size: 1rem" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </a>
                 </ng-container>
             </div>
         </li>

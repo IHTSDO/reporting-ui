@@ -177,7 +177,8 @@ div.cdk-overlay-container {
     .mat-mdc-option {
         min-height: 30px;
     }
-    div.mat-mdc-select-panel {
+    div.mat-mdc-select-panel,
+    div.mat-mdc-autocomplete-panel {
         background-color: $white;
     }
 }
