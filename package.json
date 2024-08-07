@@ -38,6 +38,7 @@
         "ngx-clipboard": "^16.0.0",
         "ngx-toastr": "^17.0.2",
         "rxjs": "~7.8.0",
+        "sonarqube-scanner": "^4.2.0",
         "tslib": "^2.3.0",
         "zone.js": "~0.13.0"
     },
