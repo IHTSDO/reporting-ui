@@ -39,7 +39,7 @@ nav#sidebar {
         }
 
         div.category {
-            height: 11.8rem;
+            //height: 11.8rem;
             cursor: pointer;
             border-bottom: 1px solid $ghost-grey;
 
@@ -54,8 +54,8 @@ nav#sidebar {
     div.reports {
         background: $alto-white;
         width: 32rem;
-        margin-top: 19rem;
-        height: calc(100vh - 28rem);
+        margin-top: 162px;
+        height: calc(100vh - 252px);
         overflow: auto;
 
         div.report {
