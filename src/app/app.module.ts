@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -52,8 +52,7 @@ import { ReleaseArchiveParameterComponent } from './components/release-archive-p
 import {ToastrModule} from 'ngx-toastr';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-@NgModule({
-    declarations: [
+@NgModule({ declarations: [
         AppComponent,
         SnomedNavbarComponent,
         SnomedFooterComponent,
@@ -75,9 +74,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         BuildArchiveParameterComponent,
         ReleaseArchiveParameterComponent
     ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
+    bootstrap: [AppComponent], imports: [BrowserModule,
         FormsModule,
         BrowserAnimationsModule,
         MatCheckboxModule,
@@ -87,12 +84,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         AppRoutingModule,
         ClipboardModule,
         MatFormFieldModule,
-        MatAutocompleteModule, 
-        MatSelectModule, 
-        FormsModule, 
-        ReactiveFormsModule
-    ],
-    providers: [
+        MatAutocompleteModule,
+        MatSelectModule,
+        FormsModule,
+        ReactiveFormsModule], providers: [
         ReportingService,
         UtilityService,
         TemplateService,
@@ -110,9 +105,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
             provide: HTTP_INTERCEPTORS,
             useClass: AuthenticationInterceptor,
             multi: true
-        }
-    ],
-    bootstrap: [AppComponent]
-})
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
 }
