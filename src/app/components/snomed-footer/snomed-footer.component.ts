@@ -5,7 +5,8 @@ import {AuthoringService} from '../../services/authoring/authoring.service';
 @Component({
     selector: 'app-snomed-footer',
     templateUrl: './snomed-footer.component.html',
-    styleUrls: ['./snomed-footer.component.scss']
+    styleUrls: ['./snomed-footer.component.scss'],
+    standalone: true
 })
 export class SnomedFooterComponent {
 

@@ -6,11 +6,19 @@ import {QueueService} from './services/queue/queue.service';
 import {Subscription} from 'rxjs';
 import {ReportingService} from './services/reporting/reporting.service';
 import {ReleaseService} from './services/release/release.service';
+import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
+import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
+import { ReportComponent } from './components/report/report.component';
+import { NgIf } from '@angular/common';
+import { QueueComponent } from './components/queue/queue.component';
+import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    standalone: true,
+    imports: [SnomedNavbarComponent, LeftSidebarComponent, ReportComponent, NgIf, QueueComponent, SnomedFooterComponent]
 })
 
 export class AppComponent implements OnInit {

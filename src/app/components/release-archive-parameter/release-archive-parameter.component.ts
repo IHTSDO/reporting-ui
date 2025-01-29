@@ -2,11 +2,17 @@ import { Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PathingService } from '../../services/pathing/pathing.service';
 import { ReportingService } from '../../services/reporting/reporting.service';
+import { NgIf, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatOption } from '@angular/material/core';
 
 @Component({
-  selector: 'release-archive-parameter',
-  templateUrl: './release-archive-parameter.component.html',
-  styleUrls: ['./release-archive-parameter.component.scss']
+    selector: 'release-archive-parameter',
+    templateUrl: './release-archive-parameter.component.html',
+    styleUrls: ['./release-archive-parameter.component.scss'],
+    standalone: true,
+    imports: [NgIf, FormsModule, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatOption]
 })
 export class ReleaseArchiveParameterComponent {
     @Input() activeReport: any;
