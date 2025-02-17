@@ -19,18 +19,19 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgbTypeaheadModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
-import { AppRoutingModule } from './app/app-routing.module';
+import { routes } from './app/app.routes'
 import { ClipboardModule } from 'ngx-clipboard';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { AppComponent } from './app/app.component';
+import { provideRouter, RouterModule } from '@angular/router';
 
 enableProdMode();
 
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(BrowserModule, FormsModule, MatCheckboxModule, NgbTypeaheadModule, NgbTooltipModule, ToastrModule.forRoot(), AppRoutingModule, ClipboardModule, MatFormFieldModule, MatAutocompleteModule, MatSelectModule, FormsModule, ReactiveFormsModule),
+        importProvidersFrom(BrowserModule, FormsModule, MatCheckboxModule, NgbTypeaheadModule, NgbTooltipModule, ToastrModule.forRoot(), ClipboardModule, MatFormFieldModule, MatAutocompleteModule, MatSelectModule, FormsModule, ReactiveFormsModule),
         ReportingService,
         UtilityService,
         TemplateService,
@@ -49,6 +50,7 @@ bootstrapApplication(AppComponent, {
             useClass: AuthenticationInterceptor,
             multi: true
         },
+        provideRouter(routes),
         provideHttpClient(withInterceptorsFromDi()),
         provideAnimations()
     ]
