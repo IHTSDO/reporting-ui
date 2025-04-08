@@ -36,6 +36,8 @@ export class BuildArchiveParameterComponent implements OnInit {
     activeProductSubscription: Subscription;
     activeBuildSubscription: Subscription;
 
+    apiCall: any;
+
     constructor(private pathingService: PathingService,
                 private releaseService: ReleaseService) {
         this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => {
@@ -48,6 +50,7 @@ export class BuildArchiveParameterComponent implements OnInit {
                 }
                 this.resetView();
                 this.getProductOptions();
+                this.apiCall = null;
             }
         });
         this.activeProductSubscription = this.releaseService.getActiveProduct().subscribe(data => {
@@ -67,7 +70,7 @@ export class BuildArchiveParameterComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {                
+    ngOnInit(): void {
         if (!this.releaseCenters) {
             this.releaseService.getReleaseCenters().subscribe(releaseCenters => {
                 this.releaseCenters = releaseCenters;
@@ -150,11 +153,13 @@ export class BuildArchiveParameterComponent implements OnInit {
         this.selectedBuild = '';
         this.resetBuildArchiveValues();
         this.buildOptions = [];
-        this.releaseService.httpGetBuilds(releaseCenter['id'], this.selectedProduct, this.selectedBuildView, !this.includedHiddenBuilds, this.selectedYears).subscribe(response => {
+        this.apiCall && typeof this.apiCall.unsunscribe === 'function' && this.apiCall.unsunscribe(); // Unsubscribe here as well.
+        this.apiCall = this.releaseService.httpGetBuilds(releaseCenter['id'], this.selectedProduct, this.selectedBuildView, !this.includedHiddenBuilds, this.selectedYears).subscribe(response => {
             this.buildsLoading = false;
             let items = response['content'];
             this.unmodifiedBuildOptions = items;
             this.buildOptions = items.filter(item => !this.excludedBuilds.includes(item['id']));
+            this.apiCall && typeof this.apiCall.unsunscribe === 'function' && this.apiCall.unsunscribe(); // Unsubscribe here as well.
         });
     }
 
@@ -220,7 +225,7 @@ export class BuildArchiveParameterComponent implements OnInit {
         this.includedHiddenBuilds = false;
         this.selectedBuildView = 'ALL_RELEASES';
         this.buildsLoading = false;
-        
+
         const currentYear = new Date().getFullYear();
         this.selectedYears = [];
         this.selectedYears.push(currentYear);
