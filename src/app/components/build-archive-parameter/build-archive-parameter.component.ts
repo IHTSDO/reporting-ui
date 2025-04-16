@@ -35,6 +35,7 @@ export class BuildArchiveParameterComponent implements OnInit {
     activeBranchSubscription: Subscription;
     activeProductSubscription: Subscription;
     activeBuildSubscription: Subscription;
+    buildOptionsSubscription: Subscription;
 
     apiCall: any;
 
@@ -56,7 +57,16 @@ export class BuildArchiveParameterComponent implements OnInit {
         this.activeProductSubscription = this.releaseService.getActiveProduct().subscribe(data => {
             if (data && data['parameterKey'] !== this.parameter.key && (!this.selectedProduct || this.selectedProduct !== data['product'])) {
                 this.selectedProduct = data['product'];
-                this.onProductChange();
+                if (!this.selectedProduct) {
+                    return;
+                }
+                const releaseCenter = this.findReleaseCenter();
+                if (!releaseCenter) {
+                    return;
+                }
+                this.selectedBuild = '';
+                this.resetBuildArchiveValues();
+                this.buildOptions = [];
             }
         });
         this.activeBuildSubscription = this.releaseService.getActiveBuild().subscribe(data => {
@@ -67,6 +77,10 @@ export class BuildArchiveParameterComponent implements OnInit {
                     this.buildOptions = this.unmodifiedBuildOptions.filter(item => !this.excludedBuilds.includes(item['id']));
                 }
             }
+        });
+        this.buildOptionsSubscription = this.releaseService.getBuildOptions().subscribe(data => {
+            this.buildOptions = data.filter(item => item.productKey === this.selectedProduct);
+            this.unmodifiedBuildOptions = data.filter(item => item.productKey === this.selectedProduct);
         });
     }
 
@@ -92,6 +106,9 @@ export class BuildArchiveParameterComponent implements OnInit {
         if (this.activeBuildSubscription) {
             this.activeBuildSubscription.unsubscribe();
         }
+        if (this.buildOptionsSubscription) {
+            this.buildOptionsSubscription.unsubscribe();
+        }
     }
 
     matSelectOnblur() {
@@ -102,7 +119,7 @@ export class BuildArchiveParameterComponent implements OnInit {
 
     matSelectOnValueChange() {
         setTimeout(()=>{
-            this.getBuildOptions();
+            this.getBuildOptions(false);
         }, 0);
     }
 
@@ -132,14 +149,14 @@ export class BuildArchiveParameterComponent implements OnInit {
             return;
         }
         this.selectedBuild = '';
-        this.getBuildOptions();
+        this.getBuildOptions(true);
         this.releaseService.setActiveProduct({
             parameterKey: this.parameter.key,
             product: this.selectedProduct
         });
     }
 
-    getBuildOptions() {
+    getBuildOptions(isProductChange: boolean = false) {
         if (!this.selectedProduct) {
             return;
         }
@@ -157,8 +174,12 @@ export class BuildArchiveParameterComponent implements OnInit {
         this.apiCall = this.releaseService.httpGetBuilds(releaseCenter['id'], this.selectedProduct, this.selectedBuildView, !this.includedHiddenBuilds, this.selectedYears).subscribe(response => {
             this.buildsLoading = false;
             let items = response['content'];
-            this.unmodifiedBuildOptions = items;
-            this.buildOptions = items.filter(item => !this.excludedBuilds.includes(item['id']));
+            if (isProductChange) {
+                this.releaseService.setBuildOptions(items.filter(item => !this.excludedBuilds.includes(item['id'])));
+            } else {
+                this.unmodifiedBuildOptions = items;
+                this.buildOptions = items.filter(item => !this.excludedBuilds.includes(item['id']));
+            }
             this.apiCall && typeof this.apiCall.unsunscribe === 'function' && this.apiCall.unsunscribe(); // Unsubscribe here as well.
         });
     }

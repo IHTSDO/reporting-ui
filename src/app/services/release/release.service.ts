@@ -10,6 +10,7 @@ export class ReleaseService {
     private releaseCenters = new Subject<any>();
     private activeProduct = new Subject();
     private activeBuild = new Subject();
+    private buildOptions = new Subject<any>();
 
     // Setters & Getters: ReleaseCenters
     setReleaseCenters(releaseCenters) {
@@ -27,6 +28,14 @@ export class ReleaseService {
 
     getActiveProduct() {
         return this.activeProduct.asObservable();
+    }
+
+    setBuildOptions(buildOptions) {
+        this.buildOptions.next(buildOptions);
+    }
+
+    getBuildOptions() {
+        return this.buildOptions.asObservable();
     }
 
     // Setters & Getters: Build
