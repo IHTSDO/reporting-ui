@@ -11,15 +11,15 @@ export default class Utils {
         this.task = '';
     }
 
-    login(urlIam: string, urlApp: string, username: string, password: string): void {
+    login(url: string, username: string, password: string): void {
         cy.clearAllCookies();
-        cy.visit(urlIam + urlApp);
+        cy.visit(url);
         cy.contains('Please Log In');
         cy.get('#username').clear();
         cy.get('#username').type(username);
         cy.get('#password').clear();
         cy.get('#password').type(password, {log: false});
-        cy.get('form').contains('button', 'LOG IN', {timeout: this.loginTimeoutInSeconds}).click({force: true});
+        cy.get('button#submit', {timeout: this.loginTimeoutInSeconds}).click({force: true});
     }
 
     logout(): void {

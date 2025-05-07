@@ -4,7 +4,6 @@ const utils = new Utils();
 
 // Spec for test is here: https://app.guidde.com/share/playbooks/pv6fj2bgpMUQkxYmxAEX2v?origin=9tgqTb2fLmPaMQXdqgEnf9oUXHx1
 describe('Reporting Platform Smoke Test', () => {
-    const urlLogin = Cypress.env('URL_LOGIN');
     const urlReporting = Cypress.env('URL_REPORTING');
     const username = Cypress.env('TEST_LOGIN_USR');
     const password = Cypress.env('TEST_LOGIN_PSW');
@@ -12,7 +11,7 @@ describe('Reporting Platform Smoke Test', () => {
     const reportTimeoutInSeconds = 60_000 * 5;  // Takes ages for reporting on dev to startup!
 
     it('Login', () => {
-        utils.login(urlLogin, urlReporting, username, password);
+        utils.login(urlReporting, username, password);
     });
 
     it('Select branch MAIN/SNOMEDCT-CH', () => {
@@ -30,7 +29,7 @@ describe('Reporting Platform Smoke Test', () => {
     it('Select "Release Validation"/"New Descriptions" report', () => {
         utils.selectReportByName('Release Validation', 'New Descriptions');
         cy.get('[data-test="report-title"]').should('include.text', 'New Descriptions');
-        cy.get('[data-test="report-description"]').should('include.text', 'This report lists all discriptions');
+        cy.get('[data-test="report-description"]').should('include.text', 'This report provides a list of all descriptions and annotations');
     });
 
     it('Select "Ad-Hoc Queries"/"List all Concepts" report', () => {

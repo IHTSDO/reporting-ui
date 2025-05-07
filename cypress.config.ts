@@ -1,29 +1,29 @@
-const {defineConfig} = require('cypress');
+import {defineConfig} from 'cypress';
 
 module.exports = defineConfig({
-    video: true,
-    videoCompression: true,
+  video: true,
+  videoCompression: true,
 
-    reporter: 'cypress-mochawesome-reporter',
+  reporter: 'cypress-mochawesome-reporter',
 
-    reporterOptions: {
-        embeddedScreenshots: false,
-        inlineAssets: false,
-        ignoreVideos: false,
-        videoOnFailOnly: true,
-        saveAllAttempts: true,
-        quiet: false,
-        debug: false,
-        charts: true // Pie chart ratio success/fail
-    },
+  reporterOptions: {
+    embeddedScreenshots: true,
+    inlineAssets: true,
+    ignoreVideos: false,
+    videoOnFailOnly: true,
+    saveAllAttempts: true,
+    quiet: false,
+    debug: false,
+    charts: true // Pie chart ratio success/fail
+  },
 
-    e2e: {
-        viewportWidth: 1366,
-        viewportHeight: 960,
-        testIsolation: false,
+  e2e: {
+    viewportWidth: 1366,
+    viewportHeight: 960,
+    testIsolation: false,
 
-        setupNodeEvents(on, config) {
-            require('cypress-mochawesome-reporter/plugin')(on);
-        }
+    setupNodeEvents(on, config) {
+      require('cypress-mochawesome-reporter/plugin')(on);
     }
+  }
 });
