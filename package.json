@@ -17,13 +17,13 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^19.1.5",
-    "@angular/cdk": "^18.2.14",
+    "@angular/cdk": "^19.1.5",
     "@angular/common": "^19.1.5",
     "@angular/compiler": "^19.1.5",
     "@angular/core": "^19.1.5",
     "@angular/forms": "^19.1.5",
     "@angular/localize": "^19.1.5",
-    "@angular/material": "^18.2.14",
+    "@angular/material": "^19.1.5",
     "@angular/platform-browser": "^19.1.5",
     "@angular/platform-browser-dynamic": "^19.1.5",
     "@angular/router": "^19.1.5",
@@ -38,7 +38,7 @@
     "jquery": "^3.5.1",
     "ngx-clipboard": "^16.0.0",
     "ngx-toastr": "^17.0.2",
-    "rxjs": "~7.8.0",
+    "rxjs": "~7.8.2",
     "sonarqube-scanner": "^4.2.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.1"
@@ -49,6 +49,6 @@
     "@angular/compiler-cli": "^19.1.5",
     "@types/jasmine": "~4.3.0",
     "jasmine-core": "~4.6.0",
-    "typescript": "~5.7.3"
+    "typescript": "~5.8.3"
   }
 }
