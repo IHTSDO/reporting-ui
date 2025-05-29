@@ -36,7 +36,6 @@ import { DisplayOrderPipe } from '../../pipes/displayOrder/display-order.pipe';
             ])
         ])
     ],
-    standalone: true,
     imports: [NgIf, FormsModule, NgFor, NgSwitch, NgSwitchCase, NgbTooltip, NgSwitchDefault, ModalComponent, QueryParametersComponent, NgbTypeahead, SlicePipe, KeyValuePipe, HiddenPipe, DisplayOrderPipe]
 })
 export class ReportComponent implements OnInit {

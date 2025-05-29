@@ -14,7 +14,6 @@ import { TextFilterPipe } from '../../pipes/text-filter/text-filter.pipe';
     selector: 'app-left-sidebar',
     templateUrl: './left-sidebar.component.html',
     styleUrls: ['./left-sidebar.component.scss'],
-    standalone: true,
     imports: [NgIf, FormsModule, NgFor, TagsPipe, AlphabeticalPipe, TextFilterPipe]
 })
 export class LeftSidebarComponent implements OnInit {

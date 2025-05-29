@@ -17,7 +17,6 @@ import { ProjectPipe } from '../../pipes/project/project.pipe';
     selector: 'app-snomed-navbar',
     templateUrl: './snomed-navbar.component.html',
     styleUrls: ['./snomed-navbar.component.scss'],
-    standalone: true,
     imports: [RouterLink, NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, AlphabeticalPipe, BranchPipe, ProjectPipe]
 })
 export class SnomedNavbarComponent implements OnInit {

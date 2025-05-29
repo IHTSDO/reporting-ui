@@ -17,7 +17,6 @@ import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    standalone: true,
     imports: [SnomedNavbarComponent, LeftSidebarComponent, ReportComponent, NgIf, QueueComponent, SnomedFooterComponent]
 })
 

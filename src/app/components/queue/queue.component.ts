@@ -7,7 +7,6 @@ import { NgFor } from '@angular/common';
     selector: 'app-queue',
     templateUrl: './queue.component.html',
     styleUrls: ['./queue.component.scss'],
-    standalone: true,
     imports: [NgFor]
 })
 export class QueueComponent implements OnInit {

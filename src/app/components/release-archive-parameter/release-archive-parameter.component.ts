@@ -11,7 +11,6 @@ import { MatOption } from '@angular/material/core';
     selector: 'release-archive-parameter',
     templateUrl: './release-archive-parameter.component.html',
     styleUrls: ['./release-archive-parameter.component.scss'],
-    standalone: true,
     imports: [NgIf, FormsModule, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatOption]
 })
 export class ReleaseArchiveParameterComponent {

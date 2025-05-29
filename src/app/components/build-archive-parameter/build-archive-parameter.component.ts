@@ -12,7 +12,6 @@ import { MatOption } from '@angular/material/core';
     selector: 'build-archive-parameter',
     templateUrl: './build-archive-parameter.component.html',
     styleUrls: ['./build-archive-parameter.component.scss'],
-    standalone: true,
     imports: [NgIf, FormsModule, NgFor, MatFormField, MatSelect, MatOption, SlicePipe]
 })
 export class BuildArchiveParameterComponent implements OnInit {

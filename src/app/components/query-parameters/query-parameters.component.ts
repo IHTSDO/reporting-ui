@@ -22,7 +22,6 @@ import { OrderByPipe } from '../../pipes/orderBy/order-by.pipe';
     selector: 'app-query-parameters',
     templateUrl: './query-parameters.component.html',
     styleUrls: ['./query-parameters.component.scss'],
-    standalone: true,
     imports: [NgIf, NgFor, NgSwitch, NgSwitchCase, FormsModule, NgbTypeahead, ReleaseArchiveParameterComponent, BuildArchiveParameterComponent, KeyValuePipe, DisplayOrderPipe, OrderByPipe]
 })
 export class QueryParametersComponent implements OnInit {
