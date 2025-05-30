@@ -1,4 +1,5 @@
-@import 'src/variables.scss';
+@use '../../../variables' as *;
+@use 'sass:color';
 
 app-modal {
     /* modals are hidden by default */
@@ -13,6 +14,7 @@ app-modal {
                 background-color: $bootstrap-black;
                 border-top-left-radius: initial;
                 border-top-right-radius: initial;
+                justify-content: space-between;
 
                 h3 {
                     color: $white;
@@ -112,7 +114,7 @@ app-modal {
                                 color: $mandy;
 
                                 &:hover {
-                                    color: darken($mandy, 10%);
+                                    color: color.adjust($mandy, $lightness: -10%);
                                 }
                             }
 
@@ -180,11 +182,11 @@ app-modal {
                     font-weight: 300;
 
                     &.accept:hover {
-                        background-color: darken($fruit-salad, 10%);
+                        background-color: color.adjust($fruit-salad, $lightness: -10%);
                     }
 
                     &.decline:hover {
-                        background-color: darken($mandy, 10%);
+                        background-color: color.adjust($mandy, $lightness: -10%);
                     }
                 }
             }

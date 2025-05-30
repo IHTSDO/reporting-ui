@@ -4,14 +4,15 @@ import { PathingService } from '../../services/pathing/pathing.service';
 import { ReportingService } from '../../services/reporting/reporting.service';
 import { NgIf, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
-import { MatOption } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
 
 @Component({
     selector: 'release-archive-parameter',
     templateUrl: './release-archive-parameter.component.html',
     styleUrls: ['./release-archive-parameter.component.scss'],
-    imports: [NgIf, FormsModule, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatOption]
+    imports: [NgIf, FormsModule, MatAutocompleteModule, MatOptionModule, NgFor]
 })
 export class ReleaseArchiveParameterComponent {
     @Input() activeReport: any;

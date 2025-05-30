@@ -16,3 +16,8 @@ div.release-archive-parameter {
     }
 }
 
+::ng-deep .cdk-overlay-container {
+  z-index: 2000 !important;
+}
+
+
