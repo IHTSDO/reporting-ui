@@ -1,4 +1,5 @@
-@import 'src/variables.scss';
+@use '../../../variables' as *;
+@use 'sass:color';
 
 div.queue-screen {
     position: absolute;
@@ -69,7 +70,7 @@ div.queue-screen {
                 cursor: pointer;
 
                 &:hover {
-                    color: darken($mandy, 15%);
+                    color: color.adjust($mandy, $lightness: -15%);
                 }
             }
         }

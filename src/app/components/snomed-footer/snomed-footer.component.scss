@@ -1,4 +1,4 @@
-@import 'src/variables.scss';
+@use '../../../variables' as *;
 
 footer.footer {
     position: fixed;

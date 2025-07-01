@@ -1,4 +1,5 @@
-@import 'src/variables.scss';
+@use '../../../variables' as *;
+@use 'sass:color';
 
 div#report {
     margin-left: 32rem;
@@ -31,7 +32,7 @@ div#report {
             color: $white;
 
             &:hover {
-                background-color: darken($regent-grey, 5%);
+                background-color: color.adjust($regent-grey, $lightness: -5%);
             }
         }
 
@@ -40,7 +41,7 @@ div#report {
             color: $white;
 
             &:hover {
-                background-color: darken($fruit-salad, 5%);
+                background-color: color.adjust($fruit-salad, $lightness: -5%);
             }
         }
     }
@@ -63,15 +64,15 @@ div#report {
 
             &:hover {
                 &.table-body {
-                    background-color: darken($white, 2.5%);
+                   background-color: color.adjust($white, $lightness: -2.5%);
                 }
             }
 
             &.selected {
-                background-color: lighten($anakiwa, 5%);
+                background-color: color.adjust($anakiwa, $lightness: 5%);
 
                 &:hover {
-                    background-color: lighten($anakiwa, 2.5%);
+                    background-color: color.adjust($anakiwa, $lightness: 2.5%);
                 }
 
                 td {
@@ -82,7 +83,7 @@ div#report {
             th {
                 font-size: 14px;
                 font-weight: 400;
-                background-color: darken($white, 2.5%);
+                background-color: color.adjust($white, $lightness: -2.5%);
             }
 
             td {
@@ -106,7 +107,7 @@ div#report {
                             color: $fruit-salad;
 
                             &:hover {
-                                color: darken($fruit-salad, 10%);
+                                color: color.adjust($fruit-salad, $lightness: -10%);
                             }
                         }
 
@@ -115,7 +116,7 @@ div#report {
                             color: $mandy;
 
                             &:hover {
-                                color: darken($mandy, 10%);
+                                color: color.adjust($mandy, $lightness: -10%);
                             }
                         }
 
@@ -124,7 +125,7 @@ div#report {
                             color: $cerulean;
 
                             &:hover {
-                                color: darken($cerulean, 10%);
+                                color: color.adjust($cerulean, $lightness: -10%);
                             }
                         }
                     }

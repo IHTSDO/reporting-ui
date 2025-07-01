@@ -10,6 +10,13 @@ import {UtilityService} from '../../services/utility/utility.service';
 import {AuthoringService} from '../../services/authoring/authoring.service';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
 import { ClipboardService } from 'ngx-clipboard';
+import { NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, SlicePipe, KeyValuePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgbTooltip, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../modal/modal.component';
+import { QueryParametersComponent } from '../query-parameters/query-parameters.component';
+import { HiddenPipe } from '../../pipes/hidden/hidden.pipe';
+import { DisplayOrderPipe } from '../../pipes/displayOrder/display-order.pipe';
 
 @Component({
     selector: 'app-report',
@@ -17,18 +24,19 @@ import { ClipboardService } from 'ngx-clipboard';
     styleUrls: ['./report.component.scss'],
     animations: [
         trigger('slide', [
-            state('start', style({ opacity: 0, transform: 'translateY(200%)'})),
-            state('end', style({ opacity: 0, transform: 'translateY(-200%)'})),
+            state('start', style({ opacity: 0, transform: 'translateY(200%)' })),
+            state('end', style({ opacity: 0, transform: 'translateY(-200%)' })),
             transition('start <=> end', [
                 animate('2000ms ease-in', keyframes([
-                    style({opacity: 0, transform: 'translateY(200%)', offset: 0}),
-                    style({opacity: 1, transform: 'translateY(0)', offset: 0.1}),
-                    style({opacity: 1, transform: 'translateY(0)', offset: 0.8}),
-                    style({opacity: 0, transform: 'translateY(-200%)', offset: 1.0})
+                    style({ opacity: 0, transform: 'translateY(200%)', offset: 0 }),
+                    style({ opacity: 1, transform: 'translateY(0)', offset: 0.1 }),
+                    style({ opacity: 1, transform: 'translateY(0)', offset: 0.8 }),
+                    style({ opacity: 0, transform: 'translateY(-200%)', offset: 1.0 })
                 ]))
             ])
         ])
-    ]
+    ],
+    imports: [NgIf, FormsModule, NgFor, NgSwitch, NgSwitchCase, NgbTooltip, NgSwitchDefault, ModalComponent, QueryParametersComponent, NgbTypeahead, SlicePipe, KeyValuePipe, HiddenPipe, DisplayOrderPipe]
 })
 export class ReportComponent implements OnInit {
 

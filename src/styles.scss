@@ -1,6 +1,6 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
-@import 'src/variables.scss';
-@import 'toastr';
+@use 'bootstrap/dist/css/bootstrap.min.css';
+@use 'variables' as *;
+@use 'toastr';
 
 html {
     font-size: 62.5%;

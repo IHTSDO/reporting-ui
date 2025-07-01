@@ -3,11 +3,16 @@ import { Subscription } from 'rxjs';
 import { ReleaseService } from '../../services/release/release.service';
 import { PathingService } from '../../services/pathing/pathing.service';
 import { MatSelect } from '@angular/material/select';
+import { NgIf, NgFor, SlicePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatFormField } from '@angular/material/form-field';
+import { MatOption } from '@angular/material/core';
 
 @Component({
-  selector: 'build-archive-parameter',
-  templateUrl: './build-archive-parameter.component.html',
-  styleUrls: ['./build-archive-parameter.component.scss']
+    selector: 'build-archive-parameter',
+    templateUrl: './build-archive-parameter.component.html',
+    styleUrls: ['./build-archive-parameter.component.scss'],
+    imports: [NgIf, FormsModule, NgFor, MatFormField, MatSelect, MatOption, SlicePipe]
 })
 export class BuildArchiveParameterComponent implements OnInit {
     @ViewChild('matSelect') matSelect: MatSelect;

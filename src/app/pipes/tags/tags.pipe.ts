@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'tags'
+    name: 'tags',
+    standalone: true
 })
 export class TagsPipe implements PipeTransform {
 

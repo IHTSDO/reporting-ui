@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { Location} from '@angular/common';
+import { Location, NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { AuthoringService } from 'src/app/services/authoring/authoring.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { User } from '../../models/user';
 import {forkJoin, Subscription} from 'rxjs';
 import {PathingService} from '../../services/pathing/pathing.service';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import {ReportingService} from '../../services/reporting/reporting.service';
 import {QueueService} from '../../services/queue/queue.service';
 import {ToastrService} from 'ngx-toastr';
+import { AlphabeticalPipe } from '../../pipes/alphabetical/alphabetical.pipe';
+import { BranchPipe } from '../../pipes/branch/branch.pipe';
+import { ProjectPipe } from '../../pipes/project/project.pipe';
 
 @Component({
     selector: 'app-snomed-navbar',
     templateUrl: './snomed-navbar.component.html',
-    styleUrls: ['./snomed-navbar.component.scss']
+    styleUrls: ['./snomed-navbar.component.scss'],
+    imports: [RouterLink, NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, AlphabeticalPipe, BranchPipe, ProjectPipe]
 })
 export class SnomedNavbarComponent implements OnInit {
 

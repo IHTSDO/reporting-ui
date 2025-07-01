@@ -1,4 +1,5 @@
-@import 'src/variables.scss';
+@use '../../../variables' as *;
+@use 'sass:color';
 
 nav#sidebar {
     position: fixed;
@@ -29,7 +30,7 @@ nav#sidebar {
 
         input.searchbar {
             font-size: 1.4rem;
-            background-color: lighten($alto-white, 10%);
+            background-color: color.adjust($alto-white, $lightness: 10%);
             width: 100%;
             border-bottom: 1px $ghost-grey solid;
             color: $bootstrap-black;
@@ -67,14 +68,14 @@ nav#sidebar {
             border-bottom: 1px $ghost-grey solid;
 
             &:hover {
-                background-color: darken($alto-white, 5%);
+                background-color: color.adjust($alto-white, $lightness: -5%);
             }
 
             &.active {
                 background-color: $anakiwa;
 
                 &:hover {
-                    background-color: darken($anakiwa, 5%);
+                   background-color: color.adjust($anakiwa, $lightness: -5%);
                 }
             }
         }
@@ -92,163 +93,163 @@ $sunflower-yellow: #F6DC8B;
 $porsche-orange: #EDB273;
 
 .spring-rain {
-    background-color: lighten($spring-rain, 10%) !important;
+    background-color: color.adjust($spring-rain, $lightness: 10%) !important;
 
     &:hover {
-        background-color: darken($spring-rain, 20%) !important;
+        background-color: color.adjust($spring-rain, $lightness: -20%) !important;
         color: $white;
     }
 
     &.active {
-        background-color: darken($spring-rain, 30%) !important;
+       background-color: color.adjust($spring-rain, $lightness: -30%) !important;
         color: $white;
     }
 }
 
 .london-hue {
-    background-color: lighten($london-hue, 10%) !important;
+    background-color: color.adjust($london-hue, $lightness: 10%) !important;
 
     &:hover {
-        background-color: darken($london-hue, 20%) !important;
+        background-color: color.adjust($london-hue, $lightness: -20%) !important;
         color: $white;
     }
 
     &.active {
-        background-color: darken($london-hue, 30%) !important;
+        background-color: color.adjust($london-hue, $lightness: -30%) !important;
         color: $white;
     }
 }
 
 .vanilla {
-    background-color: lighten($vanilla, 10%) !important;
+    background-color: color.adjust($vanilla, $lightness: 10%) !important;
 
     &:hover {
-        background-color: darken($vanilla, 20%) !important;
+        background-color: color.adjust($vanilla, $lightness: -20%) !important;
         color: $white;
     }
 
     &.active {
-        background-color: darken($vanilla, 30%) !important;
+        background-color: color.adjust($vanilla, $lightness: -30%) !important;
         color: $white;
     }
 }
 
 .dull-lavender {
-    background-color: lighten($dull-lavender, 10%) !important;
+    background-color: color.adjust($dull-lavender, $lightness: 10%) !important;
 
     &:hover {
-        background-color: darken($dull-lavender, 20%) !important;
+        background-color: color.adjust($dull-lavender, $lightness: -20%) !important;
         color: $white;
     }
 
     &.active {
-        background-color: darken($dull-lavender, 30%) !important;
+        background-color: color.adjust($dull-lavender, $lightness: -30%) !important;
         color: $white;
     }
 }
 
 .tonys-pink {
-    background-color: lighten($tonys-pink, 10%) !important;
+    background-color: color.adjust($tonys-pink, $lightness: 10%) !important;
 
     &:hover {
-        background-color: darken($tonys-pink, 20%) !important;
+        background-color: color.adjust($tonys-pink, $lightness: -20%) !important;
         color: $white;
     }
 
     &.active {
-        background-color: darken($tonys-pink, 30%) !important;
+        background-color: color.adjust($tonys-pink, $lightness: -30%) !important;
         color: $white;
     }
 }
 
 .green-mist {
-    background-color: lighten($green-mist, 10%) !important;
+    background-color: color.adjust($green-mist, $lightness: 10%) !important;
 
     &:hover, &.active {
-        background-color: darken($green-mist, 20%) !important;
+        background-color: color.adjust($green-mist, $lightness: -20%) !important;
         color: $white;
     }
 
     &.active {
-        background-color: darken($green-mist, 30%) !important;
+        background-color: color.adjust($green-mist, $lightness: -30%) !important;
         color: $white;
     }
 }
 
 .ghostly-grey {
-    background-color: lighten($ghostly-grey, 10%) !important;
+    background-color: color.adjust($ghostly-grey, $lightness: 10%) !important;
 
     &:hover, &.active {
-        background-color: darken($ghostly-grey, 20%) !important;
+        background-color: color.adjust($ghostly-grey, $lightness: -20%) !important;
         color: $white;
     }
 
     &.active {
-        background-color: darken($ghostly-grey, 30%) !important;
+        background-color: color.adjust($ghostly-grey, $lightness: -30%) !important;
         color: $white;
     }
 }
 
 .porsche-orange {
-    background-color: lighten($porsche-orange, 10%) !important;
+    background-color: color.adjust($porsche-orange, $lightness: 10%) !important;
 
     &:hover, &.active {
-        background-color: darken($porsche-orange, 20%) !important;
+        background-color: color.adjust($porsche-orange, $lightness: -20%) !important;
         color: $white;
     }
 
     &.active {
-        background-color: darken($porsche-orange, 30%) !important;
+        background-color: color.adjust($porsche-orange, $lightness: -30%) !important;
         color: $white;
     }
 }
 
 .sunflower-yellow {
-    background-color: lighten($sunflower-yellow, 10%) !important;
+   background-color: color.adjust($sunflower-yellow, $lightness: 10%) !important;
 
     &:hover, &.active {
-        background-color: darken($sunflower-yellow, 20%) !important;
+        background-color: color.adjust($sunflower-yellow, $lightness: -20%) !important;
         color: $white;
     }
 
     &.active {
-        background-color: darken($sunflower-yellow, 30%) !important;
+        background-color: color.adjust($sunflower-yellow, $lightness: -30%) !important;
         color: $white;
     }
 }
 
 .spring-rain-border {
-    border-left: solid 5px lighten($spring-rain, 10%) !important;
+    border-left: solid 5px color.adjust($spring-rain, $lightness: 10%) !important;
 }
 
 .london-hue-border {
-    border-left: solid 5px lighten($london-hue, 10%) !important;
+    border-left: solid 5px color.adjust($london-hue, $lightness: 10%) !important;
 }
 
 .vanilla-border {
-    border-left: solid 5px lighten($vanilla, 10%) !important;
+    border-left: solid 5px color.adjust($vanilla, $lightness: 10%) !important;
 }
 
 .dull-lavender-border {
-    border-left: solid 5px lighten($dull-lavender, 10%) !important;
+  border-left: solid 5px color.adjust($dull-lavender, $lightness: 10%) !important;
 }
 
 .tonys-pink-border {
-    border-left: solid 5px lighten($tonys-pink, 10%) !important;
+   border-left: solid 5px color.adjust($tonys-pink, $lightness: 10%) !important;
 }
 
 .green-mist-border {
-    border-left: solid 5px lighten($green-mist, 10%) !important;
+    border-left: solid 5px color.adjust($green-mist, $lightness: 10%) !important;
 }
 
 .ghostly-grey-border {
-    border-left: solid 5px lighten($ghostly-grey, 10%) !important;
+    border-left: solid 5px color.adjust($ghostly-grey, $lightness: 10%) !important;
 }
 
 .porsche-orange-border {
-    border-left: solid 5px lighten($porsche-orange, 10%) !important;
+    border-left: solid 5px color.adjust($porsche-orange, $lightness: 10%) !important;
 }
 
 .sunflower-yellow-border {
-    border-left: solid 5px lighten($sunflower-yellow, 10%) !important;
+   border-left: solid 5px color.adjust($sunflower-yellow, $lightness: 10%) !important;
 }

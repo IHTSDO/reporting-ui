@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'alphabetical'
+    name: 'alphabetical',
+    standalone: true
 })
 export class AlphabeticalPipe implements PipeTransform {
 
