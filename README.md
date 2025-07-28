@@ -1,8 +1,8 @@
-# SNOMED Reporting UI (SRUI)
+# SNOMED Reporting UI (Rep UI)
 
-The **SNOMED Reporting UI (SRUI)** is an Angular-based single-page web application that provides a rich user experience for running, monitoring and analysing **SNOMED CT clinical content reports**.  It acts as the front-end façade to the broader SNOMED International *Reporting Platform* and communicates with an ecosystem of backend micro-services—**Schedule-Manager**, **Reporting Engine**, **Release-Service**, **Authoring-Services**, **Snowstorm**, **Template-Service** and others—via RESTful APIs secured through the organisation’s SSO layer.
+The **SNOMED Reporting UI (Rep UI)** is an Angular-based single-page web application that provides a rich user experience for running, monitoring and analysing **SNOMED CT clinical content reports**.  It acts as the front-end façade to the broader SNOMED International *Reporting Platform* and communicates with an ecosystem of backend micro-services—**Schedule-Manager**, **Reporting Engine**, **Release-Service**, **Authoring-Services**, **Snowstorm**, **Template-Service** and others—via RESTful APIs secured through the organisation’s SSO layer.
 
-This document explains **how to run SRUI locally** and the **engineering best-practices** expected when contributing to the code-base.
+This document explains **how to run Rep UI locally** and the **engineering best-practices** expected when contributing to the code-base.
 
 ---
 
@@ -10,14 +10,14 @@ This document explains **how to run SRUI locally** and the **engineering best-pr
 
 ```mermaid
 flowchart TD
-    Browser["User's Browser"] --> SRUI["Reporting UI (Angular SPA)"]
-    SRUI -->|REST| ScheduleManager[(Schedule Manager)]
-    SRUI -->|REST| ReportingEngine[(Reporting Engine)]
-    SRUI -->|REST| ReleaseService[(Release Service)]
-    SRUI -->|REST| AuthoringServices[(Authoring Services)]
-    SRUI -->|REST| Snowstorm[(Snowstorm Term Server)]
-    SRUI -->|REST| TemplateService[(Template Service)]
-    SRUI -->|REST| Auth[(SSO / Auth Service)]
+    Browser["User's Browser"] --> RepUI["Reporting UI (Angular SPA)"]
+    RepUI -->|REST| ScheduleManager[(Schedule Manager)]
+    RepUI -->|REST| ReportingEngine[(Reporting Engine)]
+    RepUI -->|REST| ReleaseService[(Release Service)]
+    RepUI -->|REST| AuthoringServices[(Authoring Services)]
+    RepUI -->|REST| Snowstorm[(Snowstorm Term Server)]
+    RepUI -->|REST| TemplateService[(Template Service)]
+    RepUI -->|REST| Auth[(SSO / Auth Service)]
 ```
 
 <br/>
@@ -27,7 +27,7 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     participant User
-    participant SRUI as UI
+    participant RepUI as UI
     participant SM as ScheduleManager
     participant RE as ReportingEngine
     User->>UI: Configure & Trigger Report (REST)
@@ -43,7 +43,7 @@ sequenceDiagram
 
 Key points:
 * **Stateless SPA** – all state is maintained server-side enabling horizontal scaling behind a CDN.
-* Configurable **API base-paths** allow SRUI to run behind a reverse proxy in any environment.
+* Configurable **API base-paths** allow Rep UI to run behind a reverse proxy in any environment.
 * **RxJS subjects & async pipes** power real-time queue and notification components.
 * Built with **Angular 19**, **Bootstrap 5** & **Angular Material**, packaged by the Angular CLI.
 
@@ -62,7 +62,7 @@ Key points:
   * Template-Service for reusable report templates.
 * **Rich component library** utilising Angular Material, ngx-bootstrap, FontAwesome & Toastr.
 * **Cypress E2E test-suite** with Mochawesome reporting.
-* **ESLint + Prettier** enforced via pre-commit hooks.
+* **ESLint** enforced via pre-commit hooks.
 
 ---
 
@@ -71,7 +71,7 @@ Key points:
 ```
 src/
   app/                     ← Angular application sources
-    components/            ← presentational & smart components
+    components/            ← presentational & components
     services/              ← API clients, authentication, utilities
     models/                ← TypeScript interfaces & data models
     pipes/                 ← custom pipes
@@ -93,7 +93,7 @@ Package conventions:
 
 ### 4.1  Prerequisites
 
-1. **Node.js 18 LTS** (or newer)
+1. **Node.js 22 LTS** (or newer)
 2. **npm 9** (ships with Node) or **Yarn Classic**
 3. (Optional) **Angular CLI** globally: `npm i -g @angular/cli`
 4. Running instances (or mocks) of the backend services if you want realistic data:
@@ -136,7 +136,7 @@ Artifacts are ready for static hosting (Nginx, Apache, S3, CloudFront, etc.).
 
 ## 6  Deployment
 
-SRUI is a static web bundle – deploy it to any web-server or CDN.
+Rep UI is a static web bundle – deploy it to any web-server or CDN.
 
 ### 6.1  Docker (example)
 
