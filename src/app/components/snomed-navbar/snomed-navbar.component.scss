@@ -2,6 +2,35 @@
 @use 'sass:color';
 
 nav {
+
+    .user-btn {
+        padding-left: unset;
+        padding-right: unset;
+        padding-top: unset;
+        padding-bottom: 0px;
+        width: 36px;
+        height: 36px;
+        border: none;
+        background-color: transparent;
+        color: rgb(229 231 235);
+        border-radius: 9999px;
+        font-weight: 600;
+
+        div {
+            width: 32px;
+            height: 32px;
+            padding-top: 5px;
+            font-weight: inherit;
+            font-size: 14px;
+            font-family: Museo, sans-serif;
+            font-optical-sizing: auto;
+            background-color: rgb(14 165 233);
+            border-radius: 9999px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    }
+
     a.logo {
         height: 4rem;
         font-size: 1.6rem;

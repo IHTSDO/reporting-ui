@@ -85,9 +85,10 @@
         <div class="logout d-inline-block m-2" (click)="logout()">
             <span class="px-2 text-ghost-grey">Logout</span>
         </div>
-        <div class="user d-inline-block m-2">
-            <span class="px-2 text-ghost-grey">{{user.firstName}} {{user.lastName}}</span>
-            <img class="rounded-circle mx-3" src="https://jira.ihtsdotools.org/secure/useravatar?ownerId={{user.login}}">
+        <div class="user d-inline-block ms-3">
+            <button type="button" class="user-btn" title="{{user.displayName}}">
+                <div>{{getInitials(user)}}</div>
+            </button>
         </div>
     </div>
 </nav>
