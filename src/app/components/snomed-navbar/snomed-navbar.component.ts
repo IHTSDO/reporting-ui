@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location, NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import {Location, NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, NgClass} from '@angular/common';
 import { AuthoringService } from 'src/app/services/authoring/authoring.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { User } from '../../models/user';
@@ -12,6 +12,8 @@ import {ToastrService} from 'ngx-toastr';
 import { AlphabeticalPipe } from '../../pipes/alphabetical/alphabetical.pipe';
 import { BranchPipe } from '../../pipes/branch/branch.pipe';
 import { ProjectPipe } from '../../pipes/project/project.pipe';
+import {ConfigService} from '../../services/config.service';
+import {DrawerService} from '../../services/drawer.service';
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -56,6 +58,8 @@ export class SnomedNavbarComponent implements OnInit {
                 private pathingService: PathingService,
                 private reportingService: ReportingService,
                 private queueService: QueueService,
+                private drawerService: DrawerService,
+                private readonly configService: ConfigService,
                 private location: Location,
                 private route: ActivatedRoute,
                 private toastr: ToastrService) {
@@ -194,6 +198,11 @@ export class SnomedNavbarComponent implements OnInit {
     openQueue() {
         this.queueService.setQueueOpen(true);
         document.body.classList.add('app-queue-open');
+    }
+
+    openDrawer() {
+        this.drawerService.setDrawerOpen(true);
+        document.body.classList.add('app-drawer-open');
     }
 
     logout() {

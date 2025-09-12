@@ -12,15 +12,21 @@ import { ReportComponent } from './components/report/report.component';
 import { NgIf } from '@angular/common';
 import { QueueComponent } from './components/queue/queue.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
+import {DrawerComponent} from './components/drawer/drawer.component';
+import {DrawerService} from './services/drawer.service';
+import {ConfigService} from './services/config.service';
+import {User} from './models/user';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    imports: [SnomedNavbarComponent, LeftSidebarComponent, ReportComponent, NgIf, QueueComponent, SnomedFooterComponent]
+    imports: [SnomedNavbarComponent, LeftSidebarComponent, ReportComponent, NgIf, QueueComponent, SnomedFooterComponent, DrawerComponent]
 })
 
 export class AppComponent implements OnInit {
+
+    user: User;
 
     environment: string;
     managedServiceUser: boolean;
@@ -28,12 +34,18 @@ export class AppComponent implements OnInit {
     queueOpen: any;
     queueOpenSubscription: Subscription;
 
+    drawerOpen: any;
+    drawerOpenSubscription: Subscription;
+
     constructor(private authenticationService: AuthenticationService,
                 private authoringService: AuthoringService,
                 private queueService: QueueService,
+                private drawerService: DrawerService,
+                private configService: ConfigService,
                 private reportingService: ReportingService,
                 private releaseService: ReleaseService) {
         this.queueOpenSubscription = this.queueService.getQueueOpen().subscribe(data => this.queueOpen = data);
+        this.drawerOpenSubscription = this.drawerService.getDrawerOpen().subscribe(data => this.drawerOpen = data);
     }
 
     ngOnInit() {
@@ -50,16 +62,19 @@ export class AppComponent implements OnInit {
             $('<script>').attr({ src: config.endpoints.collectorEndpoint }).appendTo('body');
         });
 
-        this.authenticationService.httpGetUser().subscribe(user => {
-            this.authenticationService.setUser(user);
-        });
-
         this.reportingService.httpGetReleases().subscribe(data => {
             this.reportingService.setReleases(data);
         });
 
         this.releaseService.httpGetReleaseCenters().subscribe(data => {
             this.releaseService.setReleaseCenters(data);
+        });
+
+        this.configService.loadConfig().subscribe(data => {
+            this.authenticationService.httpGetUser().subscribe(user => {
+                this.user = user;
+                this.authenticationService.setUser(user);
+            });
         });
 
         this.assignFavicon();
