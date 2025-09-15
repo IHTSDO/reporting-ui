@@ -44,7 +44,7 @@ export class ConfigService {
 
     loadConfig(): Observable<AppConfig> {
         // Try to load from assets first, fallback to hardcoded config
-        return this.http.get<any>('/assets/launcherConfig.json').pipe(
+        return this.http.get<any>('/launcherConfig.json').pipe(
             map(data => {
                 // Extract the config object from the JSON structure
                 this.config = data; // The config is the first object in the array
