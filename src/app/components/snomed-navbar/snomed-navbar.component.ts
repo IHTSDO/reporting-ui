@@ -105,20 +105,6 @@ export class SnomedNavbarComponent implements OnInit {
         setInterval(() => this.refresh(), 5000);
     }
 
-    getInitials(user: User): string {
-        let initials = '';
-
-        if (user.firstName) {
-            initials += user.firstName?.charAt(0).toUpperCase();
-        }
-
-        if (user.lastName) {
-            initials += user.lastName?.charAt(0).toUpperCase();
-        }
-
-        return initials;
-    }
-
     refresh(): void {
         forkJoin([
             this.queueService.httpGetQueueLength(),

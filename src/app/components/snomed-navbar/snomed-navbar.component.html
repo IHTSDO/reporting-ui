@@ -85,10 +85,8 @@
         <div class="logout d-inline-block m-2" (click)="logout()">
             <span class="px-2 text-ghost-grey">Logout</span>
         </div>
-        <div class="user d-inline-block ms-3">
-            <button type="button" class="user-btn" title="{{user.displayName}}">
-                <div>{{getInitials(user)}}</div>
-            </button>
+        <div class="user d-inline-block m-2 me-3">
+            <span class="px-2 text-ghost-grey">{{user.firstName}} {{user.lastName}}</span>
         </div>
     </div>
 </nav>
