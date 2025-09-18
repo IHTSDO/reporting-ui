@@ -7,7 +7,7 @@ div.drawer-screen {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(0,0,0,0.5);
+    //background-color: rgba(0,0,0,0.5);
     z-index: 9000;
 
     div.drawer {
@@ -16,11 +16,10 @@ div.drawer-screen {
         top: 6rem;
         right: 1rem;
         width: 40rem;
-        overflow: auto;
-        background-color: $alto-white;
+        background-color: $gallery-white;
 
         div.app-row {
-            border-bottom: 1px solid $ghost-grey;
+            border-bottom: 1px solid $alto-white;
 
             div.app-logo {
                 height: 8rem;
@@ -33,7 +32,7 @@ div.drawer-screen {
                 &:hover {
                     border-radius: 1rem;
                     cursor: pointer;
-                    background-color: $ghost-grey;
+                    background-color: $alto-white;
                 }
             }
         }
