@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {QueueService} from '../../services/queue/queue.service';
-import { NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-queue',
     templateUrl: './queue.component.html',
     styleUrls: ['./queue.component.scss'],
-    imports: [NgFor]
+    imports: [CommonModule]
 })
 export class QueueComponent implements OnInit {
 

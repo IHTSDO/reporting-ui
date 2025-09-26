@@ -9,7 +9,7 @@ import {ReleaseService} from './services/release/release.service';
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { ReportComponent } from './components/report/report.component';
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { QueueComponent } from './components/queue/queue.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
 import {DrawerComponent} from './components/drawer/drawer.component';
@@ -21,7 +21,7 @@ import {User} from './models/user';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    imports: [SnomedNavbarComponent, LeftSidebarComponent, ReportComponent, NgIf, QueueComponent, SnomedFooterComponent, DrawerComponent]
+    imports: [SnomedNavbarComponent, LeftSidebarComponent, ReportComponent, CommonModule, QueueComponent, SnomedFooterComponent, DrawerComponent]
 })
 
 export class AppComponent implements OnInit {

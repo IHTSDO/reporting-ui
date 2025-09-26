@@ -1,5 +1,4 @@
 import { TestBed, async } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
@@ -13,7 +12,8 @@ import { QueryParametersComponent } from './components/query-parameters/query-pa
 import 'jquery';
 import { AppComponent } from './app.component';
 import { AlphabeticalPipe } from './pipes/alphabetical/alphabetical.pipe';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
     beforeEach(() => {
@@ -30,11 +30,11 @@ describe('AppComponent', () => {
             ],
             imports: [
                 FormsModule,
-                HttpClientTestingModule,
+                provideHttpClient(),
+                provideHttpClientTesting(),
                 MatTooltipModule,
                 NgbTypeaheadModule,
-                MatCheckboxModule,
-                BrowserAnimationsModule
+                MatCheckboxModule
             ]
         }).compileComponents();
     });

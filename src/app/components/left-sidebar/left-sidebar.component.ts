@@ -4,7 +4,7 @@ import {Subscription} from 'rxjs';
 import {ReportingService} from '../../services/reporting/reporting.service';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import { NgIf, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TagsPipe } from '../../pipes/tags/tags.pipe';
 import { AlphabeticalPipe } from '../../pipes/alphabetical/alphabetical.pipe';
@@ -14,7 +14,7 @@ import { TextFilterPipe } from '../../pipes/text-filter/text-filter.pipe';
     selector: 'app-left-sidebar',
     templateUrl: './left-sidebar.component.html',
     styleUrls: ['./left-sidebar.component.scss'],
-    imports: [NgIf, FormsModule, NgFor, TagsPipe, AlphabeticalPipe, TextFilterPipe]
+    imports: [CommonModule, FormsModule, TagsPipe, AlphabeticalPipe, TextFilterPipe]
 })
 export class LeftSidebarComponent implements OnInit {
 

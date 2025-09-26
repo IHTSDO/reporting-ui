@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PathingService } from '../../services/pathing/pathing.service';
 import { ReportingService } from '../../services/reporting/reporting.service';
-import { NgIf, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,7 +12,7 @@ import { MatOptionModule } from '@angular/material/core';
     selector: 'release-archive-parameter',
     templateUrl: './release-archive-parameter.component.html',
     styleUrls: ['./release-archive-parameter.component.scss'],
-    imports: [NgIf, FormsModule, MatAutocompleteModule, MatOptionModule, NgFor]
+    imports: [CommonModule, FormsModule, MatAutocompleteModule, MatOptionModule]
 })
 export class ReleaseArchiveParameterComponent {
     @Input() activeReport: any;
