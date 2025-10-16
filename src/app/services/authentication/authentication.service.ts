@@ -31,6 +31,9 @@ export class AuthenticationService {
     }
 
     logout() {
-        window.location.href = this.uiConfiguration.endpoints.imsEndpoint + 'logout?serviceReferer=' + window.location.href;
+        const urlObject = new URL(window.location.href);
+        // Reset search parameters
+        urlObject.search = '';
+        window.location.href = this.uiConfiguration.endpoints.imsEndpoint + 'logout?serviceReferer=' + urlObject.toString();
     }
 }
