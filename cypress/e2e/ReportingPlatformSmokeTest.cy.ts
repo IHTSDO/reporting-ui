@@ -2,53 +2,78 @@ import Utils from '../commands/Utils';
 
 const utils = new Utils();
 
-// Spec for test is here: https://app.guidde.com/share/playbooks/pv6fj2bgpMUQkxYmxAEX2v?origin=9tgqTb2fLmPaMQXdqgEnf9oUXHx1
+const urlReporting = Cypress.env('URL_REPORTING');
+const username = Cypress.env('TEST_LOGIN_USR');
+const password = Cypress.env('TEST_LOGIN_PSW');
+
 describe('Reporting Platform Smoke Test', () => {
-    const urlReporting = Cypress.env('URL_REPORTING');
-    const username = Cypress.env('TEST_LOGIN_USR');
-    const password = Cypress.env('TEST_LOGIN_PSW');
+    const reportName = 'List all Reports';
+    const reportDescription = 'This report lists all reports available to users, along with their descriptions, production status and tags.';
     const reportHistoryTimeoutInSeconds = 15_000;
     const reportTimeoutInSeconds = 60_000 * 5;  // Takes ages for reporting on dev to startup!
 
     it('Login', () => {
         utils.login(urlReporting, username, password);
+        cy.intercept('GET', '**/auth').as('auth');
+        cy.intercept('GET', '**/jobs/Report/').as('getReports');
+
+        cy.wait('@auth').then((interceptions) => {
+            assert.equal(interceptions.response.statusCode, 200);
+        });
+
+        cy.wait('@getReports').then((interceptions) => {
+            assert.equal(interceptions.response.statusCode, 200);
+        });
     });
 
-    it('Select branch MAIN/SNOMEDCT-CH', () => {
-        utils.selectBranchByName('MAIN/SNOMEDCT-CH');
-    });
-
-    it('Select project CHPRE', () => {
-        utils.selectProjectByName('CHPRE');
+    it('Ensure the application loads', () => {
+        cy.get('#sidebar div.reports').find('div.report')
+            .its('length')
+            .then((count) => {
+                expect(count).to.greaterThan(0);
+                const reportsFound = count.toString() + ' found';
+                cy.get('#sidebar div.head > h3').should('be.visible').and('contain.text', reportsFound);
+            });
     });
 
     it('Select branch MAIN', () => {
         utils.selectBranchByName('MAIN');
     });
 
-    it('Select "Release Validation"/"New Descriptions" report', () => {
-        utils.selectReportByName('Release Validation', 'New Descriptions');
-        cy.get('[data-test="report-title"]').should('include.text', 'New Descriptions');
-        cy.get('[data-test="report-description"]').should('include.text', 'This report provides a list of all descriptions and annotations');
+    it('Verify Search for a report is working', () => {
+        cy.get('#sidebar div.head').find('input.searchbar').clear().type(reportName.toLowerCase());
+
+        cy.get('#sidebar div.reports').find('div.report')
+            .should('contain.text', reportName)
+            .its('length')
+            .then((count) => {
+                expect(count).to.greaterThan(0);
+                const reportsFound = count.toString() + ' found';
+                cy.get('#sidebar div.head > h3').should('be.visible').and('contain.text', reportsFound);
+            });
     });
 
-    it('Select "Ad-Hoc Queries"/"List all Concepts" report', () => {
-        utils.selectReportByName('Ad-Hoc Queries', 'List all Concepts');
-        cy.get('[data-test="report-title"]').should('include.text', 'List all Concepts');
-        cy.get('[data-test="report-description"]').should('include.text', 'This report lists all concepts that match a given ECL, with descriptions, parents and the inferred expression');
+    it('Verify report`s details are displayed when clicking on them in the left hand toolbar', () => {
+        cy.get('#sidebar div.reports').find('div.report').first().click();
+        cy.get('[data-test="report-title"]').should('include.text', reportName);
+        cy.get('[data-test="report-description"]').should('include.text', reportDescription);
     });
 
-    it('Fill in form for "Find Concepts Across All Extensions" and schedule it', () => {
-        cy.contains('button', 'Configure Query').click();
-        cy.get('#ECL').clear();
-        cy.get('#ECL').type('< 195967001 |Asthma (disorder)|');
+    it(`Verify report can be run: "${reportName}"`, () => {
+        cy.intercept('POST', '**/runs').as('runReport');
         cy.contains('button', 'Run Query').click();
-        cy.get('[data-test="report-parameters-0"]', {timeout: reportHistoryTimeoutInSeconds}).contains('195967001');
+
+        cy.wait('@runReport').then((interceptions) => {
+            assert.equal(interceptions.request.body.jobName, reportName);
+            assert.equal(interceptions.response.statusCode, 200);
+            assert.equal(interceptions.response.body.status, 'Scheduled');
+        });
     });
 
     it('Ensure report runs', () => {
         cy.get('[data-test="report-info-0"]', {timeout: reportTimeoutInSeconds})
             .contains('Running', {timeout: reportTimeoutInSeconds});
+
     });
 
     it('Ensure report has completed', () => {
@@ -56,10 +81,21 @@ describe('Reporting Platform Smoke Test', () => {
             .contains('Complete', {timeout: reportTimeoutInSeconds});
     });
 
-    it('Logout', () => {
+    it('Ensure this report can be deleted', () => {
+        cy.get('[data-test="report-history-row"]', {timeout: reportHistoryTimeoutInSeconds}).its('length').then((count) => {
+            const runs = count;
+            cy.get('[data-test="report-history-row"]').first().click();
+            cy.get('button.delete-button').should('be.visible').click();
+            cy.get('#delete-modal').contains('button', 'Delete Reports').click();
+            cy.get('[data-test="report-history-row"]', {timeout: reportHistoryTimeoutInSeconds}).should('have.length.lessThan', runs);
+        });
+    })
+
+   it('Logout', () => {
         utils.logout();
-        cy.contains('Please Log In').should('be.visible');
-    });
+        cy.contains('Welcome to SNOMED International', {timeout: 15000}).should('be.visible');
+        cy.contains('Sign In').should('be.visible');
+   });
 
 });
 
