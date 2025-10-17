@@ -10,7 +10,7 @@ describe('Reporting Platform Smoke Test', () => {
     const reportName = 'List all Reports';
     const reportDescription = 'This report lists all reports available to users, along with their descriptions, production status and tags.';
     const reportHistoryTimeoutInSeconds = 15_000;
-    const reportTimeoutInSeconds = 60_000 * 5;  // Takes ages for reporting on dev to startup!
+    const reportTimeoutInSeconds = 60_000 * 10;  // Takes ages for reporting on dev to startup!
 
     it('Login', () => {
         utils.login(urlReporting, username, password);
