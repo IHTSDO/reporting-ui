@@ -67,10 +67,10 @@ export class QueueService {
     }
 
     httpGetQueue(statusFilter, time?) {
-        return this.http.get('/schedule-manager/jobs/runs?page=0&size=100&statusFilter=' + statusFilter + (time ? '&sinceMins=' + time : ''));
+        return this.http.get('/reporting-service/jobs/runs?page=0&size=100&statusFilter=' + statusFilter + (time ? '&sinceMins=' + time : ''));
     }
 
     httpGetQueueLength() {
-        return this.http.get<Object[]>('/schedule-manager/jobs/runs?page=0&size=100&statusFilter=Running&statusFilter=Scheduled');
+        return this.http.get<Object[]>('/reporting-service/jobs/runs?page=0&size=100&statusFilter=Running&statusFilter=Scheduled');
     }
 }

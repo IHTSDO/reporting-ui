@@ -104,23 +104,23 @@ export class ReportingService {
 
 
     httpGetReports() {
-        return this.http.get<Category[]>('/schedule-manager/jobs/Report/');
+        return this.http.get<Category[]>('/reporting-service/jobs/Report/');
     }
 
     httpGetReleases() {
-        return this.http.get<Object[]>('/schedule-manager/releases');
+        return this.http.get<Object[]>('/reporting-service/releases');
     }
 
     httpGetReportRuns(name, page?, size?) {
-        return this.http.get('/schedule-manager/jobs/Report/' + name + '/runs?page=' + (page ? page.toString() : '0') + '&size=' + (size ? size.toString() : '100') + (this.localAllReports ? '' : '&user=' + this.user.login));
+        return this.http.get('/reporting-service/jobs/Report/' + name + '/runs?page=' + (page ? page.toString() : '0') + '&size=' + (size ? size.toString() : '100') + (this.localAllReports ? '' : '&user=' + this.user.login));
     }
 
     httpDeleteReport(name, id) {
-        return this.http.delete('/schedule-manager/jobs/Report/' + name + '/runs/' + id);
+        return this.http.delete('/reporting-service/jobs/Report/' + name + '/runs/' + id);
     }
 
     httpDeleteReports(name, ids) {
-        return this.http.post('/schedule-manager/jobs/Report/' + name + '/runs/delete', ids);
+        return this.http.post('/reporting-service/jobs/Report/' + name + '/runs/delete', ids);
     }
 
     httpPostReport(query, codeSystemShortname, project, task?): Observable<Query> {
@@ -132,19 +132,19 @@ export class ReportingService {
             parameters: query.parameters
         };
 
-        return this.http.post<Query>('/schedule-manager/jobs/Report/' + params.jobName + '/runs', JSON.stringify(params));
+        return this.http.post<Query>('/reporting-service/jobs/Report/' + params.jobName + '/runs', JSON.stringify(params));
     }
 
     httpGetWhitelist(name, codeSystemShortName): Observable<Concept[]> {
-        return this.http.get<Concept[]>('/schedule-manager/jobs/Report/' + name + '/' + codeSystemShortName + '/whitelist');
+        return this.http.get<Concept[]>('/reporting-service/jobs/Report/' + name + '/' + codeSystemShortName + '/whitelist');
     }
 
     httpPostWhitelist(name, codeSystemShortName, params): Observable<Concept[]> {
-        return this.http.post<Concept[]>('/schedule-manager/jobs/Report/' + name + '/' + codeSystemShortName + '/whitelist',
+        return this.http.post<Concept[]>('/reporting-service/jobs/Report/' + name + '/' + codeSystemShortName + '/whitelist',
             JSON.stringify(params));
     }
 
     httpInitialise() {
-        return this.http.get('/schedule-manager/jobs/initialise');
+        return this.http.get('/reporting-service/jobs/initialise');
     }
 }

@@ -1,6 +1,6 @@
 # SNOMED Reporting UI (Rep UI)
 
-The **SNOMED Reporting UI (Rep UI)** is an Angular-based single-page web application that provides a rich user experience for running, monitoring and analysing **SNOMED CT clinical content reports**.  It acts as the front-end façade to the broader SNOMED International *Reporting Platform* and communicates with an ecosystem of backend micro-services—**Schedule-Manager**, **Reporting Engine**, **Release-Service**, **Authoring-Services**, **Snowstorm**, **Template-Service** and others—via RESTful APIs secured through the organisation’s SSO layer.
+The **SNOMED Reporting UI (Rep UI)** is an Angular-based single-page web application that provides a rich user experience for running, monitoring and analysing **SNOMED CT clinical content reports**.  It acts as the front-end façade to the broader SNOMED International *Reporting Platform* and communicates with an ecosystem of backend micro-services—**Reporting-Service**, **Reporting Engine**, **Release-Service**, **Authoring-Services**, **Snowstorm**, **Template-Service** and others—via RESTful APIs secured through the organisation’s SSO layer.
 
 This document explains **how to run Rep UI locally** and the **engineering best-practices** expected when contributing to the code-base.
 
@@ -56,7 +56,7 @@ Key points:
 * **Queue panel & live status indicators** – driven by `QueueService` (`src/app/services/queue`).
 * **Report wizard & results explorer** – create, re-run, download & delete report runs.
 * **Integration points**
-  * Schedule-Manager endpoints (`/schedule-manager/...`)
+  * Reporting-Service endpoints (`/reporting-service/...`)
   * Release-Service endpoints (`/release-service/...`)
   * Authoring-Services & Snowstorm endpoints (`/authoring-services/...`, `/snowstorm/...`)
   * Template-Service for reusable report templates.
@@ -97,7 +97,7 @@ Package conventions:
 2. **npm 9** (ships with Node) or **Yarn Classic**
 3. (Optional) **Angular CLI** globally: `npm i -g @angular/cli`
 4. Running instances (or mocks) of the backend services if you want realistic data:
-   * Schedule-Manager, Reporting Engine, Release-Service, Authoring-Services, Snowstorm, etc.
+   * Reporting-Service, Reporting Engine, Release-Service, Authoring-Services, Snowstorm, etc.
    * A stubbed dev proxy can be used instead – see [`proxy.conf.json`](#proxy).
 
 ### 4.2  Clone & Install
