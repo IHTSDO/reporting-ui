@@ -10,7 +10,7 @@ import {PathingService} from '../../services/pathing/pathing.service';
 import {HttpService} from '../../services/http/http.service';
 import {ReportingService} from '../../services/reporting/reporting.service';
 import {ReleaseService} from '../../services/release/release.service';
-import { NgIf, NgFor, NgSwitch, NgSwitchCase, KeyValuePipe } from '@angular/common';
+import { CommonModule, KeyValuePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { ReleaseArchiveParameterComponent } from '../release-archive-parameter/release-archive-parameter.component';
@@ -22,7 +22,7 @@ import { OrderByPipe } from '../../pipes/orderBy/order-by.pipe';
     selector: 'app-query-parameters',
     templateUrl: './query-parameters.component.html',
     styleUrls: ['./query-parameters.component.scss'],
-    imports: [NgIf, NgFor, NgSwitch, NgSwitchCase, FormsModule, NgbTypeahead, ReleaseArchiveParameterComponent, BuildArchiveParameterComponent, KeyValuePipe, DisplayOrderPipe, OrderByPipe]
+    imports: [CommonModule, FormsModule, NgbTypeahead, ReleaseArchiveParameterComponent, BuildArchiveParameterComponent, KeyValuePipe, DisplayOrderPipe, OrderByPipe]
 })
 export class QueryParametersComponent implements OnInit {
 

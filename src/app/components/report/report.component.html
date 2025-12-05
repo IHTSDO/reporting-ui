@@ -96,7 +96,7 @@
         <app-query-parameters></app-query-parameters>
     </div>
     <div footer>
-        <div [@slide]="saved" class="px-3 error">{{saveResponse}}</div>
+        <div *ngIf="showSaveMessage" class="px-3 error slide-animate">{{ saveResponse }}</div>
         <button type="button" class="btn bg-fruit-salad accept text-white" (click)="validationCheck()">Run Query</button>
     </div>
 </app-modal>
@@ -128,7 +128,7 @@
         </ng-template>
     </div>
     <div footer>
-        <div [@slide]="saved" class="px-3 saved">{{saveResponse}}</div>
+        <div *ngIf="showSaveMessage" class="px-3 saved slide-animate">{{ saveResponse }}</div>
         <button type="button" class="btn bg-fruit-salad accept text-white" [disabled]="!whitelistChanged" (click)="saveWhitelist()">Save Exceptions</button>
     </div>
 </app-modal>
