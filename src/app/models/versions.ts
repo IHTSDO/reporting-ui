@@ -1,7 +1,7 @@
 export class Versions {
     versions: {
         'reporting-ui': string;
-        'schedule-manager': string;
+        'reporting-service': string;
         'snowstorm': string;
     };
 }

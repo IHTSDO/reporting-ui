@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Location, NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, NgClass} from '@angular/common';
+import {Location, CommonModule} from '@angular/common';
 import { AuthoringService } from 'src/app/services/authoring/authoring.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { User } from '../../models/user';
@@ -19,7 +19,7 @@ import {DrawerService} from '../../services/drawer.service';
     selector: 'app-snomed-navbar',
     templateUrl: './snomed-navbar.component.html',
     styleUrls: ['./snomed-navbar.component.scss'],
-    imports: [RouterLink, NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, AlphabeticalPipe, BranchPipe, ProjectPipe]
+    imports: [RouterLink, CommonModule, AlphabeticalPipe, BranchPipe, ProjectPipe]
 })
 export class SnomedNavbarComponent implements OnInit {
 

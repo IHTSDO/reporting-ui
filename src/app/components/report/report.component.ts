@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {EMPTY, Observable, Subscription} from 'rxjs';
 import {ReportingService} from '../../services/reporting/reporting.service';
 import {ModalService} from '../../services/modal/modal.service';
-import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
 import {PathingService} from '../../services/pathing/pathing.service';
 import {catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap} from 'rxjs/operators';
 import {HttpService} from '../../services/http/http.service';
@@ -10,7 +9,7 @@ import {UtilityService} from '../../services/utility/utility.service';
 import {AuthoringService} from '../../services/authoring/authoring.service';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
 import { ClipboardService } from 'ngx-clipboard';
-import { NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, SlicePipe, KeyValuePipe } from '@angular/common';
+import { CommonModule, SlicePipe, KeyValuePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbTooltip, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../modal/modal.component';
@@ -22,27 +21,14 @@ import { DisplayOrderPipe } from '../../pipes/displayOrder/display-order.pipe';
     selector: 'app-report',
     templateUrl: './report.component.html',
     styleUrls: ['./report.component.scss'],
-    animations: [
-        trigger('slide', [
-            state('start', style({ opacity: 0, transform: 'translateY(200%)' })),
-            state('end', style({ opacity: 0, transform: 'translateY(-200%)' })),
-            transition('start <=> end', [
-                animate('2000ms ease-in', keyframes([
-                    style({ opacity: 0, transform: 'translateY(200%)', offset: 0 }),
-                    style({ opacity: 1, transform: 'translateY(0)', offset: 0.1 }),
-                    style({ opacity: 1, transform: 'translateY(0)', offset: 0.8 }),
-                    style({ opacity: 0, transform: 'translateY(-200%)', offset: 1.0 })
-                ]))
-            ])
-        ])
-    ],
-    imports: [NgIf, FormsModule, NgFor, NgSwitch, NgSwitchCase, NgbTooltip, NgSwitchDefault, ModalComponent, QueryParametersComponent, NgbTypeahead, SlicePipe, KeyValuePipe, HiddenPipe, DisplayOrderPipe]
+    imports: [FormsModule, CommonModule, NgbTooltip, ModalComponent, QueryParametersComponent, NgbTypeahead, SlicePipe, KeyValuePipe, HiddenPipe, DisplayOrderPipe]
 })
 export class ReportComponent implements OnInit {
 
     saved = 'start';
     saveResponse: string;
     whitelistChanged = false;
+    showSaveMessage = false;
     runId: string;
     deleteReports: any[] = [];
 
@@ -221,6 +207,9 @@ export class ReportComponent implements OnInit {
         } else {
             this.saveResponse = 'Invalid Input Fields';
             this.saved = (this.saved === 'start' ? 'end' : 'start');
+            this.showSaveMessage = true;
+
+            this.hideAnimeMessage(2000);
         }
     }
 
@@ -275,12 +264,18 @@ export class ReportComponent implements OnInit {
         this.reportingService.httpPostWhitelist(this.activeReport.name, this.getCodeSystemShortname(), this.whitelist).subscribe(
             () => {
                 this.saveResponse = 'Saved';
+                this.showSaveMessage = true;
                 this.saved = (this.saved === 'start' ? 'end' : 'start');
                 this.whitelistChanged = false;
+
+                this.hideAnimeMessage(2000);
             },
             () => {
                 this.saveResponse = 'Error';
+                this.showSaveMessage = true;
                 this.saved = (this.saved === 'start' ? 'end' : 'start');
+                
+                this.hideAnimeMessage(2000);
             });
     }
 
@@ -354,4 +349,11 @@ export class ReportComponent implements OnInit {
             this.reportingService.setRuns(this.runs);
         });
     }
+
+    hideAnimeMessage(delay: number = 2000): void {
+        setTimeout(() => {
+            this.showSaveMessage = false;
+        }, delay);
+    }
+
 }

@@ -4,7 +4,7 @@
             <div *ngSwitchCase="'CONCEPT'" class="mb-3">
                 <label class="w-100 m-0" for="{{parameter.key}}">{{parameter.key}} <span *ngIf="parameter.value.mandatory" class="font-italic">(mandatory field)</span></label>
                 <div class="position-relative">
-                    <input class="form-control" type="text" [(ngModel)]="parameter?.value.value" [ngbTypeahead]="search" [required]="parameter.value.mandatory"/>
+                    <input class="form-control" type="text" [(ngModel)]="parameter.value.value" [ngbTypeahead]="search" [required]="parameter.value.mandatory"/>
                 </div>
                 <div *ngIf="parameter.value?.description" class="form-text">{{parameter.value.description}}</div>
             </div>
