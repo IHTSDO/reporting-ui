@@ -234,8 +234,6 @@ export class ReportComponent implements OnInit {
             if (this.activeReport.parameters.hasOwnProperty(param)) {
                 if (this.activeReport.parameters[param].type !== 'HIDDEN') {
                     return true;
-                } else {
-                    this.activeReport.parameters[param].value = this.authoringService.environmentEndpoint + 'template-service';
                 }
             }
         }
@@ -274,7 +272,7 @@ export class ReportComponent implements OnInit {
                 this.saveResponse = 'Error';
                 this.showSaveMessage = true;
                 this.saved = (this.saved === 'start' ? 'end' : 'start');
-                
+
                 this.hideAnimeMessage(2000);
             });
     }

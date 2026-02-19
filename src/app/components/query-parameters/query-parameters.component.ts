@@ -109,9 +109,6 @@ export class QueryParametersComponent implements OnInit {
                     if (parameter.type === 'BOOLEAN') {
                         parameter.value = JSON.parse(parameter.value);
                     }
-                    if (parameter.type === 'HIDDEN') {
-                        parameter.value = this.authoringService.environmentEndpoint + 'template-service';
-                    }
                     if (parameter.type === 'CONCEPT_LIST') {
                         parameter.value = '';
                     }
