@@ -64,9 +64,7 @@ export class AppComponent implements OnInit {
             this.authoringService.setVersions(versions);
         });
 
-
-
-        this.reportingService.httpGetReleases().subscribe(data => {
+        this.releaseService.httpGetReleases().subscribe(data => {
             this.reportingService.setReleases(data);
         });
 

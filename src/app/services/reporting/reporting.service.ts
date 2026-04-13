@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../../models/category';
-import { Report } from '../../models/report';
 import { Query } from '../../models/query';
 import { Concept } from '../../models/concept';
 import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
@@ -105,10 +104,6 @@ export class ReportingService {
 
     httpGetReports() {
         return this.http.get<Category[]>('/reporting-service/jobs/Report/');
-    }
-
-    httpGetReleases() {
-        return this.http.get<Object[]>('/reporting-service/releases');
     }
 
     httpGetReportRuns(name, page?, size?) {

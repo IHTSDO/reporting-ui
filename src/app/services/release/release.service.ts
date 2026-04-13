@@ -49,6 +49,10 @@ export class ReleaseService {
 
     constructor(private http: HttpClient) { }
 
+    httpGetReleases() {
+        return this.http.get<Object[]>('/release-service/releases?page=0&size=-1');
+    }
+
     httpGetReleaseCenters() {
       return this.http.get<Object[]>('/release-service/centers');
     }
