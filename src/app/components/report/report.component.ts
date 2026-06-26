@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EMPTY, Observable, Subscription} from 'rxjs';
-import {ReportingService} from '../../services/reporting/reporting.service';
+import {ReportingService, ReportFilterMode} from '../../services/reporting/reporting.service';
 import {ModalService} from '../../services/modal/modal.service';
 import {PathingService} from '../../services/pathing/pathing.service';
 import {catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap} from 'rxjs/operators';
@@ -50,8 +50,8 @@ export class ReportComponent implements OnInit {
     activeBranchSubscription: Subscription;
     user: any;
     userSubscription: Subscription;
-    allReports: any;
-    allReportsSubscription: Subscription;
+    reportFilter: ReportFilterMode;
+    reportFilterSubscription: Subscription;
     pagination: number;
     paginationSubscription: Subscription;
 
@@ -90,15 +90,33 @@ export class ReportComponent implements OnInit {
             this.deleteReports = [];
             this.setRuns();
         });
-        this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
-        this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe( data => this.activeProject = data);
+        this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => {
+            this.activeBranch = data;
+            if (this.reportFilter === 'branch') {
+                this.reportingService.setPagination(0);
+                this.setRuns();
+            }
+        });
+        this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => {
+            this.activeProject = data;
+            if (this.reportFilter === 'branch') {
+                this.reportingService.setPagination(0);
+                this.setRuns();
+            }
+        });
         this.projectsSubscription = this.pathingService.getProjects().subscribe( data => this.projects = data);
-        this.activeTaskSubscription = this.pathingService.getActiveTask().subscribe(data => this.activeTask = data);
+        this.activeTaskSubscription = this.pathingService.getActiveTask().subscribe(data => {
+            this.activeTask = data;
+            if (this.reportFilter === 'branch') {
+                this.reportingService.setPagination(0);
+                this.setRuns();
+            }
+        });
         this.runsSubscription = this.reportingService.getRuns().subscribe( data => this.runs = data);
         this.paginationSubscription = this.reportingService.getPagination().subscribe( data => this.pagination = data);
         this.whitelistSubscription = this.reportingService.getWhitelist().subscribe( data => this.whitelist = data);
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
-        this.allReportsSubscription = this.reportingService.getAllReports().subscribe(data => this.allReports = data);
+        this.reportFilterSubscription = this.reportingService.getReportFilter().subscribe(data => this.reportFilter = data);
         this.spinner.id = 'spinner';
         this.spinner.classList.add('spinner-border', 'spinner-border-sm', 'position-absolute');
         this.spinner.style.top = '7px';
@@ -329,8 +347,9 @@ export class ReportComponent implements OnInit {
         return output += seconds + 's';
     }
 
-    setAllReports(event) {
-        this.reportingService.setAllReports(event);
+    setReportFilter(reportFilter: ReportFilterMode) {
+        this.reportingService.setPagination(0);
+        this.reportingService.setReportFilter(reportFilter);
         this.setRuns();
     }
 

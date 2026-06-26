@@ -4,8 +4,12 @@ import { Category } from '../../models/category';
 import { Query } from '../../models/query';
 import { Concept } from '../../models/concept';
 import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {AuthenticationService} from '../authentication/authentication.service';
+import {PathingService} from '../pathing/pathing.service';
 import {User} from '../../models/user';
+
+export type ReportFilterMode = 'all' | 'mine' | 'branch';
 
 @Injectable({
     providedIn: 'root'
@@ -17,18 +21,32 @@ export class ReportingService {
     private activeReport = new Subject<any>();
     private runs = new Subject<any>();
     private whitelist = new Subject<any>();
-    private allReports = new BehaviorSubject<any>(true);
+    private reportFilter = new BehaviorSubject<ReportFilterMode>('all');
     private activeReleaseArchive = new Subject();
     private pagination = new BehaviorSubject(0);
 
     user: User;
     userSubscription: Subscription;
-    localAllReports: any;
-    localAllReportsSubscription: Subscription;
+    localReportFilter: ReportFilterMode;
+    localReportFilterSubscription: Subscription;
+    activeBranch: any;
+    activeBranchSubscription: Subscription;
+    activeProject: any;
+    activeProjectSubscription: Subscription;
+    activeTask: any;
+    activeTaskSubscription: Subscription;
+    projects: any;
+    projectsSubscription: Subscription;
 
-    constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
+    constructor(private http: HttpClient,
+                private authenticationService: AuthenticationService,
+                private pathingService: PathingService) {
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
-        this.localAllReportsSubscription = this.getAllReports().subscribe(data => this.localAllReports = data);
+        this.localReportFilterSubscription = this.getReportFilter().subscribe(data => this.localReportFilter = data);
+        this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
+        this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
+        this.activeTaskSubscription = this.pathingService.getActiveTask().subscribe(data => this.activeTask = data);
+        this.projectsSubscription = this.pathingService.getProjects().subscribe(data => this.projects = data);
     }
 
     // Setters & Getters: Reports
@@ -75,13 +93,13 @@ export class ReportingService {
         return this.whitelist.asObservable();
     }
 
-    // Setters & Getters: AllReports
-    setAllReports(allReports) {
-        this.allReports.next(allReports);
+    // Setters & Getters: ReportFilter
+    setReportFilter(reportFilter: ReportFilterMode) {
+        this.reportFilter.next(reportFilter);
     }
 
-    getAllReports() {
-        return this.allReports.asObservable();
+    getReportFilter() {
+        return this.reportFilter.asObservable();
     }
 
     // Setters & Getters: ActiveReleaseArchive
@@ -106,8 +124,66 @@ export class ReportingService {
         return this.http.get<Category[]>('/reporting-service/jobs/Report/');
     }
 
+    private getRunsFilterParams(): string {
+        switch (this.localReportFilter) {
+            case 'mine':
+                return '&user=' + this.user.login;
+            case 'branch':
+                if (this.activeProject?.key) {
+                    let params = '&project=' + encodeURIComponent(this.activeProject.key);
+                    if (this.activeTask?.key) {
+                        params += '&task=' + encodeURIComponent(this.activeTask.key);
+                    }
+                    return params;
+                }
+                if (this.activeBranch?.branchPath) {
+                    return '&branchPath=' + encodeURIComponent(this.activeBranch.branchPath);
+                }
+                return '';
+            default:
+                return '';
+        }
+    }
+
+    private getProjectKeysForBranch(branchPath: string): string[] {
+        return (this.projects || [])
+            .filter(project => project.codeSystem?.branchPath === branchPath)
+            .map(project => project.key);
+    }
+
+    private matchesBranchFilter(run: any): boolean {
+        if (this.activeProject?.key) {
+            if (run.project !== this.activeProject.key) {
+                return false;
+            }
+            if (this.activeTask?.key) {
+                return run.task === this.activeTask.key;
+            }
+            return true;
+        }
+        if (this.activeBranch?.branchPath) {
+            const branchPath = this.activeBranch.branchPath;
+            if (run.project === branchPath) {
+                return true;
+            }
+            return this.getProjectKeysForBranch(branchPath).includes(run.project);
+        }
+        return true;
+    }
+
+    private filterRunsByBranch(runs: any): any {
+        if (!runs?.content || this.localReportFilter !== 'branch') {
+            return runs;
+        }
+
+        const content = runs.content.filter(run => this.matchesBranchFilter(run));
+        return {...runs, content};
+    }
+
     httpGetReportRuns(name, page?, size?) {
-        return this.http.get('/reporting-service/jobs/Report/' + name + '/runs?page=' + (page ? page.toString() : '0') + '&size=' + (size ? size.toString() : '100') + (this.localAllReports ? '' : '&user=' + this.user.login));
+        return this.http.get('/reporting-service/jobs/Report/' + name + '/runs?page=' + (page ? page.toString() : '0') + '&size=' + (size ? size.toString() : '100') + this.getRunsFilterParams()).pipe(
+            map(runs => this.filterRunsByBranch(runs))
+        );
     }
 
     httpDeleteReport(name, id) {
